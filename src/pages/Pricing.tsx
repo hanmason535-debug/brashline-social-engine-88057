@@ -236,18 +236,6 @@ const Pricing = () => {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/10 py-20">
-          <div className="w-full absolute inset-0 h-full">
-            <SparklesCore
-              id="pricing-sparkles"
-              background="transparent"
-              minSize={0.8}
-              maxSize={2}
-              particleDensity={120}
-              className="w-full h-full"
-              speed={0.8}
-              colorful={true}
-            />
-          </div>
           <div className="container mx-auto px-4 text-center relative z-10">
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
               {lang === "en" ? "Launch Strong. Scale Smart." : "Lanza Fuerte. Escala Inteligente."}
@@ -260,93 +248,6 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* Recurring Plans */}
-        <section className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <Badge className="mb-4 bg-primary text-primary-foreground">
-                {lang === "en" ? "RECURRING PLANS" : "PLANES RECURRENTES"}
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
-                {lang === "en" ? "Choose Your Growth Plan" : "Elige tu Plan de Crecimiento"}
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {recurringPlans.map((plan, index) => (
-                <Card
-                  key={index}
-                  className={`relative shadow-soft hover:shadow-medium transition-all duration-300 border-border/50 bg-card overflow-hidden ${
-                    plan.featured
-                      ? "border-primary shadow-glow md:-translate-y-4"
-                      : "hover:-translate-y-1"
-                  }`}
-                >
-                  {plan.featured && (
-                    <>
-                      <Badge className="absolute top-4 left-1/2 -translate-x-1/2 bg-primary z-10">
-                        {lang === "en" ? "Most Popular" : "Más Popular"}
-                      </Badge>
-                      <BorderBeam duration={12} size={300} colorVia="hsl(var(--primary))" />
-                    </>
-                  )}
-
-                  <CardHeader className="text-center pb-8 pt-6">
-                    <div className="text-xs font-semibold text-muted-foreground mb-2">
-                      {plan.tier[lang]}
-                    </div>
-                    <h3 className="text-2xl font-heading font-bold mb-4">
-                      {plan.name}
-                    </h3>
-                    <div className="mb-2">
-                      <span className="text-4xl font-heading font-bold">${plan.price}</span>
-                      <span className="text-muted-foreground">/mo</span>
-                    </div>
-                    <div className="text-sm text-muted-foreground mb-4">
-                      {lang === "en" ? "or " : "o "}${plan.annualPrice}
-                      {lang === "en" ? "/year" : "/año"}
-                      <span className="text-xs ml-1">
-                        ({plan.annualDiscount}% {lang === "en" ? "off" : "desc."})
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      {plan.summary[lang]}
-                    </p>
-                  </CardHeader>
-
-                  <CardContent className="space-y-3">
-                    {plan.features.map((feature, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span className="text-sm">{feature[lang]}</span>
-                      </div>
-                    ))}
-                  </CardContent>
-
-                  <CardFooter className="pt-6">
-                    <Button
-                      asChild
-                      className="w-full"
-                      variant={plan.featured ? "default" : "outline"}
-                    >
-                      <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-                        {lang === "en" ? "Get Started" : "Comenzar"}
-                      </a>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-
-            <div className="text-center mt-12">
-              <Button size="lg" variant="outline" asChild>
-                <a href="#addons">
-                  {lang === "en" ? "View all add-ons" : "Ver todos los complementos"}
-                </a>
-              </Button>
-            </div>
-          </div>
-        </section>
 
         {/* One-Time Launch Package */}
         <section className="py-16 md:py-24 bg-muted/30">

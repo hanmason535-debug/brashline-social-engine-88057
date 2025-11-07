@@ -13,17 +13,16 @@ const Contact = () => {
     <div className="min-h-screen flex flex-col">
       <Header lang={lang} onLanguageChange={setLang} />
       <main className="flex-1">
-        <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/10 py-20">
+        <section className="relative overflow-hidden bg-[hsl(220,70%,10%)] py-20">
           <div className="w-full absolute inset-0 h-full">
             <SparklesCore
               id="contact-sparkles"
               background="transparent"
               minSize={0.8}
               maxSize={2}
-              colorful={true}
               particleDensity={120}
               className="w-full h-full"
-              particleColor="rgba(255, 255, 255, 0.1)"
+              particleColor="#ffffff"
               speed={0.8}
             />
           </div>
