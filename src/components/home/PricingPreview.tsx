@@ -96,28 +96,8 @@ const PricingPreview = ({ lang }: PricingPreviewProps) => {
               }`}
             >
               {plan.featured && (
-                <>
-                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary z-10">
-                    {lang === "en" ? "Most Popular" : "Más Popular"}
-                  </Badge>
-                  <BorderBeam
-                    duration={8}
-                    size={250}
-                    colorVia="hsl(0 0% 100%)"
-                  />
-                  <BorderBeam
-                    duration={8}
-                    delay={4}
-                    size={250}
-                    borderWidth={2}
-                    colorVia="hsl(0 0% 80%)"
-                  />
-                </>
-              )}
-              
-              {plan.limitedOffer && (
-                <Badge className="absolute -top-3 right-4 z-10 bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 text-background shadow-lg animate-shine-pulse bg-[length:200%_100%]">
-                  {lang === "en" ? "Limited Offer" : "Oferta Limitada"}
+                <Badge className="absolute top-4 left-1/2 -translate-x-1/2 bg-primary z-10">
+                  {lang === "en" ? "Most Popular" : "Más Popular"}
                 </Badge>
               )}
 
