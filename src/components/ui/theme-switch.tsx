@@ -40,9 +40,12 @@ const ThemeSwitch = ({
         checked={checked}
         onCheckedChange={handleCheckedChange}
         className={cn(
-          "peer absolute inset-0 h-full w-full rounded-full bg-input/50 transition-colors",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-          "[&>span]:h-7 [&>span]:w-7 [&>span]:rounded-full [&>span]:bg-background [&>span]:shadow [&>span]:z-10",
+          "peer absolute inset-0 h-full w-full rounded-full transition-colors",
+          "bg-muted border-2 border-border",
+          "data-[state=checked]:bg-foreground data-[state=checked]:border-foreground",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+          "[&>span]:h-7 [&>span]:w-7 [&>span]:rounded-full [&>span]:shadow-md [&>span]:z-10",
+          "[&>span]:bg-background [&>span]:border [&>span]:border-border",
           "data-[state=unchecked]:[&>span]:translate-x-1",
           "data-[state=checked]:[&>span]:translate-x-[44px]"
         )}
@@ -57,8 +60,8 @@ const ThemeSwitch = ({
         <SunIcon
           size={16}
           className={cn(
-            "transition-all duration-200 ease-out",
-            checked ? "text-muted-foreground/70" : "text-foreground scale-110"
+            "transition-all duration-300 ease-out",
+            checked ? "text-background opacity-40" : "text-foreground scale-110 opacity-100"
           )}
         />
       </span>
@@ -72,8 +75,8 @@ const ThemeSwitch = ({
         <MoonIcon
           size={16}
           className={cn(
-            "transition-all duration-200 ease-out",
-            checked ? "text-foreground scale-110" : "text-muted-foreground/70"
+            "transition-all duration-300 ease-out",
+            checked ? "text-background scale-110 opacity-100" : "text-muted-foreground opacity-40"
           )}
         />
       </span>
