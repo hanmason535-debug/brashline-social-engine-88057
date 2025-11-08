@@ -75,7 +75,7 @@ const CaseStudies = () => {
     <div className="min-h-screen flex flex-col">
       <Header lang={lang} onLanguageChange={setLang} />
       <main className="flex-1">
-        <section className="relative overflow-hidden bg-black py-20">
+        <section className="relative overflow-hidden bg-muted py-20">
           <div className="w-full absolute inset-0 h-full">
             <Meteors number={30} />
           </div>

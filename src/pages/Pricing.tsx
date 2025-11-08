@@ -233,9 +233,9 @@ const Pricing = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header lang={lang} onLanguageChange={setLang} />
-      <main className="flex-1 bg-black">
+      <main className="flex-1 bg-background">
         {/* One-Time Launch Package */}
-        <section className="py-16 md:py-24 bg-black">
+        <section className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <Badge className="mb-4 bg-secondary text-secondary-foreground">
@@ -287,7 +287,7 @@ const Pricing = () => {
         </section>
 
         {/* Add-On Packages */}
-        <section id="addons" className="py-16 md:py-24 bg-black">
+        <section id="addons" className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <Badge className="mb-4 bg-secondary text-secondary-foreground">
