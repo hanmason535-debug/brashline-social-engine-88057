@@ -13,11 +13,11 @@ const footerLinks = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: "https://facebook.com/brashline", label: "Facebook" },
-  { icon: Instagram, href: "https://instagram.com/brashline", label: "Instagram" },
+  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61583138566921", label: "Facebook" },
+  { icon: Instagram, href: "https://www.instagram.com/brashlineofficial/", label: "Instagram" },
+  { icon: Twitter, href: "https://x.com/brashlinex?s=11", label: "X (Twitter)" },
   { icon: Linkedin, href: "https://linkedin.com/company/brashline", label: "LinkedIn" },
   { icon: Youtube, href: "https://youtube.com/@brashline", label: "YouTube" },
-  { icon: Twitter, href: "https://x.com/brashline", label: "X (Twitter)" },
 ];
 
 const Footer = ({ lang }: FooterProps) => {

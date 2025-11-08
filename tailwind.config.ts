@@ -116,6 +116,19 @@ export default {
             "background-position": "0% 0%",
           },
         },
+        "meteor": {
+          "0%": { 
+            transform: "rotate(215deg) translateX(0)", 
+            opacity: "1" 
+          },
+          "70%": { 
+            opacity: "1" 
+          },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: "0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -123,6 +136,7 @@ export default {
         "fade-in": "fade-in 0.6s ease-out",
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         "shine-pulse": "shine-pulse 2s infinite linear",
+        "meteor-effect": "meteor 5s linear infinite",
       },
     },
   },

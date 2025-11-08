@@ -113,16 +113,14 @@ const PricingPreview = ({ lang }: PricingPreviewProps) => {
               </ToggleGroupItem>
               <ToggleGroupItem 
                 value="annual" 
-                className="data-[state=on]:bg-background data-[state=on]:text-foreground px-6 py-2"
+                className="data-[state=on]:bg-background data-[state=on]:text-foreground px-12 py-2 flex items-center gap-2"
               >
                 {lang === "en" ? "Annual" : "Anual"}
+                <Badge className="bg-green-600 hover:bg-green-600 text-white text-xs px-2 py-0">
+                  {lang === "en" ? "Save 10%" : "Ahorra 10%"}
+                </Badge>
               </ToggleGroupItem>
             </ToggleGroup>
-            {billing === "annual" && (
-              <span className="text-sm text-primary font-semibold">
-                {lang === "en" ? "up to 15% off" : "hasta 15% desc."}
-              </span>
-            )}
           </div>
         </div>
 

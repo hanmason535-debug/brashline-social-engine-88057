@@ -233,24 +233,9 @@ const Pricing = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header lang={lang} onLanguageChange={setLang} />
-      <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/10 py-20">
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
-              {lang === "en" ? "Launch Strong. Scale Smart." : "Lanza Fuerte. Escala Inteligente."}
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {lang === "en"
-                ? "Complete business setup with flexible add-ons to match your growth."
-                : "Configuración completa del negocio con complementos flexibles para tu crecimiento."}
-            </p>
-          </div>
-        </section>
-
-
+      <main className="flex-1 bg-black">
         {/* One-Time Launch Package */}
-        <section className="py-16 md:py-24 bg-muted/30">
+        <section className="py-16 md:py-24 bg-black">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <Badge className="mb-4 bg-secondary text-secondary-foreground">
@@ -302,7 +287,7 @@ const Pricing = () => {
         </section>
 
         {/* Add-On Packages */}
-        <section id="addons" className="py-16 md:py-24 bg-background">
+        <section id="addons" className="py-16 md:py-24 bg-black">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <Badge className="mb-4 bg-secondary text-secondary-foreground">

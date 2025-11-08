@@ -87,33 +87,6 @@ const Services = () => {
     <div className="min-h-screen flex flex-col">
       <Header lang={lang} onLanguageChange={setLang} />
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/10 py-20">
-          <div className="w-full absolute inset-0 h-full">
-            <SparklesCore
-              id="services-sparkles"
-              background="transparent"
-              minSize={0.8}
-              maxSize={2}
-              colorful={true}
-              particleDensity={120}
-              className="w-full h-full"
-              particleColor="rgba(255, 255, 255, 0.1)"
-              speed={0.8}
-            />
-          </div>
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
-              {lang === "en" ? "Built to Be Seen. Designed to Grow." : "Construido para Ser Visto. Diseñado para Crecer."}
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {lang === "en"
-                ? "Websites, content, and campaigns that keep your business active, visible, and trusted online."
-                : "Sitios web, contenido y campañas que mantienen tu negocio activo, visible y confiable en línea."}
-            </p>
-          </div>
-        </section>
-
         {/* Services Grid */}
         <section className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4">

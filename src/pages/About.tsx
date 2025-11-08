@@ -3,7 +3,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Users, Award } from "lucide-react";
-import { SparklesCore } from "@/components/ui/sparkles";
+import { Meteors } from "@/components/ui/meteors";
 
 const About = () => {
   const [lang, setLang] = useState<"en" | "es">("en");
@@ -12,18 +12,9 @@ const About = () => {
     <div className="min-h-screen flex flex-col">
       <Header lang={lang} onLanguageChange={setLang} />
       <main className="flex-1">
-        <section className="relative overflow-hidden bg-[hsl(220,70%,10%)] py-20">
+        <section className="relative overflow-hidden bg-black py-20">
           <div className="w-full absolute inset-0 h-full">
-            <SparklesCore
-              id="about-sparkles"
-              background="transparent"
-              minSize={0.8}
-              maxSize={2}
-              particleDensity={120}
-              className="w-full h-full"
-              particleColor="#ffffff"
-              speed={0.8}
-            />
+            <Meteors number={30} />
           </div>
           <div className="container mx-auto px-4 text-center relative z-10">
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
