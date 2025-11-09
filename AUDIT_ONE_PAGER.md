@@ -10,6 +10,15 @@ TL;DR
 - Biggest risks: missing analytics/monitoring, bundle size & Core Web Vitals, accessibility gaps, and lack of structured data.
 - Immediate priorities (P0): Analytics + tracking, Accessibility fixes, Error handling/logging, Structured data + sitemap, Code-splitting.
 
+Audit folder findings (key items pulled from `audit/report.md`)
+- Bundle sizes measured: JS ~552 kB (gzip ~174 kB) and CSS ~73.9 kB (gzip ~12.6 kB). There is an entry chunk >500 kB — recommend manualChunks/dynamic imports. (Priority: P0)
+- Security SCA advisories: esbuild <=0.24.2 (GHSA-67mh-4wv8-2f99) and Vite versions with advisories; current Vite is 5.4.19 — upgrade to patched versions (Priority: P0/P1)
+- No `sitemap.xml` detected; `robots.txt` exists. Add sitemap and reference in `robots.txt` (Priority: P0)
+- Internationalization: language toggle is per-page state and not persisted across routes/sessions. Persist via context + URL or cookie and add `hreflang` (Priority: P0)
+- Fonts: Inter currently loaded via remote stylesheet; consider self-hosting + font-display to reduce FOUT/FOIT and improve LCP (Priority: P1)
+- SPA router: BrowserRouter requires host-level SPA fallback for deep links; confirm hosting rewrite rules (Priority: P1)
+
+
 Top 6 Priorities (P0 / P1 / P2)
 P0 (Critical, 0–2 weeks)
 - Add GA4 + event tracking (owner: product) — Effort: 1–2 days
