@@ -38,66 +38,83 @@ P2 (Medium/Longer term)
 - Load testing (k6) and synthetic monitors (Checkly) (owner: devops) — Effort: 2–4 days
 - Heatmaps and session replay (Hotjar/LogRocket) (owner: product) — Effort: 1–2 days
 
-Recommendations by Category (concise)
-Performance
-- P0: Code-split routes; lazy-load non-critical components.
-- P1: Optimize and modernize images; enable brotli/gzip at CDN.
-- P1: Add resource hints (preload fonts, prefetch important routes).
+## Brashline — Audit One‑Pager
+**Date:** 2025-11-09
+**Repo:** `brashline-social-engine-88057` (branch: `audit/one-pager-updates`)
 
-Reliability
-- P0: Implement application error boundaries and Sentry / LogRocket.
-- P1: Add synthetic uptime checks and alerting (PagerDuty / Slack).
-- P2: Add circuit breakers and retry logic for API calls.
+Purpose
+A concise, single-page summary of the full repository audit with prioritized, actionable recommendations across Performance, Reliability, Security, SEO, Accessibility, UX, Business KPIs, Deployment, and Testing.
 
-Security
-- P0: Enforce HTTPS, HSTS, CSP headers at CDN/app server.
-- P1: Enable Dependabot and fix high/critical npm audit items.
-- P2: Pen test or security review for any backend/API endpoints.
+TL;DR
+- Modern stack (React + Vite + Tailwind). Good foundation.
+- Biggest risks: missing analytics/monitoring, large initial bundle (>500 kB), dependency advisories, accessibility gaps, and missing sitemap/structured data.
+- Immediate priorities (P0): Analytics + tracking, Accessibility fixes, Error handling/logging, Structured data + sitemap, Code-splitting, and SCA upgrades.
 
-SEO
-- P0: Add JSON-LD (Organization, LocalBusiness, Service, FAQ). Generate sitemap.xml and publish.
-- P1: Ensure per-page meta tags (title/description) via a head manager (react-helmet/headless).
-- P2: Set up Search Console and submit sitemap; monitor index coverage.
+Top priorities (P0 / P1 / P2)
 
-Accessibility
-- P0: Add skip-to-content, visible focus states, aria-labels for icon-only buttons.
-- P1: Run axe-core CI checks and remediate failures.
-- P2: Conduct screen reader testing (NVDA, VoiceOver).
+P0 — Critical (0–2 weeks)
+- Add GA4 + event tracking (owner: Product) — 1–2 days
+- Implement React Error Boundary + Sentry minimal init (owner: Dev) — 1–2 days
+- Fix core accessibility issues (skip-to-content, visible focus outlines, aria labels) (owner: Dev/UX) — 2–3 days
+- Add JSON-LD structured data, generate `sitemap.xml` and update `robots.txt` (owner: SEO) — 1–2 days
+- Code-split routes / reduce initial JS (manualChunks / dynamic import) to address >500 kB entry chunk (owner: Dev) — 2–3 days
+- Upgrade build tooling to resolve SCA advisories (Vite, esbuild) (owner: Dev) — 1 day
 
-UX & Conversion
-- P0: Add analytics and track CTA clicks; add a lead capture form (track events).
-- P1: Add testimonials, populate Case Studies and Blog for trust & SEO.
-- P2: A/B test CTA copy/placement.
+P1 — High (2–6 weeks)
+- Lazy-load images, convert to WebP/AVIF and add responsive `srcset` (owner: Dev)
+- Host assets on CDN and set HTTP caching/edge headers (owner: Infra)
+- Enable Dependabot and run `npm audit` fixes (owner: DevOps)
+- Add CI pipeline with Lighthouse checks and unit tests (owner: DevOps)
 
-Business KPIs
-- P0: Install GA4 and configure conversion events & funnels.
-- P1: Configure reports: acquisition, conversion, bounce, revenue/visitor.
+P2 — Medium / Longer term
+- PWA / Service Worker (owner: Product/Dev)
+- Load testing (k6) and synthetic monitors (Checkly) (owner: DevOps)
+- Heatmaps/session replay (Hotjar/LogRocket) for UX insight (owner: Product)
 
-Deployment & Infra
-- P0: Deploy to a CDN-backed host (Vercel/Netlify) with proper headers.
-- P1: Add CI/CD and Lighthouse checks on PRs.
+Key findings (from `audit/report.md`) — concise
+1. Bundle sizes (codebase build): JS ~552 kB (gzip ~174 kB), CSS ~73.9 kB (gzip ~12.6 kB). Entry chunk >500 kB — causes slow LCP on mobile (P0).
+2. Security SCA advisories: `esbuild` (<=0.24.2) and Vite versions flagged — upgrade recommended (P0/P1).
+3. SEO: `robots.txt` present; no `sitemap.xml`; no canonical links or `hreflang` entries for en/es; SPA deep-route fallback required on host (P0).
+4. I18n/UX: Language toggle is per-page state (not persisted). Persist selection via context + localStorage or reflect in URL; add `hreflang` (P0).
+5. Fonts: Inter loaded via external stylesheet — consider self-hosting + `font-display` to reduce FOIT/FOUT and improve LCP (P1).
+6. Delivery & infra: No preconnect/preload hints found; confirm HTTP/2/3, compression, caching and CDN configuration (P1).
+7. Tests/artifacts: Runtime metrics (Lighthouse, WebPageTest, axe, k6, ZAP) are still pending and will complete the scorecard (Data required).
 
-Testing
-- P1: Add unit tests (Vitest/Jest) and E2E (Playwright/Cypress).
-- P2: Add performance regression testing via Lighthouse CI.
+Quick wins (0–7 days)
+- Add GA4 and wire CTA events (+ basic consent handling) — immediate measurement.
+- Add React Error Boundary and initialize Sentry (free tier) — capture runtime exceptions.
+- Commit a `sitemap.xml` (auto-generated at build) and add `hreflang` and canonical tags where applicable.
 
-Quick Action Plan (next 7 days)
-Day 1–2: Install GA4; wire CTA events; create backup branch.  
-Day 2–4: Implement error boundary + Sentry, fix top 3 accessibility issues (skip link, focus, aria).  
-Day 4–7: Add JSON-LD + sitemap, code-split main routes, run initial Lighthouse and commit tickets for remaining items.
+Action plan (first 7 days)
+Day 1: Create `analytics/` PR — add GA4 snippet and data-attributes on primary CTAs; add an events plan.
+Day 2: Add React Error Boundary + Sentry minimal configuration; add basic error logging to console with Sentry capture.
+Day 3: Add `sitemap.xml` generator (script) and include it in build; update `robots.txt`.
+Day 4–7: Create follow-up PRs for: Vite/esbuild upgrades, route code-splitting (manualChunks), and top 3 accessibility fixes.
+
+Acceptance criteria (examples)
+- GA4: conversion events fired on CTA clicks; events visible in GA4 debug view.
+- Sentry: uncaught exceptions appear in Sentry with source mapping where possible.
+- Performance: initial JS reduced; Lighthouse Mobile LCP improved by target (example: ≥300 ms).
+- SEO: `sitemap.xml` published and accepted in Search Console; `hreflang` present for en/es.
+
+Commands & evidence to collect (short)
+- Lighthouse (mobile):
+	`npx lighthouse <URL> --preset=mobile --output=json --output-path=audit/artifacts/lighthouse/mobile.json`
+- axe quick run:
+	`npx @axe-core/cli <URL> --tags wcag2a,wcag2aa -o audit/artifacts/axe/site.json`
+- k6 ramp example: see `audit/report.md` for template.
 
 Where to start (first PRs)
-1. Add GA4 snippet and data-attributes on CTA buttons.  
-2. Add React Error Boundary and Sentry minimal init.  
-3. Add skip-to-content anchor, ensure focus outlines are visible.  
-4. Create sitemap.xml generator script and add to build.
+1. `feature/analytics-ga4` — GA4 + CTA event wiring.
+2. `feature/sentry-errors` — ErrorBoundary + Sentry init.
+3. `feature/sitemap-hreflang` — sitemap generation + hreflang + robots update.
 
 Notes
-- I recommend pairing a Product owner and Dev owner to triage the P0 items, then schedule P1 and P2 work.  
-- I can implement the GA4 + CTA event tracking, Error Boundary + Sentry, or create PR templates and CI workflows if you want — tell me which item to take next.
+- Runtime benchmarks require a public/staging `TARGET_URL` to complete the full scorecard. Provide `TARGET_URL` and `ALT_ROUTES` to run the 12-way test matrix.
+- I can implement any P0 item; say which one and I’ll create the branch and PR.
 
 Status
-- This file added to the repository: `AUDIT_ONE_PAGER.md`.
+- Updated one-pager with findings from `audit/report.md` and committed on branch `audit/one-pager-updates`. PR updates automatically.
 
 ---
-Generated by audit tooling and repository analysis on 2025-11-09.
+Generated from codebase audit and `audit/report.md` on 2025-11-09.
