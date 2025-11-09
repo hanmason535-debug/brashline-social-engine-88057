@@ -41,7 +41,7 @@ const Hero = ({
 
           {/* Animated Headline */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-6 animate-fade-in leading-tight">
-            {lang === "en" ? "Social That Stays" : "Redes Siempre"}
+            {lang === "en" ? "Social That Be" : "Redes Siempre"}
             <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
               &nbsp;
               {titles.map((title, index) => <motion.span key={index} className="absolute font-bold" initial={{
