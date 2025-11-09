@@ -4,11 +4,7 @@ import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ThemeSwitch from "@/components/ui/theme-switch";
 import FlipButton from "@/components/ui/flip-button";
-
-interface HeaderProps {
-  lang: "en" | "es";
-  onLanguageChange: (lang: "en" | "es") => void;
-}
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const navigation = {
   top: [
@@ -22,9 +18,10 @@ const navigation = {
   ],
 };
 
-const Header = ({ lang, onLanguageChange }: HeaderProps) => {
+const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { lang, setLang } = useLanguage();
 
   const isActive = (href: string) => location.pathname === href;
 
@@ -71,7 +68,7 @@ const Header = ({ lang, onLanguageChange }: HeaderProps) => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onLanguageChange(lang === "en" ? "es" : "en")}
+            onClick={() => setLang(lang === "en" ? "es" : "en")}
             className="hidden sm:flex items-center gap-2"
           >
             <Globe className="h-4 w-4" />

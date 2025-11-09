@@ -1,16 +1,16 @@
-import { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Users, Award } from "lucide-react";
 import { Meteors } from "@/components/ui/meteors";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const About = () => {
-  const [lang, setLang] = useState<"en" | "es">("en");
+  const { lang } = useLanguage();
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header lang={lang} onLanguageChange={setLang} />
+      <Header />
       <main className="flex-1">
         <section className="relative overflow-hidden bg-muted py-20">
           <div className="w-full absolute inset-0 h-full">
@@ -113,7 +113,7 @@ const About = () => {
           </div>
         </section>
       </main>
-      <Footer lang={lang} />
+      <Footer />
     </div>
   );
 };

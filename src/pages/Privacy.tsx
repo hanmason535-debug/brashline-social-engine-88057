@@ -1,13 +1,13 @@
-import { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Privacy = () => {
-  const [lang, setLang] = useState<"en" | "es">("en");
+  const { lang } = useLanguage();
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header lang={lang} onLanguageChange={setLang} />
+      <Header />
       <main className="flex-1 py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4 max-w-4xl">
           <h1 className="text-4xl font-heading font-bold mb-2 text-foreground">
@@ -172,7 +172,7 @@ const Privacy = () => {
           </div>
         </div>
       </main>
-      <Footer lang={lang} />
+      <Footer />
     </div>
   );
 };

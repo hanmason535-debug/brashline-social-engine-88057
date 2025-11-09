@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import { SparklesCore } from "@/components/ui/sparkles";
 import { BorderBeam } from "@/components/ui/border-beam";
 
 const Pricing = () => {
-  const [lang, setLang] = useState<"en" | "es">("en");
+  const { lang } = useLanguage();
 
   const recurringPlans = [
     {
@@ -232,7 +232,7 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header lang={lang} onLanguageChange={setLang} />
+      <Header />
       <main className="flex-1 bg-background">
         {/* One-Time Launch Package */}
         <section className="py-16 md:py-24 bg-background">
@@ -359,7 +359,7 @@ const Pricing = () => {
           </div>
         </section>
       </main>
-      <Footer lang={lang} />
+      <Footer />
     </div>
   );
 };

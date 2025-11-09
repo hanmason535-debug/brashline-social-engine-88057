@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Linkedin, Youtube, Twitter } from "lucide-react";
-
-interface FooterProps {
-  lang: "en" | "es";
-}
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const footerLinks = [
   { label: { en: "Terms", es: "Términos" }, href: "/terms" },
@@ -20,7 +17,9 @@ const socialLinks = [
   { icon: Youtube, href: "https://youtube.com/@brashline", label: "YouTube" },
 ];
 
-const Footer = ({ lang }: FooterProps) => {
+const Footer = () => {
+  const { lang } = useLanguage();
+  
   return (
     <footer className="border-t border-border/40 bg-muted/30">
       <div className="container mx-auto px-4 py-12">

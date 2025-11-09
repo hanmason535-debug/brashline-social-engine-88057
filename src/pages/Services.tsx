@@ -1,12 +1,11 @@
-import { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Share2, Globe, Search, Target, ShoppingCart, Palette, Calendar, BarChart3, MessageCircle } from "lucide-react";
-import { SparklesCore } from "@/components/ui/sparkles";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Services = () => {
-  const [lang, setLang] = useState<"en" | "es">("en");
+  const { lang } = useLanguage();
 
   const services = [
     {
@@ -85,7 +84,7 @@ const Services = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header lang={lang} onLanguageChange={setLang} />
+      <Header />
       <main className="flex-1">
         {/* Services Grid */}
         <section className="py-16 md:py-24 bg-background">
@@ -113,7 +112,7 @@ const Services = () => {
           </div>
         </section>
       </main>
-      <Footer lang={lang} />
+      <Footer />
     </div>
   );
 };
