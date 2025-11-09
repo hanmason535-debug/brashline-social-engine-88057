@@ -15,4 +15,11 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Using Vite's default chunking. manualChunks was removed because it referenced
+    // packages that aren't present in package.json on all branches which caused
+    // production builds to fail when Rollup tried to create chunks for missing
+    // modules. If you want manual chunking, we can programmatically derive the
+    // list from package.json to avoid these issues.
+  },
 }));
