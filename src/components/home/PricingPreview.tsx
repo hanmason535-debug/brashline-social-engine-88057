@@ -117,7 +117,7 @@ const PricingPreview = ({ lang }: PricingPreviewProps) => {
               >
                 {lang === "en" ? "Annual" : "Anual"}
                 <Badge className="bg-green-600 hover:bg-green-600 text-white text-xs px-2 py-0">
-                  {lang === "en" ? "Save 10%" : "Ahorra 10%"}
+                  {lang === "en" ? "Upto 15% off" : "Ahorra 10%"}
                 </Badge>
               </ToggleGroupItem>
             </ToggleGroup>
