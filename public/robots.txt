@@ -12,3 +12,10 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Sitemap for better discoverability
+Sitemap: https://brashline.com/sitemap.xml
+
+# Crawl delay for responsible crawling (optional)
+# Crawl-delay: 5
+

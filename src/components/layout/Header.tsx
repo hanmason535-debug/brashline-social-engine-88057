@@ -29,8 +29,17 @@ const Header = ({ lang, onLanguageChange }: HeaderProps) => {
   const isActive = (href: string) => location.pathname === href;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <nav className="container mx-auto flex h-16 items-center justify-between px-4">
+    <>
+      {/* Skip to content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-0 focus:top-0 focus:z-50 focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded-none"
+      >
+        {lang === "en" ? "Skip to main content" : "Saltar al contenido principal"}
+      </a>
+
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <nav className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-3">
           <div className="text-xl font-heading font-bold text-foreground">
@@ -132,7 +141,8 @@ const Header = ({ lang, onLanguageChange }: HeaderProps) => {
           </div>
         </div>
       )}
-    </header>
+      </header>
+    </>
   );
 };
 
