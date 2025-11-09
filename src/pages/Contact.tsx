@@ -34,8 +34,8 @@ const Contact = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               <Card className="shadow-soft">
                 <CardContent className="p-6 text-center">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
-                    <Phone className="h-6 w-6 text-primary" />
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted mb-4">
+                    <Phone className="h-6 w-6 text-foreground" />
                   </div>
                   <h3 className="font-heading font-semibold mb-2">
                     {lang === "en" ? "Phone" : "Teléfono"}
@@ -48,8 +48,8 @@ const Contact = () => {
 
               <Card className="shadow-soft">
                 <CardContent className="p-6 text-center">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
-                    <Mail className="h-6 w-6 text-primary" />
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted mb-4">
+                    <Mail className="h-6 w-6 text-foreground" />
                   </div>
                   <h3 className="font-heading font-semibold mb-2">
                     {lang === "en" ? "Email" : "Correo"}
@@ -62,8 +62,8 @@ const Contact = () => {
 
               <Card className="shadow-soft">
                 <CardContent className="p-6 text-center">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
-                    <Clock className="h-6 w-6 text-primary" />
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted mb-4">
+                    <Clock className="h-6 w-6 text-foreground" />
                   </div>
                   <h3 className="font-heading font-semibold mb-2">
                     {lang === "en" ? "Hours" : "Horario"}

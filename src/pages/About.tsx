@@ -64,8 +64,8 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <Card className="shadow-soft">
                 <CardContent className="p-6 text-center">
-                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-4">
-                    <Target className="h-7 w-7 text-primary" />
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-muted mb-4">
+                    <Target className="h-7 w-7 text-foreground" />
                   </div>
                   <h3 className="font-heading font-semibold mb-2 text-foreground">
                     {lang === "en" ? "Simplify Digital" : "Simplificar lo Digital"}
@@ -80,8 +80,8 @@ const About = () => {
 
               <Card className="shadow-soft">
                 <CardContent className="p-6 text-center">
-                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-4">
-                    <Users className="h-7 w-7 text-primary" />
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-muted mb-4">
+                    <Users className="h-7 w-7 text-foreground" />
                   </div>
                   <h3 className="font-heading font-semibold mb-2 text-foreground">
                     {lang === "en" ? "Create Value" : "Crear Valor"}
@@ -96,8 +96,8 @@ const About = () => {
 
               <Card className="shadow-soft">
                 <CardContent className="p-6 text-center">
-                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-4">
-                    <Award className="h-7 w-7 text-primary" />
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-muted mb-4">
+                    <Award className="h-7 w-7 text-foreground" />
                   </div>
                   <h3 className="font-heading font-semibold mb-2 text-foreground">
                     {lang === "en" ? "Build Trust" : "Construir Confianza"}

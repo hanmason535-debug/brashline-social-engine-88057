@@ -96,8 +96,8 @@ const Services = () => {
                 return (
                   <Card key={index} className="shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1">
                     <CardContent className="p-8">
-                      <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-6">
-                        <Icon className="h-7 w-7 text-primary" />
+                      <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-muted mb-6">
+                        <Icon className="h-7 w-7 text-foreground" />
                       </div>
                       <h3 className="text-xl font-heading font-semibold mb-4">
                         {service.title[lang]}
