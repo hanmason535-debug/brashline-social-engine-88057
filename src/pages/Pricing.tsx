@@ -247,7 +247,12 @@ const Pricing = () => {
             </div>
 
             <Card className="max-w-4xl mx-auto relative shadow-glow border-primary overflow-hidden">
-              <BorderBeam duration={12} size={300} colorVia="hsl(var(--primary))" />
+              <BorderBeam 
+                duration={12} 
+                size={300} 
+                colorFrom="hsl(var(--primary))" 
+                colorTo="hsl(var(--primary-glow))" 
+              />
               <CardHeader className="text-center pb-8 pt-8">
                 <h3 className="text-3xl font-heading font-bold mb-4">
                   {mainPackage.name}

@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 interface PricingPreviewProps {
   lang: "en" | "es";
@@ -141,9 +142,18 @@ const PricingPreview = ({ lang }: PricingPreviewProps) => {
                 }`}
               >
                 {plan.featured && (
-                  <Badge className="absolute top-4 left-1/2 -translate-x-1/2 bg-primary z-10">
-                    {lang === "en" ? "Most Popular" : "Más Popular"}
-                  </Badge>
+                  <>
+                    <BorderBeam 
+                      size={250} 
+                      duration={12} 
+                      delay={0}
+                      colorFrom="hsl(var(--primary))"
+                      colorTo="hsl(var(--primary-glow))"
+                    />
+                    <Badge className="absolute top-4 left-1/2 -translate-x-1/2 bg-primary z-10">
+                      {lang === "en" ? "Most Popular" : "Más Popular"}
+                    </Badge>
+                  </>
                 )}
 
                 <CardHeader className="text-center pb-8 pt-12">
