@@ -22,12 +22,24 @@ const Footer = () => {
   
   return (
     <footer className="border-t border-border/40 bg-muted/30">
-      <div className="container mx-auto px-4 py-12">
+  <div className="container mx-auto py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <Link to="/" className="mb-4 inline-block">
-              <div className="text-xl font-heading font-bold text-foreground">
+            <Link to="/" className="mb-4 inline-flex items-center -space-x-1">
+              <img
+                src="/logo.png"
+                alt="Brashline Logo"
+                className="h-20 w-auto relative top-1 mr-3"
+                onError={(e) => {
+                  const img = e.currentTarget as HTMLImageElement;
+                  if (img.src.endsWith('/logo.png')) {
+                    img.onerror = null;
+                    img.src = '/logo.svg';
+                  }
+                }}
+              />
+              <div className="-ml-9 text-xl font-heading font-bold text-foreground">
                 BRASHLINE
               </div>
             </Link>
