@@ -250,13 +250,14 @@ const Pricing = () => {
               <BorderBeam 
                 duration={12} 
                 size={300} 
+                delay={0}
                 colorFrom="hsl(var(--primary))" 
                 colorTo="hsl(var(--primary-glow))" 
               />
               <BorderBeam 
                 duration={12} 
-                delay={6}
                 size={300} 
+                delay={6}
                 borderWidth={2}
                 colorFrom="hsl(var(--primary-glow))" 
                 colorTo="hsl(var(--primary))" 
@@ -320,22 +321,8 @@ const Pricing = () => {
               {addOnPackages.map((pkg, index) => (
                 <Card
                   key={index}
-                  className="relative shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 flex flex-col overflow-hidden border-primary"
+                  className="relative shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 flex flex-col"
                 >
-                  <BorderBeam 
-                    duration={10} 
-                    size={250} 
-                    colorFrom="hsl(var(--primary))" 
-                    colorTo="hsl(var(--primary-glow))" 
-                  />
-                  <BorderBeam 
-                    duration={10} 
-                    delay={5}
-                    size={250} 
-                    borderWidth={1.5}
-                    colorFrom="hsl(var(--primary-glow))" 
-                    colorTo="hsl(var(--primary))" 
-                  />
                   <CardHeader className="pb-6">
                     <h3 className="text-xl font-heading font-bold mb-2">
                       {pkg.name}

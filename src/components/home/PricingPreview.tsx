@@ -150,6 +150,14 @@ const PricingPreview = ({ lang }: PricingPreviewProps) => {
                       colorFrom="hsl(var(--primary))"
                       colorTo="hsl(var(--primary-glow))"
                     />
+                    <BorderBeam 
+                      size={250} 
+                      duration={12} 
+                      delay={6}
+                      borderWidth={2}
+                      colorFrom="hsl(var(--primary-glow))"
+                      colorTo="hsl(var(--primary))"
+                    />
                     <Badge className="absolute top-4 left-1/2 -translate-x-1/2 bg-primary z-10">
                       {lang === "en" ? "Most Popular" : "Más Popular"}
                     </Badge>
