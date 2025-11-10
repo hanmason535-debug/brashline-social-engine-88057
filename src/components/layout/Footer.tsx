@@ -22,12 +22,12 @@ const Footer = () => {
   
   return (
     <footer className="border-t border-border/40 bg-muted/30">
-      <div className="container mx-auto px-4 py-12">
+  <div className="container mx-auto py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
             <Link to="/" className="mb-4 inline-flex items-center -space-x-2">
-              <img src="/logo.svg" alt="Brashline Logo" className="h-20 w-20" />
+              <img src="/logo.png" alt="Brashline Logo" className="h-20 w-auto" />
               <div className="text-xl font-heading font-bold text-foreground">
                 BRASHLINE
               </div>
