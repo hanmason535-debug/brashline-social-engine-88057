@@ -1,0 +1,19 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .brush-stroke { fill: currentColor; }
+      .dark { fill: #001a4d; }
+      .pink { fill: #e91e63; }
+      .orange { fill: #ff9800; }
+    </style>
+  </defs>
+  
+  <!-- Blue brush stroke -->
+  <path class="dark" d="M 150 120 Q 200 100 250 130 Q 280 150 260 200 Q 240 250 180 240 Q 140 235 150 180 Z" />
+  
+  <!-- Pink brush stroke -->
+  <path class="pink" d="M 240 150 Q 290 140 330 180 Q 350 210 320 260 Q 290 300 230 280 Q 200 270 240 200 Z" />
+  
+  <!-- Orange brush stroke -->
+  <path class="orange" d="M 320 180 Q 370 170 400 220 Q 410 260 370 300 Q 320 330 270 310 Q 250 300 320 230 Z" />
+</svg>
