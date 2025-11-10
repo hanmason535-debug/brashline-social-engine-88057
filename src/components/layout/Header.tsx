@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import ThemeSwitch from "@/components/ui/theme-switch";
 import FlipButton from "@/components/ui/flip-button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { generateSrcSet, generateSizesAttribute } from "@/lib/utils";
 
 const navigation = {
   top: [
@@ -37,20 +38,30 @@ const Header = () => {
 
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <nav className="container mx-auto flex h-16 items-center justify-between">
-        {/* Logo */}
+        {/* Logo with responsive optimization */}
         <Link to="/" className="flex items-center -space-x-1">
-          <img
-            src="/logo.png"
-            alt="Brashline Logo"
-            className="h-20 w-auto relative top-1 mr-3"
-            onError={(e) => {
-              const img = e.currentTarget as HTMLImageElement;
-              if (img.src.endsWith('/logo.png')) {
-                img.onerror = null;
-                img.src = '/logo.svg';
-              }
-            }}
-          />
+          <picture>
+            <source
+              srcSet={generateSrcSet("logo", [80, 120, 160], "webp")}
+              sizes={generateSizesAttribute([80, 120, 160])}
+              type="image/webp"
+            />
+            <img
+              src="/logo.png"
+              srcSet={generateSrcSet("logo", [80, 120, 160], "png")}
+              sizes={generateSizesAttribute([80, 120, 160])}
+              alt="Brashline Logo"
+              className="h-20 w-auto relative top-1 mr-3"
+              onError={(e) => {
+                const img = e.currentTarget as HTMLImageElement;
+                if (img.src.endsWith('/logo.png')) {
+                  img.onerror = null;
+                  img.src = '/logo.svg';
+                }
+              }}
+              loading="lazy"
+            />
+          </picture>
           <div className="-ml-9 text-xl font-heading font-bold text-foreground">
             BRASHLINE
           </div>
