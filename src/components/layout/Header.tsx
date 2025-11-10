@@ -38,9 +38,9 @@ const Header = () => {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <nav className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <img src="/logo.svg" alt="Brashline Logo" className="h-10 w-10" />
-          <div className="text-lg font-heading font-bold text-foreground">
+        <Link to="/" className="flex items-center gap-1">
+          <img src="/logo.svg" alt="Brashline Logo" className="h-16 w-16" />
+          <div className="text-xl font-heading font-bold text-foreground">
             BRASHLINE
           </div>
         </Link>

@@ -26,8 +26,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <Link to="/" className="mb-4 inline-flex items-center gap-2">
-              <img src="/logo.svg" alt="Brashline Logo" className="h-10 w-10" />
+            <Link to="/" className="mb-4 inline-flex items-center gap-1">
+              <img src="/logo.svg" alt="Brashline Logo" className="h-16 w-16" />
               <div className="text-xl font-heading font-bold text-foreground">
                 BRASHLINE
               </div>
