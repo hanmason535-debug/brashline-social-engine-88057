@@ -27,7 +27,18 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <Link to="/" className="mb-4 inline-flex items-center -space-x-2">
-              <img src="/logo.png" alt="Brashline Logo" className="h-20 w-auto" />
+              <img
+                src="/logo.png"
+                alt="Brashline Logo"
+                className="h-20 w-auto"
+                onError={(e) => {
+                  const img = e.currentTarget as HTMLImageElement;
+                  if (img.src.endsWith('/logo.png')) {
+                    img.onerror = null;
+                    img.src = '/logo.svg';
+                  }
+                }}
+              />
               <div className="text-xl font-heading font-bold text-foreground">
                 BRASHLINE
               </div>
