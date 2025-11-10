@@ -38,11 +38,11 @@ const Header = () => {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <nav className="container mx-auto flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center -space-x-2">
+        <Link to="/" className="flex items-center -space-x-1">
           <img
             src="/logo.png"
             alt="Brashline Logo"
-            className="h-20 w-auto"
+            className="h-20 w-auto relative top-1"
             onError={(e) => {
               const img = e.currentTarget as HTMLImageElement;
               if (img.src.endsWith('/logo.png')) {
@@ -51,7 +51,7 @@ const Header = () => {
               }
             }}
           />
-          <div className="text-xl font-heading font-bold text-foreground">
+          <div className="-ml-3 text-xl font-heading font-bold text-foreground">
             BRASHLINE
           </div>
         </Link>
