@@ -128,6 +128,7 @@ const Blog = () => {
                             src={post.image}
                             alt={post.title[lang]}
                             className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                            loading="lazy"
                           />
                         </div>
                         <div className="p-6 flex flex-col flex-1">

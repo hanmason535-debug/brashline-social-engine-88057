@@ -1,0 +1,111 @@
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
+import { BorderBeam } from "@/components/ui/border-beam";
+import { SparklesCore } from "@/components/ui/sparkles";
+
+interface RecurringPlanCardProps {
+  tier: { en: string; es: string };
+  name: string;
+  price: number;
+  annualPrice: number;
+  annualDiscount: number;
+  summary: { en: string; es: string };
+  features: { en: string; es: string }[];
+  featured?: boolean;
+  lang: "en" | "es";
+}
+
+export const RecurringPlanCard = ({
+  tier,
+  name,
+  price,
+  annualPrice,
+  annualDiscount,
+  summary,
+  features,
+  featured,
+  lang,
+}: RecurringPlanCardProps) => {
+  return (
+    <Card
+      className={`relative flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-glow ${
+        featured
+          ? "shadow-glow border-primary scale-105 overflow-hidden"
+          : "shadow-soft hover:shadow-medium"
+      }`}
+    >
+      {featured && (
+        <>
+          <BorderBeam
+            duration={12}
+            size={300}
+            colorFrom="hsl(var(--primary))"
+            colorTo="hsl(var(--primary-glow))"
+          />
+          <div className="absolute inset-0 w-full h-full pointer-events-none">
+            <SparklesCore
+              background="transparent"
+              minSize={0.4}
+              maxSize={1}
+              particleDensity={100}
+              className="w-full h-full"
+              particleColor="hsl(var(--primary))"
+            />
+          </div>
+        </>
+      )}
+      <CardHeader className="text-center pb-8 relative z-10">
+        {featured && (
+          <div className="relative">
+            <Badge className="mb-4 bg-primary text-primary-foreground font-bold relative z-10">
+              {lang === "en" ? "MOST POPULAR" : "MÁS POPULAR"}
+            </Badge>
+          </div>
+        )}
+        <Badge
+          variant="outline"
+          className="mb-4 self-center bg-background/80 backdrop-blur-sm"
+        >
+          {tier[lang]}
+        </Badge>
+        <h3 className="text-2xl font-heading font-bold mb-2">{name}</h3>
+        <p className="text-sm text-muted-foreground mb-4">{summary[lang]}</p>
+        <div className="mb-2">
+          <span className="text-4xl font-heading font-bold">${price}</span>
+          <span className="text-muted-foreground">/mo</span>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          {lang === "en" ? "or" : "o"} ${annualPrice}/yr (
+          {lang === "en" ? "save" : "ahorra"} {annualDiscount}%)
+        </p>
+      </CardHeader>
+
+      <CardContent className="space-y-3 flex-1 relative z-10">
+        {features.map((feature, i) => (
+          <div key={i} className="flex items-start gap-3">
+            <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+            <span className="text-sm">{feature[lang]}</span>
+          </div>
+        ))}
+      </CardContent>
+
+      <CardFooter className="pt-6 relative z-10">
+        <Button
+          asChild
+          className="w-full transition-transform hover:scale-105"
+          variant={featured ? "default" : "outline"}
+        >
+          <a
+            href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {lang === "en" ? "Get Started" : "Comenzar"}
+          </a>
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};

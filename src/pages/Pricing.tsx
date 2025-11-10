@@ -246,7 +246,7 @@ const Pricing = () => {
               </h2>
             </div>
 
-            <Card className="max-w-4xl mx-auto relative shadow-glow border-primary overflow-hidden">
+            <Card className="max-w-4xl mx-auto relative shadow-glow border-primary overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-glow">
               <BorderBeam 
                 duration={12} 
                 size={300} 
@@ -312,7 +312,7 @@ const Pricing = () => {
               {addOnPackages.map((pkg, index) => (
                 <Card
                   key={index}
-                  className="relative shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                  className="relative shadow-soft hover:shadow-glow transition-all duration-300 hover:-translate-y-2 flex flex-col"
                 >
                   <CardHeader className="pb-6">
                     <h3 className="text-xl font-heading font-bold mb-2">

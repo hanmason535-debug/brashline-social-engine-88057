@@ -16,10 +16,22 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Using Vite's default chunking. manualChunks was removed because it referenced
-    // packages that aren't present in package.json on all branches which caused
-    // production builds to fail when Rollup tried to create chunks for missing
-    // modules. If you want manual chunking, we can programmatically derive the
-    // list from package.json to avoid these issues.
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+          'animation-vendor': ['framer-motion', '@tsparticles/react', '@tsparticles/engine'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
   },
 }));

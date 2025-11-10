@@ -26,11 +26,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <Link to="/" className="mb-4 inline-flex items-center -space-x-1">
+            <Link to="/" className="mb-4 inline-flex items-center gap-2">
               <img
                 src="/logo.png"
                 alt="Brashline Logo"
-                className="h-20 w-auto relative top-1 mr-3"
+                className="h-16 w-auto"
+                loading="lazy"
                 onError={(e) => {
                   const img = e.currentTarget as HTMLImageElement;
                   if (img.src.endsWith('/logo.png')) {
@@ -39,7 +40,7 @@ const Footer = () => {
                   }
                 }}
               />
-              <div className="-ml-9 text-xl font-heading font-bold text-foreground">
+              <div className="text-xl font-heading font-bold text-foreground">
                 BRASHLINE
               </div>
             </Link>
