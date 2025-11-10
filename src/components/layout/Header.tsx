@@ -42,7 +42,7 @@ const Header = () => {
           <img
             src="/logo.png"
             alt="Brashline Logo"
-            className="h-20 w-auto relative top-1"
+            className="h-20 w-auto relative top-1 mr-3"
             onError={(e) => {
               const img = e.currentTarget as HTMLImageElement;
               if (img.src.endsWith('/logo.png')) {
