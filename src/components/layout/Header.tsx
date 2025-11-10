@@ -51,7 +51,7 @@ const Header = () => {
               }
             }}
           />
-          <div className="-ml-3 text-xl font-heading font-bold text-foreground">
+          <div className="-ml-9 text-xl font-heading font-bold text-foreground">
             BRASHLINE
           </div>
         </Link>
