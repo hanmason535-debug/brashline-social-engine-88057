@@ -10,11 +10,11 @@ const footerLinks = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61583138566921", label: "Facebook" },
-  { icon: Instagram, href: "https://www.instagram.com/brashlineofficial/", label: "Instagram" },
-  { icon: Twitter, href: "https://x.com/brashlinex?s=11", label: "X (Twitter)" },
-  { icon: Linkedin, href: "https://linkedin.com/company/brashline", label: "LinkedIn" },
-  { icon: Youtube, href: "https://youtube.com/@brashline", label: "YouTube" },
+  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61583138566921", label: "Facebook", external: true },
+  { icon: Instagram, href: "https://www.instagram.com/brashlineofficial/", label: "Instagram", external: true },
+  { icon: Twitter, href: "https://x.com/brashlinex?s=11", label: "X (Twitter)", external: true },
+  { icon: Linkedin, href: "/linkedin-not-found", label: "LinkedIn", external: false },
+  { icon: Youtube, href: "/youtube-not-found", label: "YouTube", external: false },
 ];
 
 const Footer = () => {
@@ -85,16 +85,27 @@ const Footer = () => {
             </h3>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                  aria-label={social.label}
-                >
-                  <social.icon className="h-5 w-5" />
-                </a>
+                social.external ? (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                    aria-label={social.label}
+                  >
+                    <social.icon className="h-5 w-5" />
+                  </a>
+                ) : (
+                  <Link
+                    key={social.label}
+                    to={social.href}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                    aria-label={social.label}
+                  >
+                    <social.icon className="h-5 w-5" />
+                  </Link>
+                )
               ))}
             </div>
           </div>
