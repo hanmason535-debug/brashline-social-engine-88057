@@ -1,5 +1,6 @@
 import { Share2, Globe, TrendingUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 interface ValuePropsProps {
   lang: "en" | "es";
@@ -33,8 +34,10 @@ const valueProps = [
 ];
 
 const ValueProps = ({ lang }: ValuePropsProps) => {
+  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+
   return (
-    <section className="py-32 md:py-40 bg-muted/50">
+    <section ref={elementRef as React.RefObject<HTMLElement>} className="py-32 md:py-40 bg-muted/50">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {valueProps.map((prop, index) => {
@@ -42,7 +45,12 @@ const ValueProps = ({ lang }: ValuePropsProps) => {
             return (
               <Card
                 key={index}
-                className="shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 border-border/50 bg-card/50 backdrop-blur-sm"
+                className={`shadow-soft hover:shadow-medium transition-all duration-700 hover:-translate-y-1 border-border/50 bg-card/50 backdrop-blur-sm ${
+                  isVisible
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-10'
+                }`}
+                style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <CardContent className="p-8 text-center">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-foreground/5 border border-border/50 mb-6">

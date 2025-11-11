@@ -10,9 +10,11 @@ import {
 } from "@/components/ui/carousel";
 import { Meteors } from "@/components/ui/meteors";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Blog = () => {
   const { lang } = useLanguage();
+  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
   const blogPosts = [
     {
@@ -109,18 +111,21 @@ const Blog = () => {
           </div>
         </section>
 
-        <section className="py-16 md:py-24 bg-background">
+        <section ref={elementRef as React.RefObject<HTMLElement>} className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4 max-w-6xl">
             <Carousel
               opts={{
                 align: "start",
                 loop: true,
+                dragFree: true,
               }}
-              className="w-full"
+              className={`w-full transition-all duration-700 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
             >
-              <CarouselContent>
+              <CarouselContent className="-ml-2 md:-ml-4">
                 {blogPosts.map((post, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                     <Card className="shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 h-full">
                       <CardContent className="p-0 flex flex-col h-full">
                         <div className="aspect-[3/2] overflow-hidden rounded-t-lg">

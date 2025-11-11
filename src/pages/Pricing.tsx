@@ -7,9 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { BorderBeam } from "@/components/ui/border-beam";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Pricing = () => {
   const { lang } = useLanguage();
+  const { elementRef: recurringRef, isVisible: recurringVisible } = useScrollAnimation({ threshold: 0.1 });
+  const { elementRef: projectRef, isVisible: projectVisible } = useScrollAnimation({ threshold: 0.1 });
 
   const recurringPlans = [
     {
@@ -301,7 +304,7 @@ const Pricing = () => {
         </section>
 
         {/* Add-On Packages */}
-        <section id="addons" className="py-16 md:py-24 bg-background">
+        <section ref={projectRef as React.RefObject<HTMLElement>} id="addons" className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <Badge className="mb-4 bg-secondary text-secondary-foreground">
@@ -321,7 +324,12 @@ const Pricing = () => {
               {addOnPackages.map((pkg, index) => (
                 <Card
                   key={index}
-                  className="relative shadow-soft hover:shadow-glow transition-all duration-300 hover:-translate-y-2 flex flex-col"
+                  className={`relative shadow-soft hover:shadow-glow transition-all duration-700 hover:-translate-y-2 flex flex-col ${
+                    projectVisible
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-10'
+                  }`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
                 >
                   <CardHeader className="pb-6">
                     <h3 className="text-xl font-heading font-bold mb-2">

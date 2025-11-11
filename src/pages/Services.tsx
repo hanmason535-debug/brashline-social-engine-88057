@@ -3,9 +3,11 @@ import Footer from "@/components/layout/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Share2, Globe, Search, Target, ShoppingCart, Palette, Calendar, BarChart3, MessageCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Services = () => {
   const { lang } = useLanguage();
+  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
   const services = [
     {
@@ -87,13 +89,21 @@ const Services = () => {
       <Header />
       <main className="flex-1">
         {/* Services Grid */}
-        <section className="py-16 md:py-24 bg-background">
+        <section ref={elementRef as React.RefObject<HTMLElement>} className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {services.map((service, index) => {
                 const Icon = service.icon;
                 return (
-                  <Card key={index} className="shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1">
+                  <Card 
+                    key={index} 
+                    className={`shadow-soft hover:shadow-medium transition-all duration-700 hover:-translate-y-1 ${
+                      isVisible
+                        ? 'opacity-100 translate-y-0'
+                        : 'opacity-0 translate-y-10'
+                    }`}
+                    style={{ transitionDelay: `${index * 100}ms` }}
+                  >
                     <CardContent className="p-8">
                       <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-muted mb-6">
                         <Icon className="h-7 w-7 text-foreground" />

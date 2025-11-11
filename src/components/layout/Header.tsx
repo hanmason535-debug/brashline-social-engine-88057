@@ -116,40 +116,65 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-border/40 bg-background">
-          <div className="container mx-auto px-4 py-6 space-y-4">
-            {navigation.top.map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block py-2 text-base font-medium transition-colors ${
-                  isActive(item.href)
-                    ? "text-primary"
-                    : "text-foreground/80 hover:text-primary"
-                }`}
-              >
-                {item.label[lang]}
-              </Link>
-            ))}
-            <div className="pt-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">{lang === "en" ? "Theme" : "Tema"}</span>
-                <ThemeSwitch className="scale-75" />
+        <>
+          {/* Backdrop with blur effect */}
+          <div 
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden animate-fade-in"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          
+          {/* Mobile Menu Panel */}
+          <div className="fixed inset-x-0 top-16 z-50 lg:hidden border-t border-border/40 bg-background shadow-glow animate-slide-in-right">
+            <div className="container mx-auto px-4 py-6 space-y-4 max-h-[calc(100vh-4rem)] overflow-y-auto">
+              {navigation.top.map((item, index) => (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block py-3 px-4 text-lg font-medium transition-all duration-300 rounded-lg ${
+                    isActive(item.href)
+                      ? "text-primary bg-primary/10"
+                      : "text-foreground/80 hover:text-primary hover:bg-muted"
+                  }`}
+                  style={{ 
+                    animationDelay: `${index * 50}ms`,
+                    animation: 'fade-in 0.3s ease-out forwards',
+                    opacity: 0
+                  }}
+                >
+                  {item.label[lang]}
+                </Link>
+              ))}
+              <div className="pt-4 space-y-4 border-t border-border/40">
+                <div className="flex items-center justify-between px-4">
+                  <span className="text-sm text-muted-foreground">{lang === "en" ? "Theme" : "Tema"}</span>
+                  <ThemeSwitch className="scale-90" />
+                </div>
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  onClick={() => {
+                    setLang(lang === "en" ? "es" : "en");
+                  }}
+                  className="w-full flex items-center justify-center gap-2"
+                >
+                  <Globe className="h-5 w-5" />
+                  {lang === "en" ? "Español" : "English"}
+                </Button>
+                <FlipButton
+                  frontText={lang === "en" ? "Book Strategic Call" : "Reservar Llamada"}
+                  backText="📞 Calling…"
+                  from="top"
+                  href="https://wa.me/19294468440"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full"
+                  onClick={() => setMobileMenuOpen(false)}
+                />
               </div>
-              <FlipButton
-                frontText={lang === "en" ? "Book Strategic Call" : "Reservar Llamada"}
-                backText="📞 Calling…"
-                from="top"
-                href="https://wa.me/19294468440"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full"
-                onClick={() => setMobileMenuOpen(false)}
-              />
             </div>
           </div>
-        </div>
+        </>
       )}
       </header>
     </>

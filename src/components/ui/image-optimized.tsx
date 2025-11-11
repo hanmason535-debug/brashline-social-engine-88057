@@ -1,7 +1,7 @@
 import { ImgHTMLAttributes, useState } from 'react';
 import { cn } from '@/lib/utils';
 
-interface OptimizedImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'sizes'> {
   /**
    * Base image name (without extension). E.g., "logo" will generate:
    * - logo.webp (primary)
@@ -16,7 +16,7 @@ interface OptimizedImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   /**
    * Additional responsive sizes (e.g., [40, 60, 80, 120] for multiple breakpoints).
    */
-  sizes?: number[];
+  responsiveSizes?: number[];
   /**
    * Fallback src if WebP and primary format fail (e.g., "/logo.svg").
    */
@@ -39,7 +39,7 @@ interface OptimizedImageProps extends ImgHTMLAttributes<HTMLImageElement> {
 export const OptimizedImage = ({
   imageName,
   baseSize = 80,
-  sizes = [baseSize, baseSize * 1.5, baseSize * 2],
+  responsiveSizes,
   fallbackSrc,
   alt = '',
   className,
@@ -48,6 +48,8 @@ export const OptimizedImage = ({
 }: OptimizedImageProps) => {
   const [imageError, setImageError] = useState(false);
   const [isWebPSupported, setIsWebPSupported] = useState(true);
+
+  const sizes = responsiveSizes || [baseSize, baseSize * 1.5, baseSize * 2];
 
   // Generate srcset for WebP
   const webpSrcSet = sizes

@@ -3,6 +3,7 @@ import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
 import ValueProps from "@/components/home/ValueProps";
 import PricingPreview from "@/components/home/PricingPreview";
+import StatsSection from "@/components/home/StatsSection";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Index = () => {
@@ -14,6 +15,7 @@ const Index = () => {
       <main className="flex-1">
         <Hero lang={lang} />
         <ValueProps lang={lang} />
+        <StatsSection lang={lang} />
         <PricingPreview lang={lang} />
       </main>
       <Footer />
