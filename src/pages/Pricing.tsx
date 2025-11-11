@@ -250,8 +250,17 @@ const Pricing = () => {
               <BorderBeam 
                 duration={12} 
                 size={300} 
+                delay={0}
                 colorFrom="hsl(var(--primary))" 
                 colorTo="hsl(var(--primary-glow))" 
+              />
+              <BorderBeam 
+                duration={12} 
+                size={300} 
+                delay={6}
+                borderWidth={2}
+                colorFrom="hsl(var(--primary-glow))" 
+                colorTo="hsl(var(--primary))" 
               />
               <CardHeader className="text-center pb-8 pt-8">
                 <h3 className="text-3xl font-heading font-bold mb-4">
