@@ -20,6 +20,7 @@ interface SocialPostCardProps {
   post: SocialPost;
   lang: "en" | "es";
   index: number;
+  onOpenLightbox: () => void;
 }
 
 const platformIcons = {
@@ -34,8 +35,12 @@ const platformColors = {
   linkedin: "from-blue-700 to-blue-800",
 };
 
-export function SocialPostCard({ post, lang, index }: SocialPostCardProps) {
+export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPostCardProps) {
   const PlatformIcon = platformIcons[post.platform];
+
+  const handleClick = () => {
+    onOpenLightbox();
+  };
 
   const formatNumber = (num: number): string => {
     if (num >= 1000) {
@@ -50,6 +55,7 @@ export function SocialPostCard({ post, lang, index }: SocialPostCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
       className="group relative cursor-pointer"
+      onClick={handleClick}
     >
       <div className="relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-2 border border-border">
         {/* Platform Badge */}

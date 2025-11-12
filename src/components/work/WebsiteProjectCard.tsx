@@ -17,14 +17,16 @@ interface WebsiteProjectCardProps {
   project: WebsiteProject;
   lang: "en" | "es";
   index: number;
+  onOpenLightbox: () => void;
 }
 
-export function WebsiteProjectCard({ project, lang, index }: WebsiteProjectCardProps) {
+export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: WebsiteProjectCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  const handleClick = () => {
-    window.open(project.url, "_blank", "noopener,noreferrer");
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onOpenLightbox();
   };
 
   return (
@@ -75,14 +77,26 @@ export function WebsiteProjectCard({ project, lang, index }: WebsiteProjectCardP
           )}
 
           {/* Hover Overlay */}
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
             <motion.button
+              onClick={handleClick}
               initial={{ scale: 0.8, opacity: 0 }}
               whileHover={{ scale: 1.1 }}
               className="bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-glow"
             >
+              {lang === "en" ? "View Details" : "Ver Detalles"}
+            </motion.button>
+            <motion.button
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(project.url, "_blank", "noopener,noreferrer");
+              }}
+              initial={{ scale: 0.8, opacity: 0 }}
+              whileHover={{ scale: 1.1 }}
+              className="bg-background text-foreground px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-glow"
+            >
               <ExternalLink className="w-4 h-4" />
-              {lang === "en" ? "View Live" : "Ver Sitio"}
+              {lang === "en" ? "Visit Site" : "Visitar"}
             </motion.button>
           </div>
         </div>

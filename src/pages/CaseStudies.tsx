@@ -7,6 +7,8 @@ import { WebsiteProjectCard } from "@/components/work/WebsiteProjectCard";
 import { SocialPostCard } from "@/components/work/SocialPostCard";
 import { WorkFilters } from "@/components/work/WorkFilters";
 import { StatsBar } from "@/components/work/StatsBar";
+import { Lightbox } from "@/components/work/Lightbox";
+import { useParallax } from "@/hooks/useParallax";
 import {
   Carousel,
   CarouselContent,
@@ -20,6 +22,21 @@ type FilterType = "all" | "websites" | "social" | "branding";
 const CaseStudies = () => {
   const { lang } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxData, setLightboxData] = useState<{ type: "website" | "social"; data: any } | null>(null);
+
+  const heroParallax = useParallax({ speed: 0.3, direction: "down" });
+  const statsParallax = useParallax({ speed: 0.2, direction: "up" });
+
+  const openLightbox = (type: "website" | "social", data: any) => {
+    setLightboxData({ type, data });
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    setTimeout(() => setLightboxData(null), 300);
+  };
 
   // Website Projects Data
   const websiteProjects = [
@@ -247,12 +264,18 @@ const CaseStudies = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        {/* Hero Section */}
+        {/* Hero Section with Parallax */}
         <section className="relative overflow-hidden bg-muted py-20">
-          <div className="w-full absolute inset-0 h-full">
+          <div 
+            className="w-full absolute inset-0 h-full"
+            style={{ transform: `translateY(${heroParallax}px)` }}
+          >
             <Meteors number={30} />
           </div>
-          <div className="container mx-auto px-4 text-center relative z-10">
+          <div 
+            className="container mx-auto px-4 text-center relative z-10"
+            style={{ transform: `translateY(${heroParallax * 0.5}px)` }}
+          >
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
               {lang === "en" ? "Our Work" : "Nuestro Trabajo"}
             </h1>
@@ -264,9 +287,12 @@ const CaseStudies = () => {
           </div>
         </section>
 
-        {/* Stats Bar */}
+        {/* Stats Bar with Parallax */}
         <section className="py-16 bg-background">
-          <div className="container mx-auto px-4">
+          <div 
+            className="container mx-auto px-4"
+            style={{ transform: `translateY(${statsParallax}px)` }}
+          >
             <StatsBar lang={lang} />
           </div>
         </section>
@@ -308,6 +334,7 @@ const CaseStudies = () => {
                             project={project}
                             lang={lang}
                             index={index}
+                            onOpenLightbox={() => openLightbox("website", project)}
                           />
                         ))}
                       </div>
@@ -336,7 +363,13 @@ const CaseStudies = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
                 {social.map((post, index) => (
-                  <SocialPostCard key={index} post={post} lang={lang} index={index} />
+                  <SocialPostCard 
+                    key={index} 
+                    post={post} 
+                    lang={lang} 
+                    index={index}
+                    onOpenLightbox={() => openLightbox("social", post)}
+                  />
                 ))}
               </div>
             </div>
@@ -344,6 +377,17 @@ const CaseStudies = () => {
         )}
       </main>
       <Footer />
+
+      {/* Lightbox */}
+      {lightboxData && (
+        <Lightbox
+          isOpen={lightboxOpen}
+          onClose={closeLightbox}
+          type={lightboxData.type}
+          data={lightboxData.data}
+          lang={lang}
+        />
+      )}
     </div>
   );
 };
