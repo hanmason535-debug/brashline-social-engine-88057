@@ -151,7 +151,8 @@ export const getPageSEO = (page: string): PageSEO => {
  */
 export const formatTitle = (pageTitle?: string): string => {
   if (!pageTitle) return SEO_CONFIG.defaultTitle;
-  return pageTitle.includes(SEO_CONFIG.siteName)
+  // Case-insensitive check to avoid duplicating site name
+  return pageTitle.toLowerCase().includes(SEO_CONFIG.siteName.toLowerCase())
     ? pageTitle
     : `${pageTitle} | ${SEO_CONFIG.siteName}`;
 };

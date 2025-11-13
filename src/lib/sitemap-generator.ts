@@ -36,8 +36,11 @@ function escapeXml(str: string): string {
 /**
  * Generates URL entry XML for a single route
  */
-function generateUrlEntry(baseUrl: string, route: SitemapRoute): string {
-  const url = `${baseUrl}${route.path}`.replace(/([^:]\/)\/+/g, '$1'); // Remove double slashes
+export function generateUrlEntry(baseUrl: string, route: SitemapRoute): string {
+  // Sanitize path to remove any duplicate slashes, which can cause issues with URL construction
+  const sanitizedPath = route.path.replace(/\/+/g, '/');
+  const url = new URL(sanitizedPath, baseUrl).toString();
+
   const lastmod = route.lastmod ? `    <lastmod>${route.lastmod}</lastmod>\n` : '';
   const changefreq = route.changefreq ? `    <changefreq>${route.changefreq}</changefreq>\n` : '';
   const priority = route.priority !== undefined ? `    <priority>${route.priority}</priority>\n` : '';
