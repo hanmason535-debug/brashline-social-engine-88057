@@ -130,6 +130,22 @@ export default {
             opacity: "0",
           },
         },
+        "nudge": {
+          "0%, 100%": { 
+            transform: "translateX(0)" 
+          },
+          "50%": { 
+            transform: "translateX(-8px)" 
+          },
+        },
+        "nudge-reverse": {
+          "0%, 100%": { 
+            transform: "translateX(0)" 
+          },
+          "50%": { 
+            transform: "translateX(8px)" 
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -138,6 +154,8 @@ export default {
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         "shine-pulse": "shine-pulse 2s infinite linear",
         "meteor-effect": "meteor 5s linear infinite",
+        "nudge": "nudge 2s ease-in-out infinite",
+        "nudge-reverse": "nudge-reverse 2s ease-in-out infinite",
       },
     },
   },
