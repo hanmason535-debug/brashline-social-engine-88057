@@ -1,6 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/SEO/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,11 +9,13 @@ import { Check } from "lucide-react";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { getPageSEO } from "@/utils/seo";
 
 const Pricing = () => {
   const { lang } = useLanguage();
   const { elementRef: recurringRef, isVisible: recurringVisible } = useScrollAnimation({ threshold: 0.1 });
   const { elementRef: projectRef, isVisible: projectVisible } = useScrollAnimation({ threshold: 0.1 });
+  const pageSEO = getPageSEO("pricing");
 
   const recurringPlans = [
     {
@@ -234,9 +237,11 @@ const Pricing = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1 bg-background">
+    <>
+      <SEOHead pageSEO={pageSEO} lang={lang} />
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 bg-background">
         {/* One-Time Launch Package */}
         <section className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4">
@@ -383,6 +388,7 @@ const Pricing = () => {
       </main>
       <Footer />
     </div>
+    </>
   );
 };
 

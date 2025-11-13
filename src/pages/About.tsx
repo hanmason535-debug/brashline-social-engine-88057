@@ -1,15 +1,20 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/SEO/SEOHead";
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Users, Award } from "lucide-react";
 import { Meteors } from "@/components/ui/meteors";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { getPageSEO } from "@/utils/seo";
 
 const About = () => {
   const { lang } = useLanguage();
+  const pageSEO = getPageSEO("about");
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
+      <SEOHead pageSEO={pageSEO} lang={lang} />
+      <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
         <section className="relative overflow-hidden bg-muted py-20">
@@ -115,6 +120,7 @@ const About = () => {
       </main>
       <Footer />
     </div>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/SEO/SEOHead";
 import { Meteors } from "@/components/ui/meteors";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { WebsiteProjectCard } from "@/components/work/WebsiteProjectCard";
@@ -9,6 +10,7 @@ import { WorkFilters } from "@/components/work/WorkFilters";
 import { StatsBar } from "@/components/work/StatsBar";
 import { Lightbox } from "@/components/work/Lightbox";
 import { useParallax } from "@/hooks/useParallax";
+import { getPageSEO } from "@/utils/seo";
 import {
   Carousel,
   CarouselContent,
@@ -24,6 +26,7 @@ const CaseStudies = () => {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxData, setLightboxData] = useState<{ type: "website" | "social"; data: any } | null>(null);
+  const pageSEO = getPageSEO("case-studies");
 
   const heroParallax = useParallax({ speed: 0.3, direction: "down" });
   const statsParallax = useParallax({ speed: 0.2, direction: "up" });
@@ -261,9 +264,11 @@ const CaseStudies = () => {
   const { websites, social } = filteredData();
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
+    <>
+      <SEOHead pageSEO={pageSEO} lang={lang} />
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1">
         {/* Hero Section with Parallax */}
         <section className="relative overflow-hidden bg-muted py-20">
           <div 
@@ -389,6 +394,7 @@ const CaseStudies = () => {
         />
       )}
     </div>
+    </>
   );
 };
 

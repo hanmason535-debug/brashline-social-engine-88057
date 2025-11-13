@@ -1,5 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/SEO/SEOHead";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -11,10 +12,12 @@ import {
 import { Meteors } from "@/components/ui/meteors";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { getPageSEO } from "@/utils/seo";
 
 const Blog = () => {
   const { lang } = useLanguage();
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+  const pageSEO = getPageSEO("blog");
 
   const blogPosts = [
     {
@@ -92,9 +95,11 @@ const Blog = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
+    <>
+      <SEOHead pageSEO={pageSEO} lang={lang} />
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1">
         <section className="relative overflow-hidden bg-muted py-20">
           <div className="w-full absolute inset-0 h-full">
             <Meteors number={30} />
@@ -164,6 +169,7 @@ const Blog = () => {
       </main>
       <Footer />
     </div>
+    </>
   );
 };
 
