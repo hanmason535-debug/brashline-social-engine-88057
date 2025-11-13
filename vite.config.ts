@@ -34,5 +34,6 @@ export default defineConfig(({ mode }) => ({
     environment: 'jsdom',
     setupFiles: './src/tests/setup.ts',
     exclude: ['**/node_modules/**', '**/dist/**', '**/e2e/**', '**/playwright-report/**', '**/test-results/**'],
+    pool: 'vmThreads',
   },
 }));

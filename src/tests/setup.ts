@@ -7,6 +7,17 @@ import 'vitest-matchmedia-mock';
 // Extends Vitest's expect method with methods from react-testing-library
 expect.extend(matchers);
 
+// Mock IntersectionObserver
+global.IntersectionObserver = class IntersectionObserver {
+  constructor() {}
+  disconnect() {}
+  observe() {}
+  takeRecords() {
+    return [];
+  }
+  unobserve() {}
+} as any;
+
 // Mock the useLanguage context to provide a default value
 vi.mock('@/contexts/LanguageContext', () => ({
   useLanguage: () => ({
