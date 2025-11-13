@@ -293,7 +293,7 @@ const CaseStudies = () => {
         </section>
 
         {/* Stats Bar with Parallax */}
-        <section className="py-16 bg-background">
+        <section className="py-8 bg-background">
           <div 
             className="container mx-auto px-4"
             style={{ transform: `translateY(${statsParallax}px)` }}
@@ -303,7 +303,7 @@ const CaseStudies = () => {
         </section>
 
         {/* Filters */}
-        <section className="py-8 bg-background">
+        <section className="pt-8 pb-6 bg-background">
           <div className="container mx-auto px-4">
             <WorkFilters activeFilter={activeFilter} onFilterChange={setActiveFilter} lang={lang} />
           </div>
@@ -311,7 +311,7 @@ const CaseStudies = () => {
 
         {/* Website Projects Section */}
         {websites.length > 0 && (
-          <section className="py-16 bg-background">
+          <section className="pb-16 bg-background">
             <div className="container mx-auto px-4">
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4 text-center">
                 {lang === "en" ? "Website Projects" : "Proyectos de Sitios Web"}
