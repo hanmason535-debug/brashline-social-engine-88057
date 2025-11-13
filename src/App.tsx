@@ -9,6 +9,7 @@ import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { LoadingBar } from "@/components/ui/loading-bar";
 import { HelmetProvider } from "react-helmet-async";
+import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -67,6 +68,7 @@ const App = () => (
                   </main>
                 </Suspense>
               </BrowserRouter>
+              <Analytics />
             </TooltipProvider>
           </LanguageProvider>
         </ThemeProvider>
