@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { logSEOAudit } from "@/utils/seo";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 // Log SEO audit reminder in dev mode
 logSEOAudit();
@@ -20,4 +21,9 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <>
+    <App />
+    <SpeedInsights />
+  </>
+);
