@@ -1,12 +1,17 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/SEO/SEOHead";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { getPageSEO } from "@/utils/seo";
 
 const Cookies = () => {
   const { lang } = useLanguage();
+  const pageSEO = getPageSEO("cookies");
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
+      <SEOHead pageSEO={pageSEO} lang={lang} />
+      <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 py-16 md:py-24">
         <div className="container mx-auto px-4 max-w-4xl">
@@ -65,6 +70,7 @@ const Cookies = () => {
       </main>
       <Footer />
     </div>
+    </>
   );
 };
 

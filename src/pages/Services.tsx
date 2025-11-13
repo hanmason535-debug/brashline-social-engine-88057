@@ -1,13 +1,16 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/SEO/SEOHead";
 import { Card, CardContent } from "@/components/ui/card";
 import { Share2, Globe, Search, Target, ShoppingCart, Palette, Calendar, BarChart3, MessageCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { getPageSEO } from "@/utils/seo";
 
 const Services = () => {
   const { lang } = useLanguage();
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
+  const pageSEO = getPageSEO("services");
 
   const services = [
     {
@@ -85,13 +88,25 @@ const Services = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
-        {/* Services Grid */}
-        <section ref={elementRef as React.RefObject<HTMLElement>} className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <>
+      <SEOHead pageSEO={pageSEO} lang={lang} />
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1">
+          {/* Services Grid */}
+          <section ref={elementRef as React.RefObject<HTMLElement>} className="py-16 md:py-24 bg-background">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6">
+                  {lang === "en" ? "Our Services" : "Nuestros Servicios"}
+                </h1>
+                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                  {lang === "en"
+                    ? "Comprehensive social media and digital marketing services for Florida businesses"
+                    : "Servicios integrales de redes sociales y marketing digital para negocios de Florida"}
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {services.map((service, index) => {
                 const Icon = service.icon;
                 return (
@@ -124,6 +139,7 @@ const Services = () => {
       </main>
       <Footer />
     </div>
+    </>
   );
 };
 

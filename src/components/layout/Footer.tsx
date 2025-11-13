@@ -57,6 +57,8 @@ const Footer = () => {
               {lang === "en" ? "Contact" : "Contacto"}
             </h3>
             <div className="space-y-2 text-sm text-muted-foreground">
+              <p className="font-semibold text-foreground">Brashline</p>
+              <p>Orlando, Florida</p>
               <p>
                 <a href="tel:+19294468440" className="hover:text-primary transition-colors">
                   +1 (929) 446-8440
