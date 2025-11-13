@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEOHead from "@/components/SEO/SEOHead";
@@ -11,6 +11,7 @@ import { StatsBar } from "@/components/work/StatsBar";
 import { Lightbox } from "@/components/work/Lightbox";
 import { useParallax } from "@/hooks/useParallax";
 import { getPageSEO } from "@/utils/seo";
+import type { CarouselApi } from "@/components/ui/carousel";
 import {
   Carousel,
   CarouselContent,
@@ -26,6 +27,7 @@ const CaseStudies = () => {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxData, setLightboxData] = useState<{ type: "website" | "social"; data: any } | null>(null);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const pageSEO = getPageSEO("case-studies");
 
   const heroParallax = useParallax({ speed: 0.3, direction: "down" });
@@ -40,6 +42,24 @@ const CaseStudies = () => {
     setLightboxOpen(false);
     setTimeout(() => setLightboxData(null), 300);
   };
+
+  // Keyboard navigation for carousel
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!carouselApi || lightboxOpen) return;
+      
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        carouselApi.scrollPrev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        carouselApi.scrollNext();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [carouselApi, lightboxOpen]);
 
   // Website Projects Data
   const websiteProjects = [
@@ -293,7 +313,7 @@ const CaseStudies = () => {
         </section>
 
         {/* Stats Bar with Parallax */}
-        <section className="py-16 bg-background">
+        <section className="py-8 bg-background">
           <div 
             className="container mx-auto px-4"
             style={{ transform: `translateY(${statsParallax}px)` }}
@@ -303,7 +323,7 @@ const CaseStudies = () => {
         </section>
 
         {/* Filters */}
-        <section className="py-8 bg-background">
+        <section className="py-6 bg-background">
           <div className="container mx-auto px-4">
             <WorkFilters activeFilter={activeFilter} onFilterChange={setActiveFilter} lang={lang} />
           </div>
@@ -311,7 +331,7 @@ const CaseStudies = () => {
 
         {/* Website Projects Section */}
         {websites.length > 0 && (
-          <section className="py-16 bg-background">
+          <section className="py-10 bg-background">
             <div className="container mx-auto px-4">
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4 text-center">
                 {lang === "en" ? "Website Projects" : "Proyectos de Sitios Web"}
@@ -327,7 +347,8 @@ const CaseStudies = () => {
                   align: "start",
                   loop: true,
                 }}
-                className="w-full max-w-7xl mx-auto"
+                setApi={setCarouselApi}
+                className="w-full max-w-7xl mx-auto relative"
               >
                 <CarouselContent>
                   {websites.map((page, pageIndex) => (
@@ -346,8 +367,23 @@ const CaseStudies = () => {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden md:flex -left-12" />
-                <CarouselNext className="hidden md:flex -right-12" />
+                <CarouselPrevious className="hidden md:flex -left-16 w-12 h-12 border-2" />
+                <CarouselNext className="hidden md:flex -right-16 w-12 h-12 border-2" />
+                
+                {/* Mobile Navigation Hint */}
+                <div className="md:hidden absolute -bottom-8 left-0 right-0 flex justify-center gap-4 opacity-60">
+                  <div className="animate-[nudge_2s_ease-in-out_infinite]">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </div>
+                  <span className="text-sm text-muted-foreground">{lang === "en" ? "Swipe to explore" : "Desliza para explorar"}</span>
+                  <div className="animate-[nudge-reverse_2s_ease-in-out_infinite]">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
               </Carousel>
             </div>
           </section>
@@ -355,7 +391,7 @@ const CaseStudies = () => {
 
         {/* Social Media Section */}
         {social.length > 0 && (
-          <section className="py-16 bg-muted">
+          <section className="py-10 bg-muted">
             <div className="container mx-auto px-4">
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4 text-center">
                 {lang === "en" ? "Social Media Posts" : "Publicaciones en Redes Sociales"}
