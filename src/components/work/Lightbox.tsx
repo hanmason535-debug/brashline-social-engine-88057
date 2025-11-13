@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, Heart, MessageCircle, Share2, Bookmark, Play, ZoomIn, ZoomOut } from "lucide-react";
+import { X, ExternalLink, Heart, MessageCircle, Share2, Bookmark, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface LightboxProps {
@@ -12,17 +12,9 @@ interface LightboxProps {
 }
 
 export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
-  const [zoom, setZoom] = useState(1);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const imageRef = useRef<HTMLDivElement>(null);
-  const isDragging = useRef(false);
-  const lastPosition = useRef({ x: 0, y: 0 });
-
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft") handlePrevious();
-      if (e.key === "ArrowRight") handleNext();
     };
 
     if (isOpen) {
@@ -35,73 +27,6 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
       document.body.style.overflow = "unset";
     };
   }, [isOpen, onClose]);
-
-  // Reset zoom when lightbox opens/closes
-  useEffect(() => {
-    if (!isOpen) {
-      setZoom(1);
-      setPosition({ x: 0, y: 0 });
-    }
-  }, [isOpen]);
-
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY * -0.01;
-    const newZoom = Math.min(Math.max(1, zoom + delta), 3);
-    setZoom(newZoom);
-    if (newZoom === 1) setPosition({ x: 0, y: 0 });
-  };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (zoom > 1) {
-      isDragging.current = true;
-      lastPosition.current = { x: e.clientX - position.x, y: e.clientY - position.y };
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging.current && zoom > 1) {
-      setPosition({
-        x: e.clientX - lastPosition.current.x,
-        y: e.clientY - lastPosition.current.y,
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    isDragging.current = false;
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length === 2) {
-      const touch1 = e.touches[0];
-      const touch2 = e.touches[1];
-      const distance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
-      lastPosition.current = { x: distance, y: zoom };
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length === 2) {
-      const touch1 = e.touches[0];
-      const touch2 = e.touches[1];
-      const distance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
-      const scale = distance / lastPosition.current.x;
-      const newZoom = Math.min(Math.max(1, lastPosition.current.y * scale), 3);
-      setZoom(newZoom);
-      if (newZoom === 1) setPosition({ x: 0, y: 0 });
-    }
-  };
-
-  const handlePrevious = () => {
-    // Navigation logic would go here
-    console.log("Previous item");
-  };
-
-  const handleNext = () => {
-    // Navigation logic would go here
-    console.log("Next item");
-  };
 
   const formatNumber = (num: number): string => {
     if (num >= 1000) {
@@ -143,58 +68,15 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                 <X className="w-5 h-5" />
               </Button>
 
-              {/* Zoom Controls */}
-              {type === "website" || type === "social" ? (
-                <div className="absolute top-4 left-4 z-10 flex gap-2">
-                  <Button
-                    onClick={() => setZoom(Math.min(zoom + 0.25, 3))}
-                    variant="ghost"
-                    size="icon"
-                    className="bg-background/80 backdrop-blur-sm hover:bg-background"
-                    disabled={zoom >= 3}
-                  >
-                    <ZoomIn className="w-5 h-5" />
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setZoom(Math.max(zoom - 0.25, 1));
-                      if (zoom <= 1.25) setPosition({ x: 0, y: 0 });
-                    }}
-                    variant="ghost"
-                    size="icon"
-                    className="bg-background/80 backdrop-blur-sm hover:bg-background"
-                    disabled={zoom <= 1}
-                  >
-                    <ZoomOut className="w-5 h-5" />
-                  </Button>
-                  <span className="bg-background/80 backdrop-blur-sm px-3 py-2 rounded-md text-sm">
-                    {Math.round(zoom * 100)}%
-                  </span>
-                </div>
-              ) : null}
-
               <div className="overflow-y-auto max-h-[90vh]">
                 {type === "website" && data && (
                   <div>
                     {/* Website Screenshot */}
-                    <div 
-                      ref={imageRef}
-                      className="relative aspect-[16/9] bg-muted overflow-hidden cursor-move"
-                      onWheel={handleWheel}
-                      onMouseDown={handleMouseDown}
-                      onMouseMove={handleMouseMove}
-                      onMouseUp={handleMouseUp}
-                      onMouseLeave={handleMouseUp}
-                      onTouchStart={handleTouchStart}
-                      onTouchMove={handleTouchMove}
-                    >
+                    <div className="relative aspect-[16/9] bg-muted overflow-hidden">
                       <img
                         src={data.thumbnail}
                         alt={data.title[lang]}
-                        className="w-full h-full object-cover object-top transition-transform duration-200"
-                        style={{
-                          transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`,
-                        }}
+                        className="w-full h-full object-cover object-top"
                       />
                       {/* Browser Chrome Overlay */}
                       <div className="absolute top-0 left-0 right-0 bg-muted/95 backdrop-blur-sm px-4 py-3 flex items-center gap-3 border-b border-border">
@@ -255,24 +137,11 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                 {type === "social" && data && (
                   <div>
                     {/* Social Post Image */}
-                    <div 
-                      ref={imageRef}
-                      className="relative aspect-square bg-muted overflow-hidden cursor-move"
-                      onWheel={handleWheel}
-                      onMouseDown={handleMouseDown}
-                      onMouseMove={handleMouseMove}
-                      onMouseUp={handleMouseUp}
-                      onMouseLeave={handleMouseUp}
-                      onTouchStart={handleTouchStart}
-                      onTouchMove={handleTouchMove}
-                    >
+                    <div className="relative aspect-square bg-muted overflow-hidden">
                       <img
                         src={data.image}
                         alt={data.caption[lang]}
-                        className="w-full h-full object-cover transition-transform duration-200"
-                        style={{
-                          transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`,
-                        }}
+                        className="w-full h-full object-cover"
                       />
                       {data.type === "video" && (
                         <div className="absolute inset-0 flex items-center justify-center">

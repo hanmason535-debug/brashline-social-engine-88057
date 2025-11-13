@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import { BorderBeam } from "@/components/ui/border-beam";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface WebsiteProject {
@@ -37,7 +38,7 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
       onClick={handleClick}
     >
       {/* Browser Mockup Frame */}
-      <div className="relative bg-card rounded-lg overflow-hidden shadow-soft transition-all duration-300 group-hover:shadow-[0_0_0_3px_hsl(var(--primary))] group-hover:scale-[1.03] border border-border">
+      <div className="relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 hover:scale-[1.05] border border-border">
         {/* Browser Chrome */}
         <div className="bg-muted px-3 py-2 flex items-center gap-2 border-b border-border">
           <div className="flex gap-1.5">
@@ -66,7 +67,7 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
             <img
               src={project.thumbnail}
               alt={project.title[lang]}
-              className={`w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-105 ${
+              className={`w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-110 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               onLoad={() => setImageLoaded(true)}
@@ -120,6 +121,11 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
               </span>
             ))}
           </div>
+        </div>
+
+        {/* BorderBeam on hover */}
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <BorderBeam size={200} duration={8} delay={0} />
         </div>
       </div>
     </motion.div>
