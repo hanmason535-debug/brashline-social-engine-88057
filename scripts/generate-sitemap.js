@@ -100,7 +100,7 @@ const APP_ROUTES = [
 async function generateSitemap() {
   try {
     // Determine base URL from environment or use default
-    const baseUrl = process.env.VITE_SITE_URL || 'https://brashline.io';
+    const baseUrl = process.env.VITE_SITE_URL || 'https://brashline.com';
     
     // Generate sitemap XML
     const sitemapXml = generateSitemapXml({
