@@ -28,8 +28,8 @@ const CaseStudies = () => {
   const [lightboxData, setLightboxData] = useState<{ type: "website" | "social"; data: any } | null>(null);
   const pageSEO = getPageSEO("case-studies");
 
-  const heroParallax = useParallax({ speed: 0.3, direction: "down" });
-  const statsParallax = useParallax({ speed: 0.2, direction: "up" });
+  // const heroParallax = useParallax({ speed: 0.3, direction: "down" });
+  // const statsParallax = useParallax({ speed: 0.2, direction: "up" });
 
   const openLightbox = (type: "website" | "social", data: any) => {
     setLightboxData({ type, data });
@@ -271,15 +271,15 @@ const CaseStudies = () => {
         <main className="flex-1">
         {/* Hero Section with Parallax */}
         <section className="relative overflow-hidden bg-muted py-20">
-          <div 
+          {/* <div
             className="w-full absolute inset-0 h-full"
-            style={{ transform: `translateY(${heroParallax}px)` }}
+            // style={{ transform: `translateY(${heroParallax}px)` }}
           >
             <Meteors number={30} />
-          </div>
+          </div> */}
           <div 
             className="container mx-auto px-4 text-center relative z-10"
-            style={{ transform: `translateY(${heroParallax * 0.5}px)` }}
+            // style={{ transform: `translateY(${heroParallax * 0.5}px)` }}
           >
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
               {lang === "en" ? "Our Work" : "Nuestro Trabajo"}
@@ -296,7 +296,7 @@ const CaseStudies = () => {
         <section className="py-16 bg-background">
           <div 
             className="container mx-auto px-4"
-            style={{ transform: `translateY(${statsParallax}px)` }}
+            // style={{ transform: `translateY(${statsParallax}px)` }}
           >
             <StatsBar lang={lang} />
           </div>
@@ -335,7 +335,7 @@ const CaseStudies = () => {
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {page.map((project, index) => (
                           <WebsiteProjectCard
-                            key={index}
+                            key={project.title.en}
                             project={project}
                             lang={lang}
                             index={index}

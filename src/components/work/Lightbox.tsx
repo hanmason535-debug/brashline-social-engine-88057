@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, Heart, MessageCircle, Share2, Bookmark, Play } from "lucide-react";
+import { X, ExternalLink, Heart, MessageCircle, Share2, Bookmark, Play, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface LightboxProps {
@@ -50,29 +50,33 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
 
           {/* Lightbox Content */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-50 grid place-items-center p-4 md:p-8"
+            onClick={onClose}
           >
-            <div className="relative w-full max-w-6xl max-h-[90vh] bg-background rounded-2xl shadow-2xl overflow-hidden">
+            <div
+              className="relative w-full max-w-5xl max-h-[90vh] bg-background rounded-2xl shadow-2xl overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
               {/* Close Button */}
               <Button
                 onClick={onClose}
                 variant="ghost"
                 size="icon"
-                className="absolute top-4 right-4 z-10 bg-background/80 backdrop-blur-sm hover:bg-background"
+                className="absolute top-3 right-3 z-10 bg-background/80 backdrop-blur-sm hover:bg-background"
+                aria-label="Close"
               >
                 <X className="w-5 h-5" />
               </Button>
 
-              <div className="overflow-y-auto max-h-[90vh]">
+              <div>
                 {type === "website" && data && (
-                  <div>
+                  <div className="flex flex-col lg:flex-row">
                     {/* Website Screenshot */}
-                    <div className="relative aspect-[16/9] bg-muted overflow-hidden">
+                    <div className="w-full lg:w-[65%] relative aspect-[16/9] bg-muted overflow-hidden lg:rounded-l-2xl">
                       <img
                         src={data.thumbnail}
                         alt={data.title[lang]}
@@ -92,27 +96,28 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                     </div>
 
                     {/* Website Info */}
-                    <div className="p-8">
-                      <div className="flex items-start justify-between mb-6">
-                        <div>
-                          <h2 className="text-3xl font-heading font-bold text-foreground mb-2">
+                    <div className="w-full lg:w-[35%] p-6 md:p-8 flex flex-col justify-center">
+                      <div className="flex flex-col md:flex-row items-start justify-between gap-4 md:gap-6 mb-6">
+                        <div className="flex-1">
+                          <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-2">
                             {data.title[lang]}
                           </h2>
-                          <p className="text-lg text-muted-foreground mb-4">
+                          <p className="text-base md:text-lg text-muted-foreground mb-4">
                             {data.description[lang]}
                           </p>
                           <p className="text-sm text-muted-foreground">
                             {data.category[lang]}
                           </p>
                         </div>
-                        <Button
-                          onClick={() => window.open(data.url, "_blank", "noopener,noreferrer")}
-                          className="flex items-center gap-2"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                          {lang === "en" ? "Visit Live Site" : "Visitar Sitio"}
-                        </Button>
                       </div>
+
+                      <Button
+                        onClick={() => window.open(data.url, "_blank", "noopener,noreferrer")}
+                        className="flex items-center gap-2 w-full md:w-auto mb-6"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        {lang === "en" ? "Visit Live Site" : "Visitar Sitio"}
+                      </Button>
 
                       {/* Tech Stack */}
                       <div>
@@ -135,25 +140,25 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                 )}
 
                 {type === "social" && data && (
-                  <div>
+                  <div className="flex flex-col lg:flex-row">
                     {/* Social Post Image */}
-                    <div className="relative aspect-square bg-muted overflow-hidden">
+                    <div className="w-full lg:w-[50%] relative aspect-square bg-muted overflow-hidden lg:rounded-l-2xl">
                       <img
                         src={data.image}
                         alt={data.caption[lang]}
                         className="w-full h-full object-cover"
                       />
                       {data.type === "video" && (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="bg-black/60 p-6 rounded-full">
-                            <Play className="w-12 h-12 text-white fill-white" />
+                        <div className="absolute inset-0 grid place-items-center">
+                          <div className="bg-black/60 p-5 rounded-full">
+                            <Play className="w-10 h-10 text-white fill-white" />
                           </div>
                         </div>
                       )}
                     </div>
 
                     {/* Social Post Info */}
-                    <div className="p-8">
+                    <div className="w-full lg:w-[50%] p-6 md:p-8 flex flex-col justify-center">
                       <div className="flex items-start justify-between mb-6">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-4">
@@ -163,7 +168,7 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                             <span className="text-sm text-muted-foreground">•</span>
                             <span className="text-sm text-muted-foreground">{data.timestamp}</span>
                           </div>
-                          <p className="text-lg text-foreground leading-relaxed">
+                          <p className="text-base md:text-lg text-foreground leading-relaxed">
                             {data.caption[lang]}
                           </p>
                         </div>
@@ -174,17 +179,17 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                         <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
                           {lang === "en" ? "Engagement" : "Interacción"}
                         </h3>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                           {data.engagement.likes && (
                             <div className="flex items-center gap-3">
                               <div className="bg-muted p-3 rounded-full">
                                 <Heart className="w-5 h-5 text-foreground" />
                               </div>
                               <div>
-                                <div className="text-2xl font-bold text-foreground">
+                                <div className="text-xl md:text-2xl font-bold text-foreground">
                                   {formatNumber(data.engagement.likes)}
                                 </div>
-                                <div className="text-sm text-muted-foreground">
+                                <div className="text-xs md:text-sm text-muted-foreground">
                                   {lang === "en" ? "Likes" : "Me gusta"}
                                 </div>
                               </div>
@@ -196,10 +201,10 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                                 <MessageCircle className="w-5 h-5 text-foreground" />
                               </div>
                               <div>
-                                <div className="text-2xl font-bold text-foreground">
+                                <div className="text-xl md:text-2xl font-bold text-foreground">
                                   {formatNumber(data.engagement.comments)}
                                 </div>
-                                <div className="text-sm text-muted-foreground">
+                                <div className="text-xs md:text-sm text-muted-foreground">
                                   {lang === "en" ? "Comments" : "Comentarios"}
                                 </div>
                               </div>
@@ -211,10 +216,10 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                                 <Share2 className="w-5 h-5 text-foreground" />
                               </div>
                               <div>
-                                <div className="text-2xl font-bold text-foreground">
+                                <div className="text-xl md:text-2xl font-bold text-foreground">
                                   {formatNumber(data.engagement.shares)}
                                 </div>
-                                <div className="text-sm text-muted-foreground">
+                                <div className="text-xs md:text-sm text-muted-foreground">
                                   {lang === "en" ? "Shares" : "Compartidos"}
                                 </div>
                               </div>
@@ -226,10 +231,10 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                                 <Bookmark className="w-5 h-5 text-foreground" />
                               </div>
                               <div>
-                                <div className="text-2xl font-bold text-foreground">
+                                <div className="text-xl md:text-2xl font-bold text-foreground">
                                   {formatNumber(data.engagement.saves)}
                                 </div>
-                                <div className="text-sm text-muted-foreground">
+                                <div className="text-xs md:text-sm text-muted-foreground">
                                   {lang === "en" ? "Saves" : "Guardados"}
                                 </div>
                               </div>
@@ -238,13 +243,13 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                           {data.engagement.views && (
                             <div className="flex items-center gap-3">
                               <div className="bg-muted p-3 rounded-full">
-                                <Play className="w-5 h-5 text-foreground" />
+                                <Eye className="w-5 h-5 text-foreground" />
                               </div>
                               <div>
-                                <div className="text-2xl font-bold text-foreground">
+                                <div className="text-xl md:text-2xl font-bold text-foreground">
                                   {formatNumber(data.engagement.views)}
                                 </div>
-                                <div className="text-sm text-muted-foreground">
+                                <div className="text-xs md:text-sm text-muted-foreground">
                                   {lang === "en" ? "Views" : "Vistas"}
                                 </div>
                               </div>

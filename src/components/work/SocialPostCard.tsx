@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Heart, MessageCircle, Share2, Bookmark, Play, Instagram, Facebook, Linkedin } from "lucide-react";
+import { Heart, MessageCircle, Share2, Bookmark, Play, Instagram, Facebook, Linkedin, Eye } from "lucide-react";
 
 interface SocialPost {
   platform: "instagram" | "facebook" | "linkedin";
@@ -151,7 +151,7 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
               )}
               {post.engagement.views && (
                 <div className="flex items-center gap-1">
-                  <Play className="w-3.5 h-3.5" />
+                  <Eye className="w-3.5 h-3.5" />
                   <span>{formatNumber(post.engagement.views)}</span>
                 </div>
               )}
