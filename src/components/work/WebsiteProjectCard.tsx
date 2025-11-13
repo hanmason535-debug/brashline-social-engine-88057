@@ -38,7 +38,7 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
       onClick={handleClick}
     >
       {/* Browser Mockup Frame */}
-      <div className="relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 hover:scale-[1.05] border border-border">
+      <div className="relative bg-card rounded-lg overflow-hidden shadow-soft transition-all duration-300 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-[1.02] border border-border hover:ring-2 hover:ring-primary/50">
         {/* Browser Chrome */}
         <div className="bg-muted px-3 py-2 flex items-center gap-2 border-b border-border">
           <div className="flex gap-1.5">
@@ -123,10 +123,6 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
           </div>
         </div>
 
-        {/* BorderBeam on hover */}
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <BorderBeam size={200} duration={8} delay={0} />
-        </div>
       </div>
     </motion.div>
   );
