@@ -24,8 +24,8 @@ const Hero = memo(({
     return () => clearTimeout(timeoutId);
   }, [titleNumber, titles]);
   return <section className="relative overflow-hidden bg-background">
-      {/* Animated Background */}
-      <div className="absolute inset-0 z-0">
+      {/* Animated Background with performance hints */}
+      <div className="absolute inset-0 z-0" style={{ contain: 'layout style paint' }}>
         <BackgroundPaths />
       </div>
 
@@ -43,7 +43,10 @@ const Hero = memo(({
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-6 animate-fade-in leading-tight">
             <div className="flex flex-col items-center">
               <div>{lang === "en" ? "Be" : "Siempre"}</div>
-              <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
+              <span 
+                className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1"
+                style={{ contain: 'layout' }}
+              >
                 &nbsp;
                 {titles.map((title, index) => <motion.span key={index} className="absolute font-bold" initial={{
                 opacity: 0,

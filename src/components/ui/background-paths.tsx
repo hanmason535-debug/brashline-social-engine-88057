@@ -1,9 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useIsDesktop } from "@/hooks/useMediaQuery";
 
 function FloatingPaths({ position }: { position: number }) {
-  const paths = Array.from({ length: 36 }, (_, i) => ({
+  const isDesktop = useIsDesktop();
+  
+  // Reduce path count on desktop for better performance (36 → 18)
+  // Desktop has more rendering overhead due to larger viewport
+  const pathCount = isDesktop ? 18 : 36;
+  
+  const paths = Array.from({ length: pathCount }, (_, i) => ({
     id: i,
     d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
       380 - i * 5 * position

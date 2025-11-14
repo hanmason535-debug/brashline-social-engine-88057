@@ -275,13 +275,19 @@ const CaseStudies = () => {
         <section className="relative overflow-hidden bg-muted py-20">
           <div 
             className="w-full absolute inset-0 h-full"
-            style={{ transform: `translateY(${heroParallax}px)` }}
+            style={{ 
+              transform: `translateY(${heroParallax}px)`,
+              willChange: 'transform'
+            }}
           >
             <Meteors number={30} />
           </div>
           <div 
             className="container mx-auto px-4 text-center relative z-10"
-            style={{ transform: `translateY(${heroParallax * 0.5}px)` }}
+            style={{ 
+              transform: `translateY(${heroParallax * 0.5}px)`,
+              willChange: 'transform'
+            }}
           >
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
               {lang === "en" ? "Our Work" : "Nuestro Trabajo"}
@@ -298,7 +304,10 @@ const CaseStudies = () => {
         <section className="py-8 bg-background">
           <div 
             className="container mx-auto px-4"
-            style={{ transform: `translateY(${statsParallax}px)` }}
+            style={{ 
+              transform: `translateY(${statsParallax}px)`,
+              willChange: 'transform'
+            }}
           >
             <StatsBar lang={lang} />
           </div>
