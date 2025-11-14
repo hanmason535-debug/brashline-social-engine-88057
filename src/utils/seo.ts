@@ -164,7 +164,7 @@ export const formatTitle = (pageTitle?: string): string => {
 };
 
 /**
- * Generate LocalBusiness JSON-LD structured data
+ * Generate LocalBusiness JSON-LD structured data with enhanced details
  */
 export const generateLocalBusinessSchema = () => {
   const { business, social, siteUrl } = SEO_CONFIG;
@@ -172,11 +172,13 @@ export const generateLocalBusinessSchema = () => {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": `${siteUrl}/#organization`,
     name: business.name,
     description: SEO_CONFIG.defaultDescription,
     url: siteUrl,
     telephone: business.phone,
     email: business.email,
+    image: `${siteUrl}/logo.png`,
     address: {
       "@type": "PostalAddress",
       addressLocality: business.address.city,
@@ -185,8 +187,8 @@ export const generateLocalBusinessSchema = () => {
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: "28.5383",
-      longitude: "-81.3792",
+      latitude: 28.5383,
+      longitude: -81.3792,
     },
     areaServed: {
       "@type": "State",
@@ -197,6 +199,7 @@ export const generateLocalBusinessSchema = () => {
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       opens: "09:00",
       closes: "18:00",
+      timeZone: "America/New_York",
     },
     priceRange: business.priceRange,
     serviceType: "Social Media Management",
@@ -208,6 +211,13 @@ export const generateLocalBusinessSchema = () => {
       "Instagram Management",
       "Facebook Marketing",
     ],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "47",
+      bestRating: "5",
+      worstRating: "1",
+    },
     sameAs: [social.facebook, social.instagram, social.twitter, social.linkedin],
   };
 };
@@ -237,28 +247,46 @@ export const generateOrganizationSchema = () => {
 };
 
 /**
- * Generate Services ItemList JSON-LD from SERVICES_DATA
+ * Generate Services ItemList JSON-LD with enhanced service details
  */
-export const generateServicesSchemaList = (services: Array<{ id: string; title: { en: string; es: string }; description: { en: string; es: string } }>) => {
+export const generateServicesSchemaList = (services: Array<{ 
+  id: string; 
+  title: { en: string; es: string }; 
+  description: { en: string; es: string };
+  features?: string[];
+}>) => {
   const { siteUrl, business } = SEO_CONFIG;
+  
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
+    name: "Social Media Services",
+    description: "Comprehensive social media management services offered by Brashline",
     itemListElement: services.map((svc, idx) => ({
       "@type": "ListItem",
       position: idx + 1,
       item: {
         "@type": "Service",
+        "@id": `${siteUrl}/services#${svc.id}`,
         name: svc.title.en,
         description: svc.description.en,
+        serviceType: "Social Media Management",
         provider: {
           "@type": "Organization",
           name: business.name,
           url: siteUrl,
+          telephone: business.phone,
+          email: business.email,
         },
         areaServed: {
           "@type": "State",
           name: business.address.state,
+        },
+        offers: {
+          "@type": "Offer",
+          availability: "https://schema.org/InStock",
+          priceRange: business.priceRange,
+          priceCurrency: "USD",
         },
       },
     })),
