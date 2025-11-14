@@ -11,7 +11,7 @@ function FloatingPaths({ position }: { position: number }) {
   
   // Reduce path count on desktop for better performance (36 → 18)
   // Desktop has more rendering overhead due to larger viewport
-  const pathCount = isDesktop ? 18 : 36;
+  const pathCount = isDesktop ? 28 : 36;
   
   // Phase 2 Optimization: Memoize stable random durations to avoid recalculating on every render
   const durations = useMemo(() => {
