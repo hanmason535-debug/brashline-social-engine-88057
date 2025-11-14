@@ -16,7 +16,7 @@ global.IntersectionObserver = class IntersectionObserver {
     return [];
   }
   unobserve() {}
-} as any;
+} as unknown as typeof IntersectionObserver;
 
 // Mock the useLanguage context to provide a default value
 vi.mock('@/contexts/LanguageContext', () => ({
@@ -27,15 +27,20 @@ vi.mock('@/contexts/LanguageContext', () => ({
   LanguageProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
+interface MotionProps {
+  children?: React.ReactNode;
+  [key: string]: unknown;
+}
+
 // Mock framer-motion to disable animations in tests
 vi.mock('framer-motion', () => ({
   ...vi.importActual('framer-motion'),
   motion: {
-    div: ({ children, ...props }: any) => React.createElement('div', props, children),
-    span: ({ children, ...props }: any) => React.createElement('span', props, children),
-    path: (props: any) => React.createElement('path', props),
-    button: ({ children, ...props }: any) => React.createElement('button', props, children),
-    a: ({ children, ...props }: any) => React.createElement('a', props, children),
+    div: ({ children, ...props }: MotionProps) => React.createElement('div', props, children),
+    span: ({ children, ...props }: MotionProps) => React.createElement('span', props, children),
+    path: (props: MotionProps) => React.createElement('path', props),
+    button: ({ children, ...props }: MotionProps) => React.createElement('button', props, children),
+    a: ({ children, ...props }: MotionProps) => React.createElement('a', props, children),
   },
   AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
 }));

@@ -9,28 +9,34 @@ interface StatsSectionProps {
 const StatsSection = ({ lang }: StatsSectionProps) => {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.3 });
 
+  // Call hooks at the top level for each stat
+  const count1 = useCountUp({ end: 500, duration: 2500, shouldStart: isVisible });
+  const count2 = useCountUp({ end: 98, duration: 2500, shouldStart: isVisible });
+  const count3 = useCountUp({ end: 24, duration: 2500, shouldStart: isVisible });
+  const count4 = useCountUp({ end: 150, duration: 2500, shouldStart: isVisible });
+
   const stats = [
     {
       icon: Users,
-      end: 500,
+      count: count1,
       suffix: '+',
       label: { en: 'Clients Served', es: 'Clientes Atendidos' },
     },
     {
       icon: Award,
-      end: 98,
+      count: count2,
       suffix: '%',
       label: { en: 'Satisfaction Rate', es: 'Tasa de Satisfacción' },
     },
     {
       icon: Clock,
-      end: 24,
+      count: count3,
       suffix: '/7',
       label: { en: 'Support Available', es: 'Soporte Disponible' },
     },
     {
       icon: TrendingUp,
-      end: 150,
+      count: count4,
       suffix: '%',
       label: { en: 'Avg. Growth', es: 'Crecimiento Promedio' },
     },
@@ -45,11 +51,6 @@ const StatsSection = ({ lang }: StatsSectionProps) => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
-            const count = useCountUp({
-              end: stat.end,
-              duration: 2500,
-              shouldStart: isVisible,
-            });
 
             return (
               <div
@@ -65,7 +66,7 @@ const StatsSection = ({ lang }: StatsSectionProps) => {
                   <Icon className="h-8 w-8 text-primary" />
                 </div>
                 <div className="text-4xl md:text-5xl font-heading font-bold mb-2">
-                  {count}
+                  {stat.count}
                   {stat.suffix}
                 </div>
                 <p className="text-sm text-muted-foreground">

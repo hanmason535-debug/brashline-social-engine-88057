@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Linkedin, Youtube, Twitter } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -17,7 +18,7 @@ const socialLinks = [
   { icon: Youtube, href: "/youtube-not-found", label: "YouTube", external: false },
 ];
 
-const Footer = () => {
+const Footer = memo(() => {
   const { lang } = useLanguage();
   
   return (
@@ -134,6 +135,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = 'Footer';
 
 export default Footer;

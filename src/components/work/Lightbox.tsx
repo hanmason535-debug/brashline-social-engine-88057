@@ -3,11 +3,35 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink, Heart, MessageCircle, Share2, Bookmark, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+interface WebsiteData {
+  thumbnail: string;
+  title: { en: string; es: string };
+  url: string;
+  description: { en: string; es: string };
+  category: { en: string; es: string };
+  techStack: string[];
+}
+
+interface SocialData {
+  image: string;
+  caption: { en: string; es: string };
+  type?: "video" | "image";
+  platform: string;
+  timestamp: string;
+  engagement: {
+    likes?: number;
+    comments?: number;
+    shares?: number;
+    saves?: number;
+    views?: number;
+  };
+}
+
 interface LightboxProps {
   isOpen: boolean;
   onClose: () => void;
   type: "website" | "social";
-  data: any;
+  data: WebsiteData | SocialData | null;
   lang: "en" | "es";
 }
 
@@ -33,6 +57,15 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
       return (num / 1000).toFixed(1) + "K";
     }
     return num.toString();
+  };
+
+  // Type guards
+  const isWebsiteData = (d: WebsiteData | SocialData): d is WebsiteData => {
+    return 'thumbnail' in d && 'url' in d && 'techStack' in d;
+  };
+
+  const isSocialData = (d: WebsiteData | SocialData): d is SocialData => {
+    return 'platform' in d && 'engagement' in d;
   };
 
   return (
@@ -69,7 +102,7 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
               </Button>
 
               <div className="overflow-y-auto max-h-[90vh]">
-                {type === "website" && data && (
+                {type === "website" && data && isWebsiteData(data) && (
                   <div>
                     {/* Website Screenshot */}
                     <div className="relative aspect-[16/9] bg-muted overflow-hidden">
@@ -134,7 +167,7 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                   </div>
                 )}
 
-                {type === "social" && data && (
+                {type === "social" && data && isSocialData(data) && (
                   <div>
                     {/* Social Post Image */}
                     <div className="relative aspect-square bg-muted overflow-hidden">

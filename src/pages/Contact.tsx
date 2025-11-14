@@ -80,7 +80,7 @@ const Contact = () => {
               </Card>
             </div>
 
-            <Card className="shadow-medium">
+            <Card className="shadow-soft">
               <CardContent className="p-8 text-center">
                 <h2 className="text-2xl font-heading font-bold mb-4">
                   {lang === "en" ? "Schedule a Strategy Call" : "Agenda una Llamada Estratégica"}

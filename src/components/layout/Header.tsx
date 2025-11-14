@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,12 +18,48 @@ const navigation = {
   ],
 };
 
-const Header = () => {
+const Header = memo(() => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { lang, setLang } = useLanguage();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const isActive = (href: string) => location.pathname === href;
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  // Handle escape key to close mobile menu
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+
+    if (mobileMenuOpen) {
+      document.addEventListener('keydown', handleEscape);
+      // Prevent body scroll when menu is open
+      document.body.style.overflow = 'hidden';
+      
+      // Focus first link when menu opens
+      setTimeout(() => {
+        const firstLink = mobileMenuRef.current?.querySelector('a');
+        firstLink?.focus();
+      }, 100);
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   return (
     <>
@@ -100,10 +136,13 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <Button
+            ref={menuButtonRef}
             variant="ghost"
             size="sm"
             className="lg:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? (lang === "en" ? "Close menu" : "Cerrar menú") : (lang === "en" ? "Open menu" : "Abrir menú")}
           >
             {mobileMenuOpen ? (
               <X className="h-5 w-5" />
@@ -124,7 +163,13 @@ const Header = () => {
           />
           
           {/* Mobile Menu Panel */}
-          <div className="fixed inset-x-0 top-16 z-50 lg:hidden border-t border-border/40 bg-background shadow-glow animate-slide-in-right">
+          <div 
+            ref={mobileMenuRef}
+            className="fixed inset-x-0 top-16 z-50 lg:hidden border-t border-border/40 bg-background shadow-glow animate-slide-in-right"
+            role="dialog"
+            aria-modal="true"
+            aria-label={lang === "en" ? "Mobile navigation" : "Navegación móvil"}
+          >
             <div className="container mx-auto px-4 py-6 space-y-4 max-h-[calc(100vh-4rem)] overflow-y-auto">
               {navigation.top.map((item, index) => (
                 <Link
@@ -179,6 +224,8 @@ const Header = () => {
       </header>
     </>
   );
-};
+});
+
+Header.displayName = 'Header';
 
 export default Header;

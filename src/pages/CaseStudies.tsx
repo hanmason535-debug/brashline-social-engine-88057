@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEOHead from "@/components/SEO/SEOHead";
@@ -17,6 +17,8 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  CarouselDots,
+  CarouselSwipeIndicator,
 } from "@/components/ui/carousel";
 
 type FilterType = "all" | "websites" | "social" | "branding";
@@ -25,21 +27,21 @@ const CaseStudies = () => {
   const { lang } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxData, setLightboxData] = useState<{ type: "website" | "social"; data: any } | null>(null);
+  const [lightboxData, setLightboxData] = useState<{ type: "website" | "social"; data: Record<string, unknown> } | null>(null);
   const pageSEO = getPageSEO("case-studies");
 
   const heroParallax = useParallax({ speed: 0.3, direction: "down" });
   const statsParallax = useParallax({ speed: 0.2, direction: "up" });
 
-  const openLightbox = (type: "website" | "social", data: any) => {
+  const openLightbox = useCallback((type: "website" | "social", data: Record<string, unknown>) => {
     setLightboxData({ type, data });
     setLightboxOpen(true);
-  };
+  }, []);
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setLightboxOpen(false);
     setTimeout(() => setLightboxData(null), 300);
-  };
+  }, []);
 
   // Website Projects Data
   const websiteProjects = [
@@ -303,7 +305,7 @@ const CaseStudies = () => {
         </section>
 
         {/* Filters */}
-        <section className="pt-8 pb-6 bg-background">
+        <section className="py-12 bg-background">
           <div className="container mx-auto px-4">
             <WorkFilters activeFilter={activeFilter} onFilterChange={setActiveFilter} lang={lang} />
           </div>
@@ -346,8 +348,10 @@ const CaseStudies = () => {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden md:flex -left-12" />
-                <CarouselNext className="hidden md:flex -right-12" />
+                <CarouselPrevious />
+                <CarouselNext />
+                <CarouselDots className="mt-8" />
+                <CarouselSwipeIndicator />
               </Carousel>
             </div>
           </section>

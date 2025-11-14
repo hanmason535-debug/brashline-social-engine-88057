@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1763064371089" clover="3.2.0">
+  <project timestamp="1763064371089" name="All files">
+    <metrics statements="255" coveredstatements="203" conditionals="196" coveredconditionals="106" methods="89" coveredmethods="70" elements="540" coveredelements="379" complexity="0" loc="255" ncloc="255" packages="8" files="31" classes="31"/>
+    <package name="components.home">
+      <metrics statements="34" coveredstatements="29" conditionals="62" coveredconditionals="28" methods="14" coveredmethods="11"/>
+      <file name="Hero.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\home\Hero.tsx">
+        <metrics statements="12" coveredstatements="9" conditionals="16" coveredconditionals="8" methods="6" coveredmethods="5"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="15" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
+      </file>
+      <file name="PricingPreview.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\home\PricingPreview.tsx">
+        <metrics statements="9" coveredstatements="7" conditionals="42" coveredconditionals="18" methods="4" coveredmethods="2"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="85" count="3" type="stmt"/>
+        <line num="86" count="3" type="stmt"/>
+        <line num="106" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="130" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="131" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="229" count="0" type="stmt"/>
+        <line num="287" count="1" type="stmt"/>
+      </file>
+      <file name="StatsSection.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\home\StatsSection.tsx">
+        <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="53" count="12" type="stmt"/>
+      </file>
+      <file name="ValueProps.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\home\ValueProps.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="45" count="9" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.layout">
+      <metrics statements="26" coveredstatements="16" conditionals="34" coveredconditionals="11" methods="11" coveredmethods="4"/>
+      <file name="Footer.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\layout\Footer.tsx">
+        <metrics statements="9" coveredstatements="5" conditionals="14" coveredconditionals="6" methods="2" coveredmethods="1"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="140" count="1" type="stmt"/>
+      </file>
+      <file name="Header.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\layout\Header.tsx">
+        <metrics statements="17" coveredstatements="11" conditionals="20" coveredconditionals="5" methods="9" coveredmethods="3"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="8" type="stmt"/>
+        <line num="23" count="8" type="stmt"/>
+        <line num="24" count="8" type="stmt"/>
+        <line num="26" count="56" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="49" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="84" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="106" count="0" type="stmt"/>
+        <line num="123" count="0" type="stmt"/>
+        <line num="133" count="0" type="stmt"/>
+        <line num="157" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="172" count="0" type="stmt"/>
+        <line num="184" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.ui">
+      <metrics statements="48" coveredstatements="42" conditionals="49" coveredconditionals="32" methods="11" coveredmethods="9"/>
+      <file name="badge.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\ui\badge.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="6" count="1" type="stmt"/>
+      </file>
+      <file name="border-beam.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\ui\border-beam.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="7" coveredconditionals="7" methods="1" coveredmethods="1"/>
+        <line num="14" count="1" type="stmt"/>
+      </file>
+      <file name="button.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\ui\button.tsx">
+        <metrics statements="4" coveredstatements="4" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="41" count="39" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="3" type="stmt"/>
+      </file>
+      <file name="card.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\ui\card.tsx">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+      </file>
+      <file name="flip-button.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\ui\flip-button.tsx">
+        <metrics statements="17" coveredstatements="13" conditionals="27" coveredconditionals="14" methods="3" coveredmethods="2"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="47" count="11" type="cond" truecount="1" falsecount="1"/>
+        <line num="48" count="11" type="cond" truecount="1" falsecount="1"/>
+        <line num="50" count="11" type="cond" truecount="2" falsecount="2"/>
+        <line num="51" count="11" type="cond" truecount="2" falsecount="2"/>
+        <line num="53" count="11" type="stmt"/>
+        <line num="57" count="44" type="stmt"/>
+        <line num="64" count="11" type="stmt"/>
+        <line num="69" count="11" type="stmt"/>
+        <line num="74" count="11" type="stmt"/>
+        <line num="75" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="76" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="77" count="0" type="stmt"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="125" count="2" type="stmt"/>
+      </file>
+      <file name="switch.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\ui\switch.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="25" count="2" type="stmt"/>
+      </file>
+      <file name="theme-switch.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\ui\theme-switch.tsx">
+        <metrics statements="11" coveredstatements="9" conditionals="8" coveredconditionals="4" methods="4" coveredmethods="3"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="13" count="16" type="stmt"/>
+        <line num="14" count="16" type="stmt"/>
+        <line num="15" count="16" type="stmt"/>
+        <line num="17" count="16" type="stmt"/>
+        <line num="18" count="16" type="stmt"/>
+        <line num="20" count="16" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="28" count="16" type="cond" truecount="2" falsecount="0"/>
+      </file>
+      <file name="toggle-group.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\ui\toggle-group.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="28" count="6" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+      </file>
+      <file name="toggle.tsx" path="D:\Brashline\brashline-social-engine-88057\src\components\ui\toggle.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="data">
+      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="about.data.ts" path="D:\Brashline\brashline-social-engine-88057\src\data\about.data.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+      </file>
+      <file name="blog.data.ts" path="D:\Brashline\brashline-social-engine-88057\src\data\blog.data.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
+      <file name="pricing.data.ts" path="D:\Brashline\brashline-social-engine-88057\src\data\pricing.data.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+      </file>
+      <file name="services.data.ts" path="D:\Brashline\brashline-social-engine-88057\src\data\services.data.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="19" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="hooks">
+      <metrics statements="82" coveredstatements="75" conditionals="28" coveredconditionals="21" methods="36" coveredmethods="34"/>
+      <file name="use-mobile.tsx" path="D:\Brashline\brashline-social-engine-88057\src\hooks\use-mobile.tsx">
+        <metrics statements="10" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+      </file>
+      <file name="useAbout.ts" path="D:\Brashline\brashline-social-engine-88057\src\hooks\useAbout.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="15" type="stmt"/>
+        <line num="8" count="42" type="stmt"/>
+        <line num="16" count="15" type="stmt"/>
+        <line num="17" count="14" type="stmt"/>
+        <line num="25" count="56" type="stmt"/>
+        <line num="31" count="15" type="stmt"/>
+      </file>
+      <file name="useBlog.ts" path="D:\Brashline\brashline-social-engine-88057\src\hooks\useBlog.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="19" type="stmt"/>
+        <line num="8" count="108" type="stmt"/>
+        <line num="16" count="19" type="stmt"/>
+      </file>
+      <file name="useCountUp.tsx" path="D:\Brashline\brashline-social-engine-88057\src\hooks\useCountUp.tsx">
+        <metrics statements="19" coveredstatements="19" conditionals="11" coveredconditionals="10" methods="4" coveredmethods="4"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="16" count="21" type="stmt"/>
+        <line num="18" count="21" type="stmt"/>
+        <line num="19" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="25" count="3603" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="3603" type="stmt"/>
+        <line num="29" count="3603" type="stmt"/>
+        <line num="30" count="3603" type="stmt"/>
+        <line num="32" count="3603" type="stmt"/>
+        <line num="34" count="3603" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="3600" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="41" count="4" type="stmt"/>
+        <line num="43" count="4" type="stmt"/>
+        <line num="44" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="45" count="4" type="stmt"/>
+        <line num="50" count="21" type="stmt"/>
+      </file>
+      <file name="useParallax.tsx" path="D:\Brashline\brashline-social-engine-88057\src\hooks\useParallax.tsx">
+        <metrics statements="10" coveredstatements="10" conditionals="5" coveredconditionals="5" methods="4" coveredmethods="4"/>
+        <line num="9" count="40" type="stmt"/>
+        <line num="11" count="40" type="stmt"/>
+        <line num="12" count="14" type="stmt"/>
+        <line num="13" count="26" type="stmt"/>
+        <line num="14" count="26" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="26" type="stmt"/>
+        <line num="18" count="14" type="stmt"/>
+        <line num="19" count="14" type="stmt"/>
+        <line num="21" count="14" type="stmt"/>
+        <line num="24" count="40" type="stmt"/>
+      </file>
+      <file name="usePricing.ts" path="D:\Brashline\brashline-social-engine-88057\src\hooks\usePricing.ts">
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="9" coveredmethods="9"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="16" type="stmt"/>
+        <line num="8" count="45" type="stmt"/>
+        <line num="12" count="255" type="stmt"/>
+        <line num="17" count="16" type="stmt"/>
+        <line num="18" count="15" type="stmt"/>
+        <line num="21" count="135" type="stmt"/>
+        <line num="27" count="16" type="stmt"/>
+        <line num="29" count="105" type="stmt"/>
+        <line num="32" count="390" type="stmt"/>
+        <line num="38" count="16" type="stmt"/>
+      </file>
+      <file name="useScrollAnimation.tsx" path="D:\Brashline\brashline-social-engine-88057\src\hooks\useScrollAnimation.tsx">
+        <metrics statements="18" coveredstatements="12" conditionals="12" coveredconditionals="6" methods="4" coveredmethods="3"/>
+        <line num="9" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="10" count="13" type="cond" truecount="3" falsecount="0"/>
+        <line num="11" count="13" type="stmt"/>
+        <line num="12" count="13" type="stmt"/>
+        <line num="14" count="13" type="stmt"/>
+        <line num="15" count="13" type="stmt"/>
+        <line num="16" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="6" type="stmt"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="25" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="32" count="6" type="stmt"/>
+        <line num="34" count="6" type="stmt"/>
+        <line num="35" count="6" type="stmt"/>
+        <line num="39" count="13" type="stmt"/>
+      </file>
+      <file name="useServices.ts" path="D:\Brashline\brashline-social-engine-88057\src\hooks\useServices.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="10" type="stmt"/>
+        <line num="13" count="81" type="stmt"/>
+      </file>
+    </package>
+    <package name="lib">
+      <metrics statements="29" coveredstatements="16" conditionals="15" coveredconditionals="8" methods="11" coveredmethods="7"/>
+      <file name="sitemap-generator.ts" path="D:\Brashline\brashline-social-engine-88057\src\lib\sitemap-generator.ts">
+        <metrics statements="21" coveredstatements="8" conditionals="10" coveredconditionals="3" methods="6" coveredmethods="2"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="41" count="3" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="44" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="45" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="46" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="55" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="77" count="0" type="stmt"/>
+        <line num="79" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="80" count="0" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
+      </file>
+      <file name="utils.ts" path="D:\Brashline\brashline-social-engine-88057\src\lib\utils.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="5" coveredconditionals="5" methods="5" coveredmethods="5"/>
+        <line num="5" count="217" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="7" type="stmt"/>
+        <line num="31" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="6" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="pages">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="Index.tsx" path="D:\Brashline\brashline-social-engine-88057\src\pages\Index.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="utils">
+      <metrics statements="26" coveredstatements="15" conditionals="8" coveredconditionals="6" methods="5" coveredmethods="4"/>
+      <file name="seo.ts" path="D:\Brashline\brashline-social-engine-88057\src\utils\seo.ts">
+        <metrics statements="26" coveredstatements="15" conditionals="8" coveredconditionals="6" methods="5" coveredmethods="4"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="53" count="2" type="stmt"/>
+        <line num="54" count="7" type="stmt"/>
+        <line num="56" count="7" type="stmt"/>
+        <line num="139" count="7" type="stmt"/>
+        <line num="152" count="2" type="stmt"/>
+        <line num="153" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="155" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="163" count="2" type="stmt"/>
+        <line num="164" count="1" type="stmt"/>
+        <line num="166" count="1" type="stmt"/>
+        <line num="212" count="2" type="stmt"/>
+        <line num="213" count="1" type="stmt"/>
+        <line num="215" count="1" type="stmt"/>
+        <line num="236" count="2" type="stmt"/>
+        <line num="237" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="238" count="0" type="stmt"/>
+        <line num="239" count="0" type="stmt"/>
+        <line num="240" count="0" type="stmt"/>
+        <line num="241" count="0" type="stmt"/>
+        <line num="242" count="0" type="stmt"/>
+        <line num="243" count="0" type="stmt"/>
+        <line num="244" count="0" type="stmt"/>
+        <line num="245" count="0" type="stmt"/>
+        <line num="246" count="0" type="stmt"/>
+        <line num="247" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

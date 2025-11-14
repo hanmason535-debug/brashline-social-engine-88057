@@ -10,22 +10,27 @@ interface StatsBarProps {
 export function StatsBar({ lang }: StatsBarProps) {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.5 });
 
+  // Call hooks at the top level for each stat
+  const count1 = useCountUp({ end: 150, duration: 2000, shouldStart: isVisible });
+  const count2 = useCountUp({ end: 98, duration: 2000, shouldStart: isVisible });
+  const count3 = useCountUp({ end: 5, duration: 2000, shouldStart: isVisible });
+
   const stats = [
     {
       icon: Users,
-      value: 150,
+      count: count1,
       suffix: "+",
       label: { en: "Projects Completed", es: "Proyectos Completados" },
     },
     {
       icon: Award,
-      value: 98,
+      count: count2,
       suffix: "%",
       label: { en: "Client Satisfaction", es: "Satisfacción del Cliente" },
     },
     {
       icon: TrendingUp,
-      value: 5,
+      count: count3,
       suffix: "M+",
       label: { en: "Social Reach", es: "Alcance Social" },
     },
@@ -43,11 +48,6 @@ export function StatsBar({ lang }: StatsBarProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
-            const count = useCountUp({
-              end: stat.value,
-              duration: 2000,
-              shouldStart: isVisible,
-            });
 
             return (
               <motion.div
@@ -63,7 +63,7 @@ export function StatsBar({ lang }: StatsBarProps) {
                   </div>
                 </div>
                 <div className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-2">
-                  {count}
+                  {stat.count}
                   {stat.suffix}
                 </div>
                 <p className="text-muted-foreground font-medium">{stat.label[lang]}</p>
