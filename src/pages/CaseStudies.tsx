@@ -11,6 +11,7 @@ import { StatsBar } from "@/components/work/StatsBar";
 import { Lightbox } from "@/components/work/Lightbox";
 import { useParallax } from "@/hooks/useParallax";
 import { getPageSEO } from "@/utils/seo";
+import { WebsiteData, SocialData } from "@/types/work.types";
 import {
   Carousel,
   CarouselContent,
@@ -27,13 +28,13 @@ const CaseStudies = () => {
   const { lang } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxData, setLightboxData] = useState<{ type: "website" | "social"; data: Record<string, unknown> } | null>(null);
+  const [lightboxData, setLightboxData] = useState<{ type: "website" | "social"; data: WebsiteData | SocialData } | null>(null);
   const pageSEO = getPageSEO("case-studies");
 
   const heroParallax = useParallax({ speed: 0.3, direction: "down" });
   const statsParallax = useParallax({ speed: 0.2, direction: "up" });
 
-  const openLightbox = useCallback((type: "website" | "social", data: Record<string, unknown>) => {
+  const openLightbox = useCallback((type: "website" | "social", data: WebsiteData | SocialData) => {
     setLightboxData({ type, data });
     setLightboxOpen(true);
   }, []);
@@ -44,7 +45,7 @@ const CaseStudies = () => {
   }, []);
 
   // Website Projects Data
-  const websiteProjects = [
+  const websiteProjects: WebsiteData[] = [
     {
       title: { en: "Nav Techno Solutions", es: "Nav Techno Solutions" },
       description: {
@@ -114,7 +115,7 @@ const CaseStudies = () => {
   ];
 
   // Social Media Posts Data
-  const socialPosts = [
+  const socialPosts: SocialData[] = [
     {
       platform: "instagram" as const,
       type: "single" as const,
