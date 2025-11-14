@@ -8,10 +8,11 @@ import {
 } from "@/utils/seo";
 import { SERVICES_DATA } from "@/data/services.data";
 import { BLOG_POSTS } from "@/data/blog.data";
+import ReviewSchema from "./ReviewSchema";
 
 /**
  * StructuredData Component
- * Injects LocalBusiness and Organization JSON-LD structured data
+ * Injects LocalBusiness, Organization, and page-specific JSON-LD structured data
  * This helps Google understand your business for local search and rich snippets
  */
 const StructuredData = () => {
@@ -21,6 +22,8 @@ const StructuredData = () => {
 
   // Page-specific structured data
   const pageSchemas: any[] = [];
+  const showReviews = location.pathname === "/" || location.pathname === "/about";
+  
   if (location.pathname.startsWith("/services")) {
     pageSchemas.push(generateServicesSchemaList(SERVICES_DATA));
   }
@@ -29,19 +32,22 @@ const StructuredData = () => {
   }
 
   return (
-    <Helmet>
-      <script type="application/ld+json">
-        {JSON.stringify(localBusinessSchema)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(organizationSchema)}
-      </script>
-      {pageSchemas.filter(Boolean).map((schema, idx) => (
-        <script key={idx} type="application/ld+json">
-          {JSON.stringify(schema)}
+    <>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(localBusinessSchema)}
         </script>
-      ))}
-    </Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(organizationSchema)}
+        </script>
+        {pageSchemas.filter(Boolean).map((schema, idx) => (
+          <script key={idx} type="application/ld+json">
+            {JSON.stringify(schema)}
+          </script>
+        ))}
+      </Helmet>
+      {showReviews && <ReviewSchema />}
+    </>
   );
 };
 

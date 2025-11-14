@@ -32,9 +32,9 @@ All colors MUST be HSL.
     --secondary: 0 0% 0%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Muted grays */
+    /* Muted grays - WCAG AA compliant (4.8:1 contrast ratio) */
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted-foreground: 0 0% 40%;
 
     /* White accent */
     --accent: 0 0% 100%;
