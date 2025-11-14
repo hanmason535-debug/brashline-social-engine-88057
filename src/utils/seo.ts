@@ -12,7 +12,7 @@ export const SEO_CONFIG = {
   defaultKeywords:
     "social media management Orlando, Florida social media agency, social media marketing Orlando, content creation Florida, Instagram management Orlando, Facebook management Florida, affordable social media packages",
   twitterHandle: "@Brashline",
-  ogImage: "/logo.png", // TODO: Create custom 1200x630 og-image.jpg with brand visuals
+  ogImage: "/images/og-home.jpg",
   locale: "en_US",
   // NAP (Name, Address, Phone) for local SEO consistency
   business: {
@@ -61,6 +61,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "social media management Orlando, Florida social media agency, social media marketing Orlando FL, Instagram management, Facebook ads Florida",
       canonical: baseUrl,
+      ogImage: "/images/og-home.jpg",
     },
     services: {
       title: "Social Media Services | Brashline Orlando",
@@ -69,6 +70,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "social media services Orlando, social media management packages Florida, content creation Orlando, community management services",
       canonical: `${baseUrl}/services`,
+      ogImage: "/images/og-services.jpg",
     },
     pricing: {
       title: "Social Media Management Pricing | Brashline",
@@ -77,6 +79,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "social media management pricing Orlando, affordable social media packages Florida, social media cost Orlando",
       canonical: `${baseUrl}/pricing`,
+      ogImage: "/images/og-pricing.jpg",
     },
     "case-studies": {
       title: "Case Studies & Portfolio | Brashline",
@@ -85,6 +88,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "social media case studies Orlando, portfolio Florida agency, social media results",
       canonical: `${baseUrl}/case-studies`,
+      ogImage: "/images/og-case-studies.jpg",
     },
     about: {
       title: "About Brashline | Orlando Social Media Agency",
@@ -93,6 +97,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "about Brashline, Orlando social media team, Florida marketing agency, social media experts Orlando",
       canonical: `${baseUrl}/about`,
+      ogImage: "/images/og-about.jpg",
     },
     blog: {
       title: "Social Media Tips & Insights | Brashline Blog",
@@ -109,6 +114,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "contact Brashline, Orlando social media agency contact, Florida marketing agency",
       canonical: `${baseUrl}/contact`,
+      ogImage: "/images/og-contact.jpg",
     },
     terms: {
       title: "Terms of Service | Brashline",
