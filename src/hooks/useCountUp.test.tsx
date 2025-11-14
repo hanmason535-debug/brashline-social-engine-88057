@@ -6,7 +6,7 @@ describe('useCountUp', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
-      return setTimeout(() => cb(performance.now()), 1) as any;
+      return setTimeout(() => cb(performance.now()), 1) as unknown as number;
     });
     vi.spyOn(window, 'cancelAnimationFrame').mockImplementation((id: number) => {
       clearTimeout(id);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -81,7 +81,7 @@ const plans = [
   },
 ];
 
-const PricingPreview = ({ lang }: PricingPreviewProps) => {
+const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
   const [showComparison, setShowComparison] = useState(false);
 
@@ -282,6 +282,8 @@ const PricingPreview = ({ lang }: PricingPreviewProps) => {
       </div>
     </section>
   );
-};
+});
+
+PricingPreview.displayName = 'PricingPreview';
 
 export default PricingPreview;

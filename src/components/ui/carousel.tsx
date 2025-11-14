@@ -175,17 +175,18 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProp
         variant={variant}
         size={size}
         className={cn(
-          "absolute h-8 w-8 rounded-full",
+          "absolute h-12 w-12 rounded-full shadow-lg hover:scale-110 transition-all duration-200 z-10",
+          "disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100",
           orientation === "horizontal"
-            ? "-left-12 top-1/2 -translate-y-1/2"
-            : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+            ? "-left-6 md:-left-14 top-1/2 -translate-y-1/2"
+            : "-top-14 left-1/2 -translate-x-1/2 rotate-90",
           className,
         )}
         disabled={!canScrollPrev}
         onClick={scrollPrev}
         {...props}
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="h-6 w-6" />
         <span className="sr-only">Previous slide</span>
       </Button>
     );
@@ -203,17 +204,18 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
         variant={variant}
         size={size}
         className={cn(
-          "absolute h-8 w-8 rounded-full",
+          "absolute h-12 w-12 rounded-full shadow-lg hover:scale-110 transition-all duration-200 z-10",
+          "disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100",
           orientation === "horizontal"
-            ? "-right-12 top-1/2 -translate-y-1/2"
-            : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+            ? "-right-6 md:-right-14 top-1/2 -translate-y-1/2"
+            : "-bottom-14 left-1/2 -translate-x-1/2 rotate-90",
           className,
         )}
         disabled={!canScrollNext}
         onClick={scrollNext}
         {...props}
       >
-        <ArrowRight className="h-4 w-4" />
+        <ArrowRight className="h-6 w-6" />
         <span className="sr-only">Next slide</span>
       </Button>
     );
@@ -221,4 +223,95 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
 );
 CarouselNext.displayName = "CarouselNext";
 
-export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext };
+const CarouselDots = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    const { api } = useCarousel();
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([]);
+
+    React.useEffect(() => {
+      if (!api) return;
+
+      setScrollSnaps(api.scrollSnapList());
+      setSelectedIndex(api.selectedScrollSnap());
+
+      const onSelect = () => {
+        setSelectedIndex(api.selectedScrollSnap());
+      };
+
+      api.on("select", onSelect);
+      return () => {
+        api.off("select", onSelect);
+      };
+    }, [api]);
+
+    if (scrollSnaps.length <= 1) return null;
+
+    return (
+      <div
+        ref={ref}
+        className={cn("flex justify-center gap-2 mt-4", className)}
+        {...props}
+      >
+        {scrollSnaps.map((_, index) => (
+          <button
+            key={index}
+            className={cn(
+              "h-2 rounded-full transition-all duration-300",
+              index === selectedIndex 
+                ? "w-8 bg-primary" 
+                : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+            )}
+            onClick={() => api?.scrollTo(index)}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+    );
+  },
+);
+CarouselDots.displayName = "CarouselDots";
+
+const CarouselSwipeIndicator = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    const [showIndicator, setShowIndicator] = React.useState(true);
+
+    React.useEffect(() => {
+      const timer = setTimeout(() => setShowIndicator(false), 3000);
+      return () => clearTimeout(timer);
+    }, []);
+
+    if (!showIndicator) return null;
+
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "absolute bottom-4 left-1/2 -translate-x-1/2 z-10",
+          "md:hidden pointer-events-none",
+          "animate-in fade-in slide-in-from-bottom-4 duration-500",
+          className,
+        )}
+        {...props}
+      >
+        <div className="flex items-center gap-2 bg-background/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border">
+          <ArrowLeft className="h-4 w-4 text-muted-foreground animate-pulse" />
+          <span className="text-sm text-muted-foreground font-medium">Swipe</span>
+          <ArrowRight className="h-4 w-4 text-muted-foreground animate-pulse" />
+        </div>
+      </div>
+    );
+  },
+);
+CarouselSwipeIndicator.displayName = "CarouselSwipeIndicator";
+
+export { 
+  type CarouselApi, 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselPrevious, 
+  CarouselNext,
+  CarouselDots,
+  CarouselSwipeIndicator,
+};

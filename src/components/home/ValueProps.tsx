@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Share2, Globe, TrendingUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -33,7 +34,7 @@ const valueProps = [
   },
 ];
 
-const ValueProps = ({ lang }: ValuePropsProps) => {
+const ValueProps = memo(({ lang }: ValuePropsProps) => {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
   return (
@@ -70,6 +71,8 @@ const ValueProps = ({ lang }: ValuePropsProps) => {
       </div>
     </section>
   );
-};
+});
+
+ValueProps.displayName = 'ValueProps';
 
 export default ValueProps;

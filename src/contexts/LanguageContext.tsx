@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { STORAGE_KEYS, SUPPORTED_LANGUAGES, type SupportedLanguage } from "@/lib/constants";
 
-type Language = "en" | "es";
+type Language = SupportedLanguage;
 
 interface LanguageContextType {
   lang: Language;
@@ -11,19 +12,31 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLangState] = useState<Language>(() => {
-    // Initialize from localStorage or default to "en"
-    const stored = localStorage.getItem("brashline-language");
-    return (stored === "en" || stored === "es") ? stored : "en";
+    // Initialize from localStorage with error handling
+    try {
+      const stored = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
+      return SUPPORTED_LANGUAGES.includes(stored as Language) ? (stored as Language) : "en";
+    } catch {
+      return "en";
+    }
   });
 
   const setLang = (newLang: Language) => {
     setLangState(newLang);
-    localStorage.setItem("brashline-language", newLang);
+    try {
+      localStorage.setItem(STORAGE_KEYS.LANGUAGE, newLang);
+    } catch (error) {
+      console.error("Failed to save language preference:", error);
+    }
   };
 
   useEffect(() => {
     // Persist language changes to localStorage
-    localStorage.setItem("brashline-language", lang);
+    try {
+      localStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
+    } catch (error) {
+      console.error("Failed to persist language:", error);
+    }
   }, [lang]);
 
   return (
@@ -40,3 +53,6 @@ export const useLanguage = () => {
   }
   return context;
 };
+
+export { LanguageContext };
+

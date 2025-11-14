@@ -8,7 +8,8 @@ describe('Utils', () => {
     });
 
     it('should handle conditional classes', () => {
-      expect(cn('px-4', false && 'py-2', 'text-sm')).toBe('px-4 text-sm');
+      const condition = false;
+      expect(cn('px-4', condition && 'py-2', 'text-sm')).toBe('px-4 text-sm');
     });
 
     it('should merge tailwind classes correctly', () => {

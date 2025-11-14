@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Index from './Index';
 
 describe('Index Page', () => {
@@ -8,9 +8,14 @@ describe('Index Page', () => {
     'should render the header, main content, and footer',
     async () => {
       render(
-        <MemoryRouter>
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
           <Index />
-        </MemoryRouter>
+        </BrowserRouter>
       );
 
       // Check for the header (navigation)
@@ -30,9 +35,14 @@ describe('Index Page', () => {
 
   it('should render hero section', () => {
     render(
-      <MemoryRouter>
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         <Index />
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     // Hero should contain a heading
@@ -42,9 +52,14 @@ describe('Index Page', () => {
 
   it('should render all major sections', () => {
     render(
-      <MemoryRouter>
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         <Index />
-      </MemoryRouter>
+      </BrowserRouter>
     );
 
     const main = screen.getByRole('main');

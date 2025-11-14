@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, memo } from "react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import FlipButton from "@/components/ui/flip-button";
@@ -6,7 +6,7 @@ import BackgroundPaths from "@/components/ui/background-paths";
 interface HeroProps {
   lang: "en" | "es";
 }
-const Hero = ({
+const Hero = memo(({
   lang
 }: HeroProps) => {
   const [titleNumber, setTitleNumber] = useState(0);
@@ -85,5 +85,8 @@ const Hero = ({
       </div>
 
     </section>;
-};
+});
+
+Hero.displayName = 'Hero';
+
 export default Hero;
