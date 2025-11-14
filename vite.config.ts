@@ -10,7 +10,8 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
     headers: {
-      // Development CSP: allows HMR (ws), eval for source maps, and Google Fonts
+      // Development CSP: permissive to allow HMR, eval, inline scripts, DevTools
+      // Note: Production CSP is stricter (see vercel.json)
       "Content-Security-Policy": [
         "default-src 'self'",
         "base-uri 'self'",
@@ -19,13 +20,13 @@ export default defineConfig(({ mode }) => ({
         "form-action 'self'",
         "manifest-src 'self'",
         "worker-src 'self'",
-        // Dev allows eval for Vite & source maps; production CSP removes this
-        "script-src 'self' 'unsafe-eval'",
+        // Dev: allow unsafe-inline for HMR + React DevTools injection, unsafe-eval for source maps
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
         "font-src 'self' https://fonts.gstatic.com data:",
-        // Allow external images (e.g., Unsplash) and data/blob URLs used in app
+        // Allow external images and data/blob URLs
         "img-src 'self' data: blob: https:",
-        // Allow HMR websocket and HTTP(S) API calls in dev
+        // Allow HMR websocket, API, and DevTools calls
         "connect-src 'self' ws: wss: http: https:"
       ].join('; '),
     },
