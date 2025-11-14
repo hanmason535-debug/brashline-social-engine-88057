@@ -25,7 +25,7 @@ const Hero = memo(({
   }, [titleNumber, titles]);
   return <section className="relative overflow-hidden bg-background">
       {/* Animated Background with performance hints */}
-      <div className="absolute inset-0 z-0" style={{ contain: 'layout style paint' }}>
+      <div className="absolute inset-0 z-0">
         <BackgroundPaths />
       </div>
 

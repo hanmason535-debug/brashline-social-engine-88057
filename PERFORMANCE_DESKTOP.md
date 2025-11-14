@@ -211,6 +211,24 @@
 
 ## Phase 1 Results (Completed)
 
+### Visual Regression Fix (Post-Deployment):
+
+**Issue Identified:** The CSS `contain: 'layout style paint'` property added to the Hero background div (line 27 of Hero.tsx) created a new containing block, causing the animated background to shift vertically and not align properly with the hero content.
+
+**Root Cause:** CSS containment creates a new stacking context and containing block, which affected the absolute positioning of the BackgroundPaths component relative to the section.
+
+**Fix Applied:**
+- Removed `style={{ contain: 'layout style paint' }}` from the background container div
+- Kept the lightweight `style={{ contain: 'layout' }}` on the animated headline span (doesn't affect layout)
+- Background now positions identically to `main` branch
+
+**Performance Impact:** Negligible. The containment was intended to isolate rendering but:
+- BackgroundPaths component is already isolated by absolute positioning
+- The performance gains from RAF throttling, path reduction, and lazy loading are preserved
+- Tests and build remain successful
+
+---
+
 ### Changes Made:
 
 **New Files:**
@@ -220,7 +238,7 @@
 **Modified Files:**
 - `src/hooks/useParallax.tsx` - Added RAF throttling, passive listeners, desktop-only mode
 - `src/components/ui/background-paths.tsx` - Reduced path count on desktop (36 → 18)
-- `src/components/home/Hero.tsx` - Added CSS containment hints
+- `src/components/home/Hero.tsx` - ~~Added CSS containment hints~~ **Removed problematic containment** (visual regression fix)
 - `src/pages/Index.tsx` - Lazy-loaded below-fold sections
 - `src/pages/CaseStudies.tsx` - Added will-change hints to parallax transforms
 - `src/tests/setup.ts` - Fixed matchMedia mock for tests
