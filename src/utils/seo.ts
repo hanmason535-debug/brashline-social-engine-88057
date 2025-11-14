@@ -231,6 +231,60 @@ export const generateOrganizationSchema = () => {
 };
 
 /**
+ * Generate Services ItemList JSON-LD from SERVICES_DATA
+ */
+export const generateServicesSchemaList = (services: Array<{ id: string; title: { en: string; es: string }; description: { en: string; es: string } }>) => {
+  const { siteUrl, business } = SEO_CONFIG;
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: services.map((svc, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      item: {
+        "@type": "Service",
+        name: svc.title.en,
+        description: svc.description.en,
+        provider: {
+          "@type": "Organization",
+          name: business.name,
+          url: siteUrl,
+        },
+        areaServed: {
+          "@type": "State",
+          name: business.address.state,
+        },
+      },
+    })),
+  };
+};
+
+/**
+ * Generate Blog ItemList JSON-LD for blog listing page
+ */
+export const generateBlogItemListSchema = (
+  posts: Array<{ title: { en: string; es: string }; summary: { en: string; es: string }; image?: string; date?: string }>
+) => {
+  const { siteUrl } = SEO_CONFIG;
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: posts.map((p, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      item: {
+        "@type": "BlogPosting",
+        headline: p.title.en,
+        description: p.summary.en,
+        image: p.image,
+        datePublished: p.date,
+        mainEntityOfPage: siteUrl + "/blog",
+      },
+    })),
+  };
+};
+
+/**
  * SEO Audit Reminder (dev mode only)
  */
 export const logSEOAudit = () => {
