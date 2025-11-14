@@ -399,3 +399,699 @@ Continue to Phase 2 - Additional FCP/LCP optimizations
 **Status:** ✅ Phase 2 Complete  
 **Last Updated:** November 14, 2025  
 **Next Step:** Monitor real-world metrics and consider merge to `performance/desktop-res-90`
+
+---
+
+## Animation Optimization Audit (Phase 1 - Analysis Only)
+
+**Branch:** `performance/animation-optimization`  
+**Date:** November 14, 2025  
+**Goal:** Comprehensive codebase-wide animation performance audit
+
+### Audit Scope
+
+This audit identified **28 animation sources** across the codebase with varying performance impacts:
+- **Framer Motion components:** 12 sources
+- **CSS animations (Tailwind @keyframes):** 3 sources
+- **Third-party particle systems:** 2 sources (SparklesCore, Embla Carousel)
+- **Custom hooks with RAF:** 3 sources
+- **UI animation components:** 8 sources
+
+### Executive Summary
+
+**Critical Findings:**
+1. **SparklesCore (Pricing page):** 120 particles @ 120fps - excessive CPU/GPU usage
+2. **Meteors (4 pages):** 30 meteors per page = 120 total DOM nodes - above-fold blocker
+3. **BackgroundPaths:** Already optimized in Phase 2, minor further improvements possible
+
+**Total Estimated Performance Gains:**
+- **SparklesCore optimization:** 30-40% CPU reduction on Pricing page
+- **Meteors reduction:** 25-30% CPU reduction on 4 affected pages
+- **BackgroundPaths further reduction:** 10-15% additional CPU savings
+- **Combined optimizations:** 40-50% overall animation CPU reduction
+
+---
+
+### High Priority Issues (Immediate Action Required)
+
+#### 1. **SparklesCore - Particle System**
+**File:** `src/components/ui/sparkles.tsx`  
+**Complexity:** 10/10 🔴  
+**Pages:** Pricing
+
+**Performance Analysis:**
+- **120+ particles** with continuous RAF loop
+- **120fps limit** (excessive, standard is 60fps)
+- **No viewport detection** - runs offscreen
+- **Heavy interactivity** - click adds 4 particles
+- **Colorful mode** - HSL color animation on GPU
+- **Opacity animation** on 120+ particles independently
+
+**CPU Impact:** 🔴 **Severe** - Continuous particle simulation
+
+**Optimization Plan:**
+```typescript
+// BEFORE (src/pages/Pricing.tsx - Line 250-260)
+<SparklesCore
+  id="pricing-sparkles"
+  background="transparent"
+  minSize={0.4}
+  maxSize={1}
+  particleDensity={120}  // ❌ Too many
+  className="w-full h-full"
+  particleColor="#FFFFFF"
+  fps={120}              // ❌ Excessive
+  speed={3}
+  colorful={true}        // ❌ GPU-intensive
+  onClick={(e) => {       // ❌ Unnecessary
+    particles.add(e.clientX, e.clientY, 4);
+  }}
+/>
+
+// AFTER (Optimized)
+<SparklesCore
+  id="pricing-sparkles"
+  background="transparent"
+  minSize={0.4}
+  maxSize={1}
+  particleDensity={60}   // ✅ 50% reduction
+  className="w-full h-full"
+  particleColor="#FFFFFF"
+  fps={60}               // ✅ Standard 60fps
+  speed={2}              // ✅ Slightly slower
+  colorful={false}       // ✅ Static color, better performance
+  // Remove click handler entirely
+/>
+```
+
+**Additional Required Change - Add IntersectionObserver:**
+```typescript
+// New component wrapper: src/components/ui/sparkles-optimized.tsx
+import { SparklesCore } from './sparkles';
+import { useRef, useEffect, useState } from 'react';
+
+export function SparklesOptimized(props) {
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0, rootMargin: '100px' }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={containerRef} className="w-full h-full">
+      {isInView && <SparklesCore {...props} />}
+    </div>
+  );
+}
+```
+
+**Files to Modify:**
+1. `src/components/ui/sparkles-optimized.tsx` (NEW - create wrapper)
+2. `src/pages/Pricing.tsx` (Line 8, 250-260) - reduce props and import wrapper
+
+**Expected Impact:**
+- **CPU:** 60% reduction (60 particles instead of 120 + 60fps instead of 120fps)
+- **GPU:** 30% reduction (remove colorful mode)
+- **Offscreen:** 100% savings when not visible
+
+**Priority:** 🔴 **CRITICAL** - Immediate implementation recommended
+
+---
+
+#### 2. **Meteors Component**
+**File:** `src/components/ui/meteors.tsx`  
+**Complexity:** 8/10 🔴  
+**Pages:** Contact, About, Blog, CaseStudies (30 meteors each)
+
+**Performance Analysis:**
+- **30 meteors per page** = 60 DOM elements (meteor + ::before)
+- **Randomized inline styles** - not memoized
+- **CSS animation** - continuous 5s infinite loop
+- **Gradient on ::before** - GPU compositing on 30 elements
+- **No offscreen detection** - animates when scrolled away
+
+**CPU Impact:** 🔴 **Severe** - 30 meteors above-fold blocks LCP
+
+**Optimization Plan:**
+```typescript
+// BEFORE (src/components/ui/meteors.tsx - Line 4-25)
+export const Meteors = ({ number = 20 }: { number?: number }) => {
+  const meteors = new Array(number || 20).fill(true);  // ❌ Not memoized
+  
+  return (
+    <>
+      {meteors.map((el, idx) => (
+        <span
+          key={"meteor" + idx}
+          className={cn(
+            "animate-meteor-effect absolute top-1/2 left-1/2 h-0.5 w-0.5 rounded-[9999px] bg-slate-500 shadow-[0_0_0_1px_#ffffff10] rotate-[215deg]",
+            // Random inline styles ❌ Recalculated every render
+            "before:content-[''] before:absolute before:top-1/2 before:transform before:-translate-y-[50%] before:w-[50px] before:h-[1px] before:bg-gradient-to-r before:from-muted-foreground before:to-transparent"
+          )}
+          style={{
+            top: Math.floor(Math.random() * (400 - -400) + -400) + "px",
+            left: Math.floor(Math.random() * (400 - -400) + -400) + "px",
+            animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + "s",
+            animationDuration: Math.floor(Math.random() * (10 - 2) + 2) + "s",
+          }}
+        />
+      ))}
+    </>
+  );
+};
+
+// AFTER (Optimized)
+import { useMemo, useRef, useEffect, useState } from 'react';
+
+export const Meteors = ({ number = 15 }: { number?: number }) => {  // ✅ Reduced default
+  const [isInView, setIsInView] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // ✅ Memoize meteor data
+  const meteors = useMemo(() => 
+    Array.from({ length: number }, (_, idx) => ({
+      id: idx,
+      top: Math.floor(Math.random() * 800 - 400),
+      left: Math.floor(Math.random() * 800 - 400),
+      delay: Math.random() * 0.6 + 0.2,
+      duration: Math.floor(Math.random() * 8 + 2),
+    })),
+    [number]
+  );
+
+  // ✅ IntersectionObserver for offscreen detection
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0, rootMargin: '200px' }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden">
+      {isInView && meteors.map((meteor) => (
+        <span
+          key={`meteor-${meteor.id}`}
+          className={cn(
+            "animate-meteor-effect absolute h-0.5 w-0.5 rounded-[9999px] bg-slate-500 shadow-[0_0_0_1px_#ffffff10] rotate-[215deg]",
+            "before:content-[''] before:absolute before:top-1/2 before:transform before:-translate-y-[50%] before:w-[50px] before:h-[1px] before:bg-gradient-to-r before:from-muted-foreground before:to-transparent"
+          )}
+          style={{
+            top: `${meteor.top}px`,
+            left: `${meteor.left}px`,
+            animationDelay: `${meteor.delay}s`,
+            animationDuration: `${meteor.duration}s`,
+            willChange: 'transform, opacity',  // ✅ GPU hint
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+```
+
+**CSS Change Required:**
+```css
+/* Add to src/index.css */
+.animate-meteor-effect {
+  contain: paint;  /* Isolate repaint */
+}
+```
+
+**Files to Modify:**
+1. `src/components/ui/meteors.tsx` (Full rewrite with memoization + IntersectionObserver)
+2. `src/index.css` (Add `contain: paint` to `.animate-meteor-effect`)
+3. `src/pages/Contact.tsx` (Line 18) - Change `<Meteors number={30} />` to `<Meteors number={15} />`
+4. `src/pages/About.tsx` (Line 17) - Change to `number={15}`
+5. `src/pages/Blog.tsx` (Line 98) - Change to `number={15}`
+6. `src/pages/CaseStudies.tsx` (Line 80) - Change to `number={15}`
+
+**Expected Impact:**
+- **DOM nodes:** 50% reduction (30 → 15 meteors per page)
+- **CPU:** 50% reduction from fewer animations + offscreen suspension
+- **Memory:** 50% reduction from fewer DOM nodes
+- **LCP:** 10-20% improvement from reduced above-fold work
+
+**Priority:** 🔴 **CRITICAL** - Blocks LCP on 4 major pages
+
+---
+
+#### 3. **BackgroundPaths Further Optimization**
+**File:** `src/components/ui/background-paths.tsx`  
+**Complexity:** 7/10 🟡  
+**Pages:** Index (Hero section)
+
+**Current State (Phase 2 Optimized):**
+- Desktop: 18 paths × 2 instances = 36 paths
+- Mobile: 36 paths × 2 instances = 72 paths  ❌ **Counterintuitive**
+
+**Issue:** Mobile has MORE animated paths than desktop, despite lower CPU/GPU capacity
+
+**Optimization Plan:**
+```typescript
+// CURRENT (Line 11-12)
+const pathCount = isDesktop ? 18 : 36;  // ❌ Mobile has 2x more paths
+
+// OPTIMIZED
+const pathCount = isDesktop ? 20 : 15;  // ✅ Mobile has fewer paths
+// Desktop: 40 paths total (20×2)
+// Mobile: 30 paths total (15×2)
+```
+
+**Rationale:**
+- Mobile devices have less GPU/CPU capacity
+- Smaller viewports don't benefit from high path density
+- Current config is backwards (36 mobile vs 18 desktop)
+- New config: 15 mobile < 20 desktop (logical)
+
+**Files to Modify:**
+1. `src/components/ui/background-paths.tsx` (Line 12) - Change path count logic
+
+**Expected Impact:**
+- **Mobile CPU:** 58% reduction (72 → 30 paths)
+- **Desktop CPU:** -11% increase (36 → 40 paths, acceptable tradeoff for visual richness)
+- **Mobile battery:** Significant improvement from fewer animations
+- **Visual quality:** Desktop gets richer background, mobile gets simpler (appropriate)
+
+**Priority:** 🟡 **HIGH** - Mobile performance improvement
+
+---
+
+### Medium Priority Issues (Plan for Phase 3+)
+
+#### 4. **Hero Title Cycling Animation**
+**File:** `src/components/home/Hero.tsx`  
+**Complexity:** 6/10 🟡  
+**CPU Impact:** Moderate - Spring animation every 2 seconds
+
+**Current Implementation:**
+- 4 `motion.span` elements always in DOM
+- `useEffect` with `setInterval` every 2s
+- Spring animation with `type: "spring"`, `stiffness: 260`, `damping: 20`
+
+**Optimization Plan:**
+```typescript
+// Replace Framer Motion with CSS-only animation
+
+// BEFORE (Lines 40-80)
+const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentTitleIndex((prev) => (prev + 1) % titles.length);
+  }, 2000);
+  return () => clearInterval(interval);
+}, []);
+
+// Motion spans with spring animations...
+
+// AFTER (CSS-only)
+// Create CSS keyframe animation in index.css
+@keyframes titleCycle {
+  0%, 20% { opacity: 1; transform: translateY(0); }
+  25%, 100% { opacity: 0; transform: translateY(-10px); }
+}
+
+// Simplified component (no Framer Motion)
+<span className="animate-title-cycle" style={{ animationDelay: '0s' }}>
+  Consistent
+</span>
+<span className="animate-title-cycle" style={{ animationDelay: '2s' }}>
+  Growing
+</span>
+// ... etc
+```
+
+**Files to Modify:**
+1. `src/components/home/Hero.tsx` (Lines 40-80) - Replace with CSS animation
+2. `src/index.css` - Add `@keyframes titleCycle`
+
+**Expected Impact:**
+- **Bundle size:** -0.5KB (remove Framer Motion usage)
+- **CPU:** 15-20% reduction (no spring physics)
+- **Re-renders:** Eliminate state-driven re-renders every 2s
+
+**Priority:** 🟡 **MEDIUM** - Hero section, but animation is brief
+
+---
+
+#### 5. **WorkFilters Layout Animation**
+**File:** `src/components/work/WorkFilters.tsx`  
+**Complexity:** 5/10 🟡  
+**CPU Impact:** Moderate - FLIP animation on click
+
+**Current Implementation:**
+- Uses `motion.div` with `layoutId="activeFilter"`
+- FLIP animation (getBoundingClientRect + reflow calculations)
+- Spring physics on every filter change
+
+**Optimization Plan:**
+```typescript
+// Replace layoutId with simple CSS transition
+
+// BEFORE
+<motion.div layoutId="activeFilter" className="absolute inset-0 bg-primary" />
+
+// AFTER
+// Use CSS-only active state with transform
+<div 
+  className="absolute inset-0 bg-primary transition-transform duration-300"
+  style={{ 
+    transform: `translateX(${activeIndex * 100}%)`,
+    width: `${100 / filterCount}%` 
+  }}
+/>
+```
+
+**Files to Modify:**
+1. `src/components/work/WorkFilters.tsx` (Full rewrite) - Remove layoutId, use CSS transforms
+
+**Expected Impact:**
+- **CPU:** 40-60% reduction (no FLIP calculation)
+- **UX:** Simpler, more predictable animation
+- **Bundle size:** Reduce Framer Motion usage
+
+**Priority:** 🟡 **MEDIUM** - User-triggered, not continuous
+
+---
+
+#### 6. **Project Cards Stagger Animation**
+**Files:**
+- `src/components/work/WebsiteProjectCard.tsx`
+- `src/components/work/SocialPostCard.tsx`  
+**Complexity:** 5/10 🟡
+
+**Current Implementation:**
+- Staggered entry with `delay: index * 0.1`
+- Last card visible after 1.2s delay
+- All 18 cards render with motion.div wrappers
+
+**Optimization Plan:**
+```typescript
+// BEFORE
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, delay: index * 0.1 }}  // ❌ Long delay
+>
+
+// AFTER
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.4, delay: index * 0.05 }}  // ✅ Faster
+>
+```
+
+**Files to Modify:**
+1. `src/components/work/WebsiteProjectCard.tsx` (Line ~20) - Reduce stagger
+2. `src/components/work/SocialPostCard.tsx` (Line ~20) - Reduce stagger
+
+**Expected Impact:**
+- **LCP:** 10-15% improvement (cards visible sooner)
+- **Perceived performance:** Faster page load
+
+**Priority:** 🟡 **MEDIUM** - Below-fold, but multiple instances
+
+---
+
+#### 7. **StatsBar CountUp with RAF**
+**File:** `src/components/work/StatsBar.tsx`  
+**Complexity:** 6/10 🟡  
+**CPU Impact:** Moderate - 3 simultaneous RAF loops
+
+**Current Implementation:**
+- `useCountUp` hook runs 3 simultaneous RAF loops (2s each)
+- No visibility check - continues if scrolled away
+- Easing calculated on every frame (~120 times per countup)
+
+**Optimization Plan:**
+```typescript
+// Add visibility check to useCountUp hook
+
+// src/hooks/useCountUp.tsx
+import { useRef, useEffect, useState } from 'react';
+
+export function useCountUp({ end, duration, shouldStart }) {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);  // ✅ Add visibility state
+  const rafRef = useRef<number>();
+  const elementRef = useRef<HTMLElement>(null);  // ✅ Add ref
+
+  // ✅ Add IntersectionObserver
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0 }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  // Modify RAF loop to check visibility
+  useEffect(() => {
+    if (!shouldStart || !isVisible) {  // ✅ Pause when not visible
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      return;
+    }
+    
+    // ... existing RAF logic
+  }, [shouldStart, isVisible, end, duration]);
+
+  return { count, ref: elementRef };  // ✅ Return ref
+}
+```
+
+**Files to Modify:**
+1. `src/hooks/useCountUp.tsx` (Add visibility check + IntersectionObserver)
+2. `src/components/work/StatsBar.tsx` (Attach refs from useCountUp)
+
+**Expected Impact:**
+- **CPU:** 100% savings when scrolled offscreen
+- **Battery:** Improved mobile battery life
+
+**Priority:** 🟡 **MEDIUM** - Scroll-triggered, limited instances
+
+---
+
+#### 8. **BorderBeam CSS Animation**
+**File:** `src/components/ui/border-beam.tsx`  
+**Complexity:** 7/10 🟡  
+**CPU Impact:** Moderate - CSS offset-path animation
+
+**Current Implementation:**
+- CSS `offset-path` animation (12-15s duration)
+- Continuous infinite loop
+- No offscreen detection
+- Dual beams on Pricing cards (2 instances per featured card)
+
+**Optimization Plan:**
+```typescript
+// Wrap BorderBeam with IntersectionObserver
+
+// NEW: src/components/ui/border-beam-optimized.tsx
+import { BorderBeam } from './border-beam';
+import { useRef, useEffect, useState } from 'react';
+
+export function BorderBeamOptimized(props) {
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current?.parentElement;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0, rootMargin: '100px' }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  if (!isInView) return null;
+  return <BorderBeam {...props} />;
+}
+```
+
+**Files to Modify:**
+1. `src/components/ui/border-beam-optimized.tsx` (NEW - create wrapper)
+2. `src/pages/Pricing.tsx` (Lines 250, 257) - Import and use optimized version
+
+**Expected Impact:**
+- **CPU:** 100% savings when offscreen
+- **GPU:** Reduced compositing when not visible
+
+**Priority:** 🟡 **MEDIUM** - Decorative, but on Pricing page
+
+---
+
+### Low Priority Issues (Nice-to-Have)
+
+#### 9-21. **Various Low-Impact Optimizations**
+
+See full audit report section above for detailed analysis of:
+- LoadingBar (width → scaleX transform)
+- FlipButton (3D rotation overhead)
+- FlowButton (404 page animation)
+- NotFound page animations
+- Carousel (virtual scrolling for 10+ items)
+- Lightbox (body overflow manipulation)
+- ServiceCard (already well-optimized)
+- useParallax hook (add IntersectionObserver)
+- useScrollAnimation (no optimization needed)
+- useCountUp (covered in Medium priority)
+- CSS animations (meteor, border-beam keyframes)
+
+**Estimated Combined Impact:** 5-10% additional CPU savings
+
+**Priority:** 🟢 **LOW** - Implement after High/Medium priorities
+
+---
+
+### Implementation Priority Matrix
+
+| Priority | Component | File | Effort | Impact | When |
+|----------|-----------|------|--------|--------|------|
+| 🔴 **P0** | SparklesCore | `sparkles.tsx` | 2 hours | 40% CPU | Week 1 |
+| 🔴 **P0** | Meteors | `meteors.tsx` + 4 pages | 3 hours | 30% CPU | Week 1 |
+| 🟡 **P1** | BackgroundPaths | `background-paths.tsx` | 30 min | 15% mobile | Week 1 |
+| 🟡 **P1** | Hero Title | `Hero.tsx` | 2 hours | 20% CPU | Week 2 |
+| 🟡 **P1** | WorkFilters | `WorkFilters.tsx` | 1.5 hours | 50% click | Week 2 |
+| 🟡 **P2** | Project Cards | `*Card.tsx` (2 files) | 30 min | 15% LCP | Week 2 |
+| 🟡 **P2** | StatsBar | `useCountUp.tsx` | 1.5 hours | 100% offscreen | Week 3 |
+| 🟡 **P2** | BorderBeam | `border-beam.tsx` | 1 hour | 100% offscreen | Week 3 |
+| 🟢 **P3** | LoadingBar | `loading-bar.tsx` | 30 min | 5% | Week 4+ |
+| 🟢 **P3** | Various | Multiple files | 4 hours | 10% | Week 4+ |
+
+**Total Implementation Time:** ~16 hours across 4 weeks
+
+---
+
+### Testing Requirements for Each Change
+
+**Before Implementation:**
+1. Run full test suite: `npm test`
+2. Build production: `npm run build`
+3. Capture baseline Lighthouse scores (desktop + mobile)
+4. Capture baseline DevTools Performance trace
+
+**After Each Optimization:**
+1. Verify visual behavior matches original
+2. Run full test suite (ensure 99/99 passing)
+3. Build production (ensure no errors)
+4. Capture new Lighthouse scores
+5. Compare Performance traces (paint, composite, CPU)
+6. Test on real mobile device (Android Chrome recommended)
+
+**Regression Criteria:**
+- ❌ **Block merge if:** Test failures, build errors, visual regressions
+- ⚠️ **Review if:** LCP increases, CLS > 0.1, mobile RES < 95
+- ✅ **Approve if:** Tests pass, metrics improve or stay neutral, visuals match
+
+---
+
+### Files Requiring Modification (Summary)
+
+**High Priority (Week 1):**
+1. `src/components/ui/sparkles-optimized.tsx` (NEW)
+2. `src/components/ui/meteors.tsx` (REWRITE)
+3. `src/components/ui/background-paths.tsx` (1 line change)
+4. `src/pages/Pricing.tsx` (2 prop changes)
+5. `src/pages/Contact.tsx` (1 prop change)
+6. `src/pages/About.tsx` (1 prop change)
+7. `src/pages/Blog.tsx` (1 prop change)
+8. `src/pages/CaseStudies.tsx` (1 prop change)
+9. `src/index.css` (Add `contain: paint` to meteor class)
+
+**Medium Priority (Week 2-3):**
+10. `src/components/home/Hero.tsx` (Title animation rewrite)
+11. `src/components/work/WorkFilters.tsx` (Remove layoutId)
+12. `src/components/work/WebsiteProjectCard.tsx` (Reduce stagger)
+13. `src/components/work/SocialPostCard.tsx` (Reduce stagger)
+14. `src/hooks/useCountUp.tsx` (Add visibility check)
+15. `src/components/work/StatsBar.tsx` (Attach refs)
+16. `src/components/ui/border-beam-optimized.tsx` (NEW)
+
+**Total Files:** 16 files (4 new, 12 modified)
+
+---
+
+### Risk Assessment
+
+**High Risk:**
+- **SparklesCore optimization:** Third-party library, changes may break
+  - *Mitigation:* Create wrapper instead of modifying library
+- **Meteors rewrite:** Used on 4 pages, visual regression risk
+  - *Mitigation:* Thorough visual testing on all 4 pages
+
+**Medium Risk:**
+- **Hero title animation:** Visible above-fold, UX-critical
+  - *Mitigation:* A/B test CSS vs Framer Motion
+- **WorkFilters:** User interaction, must feel instant
+  - *Mitigation:* Test with various filter counts
+
+**Low Risk:**
+- **BackgroundPaths path count:** Already optimized, minor tweak
+- **StatsBar visibility:** Passive optimization, no UX change
+
+---
+
+### Success Metrics
+
+**Target Improvements (Desktop):**
+- **RES:** 57 → 90+ (primary goal)
+- **INP:** 1,216ms → <400ms (67% improvement)
+- **FCP:** 3.05s → <2.5s (18% improvement)
+- **LCP:** 3.05s → <2.5s (18% improvement)
+
+**Target Improvements (Mobile):**
+- **RES:** Maintain ≥ 95
+- **FCP:** Improve by 10-20%
+- **Battery life:** Measurable improvement from offscreen suspension
+
+**Animation-Specific Metrics:**
+- **Particle CPU:** 60% reduction (SparklesCore)
+- **Meteor CPU:** 50% reduction (count + offscreen)
+- **Paint operations:** 40% reduction (group animations)
+- **Offscreen CPU:** 90% reduction (all IntersectionObserver additions)
+
+---
+
+### Next Steps
+
+**DO NOT IMPLEMENT YET** - This audit is for analysis and planning only.
+
+**Approval Required Before Implementation:**
+1. Review audit findings
+2. Approve optimization priorities
+3. Confirm implementation timeline
+4. Green-light specific optimizations for Phase 3
+
+Once approved, implementation will proceed in priority order with continuous testing and validation.
+
+---
+
+**Status:** ✅ Audit Complete - Awaiting Approval for Implementation  
+**Last Updated:** November 14, 2025  
+**Branch:** `performance/animation-optimization` (analysis only, no code changes yet)
