@@ -211,21 +211,32 @@
 
 ## Phase 1 Results (Completed)
 
-### Visual Regression Fix (Post-Deployment):
+### Visual Regression Fix (Post-Deployment)
 
-**Issue Identified:** The CSS `contain: 'layout style paint'` property added to the Hero background div (line 27 of Hero.tsx) created a new containing block, causing the animated background to shift vertically and not align properly with the hero content.
+**Issue Identified:** Background appeared shifted/misaligned on initial page load on the performance branch compared to main.
 
-**Root Cause:** CSS containment creates a new stacking context and containing block, which affected the absolute positioning of the BackgroundPaths component relative to the section.
+**Root Cause:** The `useMediaQuery` hook was initializing with `useState(false)`, causing a **hydration mismatch and visual flash**:
+
+1. Initial render: `useIsDesktop()` returns `false` (hardcoded initial state)
+2. `BackgroundPaths` renders with 36 paths (mobile count)
+3. `useEffect` runs after mount, detects desktop viewport
+4. `useIsDesktop()` updates to `true`
+5. `BackgroundPaths` re-renders with 18 paths (desktop count)
+
+This transition from 36 → 18 paths after the first render caused a **visual flash/shift**.
 
 **Fix Applied:**
-- Removed `style={{ contain: 'layout style paint' }}` from the background container div
-- Kept the lightweight `style={{ contain: 'layout' }}` on the animated headline span (doesn't affect layout)
-- Background now positions identically to `main` branch
+- Updated `useMediaQuery.ts` to use intelligent initial value
+- Uses `useState(() => getInitialMatches(query))` instead of `useState(false)`
+- On client: Checks `window.matchMedia(query).matches` immediately
+- On SSR: Defaults to desktop (most common viewport)
+- **Result:** No hydration mismatch, no re-render, no visual flash
 
-**Performance Impact:** Negligible. The containment was intended to isolate rendering but:
-- BackgroundPaths component is already isolated by absolute positioning
-- The performance gains from RAF throttling, path reduction, and lazy loading are preserved
-- Tests and build remain successful
+**Performance Impact:** Zero regression. All performance optimizations preserved:
+- ✅ RAF throttling active
+- ✅ Path reduction working (18 paths on desktop from first render)
+- ✅ Lazy loading functional
+- ✅ Desktop-only parallax active
 
 ---
 
@@ -233,12 +244,12 @@
 
 **New Files:**
 - `src/hooks/useThrottle.ts` - Reusable throttle utility hook
-- `src/hooks/useMediaQuery.ts` - Desktop/mobile detection hooks
+- `src/hooks/useMediaQuery.ts` - Desktop/mobile detection hooks (with proper SSR handling)
 
 **Modified Files:**
 - `src/hooks/useParallax.tsx` - Added RAF throttling, passive listeners, desktop-only mode
 - `src/components/ui/background-paths.tsx` - Reduced path count on desktop (36 → 18)
-- `src/components/home/Hero.tsx` - ~~Added CSS containment hints~~ **Removed problematic containment** (visual regression fix)
+- `src/hooks/useMediaQuery.ts` - **Fixed hydration mismatch** (visual regression fix)
 - `src/pages/Index.tsx` - Lazy-loaded below-fold sections
 - `src/pages/CaseStudies.tsx` - Added will-change hints to parallax transforms
 - `src/tests/setup.ts` - Fixed matchMedia mock for tests

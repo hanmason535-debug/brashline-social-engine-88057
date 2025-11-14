@@ -1,17 +1,29 @@
 import { useState, useEffect } from 'react';
 
 /**
+ * Get initial matches value safely (works in SSR and client)
+ */
+function getInitialMatches(query: string): boolean {
+  // For SSR/initial render, check if window exists
+  if (typeof window === 'undefined') {
+    // Default to desktop for SSR to match most common viewport
+    return query.includes('min-width');
+  }
+  return window.matchMedia(query).matches;
+}
+
+/**
  * Custom hook for detecting media queries
  * @param query Media query string
  * @returns Boolean indicating if media query matches
  */
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(false);
+  const [matches, setMatches] = useState(() => getInitialMatches(query));
 
   useEffect(() => {
     const media = window.matchMedia(query);
     
-    // Set initial value
+    // Set initial value in case it changed
     setMatches(media.matches);
 
     // Create event listener

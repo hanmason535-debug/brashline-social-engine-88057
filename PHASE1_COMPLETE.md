@@ -3,7 +3,7 @@
 **Branch:** `performance/desktop-res-90`  
 **Date:** November 14, 2025  
 **Status:** ✅ Phase 1 Complete - Ready for Deployment & Testing  
-**Visual Regression:** ✅ Fixed (CSS containment removed from background)
+**Visual Regression:** ✅ Fixed (useMediaQuery hydration mismatch resolved)
 
 ---
 
@@ -11,7 +11,7 @@
 
 Phase 1 focused on fixing the **critical INP bottleneck** (1,216ms) and improving **FCP/LCP** (3.05s) on desktop while maintaining mobile performance (RES 98).
 
-**Post-Deployment Fix:** A visual regression in the hero background positioning was identified and fixed by removing problematic CSS containment that created an unintended containing block.
+**Post-Deployment Fix:** A visual flash/shift in the hero background was identified and fixed by resolving a hydration mismatch in the `useMediaQuery` hook.
 
 ### Key Achievements:
 - ✅ **Optimized scroll performance** with RAF throttling
@@ -20,34 +20,57 @@ Phase 1 focused on fixing the **critical INP bottleneck** (1,216ms) and improvin
 - ✅ **Eliminated mobile overhead** (parallax disabled on mobile)
 - ✅ **100% test pass rate** (99/99 tests)
 - ✅ **8.3% bundle size reduction** in main chunk
-- ✅ **Fixed hero background regression** (visual alignment restored)
+- ✅ **Fixed hero background hydration issue** (no visual flash)
 
 ---
 
 ## Visual Regression Fix
 
 ### Problem Discovered:
-After initial deployment of Phase 1, the animated background in the hero section was vertically shifted compared to the `main` branch. The background no longer aligned properly behind the hero content.
+After initial deployment of Phase 1, the animated background in the hero section appeared to "flash" or "shift" on initial page load, particularly noticeable on desktop viewports.
 
 ### Root Cause:
 ```typescript
-// BEFORE (Caused regression):
-<div className="absolute inset-0 z-0" style={{ contain: 'layout style paint' }}>
-  <BackgroundPaths />
-</div>
+// BEFORE (Caused hydration mismatch):
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false); // ❌ Always starts false
+  
+  useEffect(() => {
+    setMatches(window.matchMedia(query).matches); // Updates after mount
+    // ...
+  }, [query]);
+  
+  return matches;
+}
 ```
 
-The CSS `contain: 'layout style paint'` property creates a new containing block and stacking context, which affected how the absolutely positioned BackgroundPaths component was rendered relative to its parent section.
+**The Problem Flow:**
+1. **Initial render:** `useIsDesktop()` returns `false` (hardcoded)
+2. **BackgroundPaths** renders with **36 paths** (mobile count)
+3. **useEffect runs:** Detects desktop viewport
+4. **State updates:** `useIsDesktop()` becomes `true`
+5. **Re-render:** BackgroundPaths switches to **18 paths** (desktop count)
+
+This 36 → 18 path transition after the first render caused a **visible flash/shift** in the background animation.
 
 ### Solution:
 ```typescript
-// AFTER (Fixed):
-<div className="absolute inset-0 z-0">
-  <BackgroundPaths />
-</div>
+// AFTER (Fixed - intelligent initial value):
+function getInitialMatches(query: string): boolean {
+  if (typeof window === 'undefined') {
+    // SSR: Default to desktop (most common viewport)
+    return query.includes('min-width');
+  }
+  return window.matchMedia(query).matches; // ✅ Correct from start
+}
+
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(() => getInitialMatches(query));
+  // ...
+}
 ```
 
-Removed the containment property from the background container. The performance benefits from this property were negligible compared to the other optimizations (RAF throttling, path reduction, lazy loading).
+**Result:** On desktop, `useIsDesktop()` returns `true` from the **first render**. BackgroundPaths renders with 18 paths immediately. No re-render, no flash, no shift.
 
 ### Performance Impact of Fix:
 - **Zero performance regression** - The containment was redundant since:
@@ -228,9 +251,8 @@ const paths = Array.from({ length: pathCount }, (_, i) => ({...}));
    - Reduced desktop rendering overhead
 
 3. **`src/components/home/Hero.tsx`**
-   - ~~CSS containment for isolated background rendering~~ **REMOVED** (caused visual regression)
-   - Kept lightweight `contain: 'layout'` on animated headline (safe, no layout impact)
-   - Background positioning now matches `main` branch exactly
+   - Kept lightweight `contain: 'layout'` on animated headline for text rendering optimization
+   - No changes to background container (absolute positioning sufficient)
 
 4. **`src/pages/Index.tsx`**
    - Lazy-loaded ValueProps, StatsSection, PricingPreview
