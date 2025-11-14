@@ -1,13 +1,23 @@
+import { Suspense, lazy } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
-import ValueProps from "@/components/home/ValueProps";
-import PricingPreview from "@/components/home/PricingPreview";
-import StatsSection from "@/components/home/StatsSection";
 import SEOHead from "@/components/SEO/SEOHead";
 import StructuredData from "@/components/SEO/StructuredData";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getPageSEO } from "@/utils/seo";
+
+// Lazy load below-the-fold components for better FCP/LCP
+const ValueProps = lazy(() => import("@/components/home/ValueProps"));
+const StatsSection = lazy(() => import("@/components/home/StatsSection"));
+const PricingPreview = lazy(() => import("@/components/home/PricingPreview"));
+
+// Lightweight loading fallback
+const SectionLoader = () => (
+  <div className="py-20 flex justify-center">
+    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
 
 const Index = () => {
   const { lang } = useLanguage();
@@ -21,9 +31,15 @@ const Index = () => {
         <Header />
         <main className="flex-1">
           <Hero lang={lang} />
-          <ValueProps lang={lang} />
-          <StatsSection lang={lang} />
-          <PricingPreview lang={lang} />
+          <Suspense fallback={<SectionLoader />}>
+            <ValueProps lang={lang} />
+          </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <StatsSection lang={lang} />
+          </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <PricingPreview lang={lang} />
+          </Suspense>
         </main>
         <Footer />
       </div>
