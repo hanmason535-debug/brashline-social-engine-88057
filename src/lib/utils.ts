@@ -43,6 +43,12 @@ export function generateSizesAttribute(sizes: number[]): string {
   if (sizes.length === 1) return `${sizes[0]}px`;
 
   const sortedSizes = [...sizes].sort((a, b) => a - b);
+  
+  // Special case for 2 items: single breakpoint is cleaner
+  if (sizes.length === 2) {
+    return `(max-width: 640px) ${sortedSizes[0]}px, ${sortedSizes[1]}px`;
+  }
+  
   const queries = [
     `(max-width: 640px) ${sortedSizes[0]}px`,
     `(max-width: 1024px) ${sortedSizes[Math.floor(sortedSizes.length / 2)]}px`,
