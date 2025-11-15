@@ -19,6 +19,7 @@ import { Phone, Mail, Clock } from "lucide-react";
 import { Meteors } from "@/components/ui/meteors";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getPageSEO } from "@/utils/seo";
+import { ContactForm } from "@/components/forms/ContactForm";
 
 const Contact = () => {
   const { lang } = useLanguage();
@@ -93,27 +94,24 @@ const Contact = () => {
             </div>
 
             <Card className="shadow-soft">
-              <CardContent className="p-8 text-center">
-                <h2 className="text-2xl font-heading font-bold mb-4">
-                  {lang === "en" ? "Schedule a Strategy Call" : "Agenda una Llamada Estratégica"}
+              <CardContent className="p-8">
+                <h2 className="text-2xl font-heading font-bold mb-6 text-center">
+                  {lang === "en" ? "Send Us a Message" : "Envíanos un Mensaje"}
                 </h2>
-                <p className="text-muted-foreground mb-6">
-                  {lang === "en"
-                    ? "Book a free 20-minute consultation to discuss your social media goals."
-                    : "Reserva una consulta gratuita de 20 minutos para discutir tus objetivos en redes sociales."}
-                </p>
-                <Button size="lg" asChild>
-                  <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-                    {lang === "en" ? "Book Now" : "Reservar Ahora"}
-                  </a>
-                </Button>
-                <p className="text-xs text-muted-foreground mt-4">
-                  {lang === "en"
-                    ? "Replies within 1 hour"
-                    : "Respondemos en 1 hora"}
-                </p>
+                <ContactForm lang={lang} />
               </CardContent>
             </Card>
+
+            <div className="mt-8 text-center">
+              <p className="text-muted-foreground mb-4">
+                {lang === "en" ? "Or reach out directly:" : "O contáctanos directamente:"}
+              </p>
+              <Button size="lg" asChild>
+                <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+                  {lang === "en" ? "Chat on WhatsApp" : "Chatear en WhatsApp"}
+                </a>
+              </Button>
+            </div>
           </div>
         </section>
       </main>
