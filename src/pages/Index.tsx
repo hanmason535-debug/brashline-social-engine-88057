@@ -13,10 +13,10 @@
 import { Suspense, lazy } from "react";
 import { RootLayout } from "@/components/layout/RootLayout";
 import Hero from "@/components/home/Hero";
-import SEOHead from "@/components/SEO/SEOHead";
-import StructuredData from "@/components/SEO/StructuredData";
+import MetaManager from "@/seo/MetaManager";
+import StructuredData from "@/seo/StructuredData";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getPageSEO } from "@/utils/seo";
+import { getPageSEO } from "@/seo/seo";
 import { ContactFormDialog } from "@/components/forms/ContactFormDialog";
 
 // Lazy load below-the-fold components for better FCP/LCP
@@ -37,7 +37,7 @@ const Index = () => {
 
   return (
     <RootLayout>
-      <SEOHead pageSEO={pageSEO} lang={lang} />
+      <MetaManager pageSEO={pageSEO} lang={lang} />
       <StructuredData />
       <Hero lang={lang} />
       <Suspense fallback={<SectionLoader />}>

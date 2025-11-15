@@ -227,3 +227,37 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     },
   },
 ];
+
+// FAQ data for pricing page structured data (JSON-LD)
+export const faqs = [
+  {
+    question: {
+      en: "Do your plans require a long-term contract?",
+      es: "¿Los planes requieren un contrato a largo plazo?",
+    },
+    answer: {
+      en: "No — our plans are month-to-month with a 30-day cancellation notice. We focus on delivering measurable value so clients stay because they get results.",
+      es: "No — nuestros planes son mensuales con 30 días de preaviso para cancelar. Nos enfocamos en ofrecer un valor medible para que los clientes se queden por los resultados.",
+    },
+  },
+  {
+    question: {
+      en: "Can I switch between plans mid-term?",
+      es: "¿Puedo cambiar entre planes a mitad de período?",
+    },
+    answer: {
+      en: "Yes — you can upgrade or downgrade at any time; billing is prorated for upgrades.",
+      es: "Sí — puedes actualizar o degradar en cualquier momento; la facturación se prorratea para las mejoras.",
+    },
+  },
+  {
+    question: {
+      en: "Do you offer custom packages for agencies or franchises?",
+      es: "¿Ofrecen paquetes personalizados para agencias o franquicias?",
+    },
+    answer: {
+      en: "Absolutely — we provide custom packages for agencies, franchises, or enterprise clients. Contact our sales team using the contact form to discuss specific requirements.",
+      es: "Absolutamente — ofrecemos paquetes personalizados para agencias, franquicias o clientes empresariales. Contacta a nuestro equipo de ventas mediante el formulario de contacto para discutir requisitos específicos.",
+    },
+  },
+];
