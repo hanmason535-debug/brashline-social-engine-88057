@@ -14,6 +14,9 @@ import {
   formatTitle,
   generateLocalBusinessSchema,
   generateOrganizationSchema,
+  generateServicesSchemaList,
+  generateBlogItemListSchema,
+  logSEOAudit,
 } from './seo';
 
 describe('SEO Utils', () => {
@@ -74,6 +77,48 @@ describe('SEO Utils', () => {
       expect(schema.name).toBe(SEO_CONFIG.business.name);
       expect(schema.url).toBe(SEO_CONFIG.siteUrl);
       expect(schema.logo).toBe(`${SEO_CONFIG.siteUrl}/logo.png`);
+    });
+  });
+
+  describe('generateServicesSchemaList', () => {
+    it('should map services to an ItemList with Service items', () => {
+      const services = [
+        { id: 's1', title: { en: 'A', es: 'A' }, description: { en: 'Ae', es: 'Ae' } },
+        { id: 's2', title: { en: 'B', es: 'B' }, description: { en: 'Be', es: 'Be' } },
+      ];
+      const schema = generateServicesSchemaList(services);
+      expect(schema['@type']).toBe('ItemList');
+      expect(schema.itemListElement).toHaveLength(2);
+      expect(schema.itemListElement[0].position).toBe(1);
+      expect(schema.itemListElement[0].item['@type']).toBe('Service');
+      expect(schema.itemListElement[0].item.name).toBe('A');
+    });
+  });
+
+  describe('generateBlogItemListSchema', () => {
+    it('should map posts to an ItemList of BlogPosting', () => {
+      const posts = [
+        { title: { en: 'T1', es: 'T1' }, summary: { en: 'S1', es: 'S1' }, image: '/img.jpg', date: '2024-01-01' },
+      ];
+      const schema = generateBlogItemListSchema(posts);
+      expect(schema['@type']).toBe('ItemList');
+      expect(schema.itemListElement[0].item['@type']).toBe('BlogPosting');
+      expect(schema.itemListElement[0].item.headline).toBe('T1');
+    });
+  });
+
+  describe('logSEOAudit', () => {
+    it('should log audit checklist in dev', () => {
+      const group = vi.spyOn(console, 'group').mockImplementation(() => undefined);
+      const log = vi.spyOn(console, 'log').mockImplementation(() => undefined);
+      const groupEnd = vi.spyOn(console, 'groupEnd').mockImplementation(() => undefined);
+      logSEOAudit();
+      expect(group).toHaveBeenCalled();
+      expect(log).toHaveBeenCalled();
+      expect(groupEnd).toHaveBeenCalled();
+      group.mockRestore();
+      log.mockRestore();
+      groupEnd.mockRestore();
     });
   });
 });
