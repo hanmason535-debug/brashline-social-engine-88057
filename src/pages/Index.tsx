@@ -21,6 +21,7 @@ import { getPageSEO } from "@/utils/seo";
 import { ContactFormDialog } from "@/components/forms/ContactFormDialog";
 
 // Lazy load below-the-fold components for better FCP/LCP
+const TrustedBy = lazy(() => import("@/components/home/TrustedBy"));
 const ValueProps = lazy(() => import("@/components/home/ValueProps"));
 const StatsSection = lazy(() => import("@/components/home/StatsSection"));
 const PricingPreview = lazy(() => import("@/components/home/PricingPreview"));
@@ -44,6 +45,9 @@ const Index = () => {
         <Header />
         <main className="flex-1">
           <Hero lang={lang} />
+          <Suspense fallback={<SectionLoader />}>
+            <TrustedBy />
+          </Suspense>
           <Suspense fallback={<SectionLoader />}>
             <ValueProps lang={lang} />
           </Suspense>

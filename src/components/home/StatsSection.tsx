@@ -10,7 +10,8 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import { useCountUp } from '@/hooks/useCountUp';
 import { Users, Award, Clock, TrendingUp } from 'lucide-react';
 
@@ -19,78 +20,84 @@ interface StatsSectionProps {
 }
 
 const StatsSection = ({ lang }: StatsSectionProps) => {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.3 });
-
-  // Call hooks at the top level for each stat
-  const count1 = useCountUp({ end: 500, duration: 2500, shouldStart: isVisible });
-  const count2 = useCountUp({ end: 98, duration: 2500, shouldStart: isVisible });
-  const count3 = useCountUp({ end: 24, duration: 2500, shouldStart: isVisible });
-  const count4 = useCountUp({ end: 150, duration: 2500, shouldStart: isVisible });
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
 
   const stats = [
     {
       icon: Users,
-      count: count1,
+      end: 500,
       suffix: '+',
       label: { en: 'Clients Served', es: 'Clientes Atendidos' },
     },
     {
       icon: Award,
-      count: count2,
+      end: 98,
       suffix: '%',
       label: { en: 'Satisfaction Rate', es: 'Tasa de Satisfacción' },
     },
     {
       icon: Clock,
-      count: count3,
+      end: 24,
       suffix: '/7',
       label: { en: 'Support Available', es: 'Soporte Disponible' },
     },
     {
       icon: TrendingUp,
-      count: count4,
+      end: 150,
       suffix: '%',
       label: { en: 'Avg. Growth', es: 'Crecimiento Promedio' },
     },
   ];
 
   return (
-    <section
-      ref={elementRef as React.RefObject<HTMLElement>}
-      className="py-20 bg-gradient-to-b from-background to-muted/30"
-    >
+    <section ref={ref} className="py-20 bg-gradient-to-b from-background to-muted/30">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-
-            return (
-              <div
-                key={index}
-                className={`text-center transform transition-all duration-700 ${
-                  isVisible
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-10'
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 border border-primary/20 mb-4">
-                  <Icon className="h-8 w-8 text-primary" />
-                </div>
-                <div className="text-4xl md:text-5xl font-heading font-bold mb-2">
-                  {stat.count}
-                  {stat.suffix}
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  {stat.label[lang]}
-                </p>
-              </div>
-            );
-          })}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((stat, index) => (
+            <StatItem key={index} {...stat} lang={lang} isVisible={inView} index={index} />
+          ))}
         </div>
       </div>
     </section>
   );
 };
+
+const StatItem = ({ icon: Icon, end, suffix, label, lang, isVisible, index }) => {
+  const count = useCountUp({ end, duration: 2500, shouldStart: isVisible });
+
+  const variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        delay: index * 0.1,
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      variants={variants}
+      initial="hidden"
+      animate={isVisible ? 'visible' : 'hidden'}
+      className="text-center p-4 rounded-lg transition-all duration-300 hover:bg-muted/50"
+    >
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary/10 to-primary/20 border border-primary/20 mb-4">
+        <Icon className="h-8 w-8 text-primary" />
+      </div>
+      <div className="text-4xl md:text-5xl font-heading font-bold mb-2">
+        {count}
+        {suffix}
+      </div>
+      <p className="text-sm text-muted-foreground">{label[lang]}</p>
+    </motion.div>
+  );
+};
+
 
 export default StatsSection;

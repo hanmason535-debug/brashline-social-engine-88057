@@ -98,7 +98,7 @@ const Footer = memo(() => {
             <h3 className="font-heading font-semibold mb-4">
               {lang === "en" ? "Follow Us" : "Síguenos"}
             </h3>
-            <div className="flex gap-4">
+            <div className="flex gap-3">
               {socialLinks.map((social) => (
                 social.external ? (
                   <a
@@ -106,7 +106,7 @@ const Footer = memo(() => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-full bg-muted hover:bg-primary/20 text-muted-foreground hover:text-primary transition-all duration-300"
                     aria-label={social.label}
                   >
                     <social.icon className="h-5 w-5" />
@@ -115,7 +115,7 @@ const Footer = memo(() => {
                   <Link
                     key={social.label}
                     to={social.href}
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-full bg-muted hover:bg-primary/20 text-muted-foreground hover:text-primary transition-all duration-300"
                     aria-label={social.label}
                   >
                     <social.icon className="h-5 w-5" />

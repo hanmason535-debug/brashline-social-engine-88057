@@ -106,18 +106,21 @@ const Header = memo(() => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex lg:items-center lg:gap-8">
+        <div className="hidden lg:flex lg:items-center lg:gap-6">
           {navigation.top.map((item) => (
             <Link
               key={item.href}
               to={item.href}
-              className={`nav-link text-sm font-medium transition-colors pb-1 ${
+              className={`relative text-sm font-medium transition-colors duration-300 ${
                 isActive(item.href)
-                  ? "text-foreground active"
-                  : "text-foreground/80 hover:text-foreground"
+                  ? "text-primary"
+                  : "text-foreground/70 hover:text-foreground"
               }`}
             >
               {item.label[lang]}
+              {isActive(item.href) && (
+                <span className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 h-[2px] w-6 bg-primary rounded-full" />
+              )}
             </Link>
           ))}
         </div>
