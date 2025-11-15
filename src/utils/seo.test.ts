@@ -7,7 +7,7 @@
  * Assumptions:
  * - Serves as executable documentation for how callers are expected to use the API.
  */
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import {
   SEO_CONFIG,
   getPageSEO,
