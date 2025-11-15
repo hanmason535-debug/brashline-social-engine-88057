@@ -18,6 +18,7 @@ import { Meteors } from "@/components/ui/meteors";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAbout } from "@/hooks/useAbout";
 import { getPageSEO } from "@/utils/seo";
+import { sanitizeAndPreserveWhitespace } from "@/utils/sanitizer";
 
 const About = () => {
   const { lang } = useLanguage();
@@ -59,9 +60,8 @@ const About = () => {
                   className={`text-muted-foreground leading-relaxed mb-4 ${
                     index === content.story.paragraphs.length - 1 ? 'font-semibold' : ''
                   }`}
-                >
-                  {paragraph}
-                </p>
+                  dangerouslySetInnerHTML={{ __html: sanitizeAndPreserveWhitespace(paragraph) }}
+                />
               ))}
             </div>
 

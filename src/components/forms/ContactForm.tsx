@@ -31,6 +31,7 @@ const contactSchema = z.object({
     .trim()
     .min(10, { message: "Message must be at least 10 characters" })
     .max(1000, { message: "Message must be less than 1000 characters" }),
+  honeypot: z.string().optional(),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -65,6 +66,11 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
   const serviceType = watch("serviceType");
 
   const onSubmit = async (data: ContactFormData) => {
+    if (data.honeypot) {
+      console.warn("Bot submission detected");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -148,6 +154,10 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="hidden">
+        <Label htmlFor="honeypot">Honeypot</Label>
+        <Input id="honeypot" {...register("honeypot")} />
+      </div>
       <div className="space-y-2">
         <Label htmlFor="name">{t.name}</Label>
         <Input

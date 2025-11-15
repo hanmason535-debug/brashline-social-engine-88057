@@ -13,6 +13,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import { securityHeaders } from "./src/middlewares";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -20,6 +21,7 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
     headers: {
+      ...securityHeaders,
       // Development CSP: permissive to allow HMR, eval, inline scripts, DevTools
       // Note: Production CSP is stricter (see vercel.json)
       "Content-Security-Policy": [
@@ -32,13 +34,16 @@ export default defineConfig(({ mode }) => ({
         "worker-src 'self'",
         // Dev: allow unsafe-inline for HMR + React DevTools injection, unsafe-eval for source maps
         "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+        "style-src 'self' https://fonts.googleapis.com",
         "font-src 'self' https://fonts.gstatic.com data:",
         // Allow external images and data/blob URLs
         "img-src 'self' data: blob: https:",
         // Allow HMR websocket, API, and DevTools calls
-        "connect-src 'self' ws: wss: http: https:"
+        "connect-src 'self' ws: wss: http: https:",
+        "report-uri /csp-report",
+        "report-to csp-endpoint"
       ].join('; '),
+      "Reporting-Endpoints": "csp-endpoint=\"/csp-report\""
     },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
@@ -48,6 +53,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
