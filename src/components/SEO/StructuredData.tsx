@@ -32,7 +32,8 @@ const StructuredData = () => {
   const organizationSchema = generateOrganizationSchema();
 
   // Page-specific structured data
-  const pageSchemas: any[] = [];
+  // JSON-LD schemas are plain objects; keep type broad but not any
+  const pageSchemas: Array<Record<string, unknown>> = [];
   if (location.pathname.startsWith("/services")) {
     pageSchemas.push(generateServicesSchemaList(SERVICES_DATA));
   }

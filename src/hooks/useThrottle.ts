@@ -17,7 +17,7 @@ import { useEffect, useRef } from 'react';
 // Inputs: the target callback and a minimum delay between invocations.
 // Output: a stable function that forwards the latest arguments while respecting the delay.
 // Performance: coalesces rapid calls and ensures a trailing call is delivered without tight loops.
-export function useThrottle<T extends (...args: any[]) => any>(
+export function useThrottle<T extends (...args: unknown[]) => unknown>(
   callback: T,
   delay: number
 ): (...args: Parameters<T>) => void {
