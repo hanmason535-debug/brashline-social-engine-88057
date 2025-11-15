@@ -15,6 +15,7 @@
  * Performance:
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
+// Hook: encapsulated observer logic above for consistent behavior across components
 import { useEffect, useRef, useState } from 'react';
 
 interface UseScrollAnimationOptions {

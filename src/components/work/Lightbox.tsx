@@ -14,30 +14,7 @@ import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink, Heart, MessageCircle, Share2, Bookmark, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-interface WebsiteData {
-  thumbnail: string;
-  title: { en: string; es: string };
-  url: string;
-  description: { en: string; es: string };
-  category: { en: string; es: string };
-  techStack: string[];
-}
-
-interface SocialData {
-  image: string;
-  caption: { en: string; es: string };
-  type?: "video" | "image";
-  platform: string;
-  timestamp: string;
-  engagement: {
-    likes?: number;
-    comments?: number;
-    shares?: number;
-    saves?: number;
-    views?: number;
-  };
-}
+import { WebsiteData, SocialData } from "@/types/work.types";
 
 interface LightboxProps {
   isOpen: boolean;

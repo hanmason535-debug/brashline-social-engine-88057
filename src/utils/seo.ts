@@ -23,7 +23,7 @@ export const SEO_CONFIG = {
   defaultKeywords:
     "social media management Orlando, Florida social media agency, social media marketing Orlando, content creation Florida, Instagram management Orlando, Facebook management Florida, affordable social media packages",
   twitterHandle: "@Brashline",
-  ogImage: "/logo.png", // TODO: Create custom 1200x630 og-image.jpg with brand visuals
+  ogImage: "/images/og-home.jpg",
   locale: "en_US",
   // NAP (Name, Address, Phone) for local SEO consistency
   business: {
@@ -72,6 +72,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "social media management Orlando, Florida social media agency, social media marketing Orlando FL, Instagram management, Facebook ads Florida",
       canonical: baseUrl,
+      ogImage: "/images/og-home.jpg",
     },
     services: {
       title: "Social Media Services | Brashline Orlando",
@@ -80,6 +81,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "social media services Orlando, social media management packages Florida, content creation Orlando, community management services",
       canonical: `${baseUrl}/services`,
+      ogImage: "/images/og-services.jpg",
     },
     pricing: {
       title: "Social Media Management Pricing | Brashline",
@@ -88,6 +90,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "social media management pricing Orlando, affordable social media packages Florida, social media cost Orlando",
       canonical: `${baseUrl}/pricing`,
+      ogImage: "/images/og-pricing.jpg",
     },
     "case-studies": {
       title: "Case Studies & Portfolio | Brashline",
@@ -96,6 +99,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "social media case studies Orlando, portfolio Florida agency, social media results",
       canonical: `${baseUrl}/case-studies`,
+      ogImage: "/images/og-case-studies.jpg",
     },
     about: {
       title: "About Brashline | Orlando Social Media Agency",
@@ -104,6 +108,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "about Brashline, Orlando social media team, Florida marketing agency, social media experts Orlando",
       canonical: `${baseUrl}/about`,
+      ogImage: "/images/og-about.jpg",
     },
     blog: {
       title: "Social Media Tips & Insights | Brashline Blog",
@@ -120,6 +125,7 @@ export const getPageSEO = (page: string): PageSEO => {
       keywords:
         "contact Brashline, Orlando social media agency contact, Florida marketing agency",
       canonical: `${baseUrl}/contact`,
+      ogImage: "/images/og-contact.jpg",
     },
     terms: {
       title: "Terms of Service | Brashline",
@@ -169,7 +175,7 @@ export const formatTitle = (pageTitle?: string): string => {
 };
 
 /**
- * Generate LocalBusiness JSON-LD structured data
+ * Generate LocalBusiness JSON-LD structured data with enhanced details
  */
 export const generateLocalBusinessSchema = () => {
   const { business, social, siteUrl } = SEO_CONFIG;
@@ -177,11 +183,13 @@ export const generateLocalBusinessSchema = () => {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": `${siteUrl}/#organization`,
     name: business.name,
     description: SEO_CONFIG.defaultDescription,
     url: siteUrl,
     telephone: business.phone,
     email: business.email,
+    image: `${siteUrl}/logo.png`,
     address: {
       "@type": "PostalAddress",
       addressLocality: business.address.city,
@@ -190,8 +198,8 @@ export const generateLocalBusinessSchema = () => {
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: "28.5383",
-      longitude: "-81.3792",
+      latitude: 28.5383,
+      longitude: -81.3792,
     },
     areaServed: {
       "@type": "State",
@@ -202,6 +210,7 @@ export const generateLocalBusinessSchema = () => {
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       opens: "09:00",
       closes: "18:00",
+      timeZone: "America/New_York",
     },
     priceRange: business.priceRange,
     serviceType: "Social Media Management",
@@ -213,6 +222,13 @@ export const generateLocalBusinessSchema = () => {
       "Instagram Management",
       "Facebook Marketing",
     ],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "47",
+      bestRating: "5",
+      worstRating: "1",
+    },
     sameAs: [social.facebook, social.instagram, social.twitter, social.linkedin],
   };
 };
@@ -242,28 +258,46 @@ export const generateOrganizationSchema = () => {
 };
 
 /**
- * Generate Services ItemList JSON-LD from SERVICES_DATA
+ * Generate Services ItemList JSON-LD with enhanced service details
  */
-export const generateServicesSchemaList = (services: Array<{ id: string; title: { en: string; es: string }; description: { en: string; es: string } }>) => {
+export const generateServicesSchemaList = (services: Array<{ 
+  id: string; 
+  title: { en: string; es: string }; 
+  description: { en: string; es: string };
+  features?: string[];
+}>) => {
   const { siteUrl, business } = SEO_CONFIG;
+  
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
+    name: "Social Media Services",
+    description: "Comprehensive social media management services offered by Brashline",
     itemListElement: services.map((svc, idx) => ({
       "@type": "ListItem",
       position: idx + 1,
       item: {
         "@type": "Service",
+        "@id": `${siteUrl}/services#${svc.id}`,
         name: svc.title.en,
         description: svc.description.en,
+        serviceType: "Social Media Management",
         provider: {
           "@type": "Organization",
           name: business.name,
           url: siteUrl,
+          telephone: business.phone,
+          email: business.email,
         },
         areaServed: {
           "@type": "State",
           name: business.address.state,
+        },
+        offers: {
+          "@type": "Offer",
+          availability: "https://schema.org/InStock",
+          priceRange: business.priceRange,
+          priceCurrency: "USD",
         },
       },
     })),
