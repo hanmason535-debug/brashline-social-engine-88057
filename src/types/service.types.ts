@@ -2,6 +2,15 @@
  * Service Types
  * Type definitions for service offerings
  */
+/**
+ * File overview: src/types/service.types.ts
+ *
+ * Shared TypeScript type definitions for this feature area.
+ * Behavior:
+ * - Documents the shape of domain data and narrows allowable values at compile time.
+ * Assumptions:
+ * - Runtime data is normalized to match these shapes before reaching UI components.
+ */
 
 import type { LucideIcon } from 'lucide-react';
 

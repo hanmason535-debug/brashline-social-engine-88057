@@ -1,3 +1,12 @@
+/**
+ * File overview: src/components/layout/Header.test.tsx
+ *
+ * Test suite validating the public behavior of the associated module.
+ * Behavior:
+ * - Focuses on observable outputs and edge cases, not implementation details.
+ * Assumptions:
+ * - Serves as executable documentation for how callers are expected to use the API.
+ */
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, vi, beforeEach } from 'vitest';

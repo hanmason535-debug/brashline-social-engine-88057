@@ -1,7 +1,24 @@
+/**
+ * File overview: src/hooks/use-toast.ts
+ *
+ * Custom React hook `use-toast` encapsulating reusable view logic.
+ * Inputs:
+ * - Parameters passed to the hook and ambient browser/app state.
+ * Outputs:
+ * - A stable API of state and callbacks for components to consume.
+ * Side effects:
+ * - Uses React effects where needed and is responsible for its own cleanup.
+ * Performance:
+ * - Designed so calling components can avoid duplicating logic and re-renders.
+ */
 import * as React from "react";
 
 import type { ToastActionElement, ToastProps } from "@/components/ui/toast";
 
+// Hook: central toast state manager with a shared in-memory queue.
+// Responsibilities: owns toast identifiers, lifetimes, and open/close behavior for the entire app shell.
+// Side effects: updates are dispatched via a module-level reducer and timeouts instead of React context.
+// Performance: limits concurrent toasts via TOAST_LIMIT and only re-renders components that subscribe to the hook.
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000000;
 

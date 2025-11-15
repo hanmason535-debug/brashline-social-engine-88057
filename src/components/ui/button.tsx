@@ -1,3 +1,15 @@
+/**
+ * File overview: src/components/ui/button.tsx
+ *
+ * React component `button` rendering a focused piece of UI.
+ * Behavior:
+ * - Receives props from parents and may read from hooks or context.
+ * - Renders presentational markup and wires callbacks for user interaction.
+ * Data flow:
+ * - Follows a one-way data flow: parents own data, this component focuses on display.
+ * Performance:
+ * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
+ */
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";

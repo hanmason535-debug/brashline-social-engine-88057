@@ -4,10 +4,12 @@ import { cleanup } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
 import 'vitest-matchmedia-mock';
 
-// Extends Vitest's expect method with methods from react-testing-library
+// Test setup: centralizes global mocks and DOM helpers so individual test files stay focused on behavior.
+// Responsibilities: extend Jest DOM matchers, normalize browser APIs (matchMedia, IntersectionObserver), and stub animation/SEO layers.
+// Performance: keeps tests deterministic and avoids real animations or network-bound features.
 expect.extend(matchers);
 
-// Mock matchMedia for tests that don't set up their own
+// Provide a default matchMedia implementation so viewport-dependent hooks can run without extra per-test wiring.
 if (!window.matchMedia) {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
@@ -25,7 +27,7 @@ if (!window.matchMedia) {
   });
 }
 
-// Mock IntersectionObserver
+// Minimal IntersectionObserver shim to support in-view hooks without exercising browser layout logic.
 global.IntersectionObserver = class IntersectionObserver {
   constructor() {}
   disconnect() {}
@@ -36,7 +38,7 @@ global.IntersectionObserver = class IntersectionObserver {
   unobserve() {}
 } as unknown as typeof IntersectionObserver;
 
-// Mock the useLanguage context to provide a default value
+// Provide a default language context so components under test can assume a valid `lang` without rendering the real provider.
 vi.mock('@/contexts/LanguageContext', () => ({
   useLanguage: () => ({
     lang: 'en',
@@ -50,7 +52,7 @@ interface MotionProps {
   [key: string]: unknown;
 }
 
-// Mock framer-motion to disable animations in tests
+// Disable framer-motion animations in tests while preserving component structure for layout queries.
 vi.mock('framer-motion', () => ({
   ...vi.importActual('framer-motion'),
   motion: {
@@ -63,12 +65,12 @@ vi.mock('framer-motion', () => ({
   AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
 }));
 
-// Mock the BackgroundPaths component
+// Replace the heavy BackgroundPaths animation layer with a cheap test double.
 vi.mock('@/components/ui/background-paths', () => ({
   default: () => React.createElement('div', { 'data-testid': 'background-paths-mock' }),
 }));
 
-// Mock SEO components to avoid helmet-async issues in tests
+// Mock SEO components so tests do not depend on react-helmet-async behavior.
 vi.mock('@/components/SEO/SEOHead', () => ({
   default: () => null,
 }));
@@ -77,7 +79,7 @@ vi.mock('@/components/SEO/StructuredData', () => ({
   default: () => null,
 }));
 
-// Mock Vercel Analytics and Speed Insights
+// Strip Vercel analytics integrations from tests to keep the environment side-effect free.
 vi.mock('@vercel/analytics/react', () => ({
   Analytics: () => null,
 }));
@@ -86,7 +88,7 @@ vi.mock('@vercel/speed-insights/react', () => ({
   SpeedInsights: () => null,
 }));
 
-// Runs a cleanup after each test case (e.g. clearing jsdom)
+// Run a DOM cleanup after each test to avoid cross-test leakage.
 afterEach(() => {
   cleanup();
 });

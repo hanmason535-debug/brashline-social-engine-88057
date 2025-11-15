@@ -2,6 +2,16 @@
  * Design Tokens
  * Centralized design system values for consistent UI
  */
+/**
+ * File overview: src/config/design-tokens.ts
+ *
+ * Configures build-time or design-time behavior for the app.
+ * Behavior:
+ * - Centralizes shared configuration to keep feature code focused.
+ * - Assumes consumers read these values rather than hard-coding equivalents.
+ * Performance:
+ * - Changes here may impact bundle size, CSS output, or tooling performance.
+ */
 
 export const SPACING = {
   xs: 'p-2',      // 8px

@@ -1,3 +1,15 @@
+/**
+ * File overview: src/contexts/LanguageContext.tsx
+ *
+ * React context/provider responsible for shared application state.
+ * Behavior:
+ * - Owns the shape of the context value and update surface.
+ * - Coordinates state changes that span multiple feature areas.
+ * Assumptions:
+ * - Consumers are mounted beneath this provider in the component tree.
+ * Performance:
+ * - Be mindful when extending the context value to avoid broad re-renders.
+ */
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { STORAGE_KEYS, SUPPORTED_LANGUAGES, type SupportedLanguage } from "@/lib/constants";
 

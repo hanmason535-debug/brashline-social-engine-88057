@@ -3,6 +3,17 @@
  * Automatically generates XML sitemaps from route definitions
  * for better SEO indexing by search engines
  */
+/**
+ * File overview: src/lib/sitemap-generator.ts
+ *
+ * Library / utility helpers shared across the app.
+ * Behavior:
+ * - Provides pure or side-effect-aware functions with clear, reusable contracts.
+ * Assumptions:
+ * - Callers respect input contracts and handle error cases where documented.
+ * Performance:
+ * - Keep helpers small and composable to avoid hidden complexity in call sites.
+ */
 
 export interface SitemapRoute {
   path: string;

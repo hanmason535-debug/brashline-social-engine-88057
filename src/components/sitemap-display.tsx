@@ -3,6 +3,18 @@
  * Shows all routes and their SEO metadata
  * Useful for debugging and verifying sitemap generation
  */
+/**
+ * File overview: src/components/sitemap-display.tsx
+ *
+ * React component `sitemap-display` rendering a focused piece of UI.
+ * Behavior:
+ * - Receives props from parents and may read from hooks or context.
+ * - Renders presentational markup and wires callbacks for user interaction.
+ * Data flow:
+ * - Follows a one-way data flow: parents own data, this component focuses on display.
+ * Performance:
+ * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
+ */
 
 import { APP_ROUTES } from '@/lib/sitemap-generator';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';

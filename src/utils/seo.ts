@@ -2,6 +2,17 @@
  * SEO Utility Functions for Brashline
  * Centralized SEO configuration and helper functions
  */
+/**
+ * File overview: src/utils/seo.ts
+ *
+ * Library / utility helpers shared across the app.
+ * Behavior:
+ * - Provides pure or side-effect-aware functions with clear, reusable contracts.
+ * Assumptions:
+ * - Callers respect input contracts and handle error cases where documented.
+ * Performance:
+ * - Keep helpers small and composable to avoid hidden complexity in call sites.
+ */
 
 export const SEO_CONFIG = {
   siteName: "Brashline",

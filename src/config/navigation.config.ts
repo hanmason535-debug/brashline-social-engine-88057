@@ -2,6 +2,16 @@
  * Navigation Configuration
  * Central source of truth for all navigation items
  */
+/**
+ * File overview: src/config/navigation.config.ts
+ *
+ * Configures build-time or design-time behavior for the app.
+ * Behavior:
+ * - Centralizes shared configuration to keep feature code focused.
+ * - Assumes consumers read these values rather than hard-coding equivalents.
+ * Performance:
+ * - Changes here may impact bundle size, CSS output, or tooling performance.
+ */
 
 import type { LocalizedContent } from '@/types/service.types';
 
