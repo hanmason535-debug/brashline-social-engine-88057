@@ -51,6 +51,7 @@ const ThemeSwitch = ({
       <Switch
         checked={checked}
         onCheckedChange={handleCheckedChange}
+        title="theme"
         className={cn(
           "peer absolute inset-0 h-full w-full rounded-full transition-colors",
           "bg-muted border-2 border-border",

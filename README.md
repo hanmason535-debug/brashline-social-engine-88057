@@ -101,6 +101,17 @@ npm run test:coverage
 - ✅ Utils: cn, SEO helpers, sitemap generator
 - ✅ Pages: Index page
 
+## 🚀 SEO & Sharing
+
+The website is highly optimized for search engines and social sharing, following modern best practices.
+
+-   **Dynamic Meta Tags**: Each page has unique and descriptive `title` and `meta description` tags, managed by the `MetaManager` component.
+-   **Structured Data (JSON-LD)**: Rich snippets are enabled for local business, services, blog posts, and FAQs, helping search engines understand our content.
+-   **Open Graph & Twitter Cards**: Links shared on social media will have rich previews with images, titles, and descriptions.
+-   **Sitemap**: A dynamic `sitemap.xml` is automatically generated at build time to ensure all pages are indexed.
+-   **Robots.txt**: A `robots.txt` file is in place to guide search engine crawlers.
+-   **Breadcrumbs**: Breadcrumbs with JSON-LD markup are implemented to improve navigation and SEO.
+
 ## 🌍 Internationalization
 
 Built-in support for English and Spanish:

@@ -14,7 +14,7 @@ import { Suspense, lazy } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
-import SEOHead from "@/components/SEO/SEOHead";
+import MetaManager from "@/components/SEO/MetaManager";
 import StructuredData from "@/components/SEO/StructuredData";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getPageSEO } from "@/utils/seo";
@@ -38,7 +38,7 @@ const Index = () => {
 
   return (
     <>
-      <SEOHead pageSEO={pageSEO} lang={lang} />
+      <MetaManager pageSEO={pageSEO} lang={lang} />
       <StructuredData />
       <div className="min-h-screen flex flex-col">
         <Header />

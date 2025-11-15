@@ -10,6 +10,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Index from './Index';
 
 describe('Index Page', () => {
@@ -17,14 +18,16 @@ describe('Index Page', () => {
     'should render the header, main content, and footer',
     async () => {
       render(
-        <BrowserRouter
-          future={{
-            v7_startTransition: true,
-            v7_relativeSplatPath: true,
-          }}
-        >
-          <Index />
-        </BrowserRouter>
+        <HelmetProvider>
+          <BrowserRouter
+            future={{
+              v7_startTransition: true,
+              v7_relativeSplatPath: true,
+            }}
+          >
+            <Index />
+          </BrowserRouter>
+        </HelmetProvider>
       );
 
       // Check for the header (navigation)
@@ -44,14 +47,16 @@ describe('Index Page', () => {
 
   it('should render hero section', () => {
     render(
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <Index />
-      </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
+          <Index />
+        </BrowserRouter>
+      </HelmetProvider>
     );
 
     // Hero should contain a heading
@@ -61,14 +66,16 @@ describe('Index Page', () => {
 
   it('should render all major sections', () => {
     render(
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <Index />
-      </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
+          <Index />
+        </BrowserRouter>
+      </HelmetProvider>
     );
 
     const main = screen.getByRole('main');

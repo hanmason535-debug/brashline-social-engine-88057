@@ -234,6 +234,27 @@ export const generateLocalBusinessSchema = () => {
 };
 
 /**
+ * Generate FAQPage JSON-LD for pages with a FAQ section
+ */
+export const generateFAQPageSchema = (faqs: Array<{
+  question: { en: string; es: string };
+  answer: { en: string; es: string };
+}>) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question.en,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer.en,
+      },
+    })),
+  };
+};
+
+/**
  * Generate Organization JSON-LD structured data
  */
 export const generateOrganizationSchema = () => {
@@ -301,6 +322,43 @@ export const generateServicesSchemaList = (services: Array<{
         },
       },
     })),
+  };
+};
+
+/**
+ * Generate Article JSON-LD for individual blog posts
+ */
+export const generateArticleSchema = (post: {
+  title: { en: string; es: string };
+  summary: { en: string; es: string };
+  image?: string;
+  date?: string;
+  author: string;
+}) => {
+  const { siteUrl, siteName } = SEO_CONFIG;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title.en,
+    description: post.summary.en,
+    image: post.image,
+    datePublished: post.date,
+    author: {
+      "@type": "Person",
+      name: post.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteName,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${siteUrl}/blog`,
+    },
   };
 };
 

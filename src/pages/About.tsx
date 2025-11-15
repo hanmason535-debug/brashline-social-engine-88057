@@ -12,7 +12,7 @@
  */
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import SEOHead from "@/components/SEO/SEOHead";
+import MetaManager from "@/components/SEO/MetaManager";
 import { Card, CardContent } from "@/components/ui/card";
 import { Meteors } from "@/components/ui/meteors";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -26,7 +26,7 @@ const About = () => {
 
   return (
     <>
-      <SEOHead pageSEO={pageSEO} lang={lang} />
+      <MetaManager pageSEO={pageSEO} lang={lang} />
       <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">

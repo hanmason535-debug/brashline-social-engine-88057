@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import ThemeSwitch from "@/components/ui/theme-switch";
 import FlipButton from "@/components/ui/flip-button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Breadcrumbs from "./Breadcrumbs";
 
 const navigation = {
   top: [
@@ -164,6 +165,9 @@ const Header = memo(() => {
           </Button>
         </div>
       </nav>
+      <div className="container mx-auto py-2">
+        <Breadcrumbs />
+      </div>
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (

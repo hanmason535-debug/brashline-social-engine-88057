@@ -71,7 +71,7 @@ vi.mock('@/components/ui/background-paths', () => ({
 }));
 
 // Mock SEO components so tests do not depend on react-helmet-async behavior.
-vi.mock('@/components/SEO/SEOHead', () => ({
+vi.mock('@/components/SEO/MetaManager', () => ({
   default: () => null,
 }));
 
