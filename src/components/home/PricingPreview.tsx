@@ -12,6 +12,8 @@
  */
 import { useState, memo } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -96,139 +98,180 @@ const plans = [
 const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
   const [showComparison, setShowComparison] = useState(false);
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.5,
+      },
+    }),
+  };
 
   return (
-    <section className="py-16 md:py-24 bg-background">
+    <section ref={ref} className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="text-3xl md:text-5xl font-heading font-bold mb-4"
+          >
             {lang === "en" ? "Pick your plan" : "Elige tu plan"}
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6"
+          >
             {lang === "en"
               ? "Transparent pricing. No hidden fees. Cancel anytime."
               : "Precios transparentes. Sin tarifas ocultas. Cancela en cualquier momento."}
-          </p>
+          </motion.p>
 
           {/* Billing Toggle */}
-          <div className="flex items-center justify-center gap-3 mt-6">
-            <ToggleGroup 
-              type="single" 
-              value={billing} 
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex items-center justify-center gap-3 mt-6"
+          >
+            <span className={`transition-colors ${billing === 'monthly' ? 'text-foreground' : 'text-muted-foreground'}`}>
+              {lang === "en" ? "Monthly" : "Mensual"}
+            </span>
+            <ToggleGroup
+              type="single"
+              value={billing}
               onValueChange={(value) => value && setBilling(value as "monthly" | "annual")}
-              className="bg-muted p-1 rounded-lg"
+              className="bg-muted p-1 rounded-full"
             >
-              <ToggleGroupItem 
-                value="monthly" 
-                className="data-[state=on]:bg-background data-[state=on]:text-foreground px-6 py-2"
-              >
-                {lang === "en" ? "Monthly" : "Mensual"}
-              </ToggleGroupItem>
-              <ToggleGroupItem 
-                value="annual" 
-                className="data-[state=on]:bg-background data-[state=on]:text-foreground px-12 py-2 flex items-center gap-1 md:gap-2"
-              >
-                {lang === "en" ? "Annual" : "Anual"}
-                <Badge className="bg-green-600 hover:bg-green-600 text-white text-xs px-2 py-0 whitespace-nowrap">
-                  {lang === "en" ? "Upto 15% off" : "Hasta un 15% desc."}
-                </Badge>
-              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="monthly"
+                className="data-[state=on]:bg-primary data-[state=on]:text-primary-foreground rounded-full h-8 w-8"
+                aria-label="Monthly billing"
+              />
+              <ToggleGroupItem
+                value="annual"
+                className="data-[state=on]:bg-primary data-[state=on]:text-primary-foreground rounded-full h-8 w-8"
+                aria-label="Annual billing"
+              />
             </ToggleGroup>
-          </div>
+            <span className={`transition-colors ${billing === 'annual' ? 'text-foreground' : 'text-muted-foreground'}`}>
+              {lang === "en" ? "Annual" : "Anual"}
+            </span>
+            <Badge className="bg-green-600 hover:bg-green-600 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
+              {lang === "en" ? "Save up to 15%" : "Ahorra hasta 15%"}
+            </Badge>
+          </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12 items-center">
           {plans.map((plan, index) => {
             const currentPrice = billing === "monthly" ? plan.monthlyPrice : plan.annualPrice;
-            const billingPeriod = billing === "monthly" 
-              ? "" 
+            const billingPeriod = billing === "monthly"
+              ? ""
               : `${lang === "en" ? "billed as" : "cobrado como"} $${plan.annualTotal}/${lang === "en" ? "yr" : "año"}`;
 
             return (
-              <Card
+              <motion.div
                 key={index}
-                className={`relative shadow-soft hover:shadow-medium transition-all duration-300 border-border/50 bg-card overflow-hidden ${
-                  plan.featured
-                    ? "border-primary shadow-glow md:-translate-y-4"
-                    : "hover:-translate-y-1"
-                }`}
+                custom={index}
+                variants={cardVariants}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                className={`transform transition-transform duration-300 ${plan.featured ? 'md:scale-105' : 'hover:scale-102'}`}
               >
-                {plan.featured && (
-                  <>
-                    <BorderBeam 
-                      size={250} 
-                      duration={12} 
-                      delay={0}
-                      colorFrom="hsl(var(--primary))"
-                      colorTo="hsl(var(--primary-glow))"
-                    />
-                    <BorderBeam 
-                      size={250} 
-                      duration={12} 
-                      delay={6}
-                      borderWidth={2}
-                      colorFrom="hsl(var(--primary-glow))"
-                      colorTo="hsl(var(--primary))"
-                    />
-                    <Badge className="absolute top-4 left-1/2 -translate-x-1/2 bg-primary z-10">
-                      {lang === "en" ? "Most Popular" : "Más Popular"}
-                    </Badge>
-                  </>
-                )}
-
-                <CardHeader className="text-center pb-8 pt-12">
-                  <div className="text-xs font-semibold text-muted-foreground mb-2">
-                    {plan.tier[lang]}
-                  </div>
-                  <h3 className="text-2xl font-heading font-bold mb-4">
-                    {plan.name}
-                  </h3>
-                  <div className="mb-2">
-                    <span className="text-4xl font-heading font-bold">${currentPrice}</span>
-                    <span className="text-muted-foreground">/mo</span>
-                  </div>
-                  {billingPeriod && (
-                    <div className="text-sm text-muted-foreground mb-2">
-                      {billingPeriod}
-                    </div>
+                <Card
+                  className={`relative shadow-soft hover:shadow-medium transition-all duration-300 border-border/50 bg-card overflow-hidden h-full ${
+                    plan.featured ? "border-primary shadow-glow" : ""
+                  }`}
+                >
+                  {plan.featured && (
+                    <>
+                      <BorderBeam
+                        size={250}
+                        duration={12}
+                        delay={0}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary-glow))"
+                      />
+                      <BorderBeam
+                        size={250}
+                        duration={12}
+                        delay={6}
+                        borderWidth={2}
+                        colorFrom="hsl(var(--primary-glow))"
+                        colorTo="hsl(var(--primary))"
+                      />
+                      <Badge className="absolute top-4 left-1/2 -translate-x-1/2 bg-primary z-10">
+                        {lang === "en" ? "Most Popular" : "Más Popular"}
+                      </Badge>
+                    </>
                   )}
-                  {billing === "annual" && (
-                    <div className="text-xs text-primary font-semibold mb-4">
-                      {plan.discount}% {lang === "en" ? "off" : "desc."}
-                    </div>
-                  )}
-                  <p className="text-sm text-muted-foreground">
-                    {plan.summary[lang]}
-                  </p>
-                </CardHeader>
 
-                <CardContent className="space-y-3">
-                  {plan.features.map((feature, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      {feature.included ? (
-                        <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                      ) : (
-                        <X className="h-5 w-5 text-muted-foreground/50 flex-shrink-0 mt-0.5" />
-                      )}
-                      <span className={`text-sm ${!feature.included && 'text-muted-foreground'}`}>
-                        {feature[lang]}
-                      </span>
+                  <CardHeader className="text-center pb-8 pt-12">
+                    <div className="text-xs font-semibold text-muted-foreground mb-2">
+                      {plan.tier[lang]}
                     </div>
-                  ))}
-                </CardContent>
+                    <h3 className="text-2xl font-heading font-bold mb-4">
+                      {plan.name}
+                    </h3>
+                    <div className="mb-2">
+                      <span className="text-4xl font-heading font-bold">${currentPrice}</span>
+                      <span className="text-muted-foreground">/mo</span>
+                    </div>
+                    {billingPeriod && (
+                      <div className="text-sm text-muted-foreground mb-2">
+                        {billingPeriod}
+                      </div>
+                    )}
+                    {billing === "annual" && (
+                      <div className="text-xs text-primary font-semibold mb-4">
+                        {plan.discount}% {lang === "en" ? "off" : "desc."}
+                      </div>
+                    )}
+                    <p className="text-sm text-muted-foreground">
+                      {plan.summary[lang]}
+                    </p>
+                  </CardHeader>
 
-                <CardFooter className="pt-6">
-                  <Button
-                    asChild
-                    className="w-full"
-                    variant={plan.featured ? "default" : "outline"}
-                  >
-                    <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-                      {lang === "en" ? "Get Started" : "Comenzar"}
-                    </a>
-                  </Button>
-                </CardFooter>
-              </Card>
+                  <CardContent className="space-y-3">
+                    {plan.features.map((feature, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        {feature.included ? (
+                          <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        ) : (
+                          <X className="h-5 w-5 text-muted-foreground/50 flex-shrink-0 mt-0.5" />
+                        )}
+                        <span className={`text-sm ${!feature.included && 'text-muted-foreground'}`}>
+                          {feature[lang]}
+                        </span>
+                      </div>
+                    ))}
+                  </CardContent>
+
+                  <CardFooter className="pt-6">
+                    <Button
+                      asChild
+                      className="w-full"
+                      variant={plan.featured ? "default" : "outline"}
+                    >
+                      <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+                        {lang === "en" ? "Get Started" : "Comenzar"}
+                      </a>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </motion.div>
             );
           })}
         </div>

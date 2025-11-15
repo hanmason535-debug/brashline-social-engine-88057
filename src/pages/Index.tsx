@@ -11,6 +11,8 @@
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
 import { Suspense, lazy } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
@@ -36,6 +38,10 @@ const SectionLoader = () => (
 const Index = () => {
   const { lang } = useLanguage();
   const pageSEO = getPageSEO("home");
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
 
   return (
     <>
@@ -59,17 +65,36 @@ const Index = () => {
           </Suspense>
 
           {/* CTA Section with Contact Form Dialog */}
-          <section className="py-16 bg-muted">
-            <div className="container mx-auto px-4 text-center">
-              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
+          <section ref={ref} className="py-24 bg-muted/50 relative overflow-hidden">
+            <div className="absolute inset-0 z-0 opacity-10">
+              {/* Add a subtle background pattern or graphic here if available */}
+            </div>
+            <div className="container mx-auto px-4 text-center relative z-10">
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5 }}
+                className="text-3xl md:text-4xl font-heading font-bold mb-4"
+              >
                 {lang === "en" ? "Ready to Get Started?" : "¿Listo para Comenzar?"}
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8"
+              >
                 {lang === "en"
                   ? "Let's discuss how we can help grow your social media presence."
                   : "Discutamos cómo podemos ayudarte a hacer crecer tu presencia en redes sociales."}
-              </p>
-              <ContactFormDialog lang={lang} />
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <ContactFormDialog lang={lang} />
+              </motion.div>
             </div>
           </section>
         </main>

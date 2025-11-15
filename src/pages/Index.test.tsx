@@ -7,74 +7,74 @@
  * Assumptions:
  * - Serves as executable documentation for how callers are expected to use the API.
  */
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Index from './Index';
 
+// Mock child components to keep the test focused on the Index page structure
+vi.mock('@/components/layout/Header', () => ({ default: () => <header role="banner">Header</header> }));
+vi.mock('@/components/layout/Footer', () => ({ default: () => <footer role="contentinfo">Footer</footer> }));
+vi.mock('@/components/home/Hero', () => ({ default: () => <section><h1>Hero</h1></section> }));
+vi.mock('@/components/home/TrustedBy', () => ({ default: () => <section>TrustedBy</section> }));
+vi.mock('@/components/home/ValueProps', () => ({ default: () => <section>ValueProps</section> }));
+vi.mock('@/components/home/StatsSection', () => ({ default: () => <section>StatsSection</section> }));
+vi.mock('@/components/home/PricingPreview', () => ({ default: () => <section>PricingPreview</section> }));
+vi.mock('@/components/forms/ContactFormDialog', () => ({ ContactFormDialog: () => <button>Contact Us</button> }));
+vi.mock('react-intersection-observer', () => ({
+  useInView: () => ({ ref: { current: null }, inView: true }),
+}));
+vi.mock('framer-motion', () => ({
+  motion: {
+    div: (props: any) => <div {...props} />,
+    h2: (props: any) => <h2 {...props} />,
+    p: (props: any) => <p {...props} />,
+  },
+}));
+
+
 describe('Index Page', () => {
   it(
     'should render the header, main content, and footer',
-    async () => {
+    () => {
       render(
-        <BrowserRouter
-          future={{
-            v7_startTransition: true,
-            v7_relativeSplatPath: true,
-          }}
-        >
+        <BrowserRouter>
           <Index />
         </BrowserRouter>
       );
 
       // Check for the header (navigation)
-      const header = screen.getByRole('banner');
-      expect(header).toBeInTheDocument();
+      expect(screen.getByRole('banner')).toBeInTheDocument();
 
       // Check for the main content
-      const main = screen.getByRole('main');
-      expect(main).toBeInTheDocument();
+      expect(screen.getByRole('main')).toBeInTheDocument();
 
       // Check for the footer
-      const footer = screen.getByRole('contentinfo');
-      expect(footer).toBeInTheDocument();
-    },
-    10000
+      expect(screen.getByRole('contentinfo')).toBeInTheDocument();
+    }
   );
 
   it('should render hero section', () => {
     render(
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
+      <BrowserRouter>
         <Index />
       </BrowserRouter>
     );
 
     // Hero should contain a heading
-    const heroHeading = screen.getByRole('heading', { level: 1 });
-    expect(heroHeading).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
   });
 
-  it('should render all major sections', () => {
+  it('should render all major sections', async () => {
     render(
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
+      <BrowserRouter>
         <Index />
       </BrowserRouter>
     );
 
-    const main = screen.getByRole('main');
-    expect(main).toBeInTheDocument();
-    
-    // Main should contain multiple sections
-    expect(main.children.length).toBeGreaterThan(0);
+    expect(await screen.findByText('TrustedBy')).toBeInTheDocument();
+    expect(await screen.findByText('ValueProps')).toBeInTheDocument();
+    expect(await screen.findByText('StatsSection')).toBeInTheDocument();
+    expect(await screen.findByText('PricingPreview')).toBeInTheDocument();
   });
 });

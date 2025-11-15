@@ -35,7 +35,7 @@ const Hero = memo(({
     }, 2000);
     return () => clearTimeout(timeoutId);
   }, [titleNumber, titles]);
-  return <section className="relative overflow-hidden bg-background">
+  return <section data-testid="hero-section" className="relative overflow-hidden bg-background">
       {/* Animated Background with performance hints */}
       <div className="absolute inset-0 z-[-1]">
         <BackgroundPaths />

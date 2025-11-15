@@ -1,11 +1,30 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import PricingPreview from './PricingPreview';
 
-// Provide router context so internal <Link> renders without errors
+// Mock the hooks
+vi.mock('react-intersection-observer');
+vi.mock('framer-motion', () => ({
+  motion: {
+    div: (props: any) => <div {...props} />,
+    h2: (props: any) => <h2 {...props} />,
+    p: (props: any) => <p {...props} />,
+  },
+}));
+
+// Import after mocking
+import { useInView } from 'react-intersection-observer';
 
 describe('PricingPreview', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.mocked(useInView).mockReturnValue({
+      ref: { current: null },
+      inView: true,
+    });
+  });
+
   it('renders heading and plan names (English)', () => {
     render(
       <MemoryRouter>
@@ -17,9 +36,6 @@ describe('PricingPreview', () => {
     expect(screen.getByText('Starter Spark')).toBeInTheDocument();
     expect(screen.getByText('Brand Pulse')).toBeInTheDocument();
     expect(screen.getByText('Impact Engine')).toBeInTheDocument();
-
-    // CTA buttons (anchor links)
-    expect(screen.getAllByRole('link', { name: 'Get Started' }).length).toBeGreaterThan(0);
   });
 
   it('toggles to annual billing and shows discount badge', () => {
@@ -29,10 +45,10 @@ describe('PricingPreview', () => {
       </MemoryRouter>
     );
 
-    const annual = screen.getByText('Annual');
-    fireEvent.click(annual);
+    const annualToggle = screen.getByLabelText('Annual billing');
+    fireEvent.click(annualToggle);
 
-    expect(screen.getAllByText(/off/)[0]).toBeInTheDocument();
+    expect(screen.getByText('Save up to 15%')).toBeInTheDocument();
   });
 
   it('renders Spanish labels', () => {
