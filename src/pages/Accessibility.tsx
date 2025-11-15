@@ -10,8 +10,7 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { RootLayout } from "@/components/layout/RootLayout";
 import SEOHead from "@/components/SEO/SEOHead";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getPageSEO } from "@/utils/seo";
@@ -21,11 +20,9 @@ const Accessibility = () => {
   const pageSEO = getPageSEO("accessibility");
 
   return (
-    <>
+    <RootLayout>
       <SEOHead pageSEO={pageSEO} lang={lang} />
-      <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1 py-16 md:py-24 bg-background">
+      <div className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4 max-w-4xl">
           <h1 className="text-4xl font-heading font-bold mb-8 text-foreground">
             {lang === "en" ? "Accessibility Statement" : "Declaración de Accesibilidad"}
@@ -81,10 +78,8 @@ const Accessibility = () => {
             </div>
           </div>
         </div>
-      </main>
-      <Footer />
-    </div>
-    </>
+      </div>
+    </RootLayout>
   );
 };
 

@@ -11,8 +11,7 @@
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
 import { useState, useCallback } from "react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { RootLayout } from "@/components/layout/RootLayout";
 import SEOHead from "@/components/SEO/SEOHead";
 import { Meteors } from "@/components/ui/meteors";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -279,135 +278,130 @@ const CaseStudies = () => {
   const { websites, social } = filteredData();
 
   return (
-    <>
+    <RootLayout>
       <SEOHead pageSEO={pageSEO} lang={lang} />
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1">
-        {/* Hero Section with Parallax */}
-        <section className="relative overflow-hidden bg-muted py-20">
-          <div 
-            className="w-full absolute inset-0 h-full"
-            style={{ 
-              transform: `translateY(${heroParallax}px)`,
-              willChange: 'transform'
-            }}
-          >
-            <Meteors number={30} />
-          </div>
-          <div 
-            className="container mx-auto px-4 text-center relative z-10"
-            style={{ 
-              transform: `translateY(${heroParallax * 0.5}px)`,
-              willChange: 'transform'
-            }}
-          >
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
-              {lang === "en" ? "Our Work" : "Nuestro Trabajo"}
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {lang === "en"
-                ? "Showcasing our best projects in web design, development, and social media marketing."
-                : "Mostrando nuestros mejores proyectos en diseño web, desarrollo y marketing en redes sociales."}
-            </p>
-          </div>
-        </section>
+      {/* Hero Section with Parallax */}
+      <section className="relative overflow-hidden bg-muted py-20">
+        <div
+          className="w-full absolute inset-0 h-full"
+          style={{
+            transform: `translateY(${heroParallax}px)`,
+            willChange: 'transform'
+          }}
+        >
+          <Meteors number={30} />
+        </div>
+        <div
+          className="container mx-auto px-4 text-center relative z-10"
+          style={{
+            transform: `translateY(${heroParallax * 0.5}px)`,
+            willChange: 'transform'
+          }}
+        >
+          <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            {lang === "en" ? "Our Work" : "Nuestro Trabajo"}
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            {lang === "en"
+              ? "Showcasing our best projects in web design, development, and social media marketing."
+              : "Mostrando nuestros mejores proyectos en diseño web, desarrollo y marketing en redes sociales."}
+          </p>
+        </div>
+      </section>
 
-        {/* Stats Bar with Parallax */}
-        <section className="py-8 bg-background">
-          <div 
-            className="container mx-auto px-4"
-            style={{ 
-              transform: `translateY(${statsParallax}px)`,
-              willChange: 'transform'
-            }}
-          >
-            <StatsBar lang={lang} />
-          </div>
-        </section>
+      {/* Stats Bar with Parallax */}
+      <section className="py-8 bg-background">
+        <div
+          className="container mx-auto px-4"
+          style={{
+            transform: `translateY(${statsParallax}px)`,
+            willChange: 'transform'
+          }}
+        >
+          <StatsBar lang={lang} />
+        </div>
+      </section>
 
-        {/* Filters */}
-        <section className="py-12 bg-background">
+      {/* Filters */}
+      <section className="py-12 bg-background">
+        <div className="container mx-auto px-4">
+          <WorkFilters activeFilter={activeFilter} onFilterChange={setActiveFilter} lang={lang} />
+        </div>
+      </section>
+
+      {/* Website Projects Section */}
+      {websites.length > 0 && (
+        <section className="pb-16 bg-background">
           <div className="container mx-auto px-4">
-            <WorkFilters activeFilter={activeFilter} onFilterChange={setActiveFilter} lang={lang} />
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4 text-center">
+              {lang === "en" ? "Website Projects" : "Proyectos de Sitios Web"}
+            </h2>
+            <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
+              {lang === "en"
+                ? "Explore our portfolio of beautiful, functional websites built for diverse businesses."
+                : "Explora nuestro portafolio de sitios web hermosos y funcionales construidos para negocios diversos."}
+            </p>
+
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full max-w-7xl mx-auto"
+            >
+              <CarouselContent>
+                {websites.map((page, pageIndex) => (
+                  <CarouselItem key={pageIndex}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {page.map((project, index) => (
+                        <WebsiteProjectCard
+                          key={index}
+                          project={project}
+                          lang={lang}
+                          index={index}
+                          onOpenLightbox={() => openLightbox("website", project)}
+                        />
+                      ))}
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+              <CarouselDots className="mt-8" />
+              <CarouselSwipeIndicator />
+            </Carousel>
           </div>
         </section>
+      )}
 
-        {/* Website Projects Section */}
-        {websites.length > 0 && (
-          <section className="pb-16 bg-background">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4 text-center">
-                {lang === "en" ? "Website Projects" : "Proyectos de Sitios Web"}
-              </h2>
-              <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-                {lang === "en"
-                  ? "Explore our portfolio of beautiful, functional websites built for diverse businesses."
-                  : "Explora nuestro portafolio de sitios web hermosos y funcionales construidos para negocios diversos."}
-              </p>
+      {/* Social Media Section */}
+      {social.length > 0 && (
+        <section className="py-16 bg-muted">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4 text-center">
+              {lang === "en" ? "Social Media Posts" : "Publicaciones en Redes Sociales"}
+            </h2>
+            <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
+              {lang === "en"
+                ? "Real posts from real businesses. See how we help brands grow their online presence."
+                : "Publicaciones reales de negocios reales. Mira cómo ayudamos a las marcas a crecer su presencia en línea."}
+            </p>
 
-              <Carousel
-                opts={{
-                  align: "start",
-                  loop: true,
-                }}
-                className="w-full max-w-7xl mx-auto"
-              >
-                <CarouselContent>
-                  {websites.map((page, pageIndex) => (
-                    <CarouselItem key={pageIndex}>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {page.map((project, index) => (
-                          <WebsiteProjectCard
-                            key={index}
-                            project={project}
-                            lang={lang}
-                            index={index}
-                            onOpenLightbox={() => openLightbox("website", project)}
-                          />
-                        ))}
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-                <CarouselDots className="mt-8" />
-                <CarouselSwipeIndicator />
-              </Carousel>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+              {social.map((post, index) => (
+                <SocialPostCard
+                  key={index}
+                  post={post}
+                  lang={lang}
+                  index={index}
+                  onOpenLightbox={() => openLightbox("social", post)}
+                />
+              ))}
             </div>
-          </section>
-        )}
-
-        {/* Social Media Section */}
-        {social.length > 0 && (
-          <section className="py-16 bg-muted">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4 text-center">
-                {lang === "en" ? "Social Media Posts" : "Publicaciones en Redes Sociales"}
-              </h2>
-              <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-                {lang === "en"
-                  ? "Real posts from real businesses. See how we help brands grow their online presence."
-                  : "Publicaciones reales de negocios reales. Mira cómo ayudamos a las marcas a crecer su presencia en línea."}
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
-                {social.map((post, index) => (
-                  <SocialPostCard 
-                    key={index} 
-                    post={post} 
-                    lang={lang} 
-                    index={index}
-                    onOpenLightbox={() => openLightbox("social", post)}
-                  />
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-      </main>
-      <Footer />
+          </div>
+        </section>
+      )}
 
       {/* Lightbox */}
       {lightboxData && (
@@ -419,8 +413,7 @@ const CaseStudies = () => {
           lang={lang}
         />
       )}
-    </div>
-    </>
+    </RootLayout>
   );
 };
 
