@@ -2,6 +2,15 @@
  * Services Data
  * Central data source for all service offerings
  */
+/**
+ * File overview: src/data/services.data.ts
+ *
+ * Static data definitions used to drive UI content and configuration.
+ * Behavior:
+ * - Encodes copy, links, and structured content separate from presentation logic.
+ * Assumptions:
+ * - Consumers treat this as read-only and avoid mutating values in place.
+ */
 
 import {
   Share2,

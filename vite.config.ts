@@ -1,4 +1,14 @@
 /// <reference types="vitest" />
+/**
+ * File overview: vite.config.ts
+ *
+ * Configures build-time or design-time behavior for the app.
+ * Behavior:
+ * - Centralizes shared configuration to keep feature code focused.
+ * - Assumes consumers read these values rather than hard-coding equivalents.
+ * Performance:
+ * - Changes here may impact bundle size, CSS output, or tooling performance.
+ */
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";

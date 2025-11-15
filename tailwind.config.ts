@@ -1,3 +1,13 @@
+/**
+ * File overview: tailwind.config.ts
+ *
+ * Configures build-time or design-time behavior for the app.
+ * Behavior:
+ * - Centralizes shared configuration to keep feature code focused.
+ * - Assumes consumers read these values rather than hard-coding equivalents.
+ * Performance:
+ * - Changes here may impact bundle size, CSS output, or tooling performance.
+ */
 import type { Config } from "tailwindcss";
 import animatePlugin from "tailwindcss-animate";
 

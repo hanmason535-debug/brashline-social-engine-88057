@@ -1,3 +1,13 @@
+// Tests: validate the time-based count-up behavior and cleanup of the useCountUp hook using mocked timers and RAF.
+/**
+ * File overview: src/hooks/useCountUp.test.tsx
+ *
+ * Test suite validating the public behavior of the associated module.
+ * Behavior:
+ * - Focuses on observable outputs and edge cases, not implementation details.
+ * Assumptions:
+ * - Serves as executable documentation for how callers are expected to use the API.
+ */
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useCountUp } from './useCountUp';

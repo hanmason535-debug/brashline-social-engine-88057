@@ -1,3 +1,13 @@
+// Tests: ensure the useScrollAnimation hook exposes a stable ref and visibility flag with sensible defaults.
+/**
+ * File overview: src/hooks/useScrollAnimation.test.tsx
+ *
+ * Test suite validating the public behavior of the associated module.
+ * Behavior:
+ * - Focuses on observable outputs and edge cases, not implementation details.
+ * Assumptions:
+ * - Serves as executable documentation for how callers are expected to use the API.
+ */
 import { renderHook } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { useScrollAnimation } from './useScrollAnimation';

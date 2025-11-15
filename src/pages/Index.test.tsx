@@ -1,3 +1,12 @@
+/**
+ * File overview: src/pages/Index.test.tsx
+ *
+ * Test suite validating the public behavior of the associated module.
+ * Behavior:
+ * - Focuses on observable outputs and edge cases, not implementation details.
+ * Assumptions:
+ * - Serves as executable documentation for how callers are expected to use the API.
+ */
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';

@@ -1,3 +1,13 @@
+// Tests: exercise the localization behavior and basic shape of the useAbout hook without asserting implementation details.
+/**
+ * File overview: src/hooks/useAbout.test.ts
+ *
+ * Test suite validating the public behavior of the associated module.
+ * Behavior:
+ * - Focuses on observable outputs and edge cases, not implementation details.
+ * Assumptions:
+ * - Serves as executable documentation for how callers are expected to use the API.
+ */
 import { renderHook } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { useAbout } from './useAbout';

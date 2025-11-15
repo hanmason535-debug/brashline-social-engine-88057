@@ -1,8 +1,18 @@
+// Tests: exercise the parallax offset behavior under different scroll positions and options while mocking viewport media queries.
+/**
+ * File overview: src/hooks/useParallax.test.tsx
+ *
+ * Test suite validating the public behavior of the associated module.
+ * Behavior:
+ * - Focuses on observable outputs and edge cases, not implementation details.
+ * Assumptions:
+ * - Serves as executable documentation for how callers are expected to use the API.
+ */
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useParallax } from './useParallax';
 
-// Mock useMediaQuery to simulate desktop behavior
+// Mock useMediaQuery to simulate desktop behavior.
 vi.mock('./useMediaQuery', () => ({
   useIsDesktop: () => true, // Always return true for tests
   useIsMobile: () => false,

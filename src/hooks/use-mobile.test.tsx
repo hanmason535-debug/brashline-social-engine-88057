@@ -1,3 +1,13 @@
+// Tests: cover the breakpoint behavior of the useIsMobile hook under different simulated viewport widths.
+/**
+ * File overview: src/hooks/use-mobile.test.tsx
+ *
+ * Test suite validating the public behavior of the associated module.
+ * Behavior:
+ * - Focuses on observable outputs and edge cases, not implementation details.
+ * Assumptions:
+ * - Serves as executable documentation for how callers are expected to use the API.
+ */
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useIsMobile } from './use-mobile';

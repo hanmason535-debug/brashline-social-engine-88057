@@ -1,3 +1,15 @@
+/**
+ * File overview: src/components/layout/Footer.tsx
+ *
+ * React component `Footer` rendering a focused piece of UI.
+ * Behavior:
+ * - Receives props from parents and may read from hooks or context.
+ * - Renders presentational markup and wires callbacks for user interaction.
+ * Data flow:
+ * - Follows a one-way data flow: parents own data, this component focuses on display.
+ * Performance:
+ * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
+ */
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Linkedin, Youtube, Twitter } from "lucide-react";

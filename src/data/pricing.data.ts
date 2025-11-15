@@ -1,3 +1,12 @@
+/**
+ * File overview: src/data/pricing.data.ts
+ *
+ * Static data definitions used to drive UI content and configuration.
+ * Behavior:
+ * - Encodes copy, links, and structured content separate from presentation logic.
+ * Assumptions:
+ * - Consumers treat this as read-only and avoid mutating values in place.
+ */
 import { RecurringPlan, OneTimePackage } from '@/types/pricing.types';
 
 export const RECURRING_PLANS: RecurringPlan[] = [

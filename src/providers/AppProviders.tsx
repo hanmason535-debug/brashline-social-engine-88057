@@ -2,6 +2,18 @@
  * App Providers Composition
  * Centralized provider composition to reduce nesting in App.tsx
  */
+/**
+ * File overview: src/providers/AppProviders.tsx
+ *
+ * React context/provider responsible for shared application state.
+ * Behavior:
+ * - Owns the shape of the context value and update surface.
+ * - Coordinates state changes that span multiple feature areas.
+ * Assumptions:
+ * - Consumers are mounted beneath this provider in the component tree.
+ * Performance:
+ * - Be mindful when extending the context value to avoid broad re-renders.
+ */
 import { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
