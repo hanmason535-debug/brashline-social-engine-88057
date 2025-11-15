@@ -11,7 +11,6 @@
  * Performance:
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
-
 import { useMemo } from 'react';
 import { SERVICES_DATA } from '@/data/services.data';
 import type { LocalizedService } from '@/types/service.types';

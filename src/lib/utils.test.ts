@@ -75,5 +75,12 @@ describe('Utils', () => {
       expect(sizes).toContain('640px');
       expect(sizes).toContain('1024px');
     });
+
+    it('should handle a two-item array correctly', () => {
+      // Regression test: two-item arrays should generate one media query
+      // Bug: Previous implementation generated three queries even for two sizes
+      const sizes = generateSizesAttribute([300, 800]);
+      expect(sizes).toBe('(max-width: 640px) 300px, 800px');
+    });
   });
 });

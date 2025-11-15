@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - Jules-Optimization Branch
 
 ### Added
+- ✅ Tests: high-signal coverage for home components (Hero, StatsSection, ValueProps, PricingPreview), hooks (pricing, parallax, scroll, count-up, blog, services, about, mobile), and SEO/sitemap utils. Overall coverage now ~88% statements / ~87% lines.
+- ✅ Tests: sitemap XML and index generation paths, plus SEO schema generators and audit logger.
 - ✨ React Router v7 future flags (`v7_startTransition`, `v7_relativeSplatPath`)
 - ✨ Constants file (`src/lib/constants.ts`) for centralized configuration
 - ✨ Provider composition component (`src/providers/AppProviders.tsx`)
@@ -20,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 📝 MotionProps interface for test setup
 
 ### Changed
+- 🔧 Test config: exclude `worktrees/**` from Vitest to prevent cross-worktree contamination.
+- 🔧 Types: replace `any` with safer types in `StructuredData.tsx` and `useThrottle.ts`.
 - 🔧 **TypeScript Config:** Enabled strict mode
   - `noImplicitAny: true`
   - `strictNullChecks: true`
@@ -43,6 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🗑️ Production console logs (wrapped in `import.meta.env.DEV` checks)
 
 ### Fixed
+- 🐛 utils: `generateSizesAttribute` two-item array produced redundant media query. Fixed with early return and added regression test safeguarding `(max-width: 640px) min, max` invariant.
 - 🐛 **ESLint:** Resolved all 13 errors (now 0 errors, 8 warnings)
 - 🐛 **Hooks Rules:** Fixed React hooks being called inside callbacks/loops
 - 🐛 **localStorage:** Added error handling for quota exceeded and disabled localStorage

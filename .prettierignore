@@ -1,3 +1,4 @@
+# File overview: patterns for files and directories that Prettier should not attempt to format.
 dist
 node_modules
 *.log

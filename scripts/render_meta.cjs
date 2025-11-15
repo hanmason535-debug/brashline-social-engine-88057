@@ -1,3 +1,12 @@
+/**
+ * File overview: scripts/render_meta.cjs
+ *
+ * Puppeteer-based SEO helper script for inspecting live meta tags.
+ * Behavior:
+ * - Navigates to the given URL, reads key HTML metadata (title, canonical, description, Open Graph, Twitter, JSON-LD), and prints a JSON summary.
+ * Performance:
+ * - Runs as an external analysis tool and has no impact on client-side runtime or bundle size.
+ */
 const puppeteer = require('puppeteer');
 
 (async () => {
