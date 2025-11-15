@@ -19,7 +19,7 @@ import {
   type Variant,
   motion,
 } from 'motion/react';
-
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 type FlipDirection = 'top' | 'bottom' | 'left' | 'right';
@@ -83,27 +83,24 @@ const FlipButton = React.forwardRef<HTMLButtonElement, FlipButtonProps>(
       hover: buildVariant(1, 0, '0%'),
     };
 
-    const handleClick = () => {
-      if (href) {
-        if (target === '_blank') {
-          window.open(href, target, rel);
-        } else {
-          window.location.href = href;
-        }
-      }
-    };
+    const isExternal = href?.startsWith('http');
+
+    const MotionComponent = motion(isExternal ? 'a' : Link);
 
     return (
-      <motion.button
+      <MotionComponent
         ref={ref}
         initial="initial"
         whileHover="hover"
         whileTap={{ scale: 0.95 }}
-        onClick={handleClick}
         className={cn(
           'relative inline-block h-10 px-4 py-2 text-sm font-medium cursor-pointer perspective-[1000px] focus:outline-none',
           className,
         )}
+        href={isExternal ? href : undefined}
+        to={!isExternal ? href : undefined}
+        target={target}
+        rel={rel}
         {...props}
       >
         <motion.span
@@ -129,7 +126,7 @@ const FlipButton = React.forwardRef<HTMLButtonElement, FlipButtonProps>(
           {backText}
         </motion.span>
         <span className="invisible">{frontText}</span>
-      </motion.button>
+      </MotionComponent>
     );
   },
 );

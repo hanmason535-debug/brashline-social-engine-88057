@@ -20,17 +20,26 @@ const MOBILE_BREAKPOINT = 768;
 // Output: a boolean flag that updates when the underlying media query changes.
 // Performance: uses matchMedia events instead of resize polling to keep updates lightweight.
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined);
+  const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setIsMobile(event.matches);
     };
-    mql.addEventListener("change", onChange);
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    return () => mql.removeEventListener("change", onChange);
+
+    // Set the initial state
+    setIsMobile(mediaQuery.matches);
+
+    // Add the event listener
+    mediaQuery.addEventListener('change', handleChange);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+    };
   }, []);
 
-  return !!isMobile;
+  return isMobile;
 }

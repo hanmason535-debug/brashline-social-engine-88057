@@ -95,7 +95,7 @@ const Header = memo(() => {
             onError={(e) => {
               const img = e.currentTarget as HTMLImageElement;
               if (img.src.endsWith('/logo.png')) {
-                img.onerror = null;
+                img.onerror = null; // Prevent infinite loop
                 img.src = '/logo.svg';
               }
             }}
