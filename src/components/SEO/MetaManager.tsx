@@ -71,7 +71,8 @@ const MetaManager = ({ pageSEO, lang = "en" }: MetaManagerProps) => {
       <link rel="manifest" href="/manifest.json" />
 
       {/* Performance */}
-      <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+      {/* Use explicit HTTPS for dns-prefetch to satisfy CSP requirements */}
+      <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
         rel="preload"
