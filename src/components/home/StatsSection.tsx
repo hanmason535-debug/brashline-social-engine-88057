@@ -57,7 +57,7 @@ const StatsSection = ({ lang }: StatsSectionProps) => {
   return (
     <section
       ref={elementRef as React.RefObject<HTMLElement>}
-      className="py-20 bg-gradient-to-b from-background to-muted/30"
+      className="pt-12 pb-20 bg-gradient-to-b from-background to-muted/30"
     >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

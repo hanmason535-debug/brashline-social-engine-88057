@@ -50,7 +50,7 @@ const ValueProps = memo(({ lang }: ValuePropsProps) => {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
   return (
-    <section ref={elementRef as React.RefObject<HTMLElement>} className="py-32 md:py-40 bg-muted/50">
+    <section ref={elementRef as React.RefObject<HTMLElement>} className="py-20 md:py-24 bg-muted/50">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {valueProps.map((prop, index) => {
