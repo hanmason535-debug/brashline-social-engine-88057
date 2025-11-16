@@ -35,6 +35,7 @@ interface WebsiteProjectCardProps {
 export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: WebsiteProjectCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -48,9 +49,32 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
       transition={{ delay: index * 0.1, duration: 0.5 }}
       className="group relative cursor-pointer"
       onClick={handleClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Browser Mockup Frame */}
-      <div className="relative bg-card rounded-lg overflow-hidden shadow-soft transition-all duration-300 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-[1.02] border border-border hover:ring-2 hover:ring-primary/50">
+      <div className="relative bg-card rounded-lg overflow-hidden shadow-soft transition-all duration-500 ease-out hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-[1.02] border border-border hover:ring-2 hover:ring-primary/50 will-change-transform">
+        {/* Dual Border Beams - Only on Hover */}
+        {isHovered && (
+          <>
+            <BorderBeam
+              size={150}
+              duration={12}
+              delay={0}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary) / 0.3)"
+              borderWidth={2}
+            />
+            <BorderBeam
+              size={200}
+              duration={16}
+              delay={2}
+              colorFrom="hsl(var(--primary) / 0.6)"
+              colorTo="hsl(var(--accent))"
+              borderWidth={1.5}
+            />
+          </>
+        )}
         {/* Browser Chrome */}
         <div className="bg-muted px-3 py-2 flex items-center gap-2 border-b border-border">
           <div className="flex gap-1.5">
@@ -79,7 +103,7 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
             <img
               src={project.thumbnail}
               alt={project.title[lang]}
-              className={`w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-110 ${
+              className={`w-full h-full object-cover object-top transition-all duration-700 ease-out group-hover:scale-110 will-change-transform ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               onLoad={() => setImageLoaded(true)}
@@ -89,7 +113,7 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
           )}
 
           {/* Hover Overlay */}
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out flex items-center justify-center gap-3 will-change-[opacity]">
             <motion.button
               onClick={handleClick}
               initial={{ scale: 0.8, opacity: 0 }}
