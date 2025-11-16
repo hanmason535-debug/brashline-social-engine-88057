@@ -10,11 +10,12 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, Heart, MessageCircle, Share2, Bookmark, Play } from "lucide-react";
+import { X, ExternalLink, Heart, MessageCircle, Share2, Bookmark, Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WebsiteData, SocialData } from "@/types/work.types";
+import { useSwipeable } from "react-swipeable";
 
 interface LightboxProps {
   isOpen: boolean;
@@ -22,24 +23,45 @@ interface LightboxProps {
   type: "website" | "social";
   data: WebsiteData | SocialData | null;
   lang: "en" | "es";
+  allItems?: (WebsiteData | SocialData)[];
+  currentIndex?: number;
+  onNavigate?: (direction: "prev" | "next") => void;
 }
 
-export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
+export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentIndex, onNavigate }: LightboxProps) {
+  const [showNavHint, setShowNavHint] = useState(true);
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
+    const handleKeyboard = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft" && onNavigate) onNavigate("prev");
+      if (e.key === "ArrowRight" && onNavigate) onNavigate("next");
     };
 
     if (isOpen) {
-      document.addEventListener("keydown", handleEscape);
+      document.addEventListener("keydown", handleKeyboard);
       document.body.style.overflow = "hidden";
+      
+      // Hide nav hint after 3 seconds
+      const timer = setTimeout(() => setShowNavHint(false), 3000);
+      return () => {
+        document.removeEventListener("keydown", handleKeyboard);
+        document.body.style.overflow = "unset";
+        clearTimeout(timer);
+      };
     }
 
     return () => {
-      document.removeEventListener("keydown", handleEscape);
       document.body.style.overflow = "unset";
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, onNavigate]);
+
+  // Swipe handlers for mobile
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => onNavigate?.("next"),
+    onSwipedRight: () => onNavigate?.("prev"),
+    trackMouse: false,
+    trackTouch: true,
+  });
 
   const formatNumber = (num: number): string => {
     if (num >= 1000) {
@@ -78,6 +100,7 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
             onClick={(e) => e.stopPropagation()}
+            {...swipeHandlers}
           >
             <div className="relative w-full max-w-6xl max-h-[90vh] bg-background rounded-2xl shadow-2xl overflow-hidden">
               {/* Close Button */}
@@ -90,15 +113,44 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                 <X className="w-5 h-5" />
               </Button>
 
+              {/* Navigation Arrows */}
+              {onNavigate && allItems && allItems.length > 1 && (
+                <>
+                  <Button
+                    onClick={() => onNavigate("prev")}
+                    variant="ghost"
+                    size="icon"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm hover:bg-background w-12 h-12 rounded-full"
+                  >
+                    <ChevronLeft className={`w-6 h-6 transition-all ${showNavHint ? 'animate-pulse' : ''}`} />
+                  </Button>
+                  <Button
+                    onClick={() => onNavigate("next")}
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm hover:bg-background w-12 h-12 rounded-full"
+                  >
+                    <ChevronRight className={`w-6 h-6 transition-all ${showNavHint ? 'animate-pulse' : ''}`} />
+                  </Button>
+                  
+                  {/* Item Counter */}
+                  {currentIndex !== undefined && (
+                    <div className="absolute top-4 left-4 z-10 bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm font-medium">
+                      {currentIndex + 1} / {allItems.length}
+                    </div>
+                  )}
+                </>
+              )}
+
               <div className="overflow-y-auto max-h-[90vh]">
                 {type === "website" && data && isWebsiteData(data) && (
                   <div>
                     {/* Website Screenshot */}
-                    <div className="relative aspect-[16/9] bg-muted overflow-hidden">
+                    <div className="relative max-h-[60vh] bg-muted overflow-hidden flex items-center justify-center">
                       <img
                         src={data.thumbnail}
                         alt={data.title[lang]}
-                        className="w-full h-full object-cover object-top"
+                        className="max-h-[60vh] max-w-full w-auto h-auto object-contain"
                       />
                       {/* Browser Chrome Overlay */}
                       <div className="absolute top-0 left-0 right-0 bg-muted/95 backdrop-blur-sm px-4 py-3 flex items-center gap-3 border-b border-border">
@@ -159,11 +211,11 @@ export function Lightbox({ isOpen, onClose, type, data, lang }: LightboxProps) {
                 {type === "social" && data && isSocialData(data) && (
                   <div>
                     {/* Social Post Image */}
-                    <div className="relative aspect-square bg-muted overflow-hidden">
+                    <div className="relative max-h-[60vh] bg-muted overflow-hidden flex items-center justify-center">
                       <img
                         src={data.image}
                         alt={data.caption[lang]}
-                        className="w-full h-full object-cover"
+                        className="max-h-[60vh] max-w-full w-auto h-auto object-contain"
                       />
                       {data.type === "video" && (
                         <div className="absolute inset-0 flex items-center justify-center">

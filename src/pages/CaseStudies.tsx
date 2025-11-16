@@ -40,14 +40,14 @@ const CaseStudies = () => {
   const { lang } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxData, setLightboxData] = useState<{ type: "website" | "social"; data: WebsiteData | SocialData } | null>(null);
+  const [lightboxData, setLightboxData] = useState<{ type: "website" | "social"; data: WebsiteData | SocialData; index: number; allItems: (WebsiteData | SocialData)[] } | null>(null);
   const pageSEO = getPageSEO("case-studies");
 
   const heroParallax = useParallax({ speed: 0.3, direction: "down" });
   const statsParallax = useParallax({ speed: 0.2, direction: "up" });
 
-  const openLightbox = useCallback((type: "website" | "social", data: WebsiteData | SocialData) => {
-    setLightboxData({ type, data });
+  const openLightbox = useCallback((type: "website" | "social", data: WebsiteData | SocialData, index: number, allItems: (WebsiteData | SocialData)[]) => {
+    setLightboxData({ type, data, index, allItems });
     setLightboxOpen(true);
   }, []);
 
@@ -55,6 +55,22 @@ const CaseStudies = () => {
     setLightboxOpen(false);
     setTimeout(() => setLightboxData(null), 300);
   }, []);
+
+  const navigateLightbox = useCallback((direction: "prev" | "next") => {
+    if (!lightboxData) return;
+    
+    const { allItems, index, type } = lightboxData;
+    const newIndex = direction === "next" 
+      ? (index + 1) % allItems.length 
+      : (index - 1 + allItems.length) % allItems.length;
+    
+    setLightboxData({
+      type,
+      data: allItems[newIndex],
+      index: newIndex,
+      allItems
+    });
+  }, [lightboxData]);
 
   // Website Projects Data
   const websiteProjects: WebsiteData[] = [
@@ -357,15 +373,18 @@ const CaseStudies = () => {
                   {websites.map((page, pageIndex) => (
                     <CarouselItem key={pageIndex}>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {page.map((project, index) => (
-                          <WebsiteProjectCard
-                            key={index}
-                            project={project}
-                            lang={lang}
-                            index={index}
-                            onOpenLightbox={() => openLightbox("website", project)}
-                          />
-                        ))}
+                        {page.map((project, index) => {
+                          const globalIndex = pageIndex * websitesPerPage + index;
+                          return (
+                            <WebsiteProjectCard
+                              key={index}
+                              project={project}
+                              lang={lang}
+                              index={index}
+                              onOpenLightbox={() => openLightbox("website", project, globalIndex, websiteProjects)}
+                            />
+                          );
+                        })}
                       </div>
                     </CarouselItem>
                   ))}
@@ -399,7 +418,7 @@ const CaseStudies = () => {
                     post={post} 
                     lang={lang} 
                     index={index}
-                    onOpenLightbox={() => openLightbox("social", post)}
+                    onOpenLightbox={() => openLightbox("social", post, index, socialPosts)}
                   />
                 ))}
               </div>
@@ -417,6 +436,9 @@ const CaseStudies = () => {
           type={lightboxData.type}
           data={lightboxData.data}
           lang={lang}
+          allItems={lightboxData.allItems}
+          currentIndex={lightboxData.index}
+          onNavigate={navigateLightbox}
         />
       )}
     </div>
