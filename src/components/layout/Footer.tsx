@@ -40,19 +40,24 @@ const Footer = memo(() => {
           {/* Brand */}
           <div>
             <Link to="/" className="mb-4 inline-flex items-center gap-2">
-              <img
-                src="/logo.png"
-                alt="Brashline Logo"
-                className="h-16 w-auto"
-                loading="lazy"
-                onError={(e) => {
-                  const img = e.currentTarget as HTMLImageElement;
-                  if (img.src.endsWith('/logo.png')) {
-                    img.onerror = null;
-                    img.src = '/logo.svg';
-                  }
-                }}
-              />
+              <picture>
+                <source type="image/webp" srcSet="/images/logo-64w.webp 64w, /images/logo-80w.webp 80w, /images/logo-120w.webp 120w" sizes="64px" />
+                <img
+                  src="/logo.png"
+                  alt="Brashline Logo"
+                  className="h-16 w-auto"
+                  width="64"
+                  height="64"
+                  loading="lazy"
+                  onError={(e) => {
+                    const img = e.currentTarget as HTMLImageElement;
+                    if (img.src.endsWith('/logo.png')) {
+                      img.onerror = null;
+                      img.src = '/logo.svg';
+                    }
+                  }}
+                />
+              </picture>
               <div className="text-xl font-heading font-bold text-foreground">
                 BRASHLINE
               </div>

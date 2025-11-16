@@ -1,4 +1,5 @@
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { describe, it, expect } from 'vitest';
 import ReviewSchema from './ReviewSchema';
