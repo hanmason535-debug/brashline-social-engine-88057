@@ -41,6 +41,12 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
       document.addEventListener("keydown", handleKeyboard);
       document.body.style.overflow = "hidden";
       
+      // Focus trap - focus the close button when lightbox opens
+      const closeButton = document.querySelector('[data-lightbox-close]') as HTMLElement;
+      if (closeButton) {
+        closeButton.focus();
+      }
+      
       // Hide nav hint after 3 seconds
       const timer = setTimeout(() => setShowNavHint(false), 3000);
       return () => {
@@ -108,6 +114,8 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
                 onClick={onClose}
                 variant="ghost"
                 size="icon"
+                data-lightbox-close
+                aria-label="Close lightbox"
                 className="absolute top-4 right-4 z-10 bg-background/80 backdrop-blur-sm hover:bg-background"
               >
                 <X className="w-5 h-5" />
