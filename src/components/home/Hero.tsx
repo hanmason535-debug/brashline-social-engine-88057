@@ -11,13 +11,15 @@
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
 import { useEffect, useMemo, useState, memo } from "react";
-import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import FlipButton from "@/components/ui/flip-button";
 import BackgroundPaths from "@/components/ui/background-paths";
+import { useParallax } from "@/hooks/useParallax";
+
 interface HeroProps {
   lang: "en" | "es";
 }
+
 const Hero = memo(({
   lang
 }: HeroProps) => {
@@ -25,6 +27,7 @@ const Hero = memo(({
   const titlesEn = useMemo(() => ["Consistent", "Growing", "Visible", "Connected"], []);
   const titlesEs = useMemo(() => ["Constantes", "en Crecimiento", "Visibles", "Conectadas"], []);
   const titles = lang === "en" ? titlesEn : titlesEs;
+  const parallaxOffset = useParallax({ speed: 0.3, direction: "down" });
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (titleNumber === titles.length - 1) {
@@ -37,7 +40,10 @@ const Hero = memo(({
   }, [titleNumber, titles]);
   return <section className="relative overflow-hidden bg-background">
       {/* Animated Background with performance hints */}
-      <div className="absolute inset-0 z-0">
+      <div 
+        className="absolute inset-0 z-0" 
+        style={{ transform: `translateY(${parallaxOffset}px)` }}
+      >
         <BackgroundPaths />
       </div>
 
@@ -51,41 +57,36 @@ const Hero = memo(({
             </Badge>
           </div>
 
-          {/* Animated Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-6 animate-fade-in leading-tight">
-            <div className="flex flex-col items-center">
+          {/* Animated Headline with CSS */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-6 leading-tight">
+            <div className="flex flex-col items-center animate-fade-in-up">
               <div>{lang === "en" ? "Be" : "Siempre"}</div>
-              <span 
-                className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1"
-                style={{ contain: 'layout' }}
-              >
-                &nbsp;
-                {titles.map((title, index) => <motion.span key={index} className="absolute font-bold" initial={{
-                opacity: 0,
-                y: "-100"
-              }} transition={{
-                type: "spring",
-                stiffness: 50
-              }} animate={titleNumber === index ? {
-                y: 0,
-                opacity: 1
-              } : {
-                y: titleNumber > index ? -150 : 150,
-                opacity: 0
-              }}>
+              <div className="relative h-[1.2em] w-full overflow-hidden">
+                {titles.map((title, index) => (
+                  <span
+                    key={index}
+                    className={`absolute left-1/2 -translate-x-1/2 font-bold transition-all duration-500 ease-out ${
+                      titleNumber === index 
+                        ? 'translate-y-0 opacity-100' 
+                        : titleNumber > index
+                        ? '-translate-y-full opacity-0'
+                        : 'translate-y-full opacity-0'
+                    }`}
+                  >
                     {title}
-                  </motion.span>)}
-              </span>
+                  </span>
+                ))}
+              </div>
             </div>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-fade-in leading-relaxed">
+          <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-fade-in leading-relaxed animate-delay-100">
             {lang === "en" ? "Brashline started with two friends and one mission - make online visibility effortless. We create consistent, real content that keeps your business active and seen. Straightforward, affordable, and built to last." : "Brashline comenzó con dos amigos y una misión: hacer que la visibilidad en línea sea sin esfuerzo. Creamos contenido real y constante que mantiene tu negocio activo y visible. Directo, asequible y construido para durar."}
           </p>
 
           {/* CTA */}
-          <div className="flex justify-center animate-fade-in mb-8">
+          <div className="flex justify-center animate-fade-in mb-8 animate-delay-200">
             <FlipButton
               frontText={lang === "en" ? "Book Strategic Call" : "Reservar Llamada Estratégica"}
               backText="📞 Calling…"
