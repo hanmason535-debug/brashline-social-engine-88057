@@ -12,6 +12,7 @@
  */
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { STORAGE_KEYS, SUPPORTED_LANGUAGES, type SupportedLanguage } from "@/lib/constants";
+import { analytics } from "@/lib/analytics";
 
 type Language = SupportedLanguage;
 
@@ -34,9 +35,11 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const setLang = (newLang: Language) => {
+    const previousLang = lang;
     setLangState(newLang);
     try {
       localStorage.setItem(STORAGE_KEYS.LANGUAGE, newLang);
+      analytics.trackLanguageSwitch(previousLang, newLang);
     } catch (error) {
       console.error("Failed to save language preference:", error);
     }

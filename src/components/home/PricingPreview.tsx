@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { BorderBeam } from "@/components/ui/border-beam";
+import { analytics } from "@/lib/analytics";
 
 interface PricingPreviewProps {
   lang: "en" | "es";
@@ -224,6 +225,7 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
                     asChild
                     className="w-full"
                     variant={plan.featured ? "default" : "outline"}
+                    onClick={() => analytics.trackPricingCTA(plan.name, currentPrice)}
                   >
                     <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
                       {lang === "en" ? "Get Started" : "Comenzar"}

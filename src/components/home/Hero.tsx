@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import FlipButton from "@/components/ui/flip-button";
 import BackgroundPaths from "@/components/ui/background-paths";
 import { useParallax } from "@/hooks/useParallax";
+import { analytics } from "@/lib/analytics";
 
 interface HeroProps {
   lang: "en" | "es";
@@ -106,6 +107,7 @@ const Hero = memo(({
               target="_blank"
               rel="noopener noreferrer"
               className="text-lg px-10 py-6 h-auto"
+              onClick={() => analytics.trackCTA('Book Strategic Call', 'Hero Section')}
             />
           </div>
         </div>
