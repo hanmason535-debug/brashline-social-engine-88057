@@ -11,6 +11,7 @@
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
 import { useEffect, useMemo, useState, memo } from "react";
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import FlipButton from "@/components/ui/flip-button";
 import BackgroundPaths from "@/components/ui/background-paths";
@@ -57,27 +58,37 @@ const Hero = memo(({
             </Badge>
           </div>
 
-          {/* Animated Headline with CSS */}
+          {/* Animated Headline with Framer Motion */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-6 leading-tight">
-            <div className="flex flex-col items-center animate-fade-in-up">
+            <motion.div 
+              className="flex flex-col items-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
               <div>{lang === "en" ? "Be" : "Siempre"}</div>
               <div className="relative h-[1.2em] w-full overflow-hidden">
                 {titles.map((title, index) => (
-                  <span
+                  <motion.span
                     key={index}
-                    className={`absolute left-1/2 -translate-x-1/2 font-bold transition-all duration-500 ease-out ${
-                      titleNumber === index 
-                        ? 'translate-y-0 opacity-100' 
-                        : titleNumber > index
-                        ? '-translate-y-full opacity-0'
-                        : 'translate-y-full opacity-0'
-                    }`}
+                    className="absolute left-1/2 -translate-x-1/2 font-bold"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{
+                      opacity: titleNumber === index ? 1 : 0,
+                      y: titleNumber === index ? 0 : titleNumber > index ? -50 : 50,
+                      scale: titleNumber === index ? 1 : 0.8,
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.4, 0, 0.2, 1],
+                      opacity: { duration: 0.3 }
+                    }}
                   >
                     {title}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </h1>
 
           {/* Subheadline */}

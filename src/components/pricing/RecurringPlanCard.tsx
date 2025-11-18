@@ -53,8 +53,17 @@ export const RecurringPlanCard = ({
           <BorderBeam
             duration={12}
             size={300}
+            delay={0}
             colorFrom="hsl(var(--primary))"
             colorTo="hsl(var(--primary-glow))"
+          />
+          <BorderBeam
+            duration={12}
+            size={300}
+            delay={6}
+            borderWidth={2}
+            colorFrom="hsl(var(--primary-glow))"
+            colorTo="hsl(var(--primary))"
           />
           <div className="absolute inset-0 w-full h-full pointer-events-none">
             <SparklesCore
