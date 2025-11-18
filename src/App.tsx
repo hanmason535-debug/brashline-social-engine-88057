@@ -9,7 +9,7 @@
  * Performance:
  * - Keep logic straightforward and avoid hidden global side effects.
  */
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { AppProviders } from "@/providers/AppProviders";
@@ -52,8 +52,8 @@ const AnimatedRoutes = () => {
         key={location.pathname}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+        exit={{ opacity: 0, y: -15 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
       >
         <Routes location={location}>
           <Route path="/" element={<Index />} />
@@ -75,6 +75,22 @@ const AnimatedRoutes = () => {
   );
 };
 
+// GA4 page view tracker using route changes
+const GA4Tracker = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!(window as any).gtag) return;
+
+    (window as any).gtag("config", "G-D614DSBGX5", {
+      page_path: location.pathname + location.search,
+      page_title: document.title,
+    });
+  }, [location.pathname, location.search]);
+
+  return null;
+};
+
 const App = () => (
   <AppProviders>
     <Toaster />
@@ -85,6 +101,7 @@ const App = () => (
         v7_relativeSplatPath: true,
       }}
     >
+      <GA4Tracker />
       <LoadingBar />
       <Suspense fallback={<PageLoader />}>
         <main id="main-content">

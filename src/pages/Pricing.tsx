@@ -266,22 +266,24 @@ const Pricing = () => {
               </h2>
             </div>
 
-            <Card className="max-w-4xl mx-auto relative shadow-glow border-primary overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-glow">
-              <BorderBeam 
-                duration={12} 
-                size={300} 
-                delay={0}
-                colorFrom="hsl(var(--primary))" 
-                colorTo="hsl(var(--primary-glow))" 
-              />
-              <BorderBeam 
-                duration={12} 
-                size={300} 
-                delay={6}
-                borderWidth={2}
-                colorFrom="hsl(var(--primary-glow))" 
-                colorTo="hsl(var(--primary))" 
-              />
+            <Card className="group max-w-4xl mx-auto relative shadow-glow border-primary overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-glow">
+              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
+                <BorderBeam 
+                  duration={12} 
+                  size={300} 
+                  delay={0}
+                  colorFrom="hsl(var(--primary))" 
+                  colorTo="hsl(var(--primary-glow))" 
+                />
+                <BorderBeam 
+                  duration={12} 
+                  size={300} 
+                  delay={6}
+                  borderWidth={2}
+                  colorFrom="hsl(var(--primary-glow))" 
+                  colorTo="hsl(var(--primary))" 
+                />
+              </div>
               <CardHeader className="text-center pb-8 pt-8">
                 <h3 className="text-3xl font-heading font-bold mb-4">
                   {mainPackage.name}
