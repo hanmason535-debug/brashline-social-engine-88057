@@ -147,7 +147,7 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
             return (
               <Card
                 key={index}
-                className={`relative shadow-soft hover:shadow-medium transition-all duration-300 border-border/50 bg-card overflow-hidden ${
+                className={`group relative shadow-soft hover:shadow-medium transition-all duration-300 border-border/50 bg-card overflow-hidden ${
                   plan.featured
                     ? "border-primary shadow-glow md:-translate-y-4"
                     : "hover:-translate-y-1"
@@ -155,21 +155,23 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
               >
                 {plan.featured && (
                   <>
-                    <BorderBeam 
-                      size={250} 
-                      duration={12} 
-                      delay={0}
-                      colorFrom="hsl(var(--primary))"
-                      colorTo="hsl(var(--primary-glow))"
-                    />
-                    <BorderBeam 
-                      size={250} 
-                      duration={12} 
-                      delay={6}
-                      borderWidth={2}
-                      colorFrom="hsl(var(--primary-glow))"
-                      colorTo="hsl(var(--primary))"
-                    />
+                    <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
+                      <BorderBeam 
+                        size={250} 
+                        duration={12} 
+                        delay={0}
+                        colorFrom="hsl(var(--primary))"
+                        colorTo="hsl(var(--primary-glow))"
+                      />
+                      <BorderBeam 
+                        size={250} 
+                        duration={12} 
+                        delay={6}
+                        borderWidth={2}
+                        colorFrom="hsl(var(--primary-glow))"
+                        colorTo="hsl(var(--primary))"
+                      />
+                    </div>
                     <Badge className="absolute top-4 left-1/2 -translate-x-1/2 bg-primary z-10">
                       {lang === "en" ? "Most Popular" : "Más Popular"}
                     </Badge>

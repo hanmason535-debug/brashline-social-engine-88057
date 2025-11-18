@@ -42,7 +42,7 @@ export const RecurringPlanCard = ({
 }: RecurringPlanCardProps) => {
   return (
     <Card
-      className={`relative flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-glow ${
+      className={`group relative flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-glow ${
         featured
           ? "shadow-glow border-primary scale-105 overflow-hidden"
           : "shadow-soft hover:shadow-medium"
@@ -50,21 +50,23 @@ export const RecurringPlanCard = ({
     >
       {featured && (
         <>
-          <BorderBeam
-            duration={12}
-            size={300}
-            delay={0}
-            colorFrom="hsl(var(--primary))"
-            colorTo="hsl(var(--primary-glow))"
-          />
-          <BorderBeam
-            duration={12}
-            size={300}
-            delay={6}
-            borderWidth={2}
-            colorFrom="hsl(var(--primary-glow))"
-            colorTo="hsl(var(--primary))"
-          />
+          <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
+            <BorderBeam
+              duration={12}
+              size={300}
+              delay={0}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary-glow))"
+            />
+            <BorderBeam
+              duration={12}
+              size={300}
+              delay={6}
+              borderWidth={2}
+              colorFrom="hsl(var(--primary-glow))"
+              colorTo="hsl(var(--primary))"
+            />
+          </div>
           <div className="absolute inset-0 w-full h-full pointer-events-none">
             <SparklesCore
               background="transparent"

@@ -67,16 +67,16 @@ const Hero = memo(({
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
               <div>{lang === "en" ? "Be" : "Siempre"}</div>
-              <div className="relative h-[1.2em] w-full overflow-hidden">
+              <div className="relative h-[1.2em] w-full overflow-hidden flex justify-center">
                 {titles.map((title, index) => (
                   <motion.span
                     key={index}
-                    className="absolute left-1/2 -translate-x-1/2 font-bold"
+                    className="inline-block font-bold"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{
                       opacity: titleNumber === index ? 1 : 0,
                       y: titleNumber === index ? 0 : titleNumber > index ? -50 : 50,
-                      scale: titleNumber === index ? 1 : 0.8,
+                      scale: titleNumber === index ? 1 : 0.9,
                     }}
                     transition={{
                       duration: 0.5,
