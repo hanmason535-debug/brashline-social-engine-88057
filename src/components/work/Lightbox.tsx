@@ -16,6 +16,7 @@ import { X, ExternalLink, Heart, MessageCircle, Share2, Bookmark, Play, ChevronL
 import { Button } from "@/components/ui/button";
 import { WebsiteData, SocialData } from "@/types/work.types";
 import { useSwipeable } from "react-swipeable";
+import { analytics } from "@/lib/analytics";
 
 interface LightboxProps {
   isOpen: boolean;
@@ -30,6 +31,18 @@ interface LightboxProps {
 
 export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentIndex, onNavigate }: LightboxProps) {
   const [showNavHint, setShowNavHint] = useState(true);
+
+  useEffect(() => {
+    if (isOpen && data) {
+      const contentId = isWebsiteData(data) 
+        ? data.title 
+        : isSocialData(data) 
+          ? data.platform 
+          : 'unknown';
+      analytics.trackLightboxOpen(type, String(contentId));
+    }
+  }, [isOpen, data, type]);
+
   useEffect(() => {
     const handleKeyboard = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -61,10 +74,20 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
     };
   }, [isOpen, onClose, onNavigate]);
 
+  const handleClose = () => {
+    analytics.trackLightboxClose(type);
+    onClose();
+  };
+
+  const handleNavigate = (direction: 'prev' | 'next') => {
+    analytics.trackLightboxNavigation(direction);
+    onNavigate?.(direction);
+  };
+
   // Swipe handlers for mobile
   const swipeHandlers = useSwipeable({
-    onSwipedLeft: () => onNavigate?.("next"),
-    onSwipedRight: () => onNavigate?.("prev"),
+    onSwipedLeft: () => handleNavigate("next"),
+    onSwipedRight: () => handleNavigate("prev"),
     trackMouse: false,
     trackTouch: true,
   });
@@ -77,12 +100,12 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
   };
 
   // Type guards
-  const isWebsiteData = (d: WebsiteData | SocialData): d is WebsiteData => {
-    return 'thumbnail' in d && 'url' in d && 'techStack' in d;
+  const isWebsiteData = (d: WebsiteData | SocialData | null): d is WebsiteData => {
+    return d !== null && 'thumbnail' in d && 'url' in d && 'techStack' in d;
   };
 
-  const isSocialData = (d: WebsiteData | SocialData): d is SocialData => {
-    return 'platform' in d && 'engagement' in d;
+  const isSocialData = (d: WebsiteData | SocialData | null): d is SocialData => {
+    return d !== null && 'platform' in d && 'engagement' in d;
   };
 
   return (
@@ -94,7 +117,7 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={handleClose}
             className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50"
           />
 
@@ -111,7 +134,7 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
             <div className="relative w-full max-w-6xl max-h-[90vh] bg-background rounded-2xl shadow-2xl overflow-hidden">
               {/* Close Button */}
               <Button
-                onClick={onClose}
+                onClick={handleClose}
                 variant="ghost"
                 size="icon"
                 data-lightbox-close
@@ -125,7 +148,7 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
               {onNavigate && allItems && allItems.length > 1 && (
                 <>
                   <Button
-                    onClick={() => onNavigate("prev")}
+                    onClick={() => handleNavigate("prev")}
                     variant="ghost"
                     size="icon"
                     className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm hover:bg-background w-12 h-12 rounded-full"
@@ -133,7 +156,7 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
                     <ChevronLeft className={`w-6 h-6 transition-all ${showNavHint ? 'animate-pulse' : ''}`} />
                   </Button>
                   <Button
-                    onClick={() => onNavigate("next")}
+                    onClick={() => handleNavigate("next")}
                     variant="ghost"
                     size="icon"
                     className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm hover:bg-background w-12 h-12 rounded-full"

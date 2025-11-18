@@ -17,6 +17,7 @@ import { Switch } from "@/components/ui/switch";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { analytics } from "@/lib/analytics";
 
 const ThemeSwitch = ({
   className,
@@ -31,8 +32,10 @@ const ThemeSwitch = ({
 
   const handleCheckedChange = useCallback(
     (isChecked: boolean) => {
+      const newTheme = isChecked ? "dark" : "light";
       setChecked(isChecked);
-      setTheme(isChecked ? "dark" : "light");
+      setTheme(newTheme);
+      analytics.trackThemeSwitch(newTheme);
     },
     [setTheme],
   );

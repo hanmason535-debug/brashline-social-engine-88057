@@ -127,6 +127,12 @@ export const getPageSEO = (page: string): PageSEO => {
       canonical: `${baseUrl}/contact`,
       ogImage: "/images/og-contact.jpg",
     },
+    analytics: {
+      title: "Analytics Dashboard | Brashline",
+      description: "View analytics and engagement metrics for Brashline website",
+      canonical: `${baseUrl}/analytics`,
+      noindex: true,
+    },
     terms: {
       title: "Terms of Service | Brashline",
       description: "Terms of Service for Brashline social media management services.",

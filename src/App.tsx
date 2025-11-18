@@ -15,7 +15,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { AppProviders } from "@/providers/AppProviders";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { LoadingBar } from "@/components/ui/loading-bar";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { AnimatePresence, motion } from "framer-motion";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -27,6 +27,7 @@ const CaseStudies = lazy(() => import("./pages/CaseStudies"));
 const About = lazy(() => import("./pages/About"));
 const Blog = lazy(() => import("./pages/Blog"));
 const Contact = lazy(() => import("./pages/Contact"));
+const Analytics = lazy(() => import("./pages/Analytics"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
@@ -63,6 +64,7 @@ const AnimatedRoutes = () => {
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/analytics" element={<Analytics />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/cookies" element={<Cookies />} />
@@ -109,7 +111,7 @@ const App = () => (
         </main>
       </Suspense>
     </BrowserRouter>
-    <Analytics />
+    <VercelAnalytics />
   </AppProviders>
 );
 

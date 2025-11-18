@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
+import { analytics } from "@/lib/analytics";
 
 const contactSchema = z.object({
   name: z.string()
@@ -66,6 +67,7 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
+    analytics.trackContactFormStart();
 
     try {
       // Construct WhatsApp message with proper encoding
@@ -85,6 +87,8 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
         "noopener,noreferrer"
       );
 
+      analytics.trackContactFormSubmit(data.serviceType);
+
       toast({
         title: lang === "en" ? "Message sent!" : "¡Mensaje enviado!",
         description: lang === "en" 
@@ -95,6 +99,9 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
       reset();
       onSuccess?.();
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      analytics.trackContactFormError(errorMessage);
+      
       toast({
         title: lang === "en" ? "Error" : "Error",
         description: lang === "en"
