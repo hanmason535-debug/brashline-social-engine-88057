@@ -54,17 +54,16 @@ const Hero = memo(({
           {/* Animated Headline with Framer Motion */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-6 leading-tight">
             <motion.div
-              className="flex flex-col items-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <div>{lang === "en" ? "Be" : "Siempre"}</div>
-              <div className="relative h-[1.2em] w-full overflow-hidden flex justify-center">
+              {lang === "en" ? "Be " : "Siempre "}
+              <span className="relative inline-flex h-[1.2em] overflow-hidden align-middle">
                 {titles.map((title, index) => (
                   <motion.span
                     key={index}
-                    className="inline-block font-bold"
+                    className="absolute left-0 font-bold whitespace-nowrap"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{
                       opacity: titleNumber === index ? 1 : 0,
@@ -80,7 +79,7 @@ const Hero = memo(({
                     {title}
                   </motion.span>
                 ))}
-              </div>
+              </span>
             </motion.div>
           </h1>
 
