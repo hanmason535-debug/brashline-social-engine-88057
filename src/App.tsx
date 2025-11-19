@@ -17,6 +17,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { LoadingBar } from "@/components/ui/loading-bar";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { AnimatePresence, motion } from "framer-motion";
+import { analytics } from "@/lib/analytics";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -82,14 +83,34 @@ const GA4Tracker = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (!(window as any).gtag) return;
-
-    (window as any).gtag("config", "G-D614DSBGX5", {
-      page_path: location.pathname + location.search,
-      page_title: document.title,
-    });
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      // Send page_view event
+      (window as any).gtag('event', 'page_view', {
+        page_title: document.title,
+        page_location: window.location.href,
+        page_path: location.pathname + location.search,
+      });
+      
+      // Also send config for backward compatibility
+      (window as any).gtag('config', 'G-D614DSBGX5', {
+        page_path: location.pathname + location.search,
+      });
+      
+      if ((window as any).DEBUG) {
+        console.log('GA4: Page view tracked -', location.pathname);
+      }
+    }
   }, [location.pathname, location.search]);
 
+  return null;
+};
+
+// Initialize GA4 on app mount
+const GA4Initializer = () => {
+  useEffect(() => {
+    analytics.init();
+  }, []);
+  
   return null;
 };
 
@@ -103,6 +124,7 @@ const App = () => (
         v7_relativeSplatPath: true,
       }}
     >
+      <GA4Initializer />
       <GA4Tracker />
       <LoadingBar />
       <Suspense fallback={<PageLoader />}>
