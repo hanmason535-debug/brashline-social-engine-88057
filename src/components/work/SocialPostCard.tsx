@@ -54,6 +54,13 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
     onOpenLightbox();
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onOpenLightbox();
+    }
+  };
+
   const formatNumber = (num: number): string => {
     if (num >= 1000) {
       return (num / 1000).toFixed(1) + "K";
@@ -68,6 +75,10 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
       transition={{ delay: index * 0.1, duration: 0.5 }}
       className="group relative cursor-pointer"
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${post.platform} post`}
     >
       <div className="relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-2 border border-border">
         {/* Platform Badge */}

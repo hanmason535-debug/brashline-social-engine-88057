@@ -42,6 +42,15 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
     onOpenLightbox();
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onOpenLightbox();
+    }
+  };
+
+  const title = project.title[lang];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -49,8 +58,12 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
       transition={{ delay: index * 0.1, duration: 0.5 }}
       className="group relative cursor-pointer"
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      role="button"
+      tabIndex={0}
+      aria-label={`View details for ${title}`}
     >
       {/* Browser Mockup Frame */}
       <div className="relative bg-card rounded-lg overflow-hidden shadow-soft transition-all duration-500 ease-out hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-[1.02] border border-border hover:ring-2 hover:ring-primary/50 will-change-transform">
@@ -114,26 +127,21 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
 
           {/* Hover Overlay */}
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out flex items-center justify-center gap-3 will-change-[opacity]">
-            <motion.button
-              onClick={handleClick}
+            <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               whileHover={{ scale: 1.1 }}
-              className="bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-glow"
+              className="bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-glow pointer-events-none"
             >
               {lang === "en" ? "View Details" : "Ver Detalles"}
-            </motion.button>
-            <motion.button
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open(project.url, "_blank", "noopener,noreferrer");
-              }}
+            </motion.div>
+            <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               whileHover={{ scale: 1.1 }}
-              className="bg-background text-foreground px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-glow"
+              className="bg-background text-foreground px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-glow pointer-events-none"
             >
               <ExternalLink className="w-4 h-4" />
               {lang === "en" ? "Visit Site" : "Visitar"}
-            </motion.button>
+            </motion.div>
           </div>
         </div>
 

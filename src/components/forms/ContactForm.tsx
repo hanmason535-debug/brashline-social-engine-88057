@@ -202,7 +202,7 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
           value={serviceType}
           onValueChange={(value) => setValue("serviceType", value)}
         >
-          <SelectTrigger className={errors.serviceType ? "border-destructive" : ""}>
+          <SelectTrigger id="serviceType" aria-label={t.serviceType} className={errors.serviceType ? "border-destructive" : ""}>
             <SelectValue placeholder={t.selectService} />
           </SelectTrigger>
           <SelectContent>

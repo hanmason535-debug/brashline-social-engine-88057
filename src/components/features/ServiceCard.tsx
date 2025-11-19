@@ -36,7 +36,7 @@ export const ServiceCard = memo(({ service, index, isVisible }: ServiceCardProps
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-muted mb-6">
           <Icon className="h-7 w-7 text-foreground" />
         </div>
-        <h3 className="text-xl font-heading font-semibold mb-4">{service.title}</h3>
+        <h2 className="text-xl font-heading font-semibold mb-4">{service.title}</h2>
         <p className="text-muted-foreground leading-relaxed">{service.description}</p>
       </CardContent>
     </Card>

@@ -54,6 +54,7 @@ const ThemeSwitch = ({
       <Switch
         checked={checked}
         onCheckedChange={handleCheckedChange}
+        aria-label={checked ? "Switch to light mode" : "Switch to dark mode"}
         className={cn(
           "peer absolute inset-0 h-full w-full rounded-full transition-colors",
           "bg-muted border-2 border-border",

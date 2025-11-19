@@ -38,6 +38,14 @@ global.IntersectionObserver = class IntersectionObserver {
   unobserve() {}
 } as unknown as typeof IntersectionObserver;
 
+// Minimal ResizeObserver shim to support embla-carousel and other components that observe element size changes.
+global.ResizeObserver = class ResizeObserver {
+  constructor() {}
+  disconnect() {}
+  observe() {}
+  unobserve() {}
+} as unknown as typeof ResizeObserver;
+
 // Provide a default language context so components under test can assume a valid `lang` without rendering the real provider.
 vi.mock('@/contexts/LanguageContext', () => ({
   useLanguage: () => ({

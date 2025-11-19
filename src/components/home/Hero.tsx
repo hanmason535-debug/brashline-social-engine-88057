@@ -15,13 +15,9 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import FlipButton from "@/components/ui/flip-button";
 import BackgroundPaths from "@/components/ui/background-paths";
-import { useParallax } from "@/hooks/useParallax";
-import { analytics } from "@/lib/analytics";
-
 interface HeroProps {
   lang: "en" | "es";
 }
-
 const Hero = memo(({
   lang
 }: HeroProps) => {
@@ -29,7 +25,6 @@ const Hero = memo(({
   const titlesEn = useMemo(() => ["Consistent", "Growing", "Visible", "Connected"], []);
   const titlesEs = useMemo(() => ["Constantes", "en Crecimiento", "Visibles", "Conectadas"], []);
   const titles = lang === "en" ? titlesEn : titlesEs;
-  const parallaxOffset = useParallax({ speed: 0.3, direction: "down" });
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (titleNumber === titles.length - 1) {
@@ -42,10 +37,7 @@ const Hero = memo(({
   }, [titleNumber, titles]);
   return <section className="relative overflow-hidden bg-background">
       {/* Animated Background with performance hints */}
-      <div 
-        className="absolute inset-0 z-0" 
-        style={{ transform: `translateY(${parallaxOffset}px)` }}
-      >
+      <div className="absolute inset-0 z-0">
         <BackgroundPaths />
       </div>
 
@@ -61,7 +53,7 @@ const Hero = memo(({
 
           {/* Animated Headline with Framer Motion */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-6 leading-tight">
-            <motion.div 
+            <motion.div
               className="flex flex-col items-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -107,7 +99,6 @@ const Hero = memo(({
               target="_blank"
               rel="noopener noreferrer"
               className="text-lg px-10 py-6 h-auto"
-              onClick={() => analytics.trackCTA('Book Strategic Call', 'Hero Section')}
             />
           </div>
         </div>

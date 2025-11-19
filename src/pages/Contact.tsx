@@ -51,9 +51,9 @@ const Contact = () => {
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted mb-4">
                   <Phone className="h-6 w-6 text-foreground" />
                 </div>
-                <h3 className="font-heading font-semibold mb-2">
+                <h2 className="font-heading font-semibold mb-2">
                   {lang === "en" ? "Phone" : "Teléfono"}
-                </h3>
+                </h2>
                 <a href="tel:+19294468440" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                   +1 (929) 446-8440
                 </a>
@@ -65,9 +65,9 @@ const Contact = () => {
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted mb-4">
                   <Mail className="h-6 w-6 text-foreground" />
                 </div>
-                <h3 className="font-heading font-semibold mb-2">
+                <h2 className="font-heading font-semibold mb-2">
                   {lang === "en" ? "Email" : "Correo"}
-                </h3>
+                </h2>
                 <a href="mailto:Brashline@gmail.com" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                   Brashline@gmail.com
                 </a>
@@ -79,9 +79,9 @@ const Contact = () => {
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted mb-4">
                   <Clock className="h-6 w-6 text-foreground" />
                 </div>
-                <h3 className="font-heading font-semibold mb-2">
+                <h2 className="font-heading font-semibold mb-2">
                   {lang === "en" ? "Hours" : "Horario"}
-                </h3>
+                </h2>
                 <p className="text-sm text-muted-foreground">
                   {lang === "en" ? "Mon–Fri 9:00–6:00 ET" : "Lun–Vie 9:00–18:00 ET"}
                 </p>

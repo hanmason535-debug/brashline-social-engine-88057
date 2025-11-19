@@ -5,7 +5,12 @@ import Hero from './Hero';
 
 // Mock BackgroundPaths and motion to keep test light
 vi.mock('@/components/ui/background-paths', () => ({ default: () => <div data-testid="bg-paths" /> }));
-vi.mock('framer-motion', () => ({ motion: { span: (props: any) => <span {...props} /> } }));
+vi.mock('framer-motion', () => ({ 
+  motion: { 
+    div: (props: any) => <div {...props} />,
+    span: (props: any) => <span {...props} /> 
+  } 
+}));
 
 describe('Hero', () => {
   it('renders English content and CTA', () => {
