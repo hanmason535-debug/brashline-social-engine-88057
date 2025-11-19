@@ -24,6 +24,48 @@ declare global {
 
 const STORAGE_KEY = 'brashline_analytics_events';
 const MAX_STORED_EVENTS = 1000;
+const DEBUG = true; // Set to false in production
+
+/**
+ * Initialize GA4 and verify it's loaded
+ */
+function initGA4() {
+  if (typeof window === 'undefined') return false;
+  
+  // Check if gtag is available
+  if (!window.gtag) {
+    if (DEBUG) console.warn('GA4: gtag not available yet');
+    return false;
+  }
+  
+  // Check if dataLayer exists
+  if (!window.dataLayer) {
+    window.dataLayer = [];
+    if (DEBUG) console.log('GA4: Initialized dataLayer');
+  }
+  
+  if (DEBUG) console.log('GA4: Ready ✓');
+  return true;
+}
+
+/**
+ * Wait for GA4 to be ready
+ */
+function waitForGA4(callback: () => void, maxWait = 5000) {
+  const startTime = Date.now();
+  
+  const checkGA4 = () => {
+    if (initGA4()) {
+      callback();
+    } else if (Date.now() - startTime < maxWait) {
+      setTimeout(checkGA4, 100);
+    } else {
+      if (DEBUG) console.error('GA4: Timeout waiting for gtag to load');
+    }
+  };
+  
+  checkGA4();
+}
 
 /**
  * Store event locally for dashboard
@@ -64,11 +106,24 @@ export function trackEvent(
   };
 
   // Send to GA4
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', eventName, {
-      event_category: category,
-      event_label: label,
-      value,
+  if (typeof window !== 'undefined') {
+    waitForGA4(() => {
+      if (window.gtag) {
+        window.gtag('event', eventName, {
+          event_category: category,
+          event_label: label,
+          value,
+        });
+        
+        if (DEBUG) {
+          console.log('GA4 Event Sent:', {
+            event: eventName,
+            category,
+            label,
+            value,
+          });
+        }
+      }
     });
   }
 
@@ -104,6 +159,24 @@ export function clearStoredEvents() {
  * Predefined event trackers
  */
 export const analytics = {
+  // Initialize GA4 on first use
+  init: () => {
+    if (typeof window !== 'undefined') {
+      waitForGA4(() => {
+        if (DEBUG) console.log('GA4: Analytics initialized');
+        // Send initial page_view event
+        if (window.gtag) {
+          window.gtag('event', 'page_view', {
+            page_title: document.title,
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+          });
+          if (DEBUG) console.log('GA4: Initial page_view sent');
+        }
+      });
+    }
+  },
+
   // CTA interactions
   trackCTA: (label: string, location: string) => {
     trackEvent('cta_click', 'engagement', `${label} - ${location}`);
