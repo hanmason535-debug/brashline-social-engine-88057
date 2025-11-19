@@ -51,45 +51,41 @@ const Hero = memo(({
             </Badge>
           </div>
 
-          {/* Animated Headline with Framer Motion */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-6 leading-tight">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              {lang === "en" ? "Be " : "Siempre "}
-              <span className="relative inline-flex h-[1.2em] overflow-hidden align-middle">
-                {titles.map((title, index) => (
-                  <motion.span
-                    key={index}
-                    className="absolute left-0 font-bold whitespace-nowrap"
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{
-                      opacity: titleNumber === index ? 1 : 0,
-                      y: titleNumber === index ? 0 : titleNumber > index ? -50 : 50,
-                      scale: titleNumber === index ? 1 : 0.9,
-                    }}
-                    transition={{
-                      duration: 0.5,
-                      ease: [0.4, 0, 0.2, 1],
-                      opacity: { duration: 0.3 }
-                    }}
-                  >
+          {/* Animated Headline */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-6 animate-fade-in leading-tight">
+            <div className="flex flex-col items-center">
+              <div>{lang === "en" ? "Be" : "Siempre"}</div>
+              <span
+                className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1"
+                style={{ contain: 'layout' }}
+              >
+                &nbsp;
+                {titles.map((title, index) => <motion.span key={index} className="absolute font-bold" initial={{
+                  opacity: 0,
+                  y: -100
+                }} transition={{
+                type: "spring",
+                stiffness: 50
+              }} animate={titleNumber === index ? {
+                y: 0,
+                opacity: 1
+              } : {
+                y: titleNumber > index ? -150 : 150,
+                opacity: 0
+              }}>
                     {title}
-                  </motion.span>
-                ))}
+                  </motion.span>)}
               </span>
-            </motion.div>
+            </div>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-fade-in leading-relaxed animate-delay-100">
+          <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-fade-in leading-relaxed">
             {lang === "en" ? "Brashline started with two friends and one mission - make online visibility effortless. We create consistent, real content that keeps your business active and seen. Straightforward, affordable, and built to last." : "Brashline comenzó con dos amigos y una misión: hacer que la visibilidad en línea sea sin esfuerzo. Creamos contenido real y constante que mantiene tu negocio activo y visible. Directo, asequible y construido para durar."}
           </p>
 
           {/* CTA */}
-          <div className="flex justify-center animate-fade-in mb-8 animate-delay-200">
+          <div className="flex justify-center animate-fade-in mb-8">
             <FlipButton
               frontText={lang === "en" ? "Book Strategic Call" : "Reservar Llamada Estratégica"}
               backText="📞 Calling…"
