@@ -11,8 +11,7 @@
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
 import { useLanguage } from "@/contexts/LanguageContext";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { RootLayout } from "@/components/layout/RootLayout";
 import SEOHead from "@/components/SEO/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -249,160 +248,152 @@ const Pricing = () => {
   ];
 
   return (
-    <>
+    <RootLayout>
       <SEOHead pageSEO={pageSEO} lang={lang} />
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1 bg-background">
-        {/* One-Time Launch Package */}
-        <section className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <Badge className="mb-4 bg-secondary text-secondary-foreground">
-                {lang === "en" ? "COMPLETE SOLUTION" : "SOLUCIÓN COMPLETA"}
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
-                {lang === "en" ? "Everything You Need to Launch" : "Todo lo que Necesitas para Lanzar"}
-              </h2>
-            </div>
+      {/* One-Time Launch Package */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-secondary text-secondary-foreground">
+              {lang === "en" ? "COMPLETE SOLUTION" : "SOLUCIÓN COMPLETA"}
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
+              {lang === "en" ? "Everything You Need to Launch" : "Todo lo que Necesitas para Lanzar"}
+            </h2>
+          </div>
 
-            <Card className="group max-w-4xl mx-auto relative shadow-glow border-primary overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-glow">
-              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
-                <BorderBeam 
-                  duration={12} 
-                  size={300} 
-                  delay={0}
-                  colorFrom="hsl(var(--primary))" 
-                  colorTo="hsl(var(--primary-glow))" 
-                />
-                <BorderBeam 
-                  duration={12} 
-                  size={300} 
-                  delay={6}
-                  borderWidth={2}
-                  colorFrom="hsl(var(--primary-glow))" 
-                  colorTo="hsl(var(--primary))" 
-                />
+          <Card className="max-w-4xl mx-auto relative shadow-glow border-primary overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-glow">
+            <BorderBeam
+              duration={12}
+              size={300}
+              delay={0}
+              colorFrom="hsl(var(--primary))"
+              colorTo="hsl(var(--primary-glow))"
+            />
+            <BorderBeam
+              duration={12}
+              size={300}
+              delay={6}
+              borderWidth={2}
+              colorFrom="hsl(var(--primary-glow))"
+              colorTo="hsl(var(--primary))"
+            />
+            <CardHeader className="text-center pb-8 pt-8">
+              <h3 className="text-3xl font-heading font-bold mb-4">
+                {mainPackage.name}
+              </h3>
+              <p className="text-lg text-muted-foreground mb-6">
+                {mainPackage.tagline[lang]}
+              </p>
+              <div className="mb-4">
+                <span className="text-5xl font-heading font-bold">${mainPackage.price}</span>
+                <span className="text-muted-foreground ml-2">{lang === "en" ? "one-time" : "único pago"}</span>
               </div>
-              <CardHeader className="text-center pb-8 pt-8">
-                <h3 className="text-3xl font-heading font-bold mb-4">
-                  {mainPackage.name}
-                </h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  {mainPackage.tagline[lang]}
-                </p>
-                <div className="mb-4">
-                  <span className="text-5xl font-heading font-bold">${mainPackage.price}</span>
-                  <span className="text-muted-foreground ml-2">{lang === "en" ? "one-time" : "único pago"}</span>
+            </CardHeader>
+
+            <CardContent className="grid md:grid-cols-2 gap-4 pb-8">
+              {mainPackage.features.map((feature, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">{feature[lang]}</span>
                 </div>
-              </CardHeader>
-
-              <CardContent className="grid md:grid-cols-2 gap-4 pb-8">
-                {mainPackage.features.map((feature, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">{feature[lang]}</span>
-                  </div>
-                ))}
-                <div className="md:col-span-2 pt-4 mt-4 border-t border-border">
-                  <p className="text-sm text-muted-foreground italic text-center">
-                    <span className="font-semibold">{lang === "en" ? "Best for:" : "Mejor para:"}</span> {mainPackage.bestFor[lang]}
-                  </p>
-                </div>
-              </CardContent>
-
-              <CardFooter className="pt-6 pb-8">
-                <Button asChild className="w-full" size="lg">
-                  <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-                    {lang === "en" ? "Get Started" : "Comenzar"}
-                  </a>
-                </Button>
-              </CardFooter>
-            </Card>
-          </div>
-        </section>
-
-        {/* Add-On Packages */}
-        <section ref={projectRef as React.RefObject<HTMLElement>} id="addons" className="py-16 md:py-24 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <Badge className="mb-4 bg-secondary text-secondary-foreground">
-                {lang === "en" ? "ADD-ON PACKAGES" : "PAQUETES ADICIONALES"}
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
-                {lang === "en" ? "Enhance Your Launch" : "Mejora tu Lanzamiento"}
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                {lang === "en"
-                  ? "Pick the services that match your specific needs."
-                  : "Elige los servicios que se adapten a tus necesidades específicas."}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-              {addOnPackages.map((pkg, index) => (
-                <Card
-                  key={index}
-                  className={`relative shadow-soft hover:shadow-glow transition-all duration-700 hover:-translate-y-2 flex flex-col ${
-                    projectVisible
-                      ? 'opacity-100 translate-y-0'
-                      : 'opacity-0 translate-y-10'
-                  }`}
-                  style={{ transitionDelay: `${index * 100}ms` }}
-                >
-                  <CardHeader className="pb-6">
-                    <h3 className="text-xl font-heading font-bold mb-2">
-                      {pkg.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {pkg.tagline[lang]}
-                    </p>
-                    <div>
-                      <span className="text-3xl font-heading font-bold">${pkg.price}</span>
-                      <span className="text-muted-foreground text-sm ml-2">
-                        {lang === "en" ? "one-time" : "único pago"}
-                      </span>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent className="space-y-3 flex-1">
-                    {pkg.features.map((feature, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                        <span className="text-xs">{feature[lang]}</span>
-                      </div>
-                    ))}
-                    <div className="pt-3 mt-3 border-t border-border">
-                      <p className="text-xs text-muted-foreground italic">
-                        <span className="font-semibold">{lang === "en" ? "Best for:" : "Mejor para:"}</span> {pkg.bestFor[lang]}
-                      </p>
-                    </div>
-                  </CardContent>
-
-                  <CardFooter className="pt-4">
-                    <Button asChild className="w-full" variant="outline">
-                      <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-                        {lang === "en" ? "Add to Package" : "Agregar al Paquete"}
-                      </a>
-                    </Button>
-                  </CardFooter>
-                </Card>
               ))}
-            </div>
+              <div className="md:col-span-2 pt-4 mt-4 border-t border-border">
+                <p className="text-sm text-muted-foreground italic text-center">
+                  <span className="font-semibold">{lang === "en" ? "Best for:" : "Mejor para:"}</span> {mainPackage.bestFor[lang]}
+                </p>
+              </div>
+            </CardContent>
 
-            <div className="text-center mt-12">
-              <p className="text-sm text-muted-foreground">
-                {lang === "en"
-                  ? "All packages are one-time investments. Contact us to create a custom bundle."
-                  : "Todos los paquetes son inversiones únicas. Contáctanos para crear un paquete personalizado."}
-              </p>
-            </div>
+            <CardFooter className="pt-6 pb-8">
+              <Button asChild className="w-full" size="lg">
+                <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+                  {lang === "en" ? "Get Started" : "Comenzar"}
+                </a>
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </section>
+
+      {/* Add-On Packages */}
+      <section ref={projectRef as React.RefObject<HTMLElement>} id="addons" className="py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-secondary text-secondary-foreground">
+              {lang === "en" ? "ADD-ON PACKAGES" : "PAQUETES ADICIONALES"}
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
+              {lang === "en" ? "Enhance Your Launch" : "Mejora tu Lanzamiento"}
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              {lang === "en"
+                ? "Pick the services that match your specific needs."
+                : "Elige los servicios que se adapten a tus necesidades específicas."}
+            </p>
           </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
-    </>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            {addOnPackages.map((pkg, index) => (
+              <Card
+                key={index}
+                className={`relative shadow-soft hover:shadow-glow transition-all duration-700 hover:-translate-y-2 flex flex-col ${
+                  projectVisible
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-10'
+                }`}
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                <CardHeader className="pb-6">
+                  <h3 className="text-xl font-heading font-bold mb-2">
+                    {pkg.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {pkg.tagline[lang]}
+                  </p>
+                  <div>
+                    <span className="text-3xl font-heading font-bold">${pkg.price}</span>
+                    <span className="text-muted-foreground text-sm ml-2">
+                      {lang === "en" ? "one-time" : "único pago"}
+                    </span>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="space-y-3 flex-1">
+                  {pkg.features.map((feature, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-xs">{feature[lang]}</span>
+                    </div>
+                  ))}
+                  <div className="pt-3 mt-3 border-t border-border">
+                    <p className="text-xs text-muted-foreground italic">
+                      <span className="font-semibold">{lang === "en" ? "Best for:" : "Mejor para:"}</span> {pkg.bestFor[lang]}
+                    </p>
+                  </div>
+                </CardContent>
+
+                <CardFooter className="pt-4">
+                  <Button asChild className="w-full" variant="outline">
+                    <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+                      {lang === "en" ? "Add to Package" : "Agregar al Paquete"}
+                    </a>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-sm text-muted-foreground">
+              {lang === "en"
+                ? "All packages are one-time investments. Contact us to create a custom bundle."
+                : "Todos los paquetes son inversiones únicas. Contáctanos para crear un paquete personalizado."}
+            </p>
+          </div>
+        </div>
+      </section>
+    </RootLayout>
   );
 };
 

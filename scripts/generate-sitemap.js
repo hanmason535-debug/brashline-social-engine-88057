@@ -49,64 +49,9 @@ function generateSitemapXml(config) {
   return sitemapStart + urlEntries + sitemapEnd;
 }
 
-// Route definitions - must match src/lib/sitemap-generator.ts
-const APP_ROUTES = [
-  {
-    path: '/',
-    changefreq: 'weekly',
-    priority: 1.0,
-  },
-  {
-    path: '/services',
-    changefreq: 'monthly',
-    priority: 0.9,
-  },
-  {
-    path: '/pricing',
-    changefreq: 'weekly',
-    priority: 0.9,
-  },
-  {
-    path: '/case-studies',
-    changefreq: 'monthly',
-    priority: 0.85,
-  },
-  {
-    path: '/about',
-    changefreq: 'monthly',
-    priority: 0.8,
-  },
-  {
-    path: '/blog',
-    changefreq: 'weekly',
-    priority: 0.8,
-  },
-  {
-    path: '/contact',
-    changefreq: 'monthly',
-    priority: 0.7,
-  },
-  {
-    path: '/terms',
-    changefreq: 'yearly',
-    priority: 0.5,
-  },
-  {
-    path: '/privacy',
-    changefreq: 'yearly',
-    priority: 0.5,
-  },
-  {
-    path: '/cookies',
-    changefreq: 'yearly',
-    priority: 0.5,
-  },
-  {
-    path: '/accessibility',
-    changefreq: 'yearly',
-    priority: 0.5,
-  },
-];
+// Import APP_ROUTES from the single source of truth
+const routesPath = path.join(__dirname, '..', 'src', 'data', 'routes.json');
+const APP_ROUTES = JSON.parse(fs.readFileSync(routesPath, 'utf-8'));
 
 async function generateSitemap() {
   try {

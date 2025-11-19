@@ -10,8 +10,7 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { RootLayout } from "@/components/layout/RootLayout";
 import SEOHead from "@/components/SEO/SEOHead";
 import { ServiceCard } from "@/components/features/ServiceCard";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -27,40 +26,34 @@ const Services = () => {
   const services = useServices(lang);
 
   return (
-    <>
+    <RootLayout>
       <SEOHead pageSEO={pageSEO} lang={lang} />
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1">
-          {/* Services Grid */}
-          <section ref={elementRef as React.RefObject<HTMLElement>} className={`${SECTION_PADDING_Y} bg-background`}>
-            <div className={`container mx-auto ${CONTAINER_PADDING_X}`}>
-              <div className="text-center mb-12">
-                <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6">
-                  {lang === "en" ? "Our Services" : "Nuestros Servicios"}
-                </h1>
-                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                  {lang === "en"
-                    ? "Comprehensive social media and digital marketing services for Florida businesses"
-                    : "Servicios integrales de redes sociales y marketing digital para negocios de Florida"}
-                </p>
-              </div>
-              <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${SECTION_GAP}`}>
-                {services.map((service, index) => (
-                  <ServiceCard
-                    key={service.id}
-                    service={service}
-                    index={index}
-                    isVisible={isVisible}
-                  />
-                ))}
-              </div>
-            </div>
-          </section>
-        </main>
-        <Footer />
-      </div>
-    </>
+      {/* Services Grid */}
+      <section ref={elementRef as React.RefObject<HTMLElement>} className={`${SECTION_PADDING_Y} bg-background`}>
+        <div className={`container mx-auto ${CONTAINER_PADDING_X}`}>
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6">
+              {lang === "en" ? "Our Services" : "Nuestros Servicios"}
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              {lang === "en"
+                ? "Comprehensive social media and digital marketing services for Florida businesses"
+                : "Servicios integrales de redes sociales y marketing digital para negocios de Florida"}
+            </p>
+          </div>
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${SECTION_GAP}`}>
+            {services.map((service, index) => (
+              <ServiceCard
+                key={service.id}
+                service={service}
+                index={index}
+                isVisible={isVisible}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </RootLayout>
   );
 };
 

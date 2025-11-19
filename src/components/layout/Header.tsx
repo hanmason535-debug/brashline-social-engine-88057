@@ -87,25 +87,19 @@ const Header = memo(() => {
         <nav className="container mx-auto flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <picture>
-            <source type="image/webp" srcSet="/images/logo-64w.webp 64w, /images/logo-80w.webp 80w, /images/logo-120w.webp 120w, /images/logo-160w.webp 160w" sizes="64px" />
-            <img
-              src="/logo.png"
-              alt="Brashline Logo"
-              className="h-16 w-auto"
-              width="64"
-              height="64"
-              loading="eager"
-              fetchPriority="high"
-              onError={(e) => {
-                const img = e.currentTarget as HTMLImageElement;
-                if (img.src.endsWith('/logo.png')) {
-                  img.onerror = null;
-                  img.src = '/logo.svg';
-                }
-              }}
-            />
-          </picture>
+          <img
+            src="/logo.png"
+            alt="Brashline Logo"
+            className="h-16 w-auto"
+            loading="eager"
+            onError={(e) => {
+              const img = e.currentTarget as HTMLImageElement;
+              if (img.src.endsWith('/logo.png')) {
+                img.onerror = null; // Prevent infinite loop
+                img.src = '/logo.svg';
+              }
+            }}
+          />
           <div className="text-xl font-heading font-bold text-foreground">
             BRASHLINE
           </div>

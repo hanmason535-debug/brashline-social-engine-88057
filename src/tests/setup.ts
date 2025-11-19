@@ -75,7 +75,11 @@ vi.mock('@/components/SEO/SEOHead', () => ({
   default: () => null,
 }));
 
-vi.mock('@/components/SEO/StructuredData', () => ({
+vi.mock('@/seo/MetaManager', () => ({
+  default: () => null,
+}));
+
+vi.mock('@/seo/StructuredData', () => ({
   default: () => null,
 }));
 

@@ -10,6 +10,7 @@
  * - Keep logic straightforward and avoid hidden global side effects.
  */
 import { createRoot } from "react-dom/client";
+import { HelmetProvider } from "react-helmet-async";
 import App from "./App.tsx";
 import "./index.css";
 import { logSEOAudit } from "@/utils/seo";
@@ -33,8 +34,8 @@ if ('serviceWorker' in navigator) {
 }
 
 createRoot(document.getElementById("root")!).render(
-  <>
+  <HelmetProvider>
     <App />
     <SpeedInsights />
-  </>
+  </HelmetProvider>
 );

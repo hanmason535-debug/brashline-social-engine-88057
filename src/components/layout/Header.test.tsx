@@ -75,14 +75,23 @@ describe('Header', () => {
 
   it('should render the WhatsApp contact button', () => {
     renderWithProviders(<Header />);
-    const contactButton = screen.getByRole('button', { name: /book strategic call/i });
+    const contactButton = screen.getByRole('link', { name: /book strategic call/i });
     expect(contactButton).toBeInTheDocument();
   });
 
   it('should handle logo image errors gracefully', () => {
     renderWithProviders(<Header />);
     const image = screen.getByAltText('Brashline Logo') as HTMLImageElement;
+
+    // Check initial source
+    expect(image.src).toContain('/logo.png');
+
+    // Trigger error
     fireEvent.error(image);
+
+    // Check if the source has been updated to the fallback SVG
+    expect(image.src).toContain('/logo.svg');
+
     // Image should still be in the document even after error
     expect(image).toBeInTheDocument();
   });

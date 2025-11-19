@@ -11,12 +11,12 @@ describe('Hero', () => {
   it('renders English content and CTA', () => {
     render(<Hero lang="en" />);
     expect(screen.getByText('Florida-Grown')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Book Strategic Call/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Book Strategic Call/i })).toBeInTheDocument();
   });
 
   it('renders Spanish content', () => {
     render(<Hero lang="es" />);
     expect(screen.getByText('Crecido en Florida')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Reservar Llamada Estratégica/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Reservar Llamada Estratégica/i })).toBeInTheDocument();
   });
 });
