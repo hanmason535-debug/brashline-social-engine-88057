@@ -65,6 +65,42 @@ export default function Analytics() {
       count,
     }));
 
+  // UTM tracking data
+  const eventsWithUTM = events.filter(e => e.utm);
+  
+  const sourceData = eventsWithUTM.reduce((acc, event) => {
+    const source = event.utm?.utm_source || 'direct';
+    acc[source] = (acc[source] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const utmSourceData = Object.entries(sourceData)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5)
+    .map(([name, value]) => ({ name: name.charAt(0).toUpperCase() + name.slice(1), value }));
+
+  const mediumData = eventsWithUTM.reduce((acc, event) => {
+    const medium = event.utm?.utm_medium || 'none';
+    acc[medium] = (acc[medium] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const utmMediumData = Object.entries(mediumData)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5)
+    .map(([name, value]) => ({ name: name.charAt(0).toUpperCase() + name.slice(1), value }));
+
+  const campaignData = eventsWithUTM.reduce((acc, event) => {
+    const campaign = event.utm?.utm_campaign || 'none';
+    acc[campaign] = (acc[campaign] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const utmCampaignData = Object.entries(campaignData)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5)
+    .map(([name, value]) => ({ name: name.charAt(0).toUpperCase() + name.slice(1), value }));
+
   // Key metrics
   const totalEvents = events.length;
   const ctaClicks = events.filter(e => e.event_name === 'cta_click').length;
@@ -249,6 +285,126 @@ export default function Analytics() {
                   </ResponsiveContainer>
                 </CardContent>
               </Card>
+
+              {/* UTM Tracking Section */}
+              {eventsWithUTM.length > 0 && (
+                <>
+                  <div className="col-span-full mt-8">
+                    <h2 className="text-2xl font-bold text-foreground mb-2">Campaign Attribution</h2>
+                    <p className="text-muted-foreground">Track marketing campaign performance via UTM parameters</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Traffic Sources */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Traffic Sources</CardTitle>
+                        <CardDescription>Top UTM sources</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <ResponsiveContainer width="100%" height={250}>
+                          <BarChart data={utmSourceData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                            <XAxis 
+                              dataKey="name"
+                              stroke="hsl(var(--muted-foreground))"
+                              style={{ fontSize: '11px' }}
+                            />
+                            <YAxis 
+                              stroke="hsl(var(--muted-foreground))"
+                              style={{ fontSize: '11px' }}
+                            />
+                            <Tooltip 
+                              contentStyle={{ 
+                                backgroundColor: 'hsl(var(--card))',
+                                border: '1px solid hsl(var(--border))',
+                                borderRadius: '6px'
+                              }}
+                            />
+                            <Bar 
+                              dataKey="value" 
+                              fill="hsl(var(--secondary))"
+                              radius={[4, 4, 0, 0]}
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </CardContent>
+                    </Card>
+
+                    {/* Traffic Mediums */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Traffic Mediums</CardTitle>
+                        <CardDescription>Top UTM mediums</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <ResponsiveContainer width="100%" height={250}>
+                          <BarChart data={utmMediumData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                            <XAxis 
+                              dataKey="name"
+                              stroke="hsl(var(--muted-foreground))"
+                              style={{ fontSize: '11px' }}
+                            />
+                            <YAxis 
+                              stroke="hsl(var(--muted-foreground))"
+                              style={{ fontSize: '11px' }}
+                            />
+                            <Tooltip 
+                              contentStyle={{ 
+                                backgroundColor: 'hsl(var(--card))',
+                                border: '1px solid hsl(var(--border))',
+                                borderRadius: '6px'
+                              }}
+                            />
+                            <Bar 
+                              dataKey="value" 
+                              fill="hsl(var(--accent))"
+                              radius={[4, 4, 0, 0]}
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </CardContent>
+                    </Card>
+
+                    {/* Campaigns */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Campaigns</CardTitle>
+                        <CardDescription>Top UTM campaigns</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <ResponsiveContainer width="100%" height={250}>
+                          <BarChart data={utmCampaignData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                            <XAxis 
+                              dataKey="name"
+                              stroke="hsl(var(--muted-foreground))"
+                              style={{ fontSize: '11px' }}
+                            />
+                            <YAxis 
+                              stroke="hsl(var(--muted-foreground))"
+                              style={{ fontSize: '11px' }}
+                            />
+                            <Tooltip 
+                              contentStyle={{ 
+                                backgroundColor: 'hsl(var(--card))',
+                                border: '1px solid hsl(var(--border))',
+                                borderRadius: '6px'
+                              }}
+                            />
+                            <Bar 
+                              dataKey="value" 
+                              fill="hsl(var(--primary))"
+                              radius={[4, 4, 0, 0]}
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </>
+              )}
             </>
           )}
         </div>
