@@ -3,12 +3,21 @@
  * Tracks custom events and stores them locally for dashboard
  */
 
+export interface UTMParams {
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+}
+
 export interface AnalyticsEvent {
   event_name: string;
   event_category: string;
   event_label?: string;
   value?: number;
   timestamp: number;
+  utm?: UTMParams;
 }
 
 declare global {
@@ -23,8 +32,57 @@ declare global {
 }
 
 const STORAGE_KEY = 'brashline_analytics_events';
+const UTM_STORAGE_KEY = 'brashline_utm_params';
 const MAX_STORED_EVENTS = 1000;
 const DEBUG = true; // Set to false in production
+
+/**
+ * Extract UTM parameters from URL
+ */
+function extractUTMParams(): UTMParams | null {
+  if (typeof window === 'undefined') return null;
+  
+  const params = new URLSearchParams(window.location.search);
+  const utmParams: UTMParams = {};
+  
+  const utmKeys: (keyof UTMParams)[] = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+  let hasParams = false;
+  
+  utmKeys.forEach(key => {
+    const value = params.get(key);
+    if (value) {
+      utmParams[key] = value;
+      hasParams = true;
+    }
+  });
+  
+  return hasParams ? utmParams : null;
+}
+
+/**
+ * Store UTM parameters in sessionStorage
+ */
+function storeUTMParams(params: UTMParams) {
+  try {
+    sessionStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(params));
+    if (DEBUG) console.log('UTM Parameters Captured:', params);
+  } catch (error) {
+    console.error('Failed to store UTM parameters:', error);
+  }
+}
+
+/**
+ * Get stored UTM parameters
+ */
+function getStoredUTMParams(): UTMParams | null {
+  try {
+    const stored = sessionStorage.getItem(UTM_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : null;
+  } catch (error) {
+    console.error('Failed to retrieve UTM parameters:', error);
+    return null;
+  }
+}
 
 /**
  * Initialize GA4 and verify it's loaded
@@ -97,15 +155,19 @@ export function trackEvent(
   label?: string,
   value?: number
 ) {
+  // Get UTM parameters
+  const utmParams = getStoredUTMParams();
+  
   const event: AnalyticsEvent = {
     event_name: eventName,
     event_category: category,
     event_label: label,
     value,
     timestamp: Date.now(),
+    utm: utmParams || undefined,
   };
 
-  // Send to GA4
+  // Send to GA4 with UTM parameters
   if (typeof window !== 'undefined') {
     waitForGA4(() => {
       if (window.gtag) {
@@ -113,6 +175,7 @@ export function trackEvent(
           event_category: category,
           event_label: label,
           value,
+          ...utmParams, // Include UTM parameters in GA4 event
         });
         
         if (DEBUG) {
@@ -121,6 +184,7 @@ export function trackEvent(
             category,
             label,
             value,
+            utm: utmParams,
           });
         }
       }
@@ -162,16 +226,24 @@ export const analytics = {
   // Initialize GA4 on first use
   init: () => {
     if (typeof window !== 'undefined') {
+      // Capture UTM parameters on page load
+      const utmParams = extractUTMParams();
+      if (utmParams) {
+        storeUTMParams(utmParams);
+      }
+      
       waitForGA4(() => {
         if (DEBUG) console.log('GA4: Analytics initialized');
-        // Send initial page_view event
+        // Send initial page_view event with UTM parameters
         if (window.gtag) {
+          const storedUTM = getStoredUTMParams();
           window.gtag('event', 'page_view', {
             page_title: document.title,
             page_location: window.location.href,
             page_path: window.location.pathname,
+            ...storedUTM,
           });
-          if (DEBUG) console.log('GA4: Initial page_view sent');
+          if (DEBUG) console.log('GA4: Initial page_view sent', storedUTM ? 'with UTM params' : '');
         }
       });
     }
