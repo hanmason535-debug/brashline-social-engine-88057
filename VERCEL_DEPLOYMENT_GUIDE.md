@@ -189,6 +189,15 @@ curl -I https://brashline.com/pricing
 3. **Indexing:** Verify all 11 routes are indexed
 4. **Sitemap Update:** Auto-regenerates on each deploy (verify in build logs)
 
+### Vercel Analytics / Speed Insights
+
+If you want to enable Vercel Analytics and Speed Insights in production, set the environment variable `VITE_ENABLE_ANALYTICS=true` in the Vercel project settings. The app only injects analytics when:
+
+- `import.meta.env.PROD` is true (production builds) OR
+- `VITE_ENABLE_ANALYTICS` is explicitly set to `'true'
+
+This prevents analytics scripts from being loaded in local development which can trigger CSP warnings or be blocked by content blockers.
+
 ### When Adding New Routes
 1. Add route to `src/App.tsx`
 2. Create page component in `src/pages/`
