@@ -592,7 +592,7 @@ Security audit completed: no hardcoded API keys or secrets found
 ### 1. No Hardcoded Secrets
 ```typescript
 // ❌ Bad
-const API_KEY = 'sk_live_123456789';
+const API_KEY = 'sk_live_***REDACTED***';
 
 // ✅ Good
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -605,7 +605,7 @@ VITE_SITE_URL=https://brashline.com
 VITE_ENABLE_ANALYTICS=false
 
 # .env.local (gitignored)
-VITE_API_KEY=actual_secret_key
+VITE_API_KEY=***REDACTED***
 ```
 
 ### 3. Content Security Policy

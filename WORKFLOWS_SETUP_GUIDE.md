@@ -31,13 +31,13 @@
 ### Already Configured ✅
 
 1. **CODECOV_TOKEN**
-   - Value: `f13c2597-5787-485e-ae7b-2ad69a808087`
+  - Value: `**REDACTED**` (do not commit tokens to the repo)
    - Purpose: Upload coverage reports to Codecov
    - Status: ✅ Added to repository secrets
 
 2. **PERCY_TOKEN** (Percy Visual Testing)
-   - Username: `yushijain_PJVxRs`
-   - Access Key: `Se9s8LhELJHisopUYxAD`
+  - Username: `yushijain_PJVxRs`
+  - Access Key: `**REDACTED**` (add to GitHub Secrets as `PERCY_TOKEN`)
    - Purpose: Visual regression testing
    - Status: ✅ Configured in `.percyrc.yml`
    - **Action Required:** Add to GitHub Secrets as `PERCY_TOKEN`
@@ -460,7 +460,7 @@ gh api /repos/:owner/:repo/dependabot/alerts
    - Go to: https://github.com/hanmason535-debug/brashline-social-engine-88057/settings/secrets/actions
    - Click **"New repository secret"**
    - Name: `PERCY_TOKEN`
-   - Value: `Se9s8LhELJHisopUYxAD`
+  - Value: `**REDACTED**` (add the real token to GitHub Secrets as `PERCY_TOKEN`)
    - Click **"Add secret"**
 
 2. **Commit and Push Workflows**

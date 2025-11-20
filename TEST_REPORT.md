@@ -223,7 +223,7 @@ snapshot:
 **Threshold**: 1% visual difference tolerance  
 
 **Action Required**: Add `PERCY_TOKEN` to GitHub Secrets  
-**Token**: `Se9s8LhELJHisopUYxAD`  
+**Token**: `**REDACTED**`  
 
 **Validation**: YAML syntax checked ✓, Percy config validated ✓
 
@@ -656,7 +656,7 @@ ci: add comprehensive GitHub workflows and MCP configuration
 1. Go to: `https://github.com/hanmason535-debug/brashline-social-engine-88057/settings/secrets/actions`
 2. Click "New repository secret"
 3. Name: `PERCY_TOKEN`
-4. Value: `Se9s8LhELJHisopUYxAD`
+4. Value: `**REDACTED**` (add the real token to GitHub Secrets as `PERCY_TOKEN`)
 5. Click "Add secret"
 
 **Why**: Visual regression workflow will fail without this token.
@@ -744,13 +744,13 @@ After pushing changes, verify the following:
 ## 10. Integration Credentials
 
 ### Codecov
-- **Token**: `f13c2597-5787-485e-ae7b-2ad69a808087`
+- **Token**: `**REDACTED**` (rotate if previously exposed)
 - **Status**: Configured in CI workflow ✓
 - **Dashboard**: Will be available after first push
 
 ### Percy
 - **Username**: `yushijain_PJVxRs`
-- **Project Token**: `Se9s8LhELJHisopUYxAD`
+- **Project Token**: `**REDACTED**` (rotate if previously exposed)
 - **Status**: Configured in workflow ⏳ (needs GitHub Secret)
 - **Dashboard**: `https://percy.io/yushijain_PJVxRs/brashline-social-engine`
 
