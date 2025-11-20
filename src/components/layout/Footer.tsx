@@ -23,8 +23,18 @@ const footerLinks = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61583138566921", label: "Facebook", external: true },
-  { icon: Instagram, href: "https://www.instagram.com/brashlineofficial/", label: "Instagram", external: true },
+  {
+    icon: Facebook,
+    href: "https://www.facebook.com/profile.php?id=61583138566921",
+    label: "Facebook",
+    external: true,
+  },
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/brashlineofficial/",
+    label: "Instagram",
+    external: true,
+  },
   { icon: Twitter, href: "https://x.com/brashlinex?s=11", label: "X (Twitter)", external: true },
   { icon: Linkedin, href: "/linkedin-not-found", label: "LinkedIn", external: false },
   { icon: Youtube, href: "/youtube-not-found", label: "YouTube", external: false },
@@ -32,35 +42,28 @@ const socialLinks = [
 
 const Footer = memo(() => {
   const { lang } = useLanguage();
-  
+
   return (
     <footer className="border-t border-border/40 bg-muted/30">
-  <div className="container mx-auto py-12">
+      <div className="container mx-auto py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
             <Link to="/" className="mb-4 inline-flex items-center gap-2">
-              <picture>
-                <source type="image/webp" srcSet="/images/logo-64w.webp 64w, /images/logo-80w.webp 80w, /images/logo-120w.webp 120w" sizes="64px" />
-                <img
-                  src="/logo.png"
-                  alt="Brashline Logo"
-                  className="h-16 w-auto"
-                  width="64"
-                  height="64"
-                  loading="lazy"
-                  onError={(e) => {
-                    const img = e.currentTarget as HTMLImageElement;
-                    if (img.src.endsWith('/logo.png')) {
-                      img.onerror = null;
-                      img.src = '/logo.svg';
-                    }
-                  }}
-                />
-              </picture>
-              <div className="text-xl font-heading font-bold text-foreground">
-                BRASHLINE
-              </div>
+              <img
+                src="/logo.png"
+                alt="Brashline Logo"
+                className="h-16 w-auto"
+                loading="lazy"
+                onError={(e) => {
+                  const img = e.currentTarget as HTMLImageElement;
+                  if (img.src.endsWith("/logo.png")) {
+                    img.onerror = null;
+                    img.src = "/logo.svg";
+                  }
+                }}
+              />
+              <div className="text-xl font-heading font-bold text-foreground">BRASHLINE</div>
             </Link>
             <p className="text-sm text-muted-foreground">
               {lang === "en"
@@ -83,14 +86,15 @@ const Footer = memo(() => {
                 </a>
               </p>
               <p>
-                <a href="mailto:Brashline@gmail.com" className="hover:text-primary transition-colors">
+                <a
+                  href="mailto:Brashline@gmail.com"
+                  className="hover:text-primary transition-colors"
+                >
                   Brashline@gmail.com
                 </a>
               </p>
               <p className="text-xs mt-2">
-                {lang === "en"
-                  ? "Replies within 1 business day"
-                  : "Respondemos en 1 día hábil"}
+                {lang === "en" ? "Replies within 1 business day" : "Respondemos en 1 día hábil"}
               </p>
               <p className="text-xs">
                 {lang === "en" ? "Mon–Fri 9:00–6:00 ET" : "Lun–Vie 9:00–18:00 ET"}
@@ -104,7 +108,7 @@ const Footer = memo(() => {
               {lang === "en" ? "Follow Us" : "Síguenos"}
             </h3>
             <div className="flex gap-4">
-              {socialLinks.map((social) => (
+              {socialLinks.map((social) =>
                 social.external ? (
                   <a
                     key={social.label}
@@ -126,7 +130,7 @@ const Footer = memo(() => {
                     <social.icon className="h-5 w-5" />
                   </Link>
                 )
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -134,7 +138,8 @@ const Footer = memo(() => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border/40 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Brashline. {lang === "en" ? "All rights reserved." : "Todos los derechos reservados."}
+            © {new Date().getFullYear()} Brashline.{" "}
+            {lang === "en" ? "All rights reserved." : "Todos los derechos reservados."}
           </p>
 
           <div className="flex flex-wrap gap-4 text-sm">
@@ -154,6 +159,6 @@ const Footer = memo(() => {
   );
 });
 
-Footer.displayName = 'Footer';
+Footer.displayName = "Footer";
 
 export default Footer;

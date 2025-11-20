@@ -1,11 +1,11 @@
-import { render } from '@testing-library/react';
-import { waitFor } from '@testing-library/dom';
-import { HelmetProvider } from 'react-helmet-async';
-import { describe, it, expect } from 'vitest';
-import ReviewSchema from './ReviewSchema';
+import { render } from "@testing-library/react";
+import { waitFor } from "@testing-library/dom";
+import { HelmetProvider } from "react-helmet-async";
+import { describe, it, expect } from "vitest";
+import ReviewSchema from "./ReviewSchema";
 
-describe('ReviewSchema', () => {
-  it('renders AggregateRating and Review JSON-LD', async () => {
+describe("ReviewSchema", () => {
+  it("renders AggregateRating and Review JSON-LD", async () => {
     render(
       <HelmetProvider>
         <ReviewSchema />
@@ -19,12 +19,12 @@ describe('ReviewSchema', () => {
     });
 
     const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
-    const json = JSON.parse(scripts[0].textContent || '{}');
-    expect(json['@type']).toBe('Organization');
+    const json = JSON.parse(scripts[0].textContent || "{}");
+    expect(json["@type"]).toBe("Organization");
     expect(json.aggregateRating).toBeDefined();
 
-    const reviewScripts = scripts.slice(1).map(s => JSON.parse(s.textContent || '{}'));
-    expect(reviewScripts[0]['@type']).toBe('Review');
+    const reviewScripts = scripts.slice(1).map((s) => JSON.parse(s.textContent || "{}"));
+    expect(reviewScripts[0]["@type"]).toBe("Review");
     expect(reviewScripts[0].author).toBeDefined();
   });
 });

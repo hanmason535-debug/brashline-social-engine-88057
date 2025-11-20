@@ -1,0 +1,55 @@
+version: 2
+updates:
+  # npm dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "hanmason535-debug"
+    labels:
+      - "dependencies"
+      - "automated"
+    versioning-strategy: increase
+    groups:
+      # Group React ecosystem updates
+      react:
+        patterns:
+          - "react*"
+          - "@types/react*"
+      # Group Radix UI updates
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
+      # Group testing libraries
+      testing:
+        patterns:
+          - "@testing-library/*"
+          - "vitest*"
+          - "@vitest/*"
+      # Group build tools
+      build-tools:
+        patterns:
+          - "vite*"
+          - "@vitejs/*"
+          - "typescript"
+          - "eslint*"
+      # Group Framer Motion
+      animations:
+        patterns:
+          - "framer-motion"
+          - "motion"
+          - "@tsparticles/*"
+    
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    labels:
+      - "dependencies"
+      - "github-actions"

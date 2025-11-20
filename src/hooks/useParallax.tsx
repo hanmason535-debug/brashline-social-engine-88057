@@ -24,10 +24,10 @@ interface ParallaxOptions {
 // Inputs: tuning options for speed, direction, and mobile enable flag.
 // Output: a signed offset value intended for transform-based animations.
 // Performance: disables work on non-desktop by default and uses a single scroll listener with rAF throttling.
-export function useParallax({ 
-  speed = 0.5, 
+export function useParallax({
+  speed = 0.5,
   direction = "up",
-  enableOnMobile = false 
+  enableOnMobile = false,
 }: ParallaxOptions = {}) {
   const [offset, setOffset] = useState(0);
   const isDesktop = useIsDesktop();
@@ -44,7 +44,7 @@ export function useParallax({
 
     const handleScroll = () => {
       lastScrollRef.current = window.pageYOffset;
-      
+
       if (!ticking) {
         rafRef.current = requestAnimationFrame(() => {
           const scrolled = lastScrollRef.current;

@@ -39,7 +39,10 @@ const CaseStudies = () => {
   const { lang } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxData, setLightboxData] = useState<{ type: "website" | "social"; data: WebsiteData | SocialData } | null>(null);
+  const [lightboxData, setLightboxData] = useState<{
+    type: "website" | "social";
+    data: WebsiteData | SocialData;
+  } | null>(null);
   const pageSEO = getPageSEO("case-studies");
 
   const heroParallax = useParallax({ speed: 0.3, direction: "down" });
@@ -64,7 +67,8 @@ const CaseStudies = () => {
         es: "Sitio web de soluciones tecnológicas modernas con diseño elegante y funciones interactivas",
       },
       url: "https://navtechno.in/",
-      thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+      thumbnail:
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
       techStack: ["React", "TypeScript", "Tailwind CSS"],
       category: { en: "Technology", es: "Tecnología" },
     },
@@ -75,7 +79,8 @@ const CaseStudies = () => {
         es: "Sitio web de empresa de mudanzas profesional con sistema de reservas y exhibición de servicios",
       },
       url: "https://www.westernhydromovers.com/",
-      thumbnail: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=600&fit=crop",
+      thumbnail:
+        "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=600&fit=crop",
       techStack: ["WordPress", "WooCommerce", "Custom CSS"],
       category: { en: "Services", es: "Servicios" },
     },
@@ -86,7 +91,8 @@ const CaseStudies = () => {
         es: "Sitio web de cafetería acogedor con pedidos en línea y exhibición de menú",
       },
       url: "https://www.cafecitosantafe.com/",
-      thumbnail: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop",
+      thumbnail:
+        "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop",
       techStack: ["Shopify", "Liquid", "Custom Theme"],
       category: { en: "Food & Beverage", es: "Comida y Bebida" },
     },
@@ -108,7 +114,8 @@ const CaseStudies = () => {
         es: "Sitio web de restaurante moderno con menú interactivo y sistema de reservas",
       },
       url: "https://oobpdx.com/",
-      thumbnail: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop",
+      thumbnail:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop",
       techStack: ["React", "Node.js", "OpenTable API"],
       category: { en: "Restaurant", es: "Restaurante" },
     },
@@ -119,7 +126,8 @@ const CaseStudies = () => {
         es: "Sitio web de bufete de abogados profesional con estudios de casos y portal de clientes",
       },
       url: "https://www.thomplegal.com/",
-      thumbnail: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=600&fit=crop",
+      thumbnail:
+        "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=600&fit=crop",
       techStack: ["WordPress", "Custom CMS", "SSL Security"],
       category: { en: "Professional Services", es: "Servicios Profesionales" },
     },
@@ -286,7 +294,7 @@ const CaseStudies = () => {
           className="w-full absolute inset-0 h-full"
           style={{
             transform: `translateY(${heroParallax}px)`,
-            willChange: 'transform'
+            willChange: "transform",
           }}
         >
           <Meteors number={30} />
@@ -295,7 +303,7 @@ const CaseStudies = () => {
           className="container mx-auto px-4 text-center relative z-10"
           style={{
             transform: `translateY(${heroParallax * 0.5}px)`,
-            willChange: 'transform'
+            willChange: "transform",
           }}
         >
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
@@ -315,7 +323,7 @@ const CaseStudies = () => {
           className="container mx-auto px-4"
           style={{
             transform: `translateY(${statsParallax}px)`,
-            willChange: 'transform'
+            willChange: "transform",
           }}
         >
           <StatsBar lang={lang} />

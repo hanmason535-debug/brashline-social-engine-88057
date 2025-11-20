@@ -87,10 +87,7 @@ export const RecurringPlanCard = ({
             </Badge>
           </div>
         )}
-        <Badge
-          variant="outline"
-          className="mb-4 self-center bg-background/80 backdrop-blur-sm"
-        >
+        <Badge variant="outline" className="mb-4 self-center bg-background/80 backdrop-blur-sm">
           {tier[lang]}
         </Badge>
         <h3 className="text-2xl font-heading font-bold mb-2">{name}</h3>
@@ -100,8 +97,8 @@ export const RecurringPlanCard = ({
           <span className="text-muted-foreground">/mo</span>
         </div>
         <p className="text-xs text-muted-foreground">
-          {lang === "en" ? "or" : "o"} ${annualPrice}/yr (
-          {lang === "en" ? "save" : "ahorra"} {annualDiscount}%)
+          {lang === "en" ? "or" : "o"} ${annualPrice}/yr ({lang === "en" ? "save" : "ahorra"}{" "}
+          {annualDiscount}%)
         </p>
       </CardHeader>
 

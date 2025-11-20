@@ -7,7 +7,7 @@
  * Assumptions:
  * - Consumers treat this as read-only and avoid mutating values in place.
  */
-import { BlogPost } from '@/types/blog.types';
+import { BlogPost } from "@/types/blog.types";
 
 export const BLOG_POSTS: BlogPost[] = [
   {

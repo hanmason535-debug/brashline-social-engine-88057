@@ -8,17 +8,17 @@
  * Assumptions:
  * - Serves as executable documentation for how callers are expected to use the API.
  */
-import { renderHook, act } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { useCountUp } from './useCountUp';
+import { renderHook, act } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { useCountUp } from "./useCountUp";
 
-describe('useCountUp', () => {
+describe("useCountUp", () => {
   beforeEach(() => {
     vi.useFakeTimers();
-    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
+    vi.spyOn(window, "requestAnimationFrame").mockImplementation((cb: FrameRequestCallback) => {
       return setTimeout(() => cb(performance.now()), 1) as unknown as number;
     });
-    vi.spyOn(window, 'cancelAnimationFrame').mockImplementation((id: number) => {
+    vi.spyOn(window, "cancelAnimationFrame").mockImplementation((id: number) => {
       clearTimeout(id);
     });
   });
@@ -28,8 +28,10 @@ describe('useCountUp', () => {
     vi.restoreAllMocks();
   });
 
-  it('should count up from start to end', () => {
-    const { result } = renderHook(() => useCountUp({ end: 100, duration: 1000, shouldStart: true }));
+  it("should count up from start to end", () => {
+    const { result } = renderHook(() =>
+      useCountUp({ end: 100, duration: 1000, shouldStart: true })
+    );
 
     expect(result.current).toBe(0);
 
@@ -40,7 +42,7 @@ describe('useCountUp', () => {
     expect(result.current).toBe(100);
   });
 
-  it('should not start counting if shouldStart is false', () => {
+  it("should not start counting if shouldStart is false", () => {
     const { result } = renderHook(() => useCountUp({ end: 100, shouldStart: false }));
 
     expect(result.current).toBe(0);
@@ -52,7 +54,7 @@ describe('useCountUp', () => {
     expect(result.current).toBe(0);
   });
 
-  it('should start from a custom start value', () => {
+  it("should start from a custom start value", () => {
     const { result } = renderHook(() => useCountUp({ start: 50, end: 100, shouldStart: true }));
 
     expect(result.current).toBe(50);
@@ -64,7 +66,7 @@ describe('useCountUp', () => {
     expect(result.current).toBe(100);
   });
 
-  it('should work with a custom duration', () => {
+  it("should work with a custom duration", () => {
     const { result } = renderHook(() => useCountUp({ end: 100, duration: 500, shouldStart: true }));
 
     act(() => {
@@ -74,10 +76,10 @@ describe('useCountUp', () => {
     expect(result.current).toBe(100);
   });
 
-  it('should clean up animation frame on unmount', () => {
+  it("should clean up animation frame on unmount", () => {
     const { unmount } = renderHook(() => useCountUp({ end: 100, shouldStart: true }));
     act(() => {
-        vi.advanceTimersByTime(100);
+      vi.advanceTimersByTime(100);
     });
     unmount();
     expect(window.cancelAnimationFrame).toHaveBeenCalled();

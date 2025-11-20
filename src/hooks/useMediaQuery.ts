@@ -11,13 +11,13 @@
  * Performance:
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 // Helper: compute an initial media query match in both browser and SSR environments.
 function getInitialMatches(query: string): boolean {
   // On the server, assume desktop for min-width queries so layouts default to wide view.
-  if (typeof window === 'undefined') {
-    return query.includes('min-width');
+  if (typeof window === "undefined") {
+    return query.includes("min-width");
   }
   return window.matchMedia(query).matches;
 }
@@ -31,7 +31,7 @@ export function useMediaQuery(query: string): boolean {
 
   useEffect(() => {
     const media = window.matchMedia(query);
-    
+
     // Sync state in case the query result changed between render and effect.
     setMatches(media.matches);
 
@@ -41,8 +41,8 @@ export function useMediaQuery(query: string): boolean {
     };
 
     if (media.addEventListener) {
-      media.addEventListener('change', listener);
-      return () => media.removeEventListener('change', listener);
+      media.addEventListener("change", listener);
+      return () => media.removeEventListener("change", listener);
     } else {
       media.addListener(listener);
       return () => media.removeListener(listener);
@@ -54,10 +54,10 @@ export function useMediaQuery(query: string): boolean {
 
 // Hook: specialized desktop matcher for viewports ≥ 768px.
 export function useIsDesktop(): boolean {
-  return useMediaQuery('(min-width: 768px)');
+  return useMediaQuery("(min-width: 768px)");
 }
 
 // Hook: specialized mobile matcher for viewports < 768px.
 export function useIsMobile(): boolean {
-  return useMediaQuery('(max-width: 767px)');
+  return useMediaQuery("(max-width: 767px)");
 }

@@ -8,7 +8,7 @@
  * - Consumers treat this as read-only and avoid mutating values in place.
  */
 import { Target, Users, Award } from "lucide-react";
-import { ValueCard } from '@/types/about.types';
+import { ValueCard } from "@/types/about.types";
 
 export const VALUE_CARDS: ValueCard[] = [
   {

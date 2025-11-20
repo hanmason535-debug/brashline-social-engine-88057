@@ -36,7 +36,9 @@ export class ErrorBoundary extends React.Component<Props, State> {
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     // Log error details to console and external service (Sentry)
     console.error("ErrorBoundary caught an error:", error, errorInfo);
-    const maybeWindow = window as unknown as { Sentry?: { captureException?: (err: unknown, ctx?: unknown) => void } };
+    const maybeWindow = window as unknown as {
+      Sentry?: { captureException?: (err: unknown, ctx?: unknown) => void };
+    };
     if (maybeWindow.Sentry && typeof maybeWindow.Sentry.captureException === "function") {
       maybeWindow.Sentry.captureException(error, { contexts: { react: errorInfo } });
     }
@@ -54,7 +56,8 @@ export class ErrorBoundary extends React.Component<Props, State> {
             <AlertTriangle className="w-16 h-16 text-destructive mx-auto mb-4" />
             <h1 className="text-2xl font-bold mb-2">Oops! Something went wrong</h1>
             <p className="text-muted-foreground mb-4">
-              We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists.
+              We encountered an unexpected error. Please try refreshing the page or contact support
+              if the problem persists.
             </p>
             {process.env.NODE_ENV === "development" && this.state.error && (
               <details className="mt-4 p-4 bg-muted rounded text-left text-sm">
@@ -66,7 +69,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
               <Button onClick={this.handleReset} className="primary">
                 Try Again
               </Button>
-              <Button onClick={() => window.location.href = "/"} variant="outline">
+              <Button onClick={() => (window.location.href = "/")} variant="outline">
                 Go Home
               </Button>
             </div>

@@ -11,15 +11,15 @@
  * Performance:
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
-import { useMemo } from 'react';
-import { RECURRING_PLANS, MAIN_PACKAGE, ADDON_PACKAGES } from '@/data/pricing.data';
-import { LocalizedRecurringPlan, LocalizedOneTimePackage } from '@/types/pricing.types';
+import { useMemo } from "react";
+import { RECURRING_PLANS, MAIN_PACKAGE, ADDON_PACKAGES } from "@/data/pricing.data";
+import { LocalizedRecurringPlan, LocalizedOneTimePackage } from "@/types/pricing.types";
 
 // Hook: builds localized pricing view models from static plan definitions.
 // Inputs: current language code.
 // Output: memoized recurring plans and one-time packages ready for rendering.
 // Performance: memoizes all derived structures so pricing sections stay cheap to rerender.
-export const usePricing = (lang: 'en' | 'es') => {
+export const usePricing = (lang: "en" | "es") => {
   const localizedRecurringPlans = useMemo<LocalizedRecurringPlan[]>(
     () =>
       RECURRING_PLANS.map((plan) => ({

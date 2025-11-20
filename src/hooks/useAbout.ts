@@ -11,15 +11,15 @@
  * Performance:
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
-import { useMemo } from 'react';
-import { VALUE_CARDS, ABOUT_CONTENT } from '@/data/about.data';
-import { LocalizedValueCard } from '@/types/about.types';
+import { useMemo } from "react";
+import { VALUE_CARDS, ABOUT_CONTENT } from "@/data/about.data";
+import { LocalizedValueCard } from "@/types/about.types";
 
 // Hook: derives localized About page content from static data modules.
 // Inputs: current language code.
 // Output: memoized value cards and structured copy for hero and story sections.
 // Performance: memoizes all derived structures so recomputation only occurs when the language changes.
-export const useAbout = (lang: 'en' | 'es') => {
+export const useAbout = (lang: "en" | "es") => {
   const localizedValueCards = useMemo<LocalizedValueCard[]>(
     () =>
       VALUE_CARDS.map((card) => ({

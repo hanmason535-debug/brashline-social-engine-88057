@@ -58,9 +58,7 @@ const MetaManager = ({ pageSEO, lang = "en" }: MetaManagerProps) => {
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={fullOgImageUrl} />
       <meta name="twitter:image:alt" content={description} />
-      {SEO_CONFIG.twitterHandle && (
-        <meta name="twitter:site" content={SEO_CONFIG.twitterHandle} />
-      )}
+      {SEO_CONFIG.twitterHandle && <meta name="twitter:site" content={SEO_CONFIG.twitterHandle} />}
 
       {/* Icons */}
       <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -70,11 +68,7 @@ const MetaManager = ({ pageSEO, lang = "en" }: MetaManagerProps) => {
 
       {/* Performance - Font preloading with non-blocking pattern */}
       <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-      <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossOrigin="anonymous"
-      />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
         rel="preload"
         as="style"

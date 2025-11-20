@@ -7,7 +7,7 @@
  * Assumptions:
  * - Consumers treat this as read-only and avoid mutating values in place.
  */
-import { RecurringPlan, OneTimePackage } from '@/types/pricing.types';
+import { RecurringPlan, OneTimePackage } from "@/types/pricing.types";
 
 export const RECURRING_PLANS: RecurringPlan[] = [
   {
@@ -78,14 +78,35 @@ export const MAIN_PACKAGE: OneTimePackage = {
     es: "Configuración completa del negocio — para clientes nuevos o en proceso de rebranding",
   },
   features: [
-    { en: "Custom website design & development (6–8 pages)", es: "Diseño y desarrollo de sitio web personalizado (6–8 páginas)" },
-    { en: "Logo + complete brand kit (fonts, palette, templates)", es: "Logo + kit de marca completo (fuentes, paleta, plantillas)" },
-    { en: "Professional photoshoot + video production", es: "Sesión de fotos profesional + producción de video" },
+    {
+      en: "Custom website design & development (6–8 pages)",
+      es: "Diseño y desarrollo de sitio web personalizado (6–8 páginas)",
+    },
+    {
+      en: "Logo + complete brand kit (fonts, palette, templates)",
+      es: "Logo + kit de marca completo (fuentes, paleta, plantillas)",
+    },
+    {
+      en: "Professional photoshoot + video production",
+      es: "Sesión de fotos profesional + producción de video",
+    },
     { en: "SEO optimization & Google indexing", es: "Optimización SEO e indexación en Google" },
-    { en: "GBP & Yelp setup + local directory submissions", es: "Configuración de GBP y Yelp + envíos a directorios locales" },
-    { en: "E-commerce setup (Shopify, Amazon, DoorDash, UberEats, Groupon)", es: "Configuración de e-commerce (Shopify, Amazon, DoorDash, UberEats, Groupon)" },
-    { en: "Hosting, domain, SSL, analytics setup", es: "Configuración de hosting, dominio, SSL, análisis" },
-    { en: "CRM + automation flow (HubSpot/Zoho)", es: "CRM + flujo de automatización (HubSpot/Zoho)" },
+    {
+      en: "GBP & Yelp setup + local directory submissions",
+      es: "Configuración de GBP y Yelp + envíos a directorios locales",
+    },
+    {
+      en: "E-commerce setup (Shopify, Amazon, DoorDash, UberEats, Groupon)",
+      es: "Configuración de e-commerce (Shopify, Amazon, DoorDash, UberEats, Groupon)",
+    },
+    {
+      en: "Hosting, domain, SSL, analytics setup",
+      es: "Configuración de hosting, dominio, SSL, análisis",
+    },
+    {
+      en: "CRM + automation flow (HubSpot/Zoho)",
+      es: "CRM + flujo de automatización (HubSpot/Zoho)",
+    },
     { en: "30-day post-launch support", es: "Soporte post-lanzamiento de 30 días" },
   ],
   bestFor: {
@@ -104,10 +125,19 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
       es: "Configuración completa de anuncios en todas las redes",
     },
     features: [
-      { en: "Meta, Instagram, Google, Yelp, UberEats, DoorDash, Grubhub & Groupon", es: "Meta, Instagram, Google, Yelp, UberEats, DoorDash, Grubhub y Groupon" },
-      { en: "Audience targeting, budget structure, and creative setup", es: "Segmentación de audiencia, estructura de presupuesto y configuración creativa" },
+      {
+        en: "Meta, Instagram, Google, Yelp, UberEats, DoorDash, Grubhub & Groupon",
+        es: "Meta, Instagram, Google, Yelp, UberEats, DoorDash, Grubhub y Groupon",
+      },
+      {
+        en: "Audience targeting, budget structure, and creative setup",
+        es: "Segmentación de audiencia, estructura de presupuesto y configuración creativa",
+      },
       { en: "Pixel, UTM & conversion tracking", es: "Seguimiento de Pixel, UTM y conversiones" },
-      { en: "Launch report + ad optimization guide", es: "Informe de lanzamiento + guía de optimización de anuncios" },
+      {
+        en: "Launch report + ad optimization guide",
+        es: "Informe de lanzamiento + guía de optimización de anuncios",
+      },
     ],
     bestFor: {
       en: "brands ready for omnichannel paid visibility",
@@ -125,8 +155,14 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     features: [
       { en: "Logo suite + icon variations", es: "Suite de logo + variaciones de iconos" },
       { en: "Color palette & typography guide", es: "Paleta de colores y guía de tipografía" },
-      { en: "Social post templates + banner set", es: "Plantillas de publicaciones sociales + conjunto de banners" },
-      { en: "Digital stationery (email signature, cards)", es: "Papelería digital (firma de correo, tarjetas)" },
+      {
+        en: "Social post templates + banner set",
+        es: "Plantillas de publicaciones sociales + conjunto de banners",
+      },
+      {
+        en: "Digital stationery (email signature, cards)",
+        es: "Papelería digital (firma de correo, tarjetas)",
+      },
     ],
     bestFor: {
       en: "new or refreshing businesses seeking cohesive design",
@@ -143,7 +179,10 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     },
     features: [
       { en: "Professional photoshoot", es: "Sesión de fotos profesional" },
-      { en: "20 edited images + 5 short social clips", es: "20 imágenes editadas + 5 clips sociales cortos" },
+      {
+        en: "20 edited images + 5 short social clips",
+        es: "20 imágenes editadas + 5 clips sociales cortos",
+      },
       { en: "Branded formatting for posts", es: "Formato de marca para publicaciones" },
       { en: "Commercial usage rights", es: "Derechos de uso comercial" },
     ],
@@ -161,8 +200,14 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
       es: "CRM + automatización de flujo de trabajo",
     },
     features: [
-      { en: "CRM setup (HubSpot, Zoho, or custom)", es: "Configuración de CRM (HubSpot, Zoho o personalizado)" },
-      { en: "Lead capture, nurture, and follow-up automation", es: "Captura de leads, nutrición y automatización de seguimiento" },
+      {
+        en: "CRM setup (HubSpot, Zoho, or custom)",
+        es: "Configuración de CRM (HubSpot, Zoho o personalizado)",
+      },
+      {
+        en: "Lead capture, nurture, and follow-up automation",
+        es: "Captura de leads, nutrición y automatización de seguimiento",
+      },
       { en: "Booking or form integrations", es: "Integraciones de reservas o formularios" },
       { en: "Dashboard connection to website", es: "Conexión de panel al sitio web" },
     ],
@@ -180,8 +225,14 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
       es: "Búsqueda local y mejora de clasificación en mapas",
     },
     features: [
-      { en: "Google Business Profile optimization", es: "Optimización de Perfil de Negocio de Google" },
-      { en: "Yelp, Nextdoor & citation listings (20+)", es: "Listados de Yelp, Nextdoor y citas (20+)" },
+      {
+        en: "Google Business Profile optimization",
+        es: "Optimización de Perfil de Negocio de Google",
+      },
+      {
+        en: "Yelp, Nextdoor & citation listings (20+)",
+        es: "Listados de Yelp, Nextdoor y citas (20+)",
+      },
       { en: "Local keyword targeting", es: "Segmentación de palabras clave locales" },
       { en: "Ranking improvement tracking", es: "Seguimiento de mejora de clasificación" },
     ],
@@ -199,8 +250,14 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
       es: "Integración de e-commerce y entrega",
     },
     features: [
-      { en: "Store setup on Amazon, Shopify, DoorDash, UberEats, Grubhub, Groupon", es: "Configuración de tienda en Amazon, Shopify, DoorDash, UberEats, Grubhub, Groupon" },
-      { en: "Payment, inventory, and shipping setup", es: "Configuración de pagos, inventario y envíos" },
+      {
+        en: "Store setup on Amazon, Shopify, DoorDash, UberEats, Grubhub, Groupon",
+        es: "Configuración de tienda en Amazon, Shopify, DoorDash, UberEats, Grubhub, Groupon",
+      },
+      {
+        en: "Payment, inventory, and shipping setup",
+        es: "Configuración de pagos, inventario y envíos",
+      },
       { en: "Merchant analytics dashboard", es: "Panel de análisis comercial" },
     ],
     bestFor: {

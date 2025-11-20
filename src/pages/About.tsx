@@ -34,9 +34,7 @@ const About = () => {
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
             {content.hero.title}
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            {content.hero.subtitle}
-          </p>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">{content.hero.subtitle}</p>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-4">
             {content.hero.description}
           </p>
@@ -50,10 +48,10 @@ const About = () => {
               {content.story.title}
             </h2>
             {content.story.paragraphs.map((paragraph, index) => (
-                <p
+              <p
                 key={index}
                 className={`text-muted-foreground leading-relaxed mb-4 ${
-                  index === content.story.paragraphs.length - 1 ? 'font-semibold' : ''
+                  index === content.story.paragraphs.length - 1 ? "font-semibold" : ""
                 }`}
               >
                 {paragraph}
@@ -73,9 +71,7 @@ const About = () => {
                     <h3 className="font-heading font-semibold mb-2 text-foreground">
                       {card.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {card.description}
-                    </p>
+                    <p className="text-sm text-muted-foreground">{card.description}</p>
                   </CardContent>
                 </Card>
               );

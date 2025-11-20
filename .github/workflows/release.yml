@@ -1,0 +1,94 @@
+name: Release & Deploy
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run tests
+        run: npx vitest run --coverage
+      
+      - name: Build project
+        run: npm run build
+      
+      - name: Generate changelog
+        id: changelog
+        run: |
+          echo "# 🚀 What's Changed in ${{ github.ref_name }}" > RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+          
+          # Get previous tag
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          
+          if [ -z "$PREV_TAG" ]; then
+            echo "## Initial Release" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            echo "First production release of Brashline Social Engine" >> RELEASE_NOTES.md
+          else
+            echo "## Commits since $PREV_TAG" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            
+            # Group commits by type
+            echo "### ✨ Features" >> RELEASE_NOTES.md
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%an)" --grep="^feat" >> RELEASE_NOTES.md || echo "- No new features" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            
+            echo "### 🐛 Bug Fixes" >> RELEASE_NOTES.md
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%an)" --grep="^fix" >> RELEASE_NOTES.md || echo "- No bug fixes" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            
+            echo "### 📚 Documentation" >> RELEASE_NOTES.md
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%an)" --grep="^docs" >> RELEASE_NOTES.md || echo "- No documentation changes" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+            
+            echo "### 🎨 Styling" >> RELEASE_NOTES.md
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%an)" --grep="^style" >> RELEASE_NOTES.md || echo "- No styling changes" >> RELEASE_NOTES.md
+            echo "" >> RELEASE_NOTES.md
+          fi
+          
+          echo "" >> RELEASE_NOTES.md
+          echo "---" >> RELEASE_NOTES.md
+          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/$PREV_TAG...${{ github.ref_name }}" >> RELEASE_NOTES.md
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: RELEASE_NOTES.md
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Upload build artifacts to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

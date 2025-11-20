@@ -7,7 +7,7 @@
  * Assumptions:
  * - Runtime data is normalized to match these shapes before reaching UI components.
  */
-import { LocalizedContent } from './service.types';
+import { LocalizedContent } from "./service.types";
 
 export interface BlogPost {
   title: LocalizedContent;
@@ -16,7 +16,7 @@ export interface BlogPost {
   date: string;
 }
 
-export interface LocalizedBlogPost extends Omit<BlogPost, 'title' | 'summary'> {
+export interface LocalizedBlogPost extends Omit<BlogPost, "title" | "summary"> {
   title: string;
   summary: string;
 }

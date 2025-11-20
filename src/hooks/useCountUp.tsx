@@ -11,7 +11,7 @@
  * Performance:
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 // Hook: animates a numeric value from a start to an end value over time.
 // Inputs: target end value, duration, optional start, and a flag indicating when to start.

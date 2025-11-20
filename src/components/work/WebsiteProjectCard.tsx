@@ -32,7 +32,12 @@ interface WebsiteProjectCardProps {
   onOpenLightbox: () => void;
 }
 
-export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: WebsiteProjectCardProps) {
+export function WebsiteProjectCard({
+  project,
+  lang,
+  index,
+  onOpenLightbox,
+}: WebsiteProjectCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -43,7 +48,7 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       onOpenLightbox();
     }
@@ -102,9 +107,7 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
 
         {/* Website Screenshot */}
         <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-          {!imageLoaded && !imageError && (
-            <Skeleton className="absolute inset-0 w-full h-full" />
-          )}
+          {!imageLoaded && !imageError && <Skeleton className="absolute inset-0 w-full h-full" />}
           {imageError ? (
             <div className="absolute inset-0 flex items-center justify-center bg-muted">
               <div className="text-center p-6">
@@ -150,9 +153,7 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
           <h3 className="font-heading font-bold text-lg mb-2 text-foreground">
             {project.title[lang]}
           </h3>
-          <p className="text-sm text-muted-foreground mb-3">
-            {project.description[lang]}
-          </p>
+          <p className="text-sm text-muted-foreground mb-3">{project.description[lang]}</p>
 
           {/* Tech Stack Badges */}
           <div className="flex flex-wrap gap-2">
@@ -166,7 +167,6 @@ export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: Web
             ))}
           </div>
         </div>
-
       </div>
     </motion.div>
   );

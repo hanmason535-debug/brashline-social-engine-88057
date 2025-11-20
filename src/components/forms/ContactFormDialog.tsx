@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "./ContactForm";
 import { MessageSquare } from "lucide-react";
@@ -29,12 +36,15 @@ export const ContactFormDialog = ({ lang, trigger }: ContactFormDialogProps) => 
   const t = content[lang];
 
   return (
-    <Dialog open={open} onOpenChange={(isOpen) => {
-      setOpen(isOpen);
-      if (isOpen) {
-        analytics.trackCTA(t.triggerText, 'Contact Dialog');
-      }
-    }}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (isOpen) {
+          analytics.trackCTA(t.triggerText, "Contact Dialog");
+        }
+      }}
+    >
       <DialogTrigger asChild>
         {trigger || (
           <Button size="lg" className="gap-2">

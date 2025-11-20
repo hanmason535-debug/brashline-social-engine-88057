@@ -45,9 +45,7 @@ export function AppProviders({ children }: AppProvidersProps) {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <LanguageProvider>
-              <TooltipProvider>
-                {children}
-              </TooltipProvider>
+              <TooltipProvider>{children}</TooltipProvider>
             </LanguageProvider>
           </ThemeProvider>
         </QueryClientProvider>

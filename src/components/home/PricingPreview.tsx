@@ -113,20 +113,20 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
 
           {/* Billing Toggle */}
           <div className="flex items-center justify-center gap-3 mt-6">
-            <ToggleGroup 
-              type="single" 
-              value={billing} 
+            <ToggleGroup
+              type="single"
+              value={billing}
               onValueChange={(value) => value && setBilling(value as "monthly" | "annual")}
               className="bg-muted p-1 rounded-lg"
             >
-              <ToggleGroupItem 
-                value="monthly" 
+              <ToggleGroupItem
+                value="monthly"
                 className="data-[state=on]:bg-background data-[state=on]:text-foreground px-6 py-2"
               >
                 {lang === "en" ? "Monthly" : "Mensual"}
               </ToggleGroupItem>
-              <ToggleGroupItem 
-                value="annual" 
+              <ToggleGroupItem
+                value="annual"
                 className="data-[state=on]:bg-background data-[state=on]:text-foreground px-12 py-2 flex items-center gap-1 md:gap-2"
               >
                 {lang === "en" ? "Annual" : "Anual"}
@@ -141,9 +141,10 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
           {plans.map((plan, index) => {
             const currentPrice = billing === "monthly" ? plan.monthlyPrice : plan.annualPrice;
-            const billingPeriod = billing === "monthly" 
-              ? "" 
-              : `${lang === "en" ? "billed as" : "cobrado como"} $${plan.annualTotal}/${lang === "en" ? "yr" : "año"}`;
+            const billingPeriod =
+              billing === "monthly"
+                ? ""
+                : `${lang === "en" ? "billed as" : "cobrado como"} $${plan.annualTotal}/${lang === "en" ? "yr" : "año"}`;
 
             return (
               <Card
@@ -157,16 +158,16 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
                 {plan.featured && (
                   <>
                     <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
-                      <BorderBeam 
-                        size={250} 
-                        duration={12} 
+                      <BorderBeam
+                        size={250}
+                        duration={12}
                         delay={0}
                         colorFrom="hsl(var(--primary))"
                         colorTo="hsl(var(--primary-glow))"
                       />
-                      <BorderBeam 
-                        size={250} 
-                        duration={12} 
+                      <BorderBeam
+                        size={250}
+                        duration={12}
                         delay={6}
                         borderWidth={2}
                         colorFrom="hsl(var(--primary-glow))"
@@ -183,26 +184,20 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
                   <div className="text-xs font-semibold text-muted-foreground mb-2">
                     {plan.tier[lang]}
                   </div>
-                  <h3 className="text-2xl font-heading font-bold mb-4">
-                    {plan.name}
-                  </h3>
+                  <h3 className="text-2xl font-heading font-bold mb-4">{plan.name}</h3>
                   <div className="mb-2">
                     <span className="text-4xl font-heading font-bold">${currentPrice}</span>
                     <span className="text-muted-foreground">/mo</span>
                   </div>
                   {billingPeriod && (
-                    <div className="text-sm text-muted-foreground mb-2">
-                      {billingPeriod}
-                    </div>
+                    <div className="text-sm text-muted-foreground mb-2">{billingPeriod}</div>
                   )}
                   {billing === "annual" && (
                     <div className="text-xs text-primary font-semibold mb-4">
                       {plan.discount}% {lang === "en" ? "off" : "desc."}
                     </div>
                   )}
-                  <p className="text-sm text-muted-foreground">
-                    {plan.summary[lang]}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{plan.summary[lang]}</p>
                 </CardHeader>
 
                 <CardContent className="space-y-3">
@@ -213,7 +208,7 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
                       ) : (
                         <X className="h-5 w-5 text-muted-foreground/50 flex-shrink-0 mt-0.5" />
                       )}
-                      <span className={`text-sm ${!feature.included && 'text-muted-foreground'}`}>
+                      <span className={`text-sm ${!feature.included && "text-muted-foreground"}`}>
                         {feature[lang]}
                       </span>
                     </div>
@@ -227,7 +222,11 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
                     variant={plan.featured ? "default" : "outline"}
                     onClick={() => analytics.trackPricingCTA(plan.name, currentPrice)}
                   >
-                    <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+                    <a
+                      href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {lang === "en" ? "Get Started" : "Comenzar"}
                     </a>
                   </Button>
@@ -239,15 +238,14 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
 
         {/* Comparison Table Toggle */}
         <div className="text-center space-y-4">
-          <Button 
-            size="lg" 
-            variant="outline" 
-            onClick={() => setShowComparison(!showComparison)}
-          >
-            {showComparison 
-              ? (lang === "en" ? "Hide Comparison" : "Ocultar Comparación")
-              : (lang === "en" ? "Compare All Features" : "Comparar Todas las Características")
-            }
+          <Button size="lg" variant="outline" onClick={() => setShowComparison(!showComparison)}>
+            {showComparison
+              ? lang === "en"
+                ? "Hide Comparison"
+                : "Ocultar Comparación"
+              : lang === "en"
+                ? "Compare All Features"
+                : "Comparar Todas las Características"}
           </Button>
           <div>
             <Button size="lg" variant="default" asChild>
@@ -300,6 +298,6 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
   );
 });
 
-PricingPreview.displayName = 'PricingPreview';
+PricingPreview.displayName = "PricingPreview";
 
 export default PricingPreview;

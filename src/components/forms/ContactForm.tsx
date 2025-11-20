@@ -5,30 +5,39 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { analytics } from "@/lib/analytics";
 
 const contactSchema = z.object({
-  name: z.string()
+  name: z
+    .string()
     .trim()
     .min(2, { message: "Name must be at least 2 characters" })
     .max(100, { message: "Name must be less than 100 characters" }),
-  email: z.string()
+  email: z
+    .string()
     .trim()
     .email({ message: "Invalid email address" })
     .max(255, { message: "Email must be less than 255 characters" }),
-  phone: z.string()
+  phone: z
+    .string()
     .trim()
     .min(10, { message: "Phone must be at least 10 digits" })
     .max(20, { message: "Phone must be less than 20 characters" })
     .optional()
     .or(z.literal("")),
-  serviceType: z.string()
-    .min(1, { message: "Please select a service type" }),
-  message: z.string()
+  serviceType: z.string().min(1, { message: "Please select a service type" }),
+  message: z
+    .string()
     .trim()
     .min(10, { message: "Message must be at least 10 characters" })
     .max(1000, { message: "Message must be less than 1000 characters" }),
@@ -73,11 +82,11 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
       // Construct WhatsApp message with proper encoding
       const whatsappMessage = encodeURIComponent(
         `New Contact Form Submission:\n\n` +
-        `Name: ${data.name}\n` +
-        `Email: ${data.email}\n` +
-        `Phone: ${data.phone || "Not provided"}\n` +
-        `Service: ${data.serviceType}\n` +
-        `Message: ${data.message}`
+          `Name: ${data.name}\n` +
+          `Email: ${data.email}\n` +
+          `Phone: ${data.phone || "Not provided"}\n` +
+          `Service: ${data.serviceType}\n` +
+          `Message: ${data.message}`
       );
 
       // Open WhatsApp with pre-filled message
@@ -91,22 +100,22 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
 
       toast({
         title: lang === "en" ? "Message sent!" : "¡Mensaje enviado!",
-        description: lang === "en" 
-          ? "We'll get back to you within 1 hour." 
-          : "Te responderemos en 1 hora.",
+        description:
+          lang === "en" ? "We'll get back to you within 1 hour." : "Te responderemos en 1 hora.",
       });
 
       reset();
       onSuccess?.();
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
       analytics.trackContactFormError(errorMessage);
-      
+
       toast({
         title: lang === "en" ? "Error" : "Error",
-        description: lang === "en"
-          ? "Failed to send message. Please try again."
-          : "Error al enviar el mensaje. Por favor, inténtalo de nuevo.",
+        description:
+          lang === "en"
+            ? "Failed to send message. Please try again."
+            : "Error al enviar el mensaje. Por favor, inténtalo de nuevo.",
         variant: "destructive",
       });
     } finally {
@@ -163,9 +172,7 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
           className={errors.name ? "border-destructive" : ""}
           placeholder={t.name}
         />
-        {errors.name && (
-          <p className="text-sm text-destructive">{errors.name.message}</p>
-        )}
+        {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
       </div>
 
       <div className="space-y-2">
@@ -177,9 +184,7 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
           className={errors.email ? "border-destructive" : ""}
           placeholder={t.email}
         />
-        {errors.email && (
-          <p className="text-sm text-destructive">{errors.email.message}</p>
-        )}
+        {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
       </div>
 
       <div className="space-y-2">
@@ -191,18 +196,17 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
           className={errors.phone ? "border-destructive" : ""}
           placeholder={t.phone}
         />
-        {errors.phone && (
-          <p className="text-sm text-destructive">{errors.phone.message}</p>
-        )}
+        {errors.phone && <p className="text-sm text-destructive">{errors.phone.message}</p>}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="serviceType">{t.serviceType}</Label>
-        <Select
-          value={serviceType}
-          onValueChange={(value) => setValue("serviceType", value)}
-        >
-          <SelectTrigger id="serviceType" aria-label={t.serviceType} className={errors.serviceType ? "border-destructive" : ""}>
+        <Select value={serviceType} onValueChange={(value) => setValue("serviceType", value)}>
+          <SelectTrigger
+            id="serviceType"
+            aria-label={t.serviceType}
+            className={errors.serviceType ? "border-destructive" : ""}
+          >
             <SelectValue placeholder={t.selectService} />
           </SelectTrigger>
           <SelectContent>
@@ -227,9 +231,7 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
           placeholder={t.message}
           rows={5}
         />
-        {errors.message && (
-          <p className="text-sm text-destructive">{errors.message.message}</p>
-        )}
+        {errors.message && <p className="text-sm text-destructive">{errors.message.message}</p>}
       </div>
 
       <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>

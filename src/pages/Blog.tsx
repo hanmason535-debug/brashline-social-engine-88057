@@ -53,7 +53,10 @@ const Blog = () => {
         </div>
       </section>
 
-      <section ref={elementRef as React.RefObject<HTMLElement>} className="py-16 md:py-24 bg-background">
+      <section
+        ref={elementRef as React.RefObject<HTMLElement>}
+        className="py-16 md:py-24 bg-background"
+      >
         <div className="container mx-auto px-4 max-w-6xl">
           <Carousel
             opts={{
@@ -62,7 +65,7 @@ const Blog = () => {
               dragFree: true,
             }}
             className={`w-full transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
             <CarouselContent className="-ml-2 md:-ml-4">
@@ -80,18 +83,17 @@ const Blog = () => {
                       </div>
                       <div className="p-6 flex flex-col flex-1">
                         <div className="text-xs text-muted-foreground mb-2">
-                          {new Date(post.date).toLocaleDateString(lang === "en" ? "en-US" : "es-ES", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })}
+                          {new Date(post.date).toLocaleDateString(
+                            lang === "en" ? "en-US" : "es-ES",
+                            {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            }
+                          )}
                         </div>
-                        <h3 className="text-xl font-heading font-bold mb-3">
-                          {post.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm flex-1">
-                          {post.summary}
-                        </p>
+                        <h3 className="text-xl font-heading font-bold mb-3">{post.title}</h3>
+                        <p className="text-muted-foreground text-sm flex-1">{post.summary}</p>
                       </div>
                     </CardContent>
                   </Card>

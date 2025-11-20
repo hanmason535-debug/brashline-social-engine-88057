@@ -10,8 +10,8 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import { Skeleton } from './skeleton';
-import { Card, CardContent, CardFooter, CardHeader } from './card';
+import { Skeleton } from "./skeleton";
+import { Card, CardContent, CardFooter, CardHeader } from "./card";
 
 export const PricingCardSkeleton = () => (
   <Card className="flex flex-col">

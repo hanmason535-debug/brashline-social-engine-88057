@@ -1,0 +1,45 @@
+# Percy Visual Testing Configuration
+# Username: yushijain_PJVxRs
+# Access Key: Se9s8LhELJHisopUYxAD
+
+version: 2
+static:
+  # Static site configuration
+  static-snapshots: true
+  base-url: "/"
+  snapshot-files: "**/*.html"
+  ignore-files: "**/node_modules/**"
+  
+  # Viewport configurations for responsive testing
+  widths:
+    - 375   # Mobile
+    - 768   # Tablet
+    - 1280  # Desktop
+    - 1920  # Large Desktop
+
+# Percy snapshot options
+snapshot:
+  widths:
+    - 375
+    - 768
+    - 1280
+  min-height: 1024
+  percy-css: ""
+  
+# Discovery options
+discovery:
+  allowed-hostnames:
+    - localhost
+    - 127.0.0.1
+  network-idle-timeout: 750
+  
+# Visual testing settings
+visualComparison:
+  threshold: 0.01  # 1% threshold for visual changes
+  
+# Build environment
+agent:
+  asset-discovery:
+    allowed-hostnames:
+      - localhost
+    network-idle-timeout: 750

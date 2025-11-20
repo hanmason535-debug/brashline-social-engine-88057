@@ -16,7 +16,7 @@
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
 // Hook: encapsulated observer logic above for consistent behavior across components
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 interface UseScrollAnimationOptions {
   threshold?: number;
@@ -25,7 +25,7 @@ interface UseScrollAnimationOptions {
 }
 
 export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
-  const { threshold = 0.1, rootMargin = '0px', triggerOnce = true } = options;
+  const { threshold = 0.1, rootMargin = "0px", triggerOnce = true } = options;
   const [isVisible, setIsVisible] = useState(false);
   const elementRef = useRef<HTMLElement>(null);
 

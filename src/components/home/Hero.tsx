@@ -18,9 +18,7 @@ import BackgroundPaths from "@/components/ui/background-paths";
 interface HeroProps {
   lang: "en" | "es";
 }
-const Hero = memo(({
-  lang
-}: HeroProps) => {
+const Hero = memo(({ lang }: HeroProps) => {
   const [titleNumber, setTitleNumber] = useState(0);
   const titlesEn = useMemo(() => ["Consistent", "Growing", "Visible", "Connected"], []);
   const titlesEs = useMemo(() => ["Constantes", "en Crecimiento", "Visibles", "Conectadas"], []);
@@ -35,7 +33,8 @@ const Hero = memo(({
     }, 2000);
     return () => clearTimeout(timeoutId);
   }, [titleNumber, titles]);
-  return <section className="relative overflow-hidden bg-background">
+  return (
+    <section className="relative overflow-hidden bg-background">
       {/* Animated Background with performance hints */}
       <div className="absolute inset-0 z-0">
         <BackgroundPaths />
@@ -57,31 +56,45 @@ const Hero = memo(({
               <div>{lang === "en" ? "Be" : "Siempre"}</div>
               <span
                 className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1"
-                style={{ contain: 'layout' }}
+                style={{ contain: "layout" }}
               >
                 &nbsp;
-                {titles.map((title, index) => <motion.span key={index} className="absolute font-bold" initial={{
-                  opacity: 0,
-                  y: -100
-                }} transition={{
-                type: "spring",
-                stiffness: 50
-              }} animate={titleNumber === index ? {
-                y: 0,
-                opacity: 1
-              } : {
-                y: titleNumber > index ? -150 : 150,
-                opacity: 0
-              }}>
+                {titles.map((title, index) => (
+                  <motion.span
+                    key={index}
+                    className="absolute font-bold"
+                    initial={{
+                      opacity: 0,
+                      y: -100,
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 50,
+                    }}
+                    animate={
+                      titleNumber === index
+                        ? {
+                            y: 0,
+                            opacity: 1,
+                          }
+                        : {
+                            y: titleNumber > index ? -150 : 150,
+                            opacity: 0,
+                          }
+                    }
+                  >
                     {title}
-                  </motion.span>)}
+                  </motion.span>
+                ))}
               </span>
             </div>
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-fade-in leading-relaxed">
-            {lang === "en" ? "Brashline started with two friends and one mission - make online visibility effortless. We create consistent, real content that keeps your business active and seen. Straightforward, affordable, and built to last." : "Brashline comenzó con dos amigos y una misión: hacer que la visibilidad en línea sea sin esfuerzo. Creamos contenido real y constante que mantiene tu negocio activo y visible. Directo, asequible y construido para durar."}
+            {lang === "en"
+              ? "Brashline started with two friends and one mission - make online visibility effortless. We create consistent, real content that keeps your business active and seen. Straightforward, affordable, and built to last."
+              : "Brashline comenzó con dos amigos y una misión: hacer que la visibilidad en línea sea sin esfuerzo. Creamos contenido real y constante que mantiene tu negocio activo y visible. Directo, asequible y construido para durar."}
           </p>
 
           {/* CTA */}
@@ -98,10 +111,10 @@ const Hero = memo(({
           </div>
         </div>
       </div>
-
-    </section>;
+    </section>
+  );
 });
 
-Hero.displayName = 'Hero';
+Hero.displayName = "Hero";
 
 export default Hero;

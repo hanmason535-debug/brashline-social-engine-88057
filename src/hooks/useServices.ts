@@ -11,15 +11,15 @@
  * Performance:
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
-import { useMemo } from 'react';
-import { SERVICES_DATA } from '@/data/services.data';
-import type { LocalizedService } from '@/types/service.types';
+import { useMemo } from "react";
+import { SERVICES_DATA } from "@/data/services.data";
+import type { LocalizedService } from "@/types/service.types";
 
 // Hook: returns localized service definitions derived from static data.
 // Inputs: current language code.
 // Output: memoized list of view-ready services, including original labels for debugging and analytics.
 // Performance: memoizes mapping so service sections re-render only when the language changes.
-export const useServices = (lang: 'en' | 'es'): LocalizedService[] => {
+export const useServices = (lang: "en" | "es"): LocalizedService[] => {
   return useMemo(
     () =>
       SERVICES_DATA.map((service) => ({

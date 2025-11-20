@@ -29,7 +29,10 @@ const Services = () => {
     <RootLayout>
       <SEOHead pageSEO={pageSEO} lang={lang} />
       {/* Services Grid */}
-      <section ref={elementRef as React.RefObject<HTMLElement>} className={`${SECTION_PADDING_Y} bg-background`}>
+      <section
+        ref={elementRef as React.RefObject<HTMLElement>}
+        className={`${SECTION_PADDING_Y} bg-background`}
+      >
         <div className={`container mx-auto ${CONTAINER_PADDING_X}`}>
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6">
@@ -43,12 +46,7 @@ const Services = () => {
           </div>
           <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${SECTION_GAP}`}>
             {services.map((service, index) => (
-              <ServiceCard
-                key={service.id}
-                service={service}
-                index={index}
-                isVisible={isVisible}
-              />
+              <ServiceCard key={service.id} service={service} index={index} isVisible={isVisible} />
             ))}
           </div>
         </div>

@@ -11,7 +11,14 @@
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
 import { useToast } from "@/hooks/use-toast";
-import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from "@/components/ui/toast";
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "@/components/ui/toast";
 
 export function Toaster() {
   const { toasts } = useToast();

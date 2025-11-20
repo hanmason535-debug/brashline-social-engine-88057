@@ -12,7 +12,7 @@
  */
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from "framer-motion";
 import { FlowButton } from "@/components/ui/flow-button";
 
 const NotFound = () => {
@@ -30,14 +30,14 @@ const NotFound = () => {
     if (window.history.length > 1) {
       navigate(-1);
     } else {
-      navigate('/');
+      navigate("/");
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
       <AnimatePresence mode="wait">
-        <motion.div 
+        <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -45,7 +45,7 @@ const NotFound = () => {
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <div className="flex items-center justify-center gap-4 md:gap-6 mb-8 md:mb-12">
-            <motion.span 
+            <motion.span
               className="text-[80px] md:text-[120px] font-bold text-foreground/70 select-none"
               initial={{ opacity: 0, x: -40, y: 15, rotate: -5 }}
               animate={{ opacity: 0.7, x: 0, y: 0, rotate: 0 }}
@@ -55,11 +55,11 @@ const NotFound = () => {
             </motion.span>
             <motion.div
               initial={{ scale: 0.8, opacity: 0, y: 15, rotate: -5 }}
-              animate={{ 
-                scale: 1, 
-                opacity: 1, 
+              animate={{
+                scale: 1,
+                opacity: 1,
                 y: [0, -5, 5],
-                rotate: 0
+                rotate: 0,
               }}
               transition={{
                 duration: 0.6,
@@ -69,14 +69,14 @@ const NotFound = () => {
                   duration: 2,
                   ease: "easeInOut",
                   repeat: Infinity,
-                  repeatType: "reverse"
-                }
+                  repeatType: "reverse",
+                },
               }}
-              whileHover={{ 
-                scale: 1.1, 
+              whileHover={{
+                scale: 1.1,
                 y: -10,
                 rotate: [0, -5, 5, -5, 0],
-                transition: { duration: 0.8 }
+                transition: { duration: 0.8 },
               }}
             >
               <img
@@ -86,7 +86,7 @@ const NotFound = () => {
                 draggable="false"
               />
             </motion.div>
-            <motion.span 
+            <motion.span
               className="text-[80px] md:text-[120px] font-bold text-foreground/70 select-none"
               initial={{ opacity: 0, x: 40, y: 15, rotate: 5 }}
               animate={{ opacity: 0.7, x: 0, y: 0, rotate: 0 }}
@@ -95,8 +95,8 @@ const NotFound = () => {
               4
             </motion.span>
           </div>
-          
-          <motion.h1 
+
+          <motion.h1
             className="text-3xl md:text-5xl font-bold text-foreground/70 mb-4 md:mb-6 select-none"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -104,8 +104,8 @@ const NotFound = () => {
           >
             Boo! Page missing!
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             className="text-lg md:text-xl text-muted-foreground mb-8 md:mb-12 select-none"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -114,7 +114,7 @@ const NotFound = () => {
             Whoops! This page must be a ghost - it&apos;s not here!
           </motion.p>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
@@ -124,7 +124,7 @@ const NotFound = () => {
             <FlowButton text="Find shelter" onClick={handleGoBack} />
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="mt-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

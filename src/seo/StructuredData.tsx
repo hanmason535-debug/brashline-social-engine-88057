@@ -35,12 +35,8 @@ const StructuredData = () => {
 
   return (
     <Helmet>
-      <script type="application/ld+json">
-        {JSON.stringify(localBusinessSchema)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(organizationSchema)}
-      </script>
+      <script type="application/ld+json">{JSON.stringify(localBusinessSchema)}</script>
+      <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
       {pageSchemas.map((schema, idx) => (
         <script key={idx} type="application/ld+json">
           {JSON.stringify(schema)}

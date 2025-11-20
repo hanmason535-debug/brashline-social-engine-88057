@@ -12,7 +12,17 @@
  */
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, Heart, MessageCircle, Share2, Bookmark, Play, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  X,
+  ExternalLink,
+  Heart,
+  MessageCircle,
+  Share2,
+  Bookmark,
+  Play,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WebsiteData, SocialData } from "@/types/work.types";
 import { useSwipeable } from "react-swipeable";
@@ -29,16 +39,25 @@ interface LightboxProps {
   onNavigate?: (direction: "prev" | "next") => void;
 }
 
-export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentIndex, onNavigate }: LightboxProps) {
+export function Lightbox({
+  isOpen,
+  onClose,
+  type,
+  data,
+  lang,
+  allItems,
+  currentIndex,
+  onNavigate,
+}: LightboxProps) {
   const [showNavHint, setShowNavHint] = useState(true);
 
   useEffect(() => {
     if (isOpen && data) {
-      const contentId = isWebsiteData(data) 
-        ? data.title 
-        : isSocialData(data) 
-          ? data.platform 
-          : 'unknown';
+      const contentId = isWebsiteData(data)
+        ? data.title
+        : isSocialData(data)
+          ? data.platform
+          : "unknown";
       analytics.trackLightboxOpen(type, String(contentId));
     }
   }, [isOpen, data, type]);
@@ -53,13 +72,13 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
     if (isOpen) {
       document.addEventListener("keydown", handleKeyboard);
       document.body.style.overflow = "hidden";
-      
+
       // Focus trap - focus the close button when lightbox opens
-      const closeButton = document.querySelector('[data-lightbox-close]') as HTMLElement;
+      const closeButton = document.querySelector("[data-lightbox-close]") as HTMLElement;
       if (closeButton) {
         closeButton.focus();
       }
-      
+
       // Hide nav hint after 3 seconds
       const timer = setTimeout(() => setShowNavHint(false), 3000);
       return () => {
@@ -79,7 +98,7 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
     onClose();
   };
 
-  const handleNavigate = (direction: 'prev' | 'next') => {
+  const handleNavigate = (direction: "prev" | "next") => {
     analytics.trackLightboxNavigation(direction);
     onNavigate?.(direction);
   };
@@ -101,11 +120,11 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
 
   // Type guards
   const isWebsiteData = (d: WebsiteData | SocialData | null): d is WebsiteData => {
-    return d !== null && 'thumbnail' in d && 'url' in d && 'techStack' in d;
+    return d !== null && "thumbnail" in d && "url" in d && "techStack" in d;
   };
 
   const isSocialData = (d: WebsiteData | SocialData | null): d is SocialData => {
-    return d !== null && 'platform' in d && 'engagement' in d;
+    return d !== null && "platform" in d && "engagement" in d;
   };
 
   return (
@@ -153,7 +172,9 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
                     size="icon"
                     className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm hover:bg-background w-12 h-12 rounded-full"
                   >
-                    <ChevronLeft className={`w-6 h-6 transition-all ${showNavHint ? 'animate-pulse' : ''}`} />
+                    <ChevronLeft
+                      className={`w-6 h-6 transition-all ${showNavHint ? "animate-pulse" : ""}`}
+                    />
                   </Button>
                   <Button
                     onClick={() => handleNavigate("next")}
@@ -161,9 +182,11 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
                     size="icon"
                     className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm hover:bg-background w-12 h-12 rounded-full"
                   >
-                    <ChevronRight className={`w-6 h-6 transition-all ${showNavHint ? 'animate-pulse' : ''}`} />
+                    <ChevronRight
+                      className={`w-6 h-6 transition-all ${showNavHint ? "animate-pulse" : ""}`}
+                    />
                   </Button>
-                  
+
                   {/* Item Counter */}
                   {currentIndex !== undefined && (
                     <div className="absolute top-4 left-4 z-10 bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm font-medium">
@@ -206,9 +229,7 @@ export function Lightbox({ isOpen, onClose, type, data, lang, allItems, currentI
                           <p className="text-lg text-muted-foreground mb-4">
                             {data.description[lang]}
                           </p>
-                          <p className="text-sm text-muted-foreground">
-                            {data.category[lang]}
-                          </p>
+                          <p className="text-sm text-muted-foreground">{data.category[lang]}</p>
                         </div>
                         <Button
                           onClick={() => window.open(data.url, "_blank", "noopener,noreferrer")}

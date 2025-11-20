@@ -7,7 +7,7 @@
  * Assumptions:
  * - Runtime data is normalized to match these shapes before reaching UI components.
  */
-import { LocalizedContent } from './service.types';
+import { LocalizedContent } from "./service.types";
 
 export interface PricingFeature {
   en: string;
@@ -28,19 +28,21 @@ export interface RecurringPlan {
 export interface OneTimePackage {
   name: string;
   price: number;
-  type: 'one-time';
+  type: "one-time";
   tagline: LocalizedContent;
   features: PricingFeature[];
   bestFor: LocalizedContent;
 }
 
-export interface LocalizedRecurringPlan extends Omit<RecurringPlan, 'tier' | 'summary' | 'features'> {
+export interface LocalizedRecurringPlan
+  extends Omit<RecurringPlan, "tier" | "summary" | "features"> {
   tier: string;
   summary: string;
   features: string[];
 }
 
-export interface LocalizedOneTimePackage extends Omit<OneTimePackage, 'tagline' | 'features' | 'bestFor'> {
+export interface LocalizedOneTimePackage
+  extends Omit<OneTimePackage, "tagline" | "features" | "bestFor"> {
   tagline: string;
   features: string[];
   bestFor: string;

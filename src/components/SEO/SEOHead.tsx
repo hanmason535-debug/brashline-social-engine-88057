@@ -58,9 +58,7 @@ const SEOHead = ({ pageSEO, lang = "en" }: SEOHeadProps) => {
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={fullOgImageUrl} />
-      {SEO_CONFIG.twitterHandle && (
-        <meta name="twitter:site" content={SEO_CONFIG.twitterHandle} />
-      )}
+      {SEO_CONFIG.twitterHandle && <meta name="twitter:site" content={SEO_CONFIG.twitterHandle} />}
 
       {/* Additional SEO */}
       <meta name="author" content={SEO_CONFIG.siteName} />

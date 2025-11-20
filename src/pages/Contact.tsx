@@ -54,7 +54,10 @@ const Contact = () => {
                 <h2 className="font-heading font-semibold mb-2">
                   {lang === "en" ? "Phone" : "Teléfono"}
                 </h2>
-                <a href="tel:+19294468440" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="tel:+19294468440"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
                   +1 (929) 446-8440
                 </a>
               </CardContent>
@@ -68,7 +71,10 @@ const Contact = () => {
                 <h2 className="font-heading font-semibold mb-2">
                   {lang === "en" ? "Email" : "Correo"}
                 </h2>
-                <a href="mailto:Brashline@gmail.com" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="mailto:Brashline@gmail.com"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
                   Brashline@gmail.com
                 </a>
               </CardContent>
@@ -103,7 +109,11 @@ const Contact = () => {
               {lang === "en" ? "Or reach out directly:" : "O contáctanos directamente:"}
             </p>
             <Button size="lg" asChild>
-              <a href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {lang === "en" ? "Chat on WhatsApp" : "Chatear en WhatsApp"}
               </a>
             </Button>

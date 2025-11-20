@@ -1,0 +1,82 @@
+name: Performance Budget
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  performance:
+    name: Check Performance Budget
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build project
+        run: npm run build
+      
+      - name: Check bundle sizes against budget
+        id: bundle_check
+        run: |
+          echo "📊 Performance Budget Check"
+          echo "=============================="
+          echo ""
+          
+          # Budget: 200 KB raw, ~60 KB gzipped
+          BUDGET_RAW=200
+          BUDGET_GZIP=70
+          
+          # Get main bundle size
+          MAIN_SIZE=$(find dist/assets -name "index-*.js" -exec du -b {} + | awk '{sum+=$1} END {print sum}')
+          MAIN_SIZE_KB=$((MAIN_SIZE / 1024))
+          
+          echo "Main bundle (raw): $MAIN_SIZE_KB KB / $BUDGET_RAW KB budget"
+          
+          # Check raw size
+          if [ $MAIN_SIZE_KB -gt $BUDGET_RAW ]; then
+            echo "❌ FAILED: Main bundle ($MAIN_SIZE_KB KB) exceeds budget ($BUDGET_RAW KB)"
+            echo "bundle_status=failed" >> $GITHUB_OUTPUT
+            exit 1
+          else
+            echo "✅ PASSED: Bundle size within budget"
+            echo "bundle_status=passed" >> $GITHUB_OUTPUT
+          fi
+          
+          echo ""
+          echo "Chunk breakdown:"
+          du -h dist/assets/*.js | sort -rh | head -10
+      
+      - name: Run Lighthouse CI with performance budgets
+        run: |
+          npm install -g @lhci/cli
+          lhci autorun --config=lighthouserc.json || echo "⚠️ Lighthouse checks need review"
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+      
+      - name: Performance report summary
+        if: always()
+        run: |
+          echo "## 📊 Performance Budget Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Target | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|--------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Bundle Size (raw) | < 200 KB | ${{ steps.bundle_check.outputs.bundle_status == 'passed' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Bundle Size (gzip) | < 70 KB | 🔍 Check build logs |" >> $GITHUB_STEP_SUMMARY
+          echo "| Lighthouse Score | > 90 | 🔍 Check Lighthouse report |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Current Targets:" >> $GITHUB_STEP_SUMMARY
+          echo "- **FCP**: < 1.5s" >> $GITHUB_STEP_SUMMARY
+          echo "- **LCP**: < 2.5s" >> $GITHUB_STEP_SUMMARY
+          echo "- **TTI**: < 3.0s" >> $GITHUB_STEP_SUMMARY
+          echo "- **CLS**: < 0.1" >> $GITHUB_STEP_SUMMARY

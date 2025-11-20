@@ -96,8 +96,7 @@ export const getPageSEO = (page: string): PageSEO => {
       title: "Case Studies & Portfolio | Brashline",
       description:
         "See how we've helped Florida businesses grow their social media presence. Real results from Orlando-based clients across multiple industries.",
-      keywords:
-        "social media case studies Orlando, portfolio Florida agency, social media results",
+      keywords: "social media case studies Orlando, portfolio Florida agency, social media results",
       canonical: `${baseUrl}/case-studies`,
       ogImage: "/images/og-case-studies.jpg",
     },
@@ -114,16 +113,14 @@ export const getPageSEO = (page: string): PageSEO => {
       title: "Social Media Tips & Insights | Brashline Blog",
       description:
         "Expert social media tips, industry insights, and digital marketing advice for Florida businesses from the Brashline team in Orlando.",
-      keywords:
-        "social media blog, digital marketing tips Orlando, social media strategy Florida",
+      keywords: "social media blog, digital marketing tips Orlando, social media strategy Florida",
       canonical: `${baseUrl}/blog`,
     },
     contact: {
       title: "Contact Brashline | Orlando Social Media Agency",
       description:
         "Get in touch with Brashline for social media management services. Based in Orlando, serving Florida businesses. Call, email, or message us on WhatsApp.",
-      keywords:
-        "contact Brashline, Orlando social media agency contact, Florida marketing agency",
+      keywords: "contact Brashline, Orlando social media agency contact, Florida marketing agency",
       canonical: `${baseUrl}/contact`,
       ogImage: "/images/og-contact.jpg",
     },
@@ -141,7 +138,8 @@ export const getPageSEO = (page: string): PageSEO => {
     },
     privacy: {
       title: "Privacy Policy | Brashline",
-      description: "Privacy Policy for Brashline - how we handle your data and protect your privacy.",
+      description:
+        "Privacy Policy for Brashline - how we handle your data and protect your privacy.",
       canonical: `${baseUrl}/privacy`,
       noindex: true,
     },
@@ -266,14 +264,16 @@ export const generateOrganizationSchema = () => {
 /**
  * Generate Services ItemList JSON-LD with enhanced service details
  */
-export const generateServicesSchemaList = (services: Array<{ 
-  id: string; 
-  title: { en: string; es: string }; 
-  description: { en: string; es: string };
-  features?: string[];
-}>) => {
+export const generateServicesSchemaList = (
+  services: Array<{
+    id: string;
+    title: { en: string; es: string };
+    description: { en: string; es: string };
+    features?: string[];
+  }>
+) => {
   const { siteUrl, business } = SEO_CONFIG;
-  
+
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -314,7 +314,12 @@ export const generateServicesSchemaList = (services: Array<{
  * Generate Blog ItemList JSON-LD for blog listing page
  */
 export const generateBlogItemListSchema = (
-  posts: Array<{ title: { en: string; es: string }; summary: { en: string; es: string }; image?: string; date?: string }>
+  posts: Array<{
+    title: { en: string; es: string };
+    summary: { en: string; es: string };
+    image?: string;
+    date?: string;
+  }>
 ) => {
   const { siteUrl } = SEO_CONFIG;
   return {

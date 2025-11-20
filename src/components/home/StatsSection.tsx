@@ -10,12 +10,12 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { useCountUp } from '@/hooks/useCountUp';
-import { Users, Award, Clock, TrendingUp } from 'lucide-react';
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useCountUp } from "@/hooks/useCountUp";
+import { Users, Award, Clock, TrendingUp } from "lucide-react";
 
 interface StatsSectionProps {
-  lang: 'en' | 'es';
+  lang: "en" | "es";
 }
 
 const StatsSection = ({ lang }: StatsSectionProps) => {
@@ -31,26 +31,26 @@ const StatsSection = ({ lang }: StatsSectionProps) => {
     {
       icon: Users,
       count: count1,
-      suffix: '+',
-      label: { en: 'Clients Served', es: 'Clientes Atendidos' },
+      suffix: "+",
+      label: { en: "Clients Served", es: "Clientes Atendidos" },
     },
     {
       icon: Award,
       count: count2,
-      suffix: '%',
-      label: { en: 'Satisfaction Rate', es: 'Tasa de Satisfacción' },
+      suffix: "%",
+      label: { en: "Satisfaction Rate", es: "Tasa de Satisfacción" },
     },
     {
       icon: Clock,
       count: count3,
-      suffix: '/7',
-      label: { en: 'Support Available', es: 'Soporte Disponible' },
+      suffix: "/7",
+      label: { en: "Support Available", es: "Soporte Disponible" },
     },
     {
       icon: TrendingUp,
       count: count4,
-      suffix: '%',
-      label: { en: 'Avg. Growth', es: 'Crecimiento Promedio' },
+      suffix: "%",
+      label: { en: "Avg. Growth", es: "Crecimiento Promedio" },
     },
   ];
 
@@ -68,9 +68,7 @@ const StatsSection = ({ lang }: StatsSectionProps) => {
               <div
                 key={index}
                 className={`text-center transform transition-all duration-700 ${
-                  isVisible
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-10'
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
@@ -81,9 +79,7 @@ const StatsSection = ({ lang }: StatsSectionProps) => {
                   {stat.count}
                   {stat.suffix}
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  {stat.label[lang]}
-                </p>
+                <p className="text-sm text-muted-foreground">{stat.label[lang]}</p>
               </div>
             );
           })}

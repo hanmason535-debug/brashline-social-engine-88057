@@ -11,7 +11,16 @@
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
 import { motion } from "framer-motion";
-import { Heart, MessageCircle, Share2, Bookmark, Play, Instagram, Facebook, Linkedin } from "lucide-react";
+import {
+  Heart,
+  MessageCircle,
+  Share2,
+  Bookmark,
+  Play,
+  Instagram,
+  Facebook,
+  Linkedin,
+} from "lucide-react";
 
 interface SocialPost {
   platform: "instagram" | "facebook" | "linkedin";
@@ -55,7 +64,7 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       onOpenLightbox();
     }
@@ -83,7 +92,9 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
       <div className="relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-2 border border-border">
         {/* Platform Badge */}
         <div className="absolute top-3 right-3 z-10">
-          <div className={`bg-gradient-to-r ${platformColors[post.platform]} p-2 rounded-full shadow-lg`}>
+          <div
+            className={`bg-gradient-to-r ${platformColors[post.platform]} p-2 rounded-full shadow-lg`}
+          >
             <PlatformIcon className="w-4 h-4 text-white" />
           </div>
         </div>
@@ -126,12 +137,10 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
 
           {/* Hover Overlay */}
           <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              className="text-center px-4"
-            >
+            <motion.div initial={{ scale: 0.8, opacity: 0 }} className="text-center px-4">
               <p className="text-white font-semibold mb-2">
-                {lang === "en" ? "View on" : "Ver en"} {post.platform.charAt(0).toUpperCase() + post.platform.slice(1)}
+                {lang === "en" ? "View on" : "Ver en"}{" "}
+                {post.platform.charAt(0).toUpperCase() + post.platform.slice(1)}
               </p>
               <div className="flex items-center justify-center gap-4 text-white text-sm">
                 {post.engagement.likes && (
@@ -153,9 +162,7 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
 
         {/* Post Info */}
         <div className="p-4">
-          <p className="text-sm text-foreground line-clamp-2 mb-3">
-            {post.caption[lang]}
-          </p>
+          <p className="text-sm text-foreground line-clamp-2 mb-3">{post.caption[lang]}</p>
 
           {/* Engagement Stats */}
           <div className="flex items-center justify-between text-xs text-muted-foreground">

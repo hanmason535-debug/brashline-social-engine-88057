@@ -11,7 +11,7 @@
  * Performance:
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 // Hook: returns a throttled version of a callback that limits how often it can run.
 // Inputs: the target callback and a minimum delay between invocations.
@@ -43,13 +43,10 @@ export function useThrottle<T extends (...args: unknown[]) => unknown>(
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
-      timeoutRef.current = setTimeout(
-        () => {
-          callback(...args);
-          lastRun.current = Date.now();
-        },
-        delay - timeSinceLastRun
-      );
+      timeoutRef.current = setTimeout(() => {
+        callback(...args);
+        lastRun.current = Date.now();
+      }, delay - timeSinceLastRun);
     }
   };
 }

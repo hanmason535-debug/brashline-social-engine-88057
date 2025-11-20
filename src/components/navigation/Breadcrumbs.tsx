@@ -38,13 +38,17 @@ export const Breadcrumbs = () => {
     <nav aria-label="Breadcrumb" className="w-full px-4 py-2 text-sm text-muted-foreground">
       <ol className="flex items-center gap-2">
         <li>
-          <Link to="/" className="hover:underline text-foreground">Home</Link>
+          <Link to="/" className="hover:underline text-foreground">
+            Home
+          </Link>
         </li>
         {segments.map((seg, i) => (
           <li key={seg.href} className="flex items-center gap-2">
             <span className="opacity-60">/</span>
             {i === segments.length - 1 ? (
-              <span aria-current="page" className="text-foreground">{seg.label}</span>
+              <span aria-current="page" className="text-foreground">
+                {seg.label}
+              </span>
             ) : (
               <Link to={seg.href} className="hover:underline text-foreground">
                 {seg.label}

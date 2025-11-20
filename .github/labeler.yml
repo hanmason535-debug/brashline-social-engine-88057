@@ -1,0 +1,125 @@
+# Component changes
+'component: home':
+  - changed-files:
+    - any-glob-to-any-file: 'src/components/home/**/*'
+
+'component: ui':
+  - changed-files:
+    - any-glob-to-any-file: 'src/components/ui/**/*'
+
+'component: layout':
+  - changed-files:
+    - any-glob-to-any-file: 'src/components/layout/**/*'
+
+'component: forms':
+  - changed-files:
+    - any-glob-to-any-file: 'src/components/forms/**/*'
+
+'component: seo':
+  - changed-files:
+    - any-glob-to-any-file: 'src/components/SEO/**/*'
+
+# Type of changes
+'type: tests':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.test.ts'
+      - '**/*.test.tsx'
+      - 'src/tests/**/*'
+      - 'e2e/**/*'
+
+'type: docs':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.md'
+      - 'docs/**/*'
+
+'type: config':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '*.config.*'
+      - '.github/**/*'
+      - '.vscode/**/*'
+      - 'tsconfig*.json'
+
+'type: dependencies':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'bun.lockb'
+
+# Area changes
+'area: styling':
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.css'
+      - 'tailwind.config.ts'
+      - 'postcss.config.js'
+
+'area: analytics':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'src/lib/analytics.ts'
+      - 'index.html'
+
+'area: security':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'vercel.json'
+      - '.env.example'
+      - 'SECURITY.md'
+
+'area: routing':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'src/pages/**/*'
+      - 'src/data/routes.json'
+
+'area: hooks':
+  - changed-files:
+    - any-glob-to-any-file: 'src/hooks/**/*'
+
+'area: data':
+  - changed-files:
+    - any-glob-to-any-file: 'src/data/**/*'
+
+# Size labels
+'size: XS':
+  - changed-files:
+    - any-glob-to-any-file: '**/*'
+      count: 1-5
+
+'size: S':
+  - changed-files:
+    - any-glob-to-any-file: '**/*'
+      count: 6-15
+
+'size: M':
+  - changed-files:
+    - any-glob-to-any-file: '**/*'
+      count: 16-50
+
+'size: L':
+  - changed-files:
+    - any-glob-to-any-file: '**/*'
+      count: 51-150
+
+'size: XL':
+  - changed-files:
+    - any-glob-to-any-file: '**/*'
+      count: 151-999
+
+# Priority labels
+'priority: critical':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'src/lib/analytics.ts'
+      - 'vercel.json'
+      - 'index.html'
+
+'priority: high':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'src/components/home/Hero.tsx'
+      - 'src/components/layout/**/*'

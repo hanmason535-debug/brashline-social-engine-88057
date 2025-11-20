@@ -1,22 +1,22 @@
-import { render } from '@testing-library/react';
-import { screen } from '@testing-library/dom';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import StatsSection from './StatsSection';
+import { render } from "@testing-library/react";
+import { screen } from "@testing-library/dom";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import StatsSection from "./StatsSection";
 
 // Mock the hooks
-vi.mock('@/hooks/useScrollAnimation');
-vi.mock('@/hooks/useCountUp');
+vi.mock("@/hooks/useScrollAnimation");
+vi.mock("@/hooks/useCountUp");
 
 // Import after mocking to get the mocked versions
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { useCountUp } from '@/hooks/useCountUp';
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useCountUp } from "@/hooks/useCountUp";
 
-describe('StatsSection', () => {
+describe("StatsSection", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('should render with initial animation state (not visible)', () => {
+  it("should render with initial animation state (not visible)", () => {
     // Mock hooks to return initial state
     vi.mocked(useScrollAnimation).mockReturnValue({
       elementRef: { current: null },
@@ -27,16 +27,16 @@ describe('StatsSection', () => {
     const { container } = render(<StatsSection lang="en" />);
 
     // Check that individual stat cards are rendered but hidden
-    const statCards = container.querySelectorAll('.text-center');
+    const statCards = container.querySelectorAll(".text-center");
     expect(statCards.length).toBeGreaterThan(0);
-    
+
     statCards.forEach((card) => {
-      expect(card).toHaveClass('opacity-0');
-      expect(card).toHaveClass('translate-y-10');
+      expect(card).toHaveClass("opacity-0");
+      expect(card).toHaveClass("translate-y-10");
     });
   });
 
-  it('should render with final animation state (visible)', () => {
+  it("should render with final animation state (visible)", () => {
     // Mock hooks to return visible state with final counts
     vi.mocked(useScrollAnimation).mockReturnValue({
       elementRef: { current: null },
@@ -48,12 +48,12 @@ describe('StatsSection', () => {
     const { container } = render(<StatsSection lang="en" />);
 
     // Check that individual stat cards are visible
-    const statCards = container.querySelectorAll('.text-center');
+    const statCards = container.querySelectorAll(".text-center");
     expect(statCards.length).toBeGreaterThan(0);
-    
+
     statCards.forEach((card) => {
-      expect(card).toHaveClass('opacity-100');
-      expect(card).toHaveClass('translate-y-0');
+      expect(card).toHaveClass("opacity-100");
+      expect(card).toHaveClass("translate-y-0");
     });
 
     // Check that all final counts are displayed
@@ -63,7 +63,7 @@ describe('StatsSection', () => {
     expect(screen.getByText(/150/)).toBeInTheDocument();
   });
 
-  it('should display labels in English', () => {
+  it("should display labels in English", () => {
     vi.mocked(useScrollAnimation).mockReturnValue({
       elementRef: { current: null },
       isVisible: true,
@@ -72,13 +72,13 @@ describe('StatsSection', () => {
 
     render(<StatsSection lang="en" />);
 
-    expect(screen.getByText('Clients Served')).toBeInTheDocument();
-    expect(screen.getByText('Satisfaction Rate')).toBeInTheDocument();
-    expect(screen.getByText('Support Available')).toBeInTheDocument();
-    expect(screen.getByText('Avg. Growth')).toBeInTheDocument();
+    expect(screen.getByText("Clients Served")).toBeInTheDocument();
+    expect(screen.getByText("Satisfaction Rate")).toBeInTheDocument();
+    expect(screen.getByText("Support Available")).toBeInTheDocument();
+    expect(screen.getByText("Avg. Growth")).toBeInTheDocument();
   });
 
-  it('should display labels in Spanish', () => {
+  it("should display labels in Spanish", () => {
     vi.mocked(useScrollAnimation).mockReturnValue({
       elementRef: { current: null },
       isVisible: true,
@@ -87,13 +87,13 @@ describe('StatsSection', () => {
 
     render(<StatsSection lang="es" />);
 
-    expect(screen.getByText('Clientes Atendidos')).toBeInTheDocument();
-    expect(screen.getByText('Tasa de Satisfacción')).toBeInTheDocument();
-    expect(screen.getByText('Soporte Disponible')).toBeInTheDocument();
-    expect(screen.getByText('Crecimiento Promedio')).toBeInTheDocument();
+    expect(screen.getByText("Clientes Atendidos")).toBeInTheDocument();
+    expect(screen.getByText("Tasa de Satisfacción")).toBeInTheDocument();
+    expect(screen.getByText("Soporte Disponible")).toBeInTheDocument();
+    expect(screen.getByText("Crecimiento Promedio")).toBeInTheDocument();
   });
 
-  it('should render all stat icons', () => {
+  it("should render all stat icons", () => {
     vi.mocked(useScrollAnimation).mockReturnValue({
       elementRef: { current: null },
       isVisible: true,
@@ -103,17 +103,17 @@ describe('StatsSection', () => {
     const { container } = render(<StatsSection lang="en" />);
 
     // Check that we have 4 stat cards (2x2 grid on mobile, 4 columns on desktop)
-    const statCards = container.querySelectorAll('.grid > div');
+    const statCards = container.querySelectorAll(".grid > div");
     expect(statCards).toHaveLength(4);
 
     // Check that each card has an icon container
     statCards.forEach((card) => {
-      const iconContainer = card.querySelector('.inline-flex');
+      const iconContainer = card.querySelector(".inline-flex");
       expect(iconContainer).toBeInTheDocument();
     });
   });
 
-  it('should apply staggered animation delays', () => {
+  it("should apply staggered animation delays", () => {
     vi.mocked(useScrollAnimation).mockReturnValue({
       elementRef: { current: null },
       isVisible: true,
@@ -122,8 +122,8 @@ describe('StatsSection', () => {
 
     const { container } = render(<StatsSection lang="en" />);
 
-    const statCards = container.querySelectorAll('.grid > div');
-    
+    const statCards = container.querySelectorAll(".grid > div");
+
     // Check that each card has a transition delay
     statCards.forEach((card, index) => {
       const expectedDelay = `${index * 100}ms`;
@@ -131,7 +131,7 @@ describe('StatsSection', () => {
     });
   });
 
-  it('should call useCountUp with correct parameters', () => {
+  it("should call useCountUp with correct parameters", () => {
     vi.mocked(useScrollAnimation).mockReturnValue({
       elementRef: { current: null },
       isVisible: true,
@@ -166,7 +166,7 @@ describe('StatsSection', () => {
     });
   });
 
-  it('should render correct suffixes for each stat', () => {
+  it("should render correct suffixes for each stat", () => {
     vi.mocked(useScrollAnimation).mockReturnValue({
       elementRef: { current: null },
       isVisible: true,

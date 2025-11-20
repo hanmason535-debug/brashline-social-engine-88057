@@ -33,11 +33,11 @@ export function useIsMobile() {
     setIsMobile(mediaQuery.matches);
 
     // Add the event listener
-    mediaQuery.addEventListener('change', handleChange);
+    mediaQuery.addEventListener("change", handleChange);
 
     // Clean up the event listener on component unmount
     return () => {
-      mediaQuery.removeEventListener('change', handleChange);
+      mediaQuery.removeEventListener("change", handleChange);
     };
   }, []);
 

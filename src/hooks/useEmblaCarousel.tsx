@@ -11,8 +11,8 @@
  * Performance:
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
-import { useEffect } from 'react';
-import type { EmblaCarouselType } from 'embla-carousel';
+import { useEffect } from "react";
+import type { EmblaCarouselType } from "embla-carousel";
 
 // Hook: decorates an Embla carousel instance with cursor and haptic feedback behavior.
 // Inputs: an EmblaCarousel API instance created by the carousel component.
@@ -23,31 +23,31 @@ export const useEnhancedCarousel = (emblaApi: EmblaCarouselType | undefined) => 
     if (!emblaApi) return;
 
     // On init, set cursor styles so drag affordance feels explicit.
-    emblaApi.on('init', () => {
+    emblaApi.on("init", () => {
       const viewport = emblaApi.rootNode();
       if (viewport) {
-        viewport.style.cursor = 'grab';
+        viewport.style.cursor = "grab";
       }
     });
 
     // Toggle cursor while dragging to reinforce interactivity.
-    emblaApi.on('pointerDown', () => {
+    emblaApi.on("pointerDown", () => {
       const viewport = emblaApi.rootNode();
       if (viewport) {
-        viewport.style.cursor = 'grabbing';
+        viewport.style.cursor = "grabbing";
       }
     });
 
-    emblaApi.on('pointerUp', () => {
+    emblaApi.on("pointerUp", () => {
       const viewport = emblaApi.rootNode();
       if (viewport) {
-        viewport.style.cursor = 'grab';
+        viewport.style.cursor = "grab";
       }
     });
 
     // Provide a subtle haptic tick on slide change for capable devices.
-    emblaApi.on('select', () => {
-      if ('vibrate' in navigator) {
+    emblaApi.on("select", () => {
+      if ("vibrate" in navigator) {
         navigator.vibrate(10);
       }
     });

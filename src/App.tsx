@@ -47,7 +47,7 @@ const PageLoader = () => (
 // Animated route wrapper for smooth page transitions
 const AnimatedRoutes = () => {
   const location = useLocation();
-  
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -83,21 +83,21 @@ const GA4Tracker = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && (window as any).gtag) {
+    if (typeof window !== "undefined" && window.gtag) {
       // Send page_view event
-      (window as any).gtag('event', 'page_view', {
+      window.gtag("event", "page_view", {
         page_title: document.title,
         page_location: window.location.href,
         page_path: location.pathname + location.search,
       });
-      
+
       // Also send config for backward compatibility
-      (window as any).gtag('config', 'G-D614DSBGX5', {
+      window.gtag("config", "G-D614DSBGX5", {
         page_path: location.pathname + location.search,
       });
-      
-      if ((window as any).DEBUG) {
-        console.log('GA4: Page view tracked -', location.pathname);
+
+      if (import.meta.env.DEV) {
+        console.log("GA4: Page view tracked -", location.pathname);
       }
     }
   }, [location.pathname, location.search]);
@@ -110,7 +110,7 @@ const GA4Initializer = () => {
   useEffect(() => {
     analytics.init();
   }, []);
-  
+
   return null;
 };
 

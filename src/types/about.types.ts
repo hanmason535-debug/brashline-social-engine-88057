@@ -7,8 +7,8 @@
  * Assumptions:
  * - Runtime data is normalized to match these shapes before reaching UI components.
  */
-import { LocalizedContent } from './service.types';
-import { LucideIcon } from 'lucide-react';
+import { LocalizedContent } from "./service.types";
+import { LucideIcon } from "lucide-react";
 
 export interface ValueCard {
   icon: LucideIcon;
@@ -16,7 +16,7 @@ export interface ValueCard {
   description: LocalizedContent;
 }
 
-export interface LocalizedValueCard extends Omit<ValueCard, 'title' | 'description'> {
+export interface LocalizedValueCard extends Omit<ValueCard, "title" | "description"> {
   title: string;
   description: string;
 }

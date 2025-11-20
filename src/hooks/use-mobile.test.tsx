@@ -8,12 +8,12 @@
  * Assumptions:
  * - Serves as executable documentation for how callers are expected to use the API.
  */
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
-import { useIsMobile } from './use-mobile';
-import MatchMediaMock from 'vitest-matchmedia-mock';
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { renderHook, act } from "@testing-library/react";
+import { useIsMobile } from "./use-mobile";
+import MatchMediaMock from "vitest-matchmedia-mock";
 
-describe('useIsMobile Hook', () => {
+describe("useIsMobile Hook", () => {
   let matchMediaMock: MatchMediaMock;
 
   beforeEach(() => {
@@ -24,45 +24,45 @@ describe('useIsMobile Hook', () => {
     matchMediaMock.destroy();
   });
 
-  it('should return true when the screen width is less than the mobile breakpoint', () => {
-    matchMediaMock.useMediaQuery('(max-width: 767px)');
+  it("should return true when the screen width is less than the mobile breakpoint", () => {
+    matchMediaMock.useMediaQuery("(max-width: 767px)");
     const { result } = renderHook(() => useIsMobile());
     expect(result.current).toBe(true);
   });
 
-  it('should return false when the screen width is greater than the mobile breakpoint', () => {
-    matchMediaMock.useMediaQuery('(min-width: 768px)');
+  it("should return false when the screen width is greater than the mobile breakpoint", () => {
+    matchMediaMock.useMediaQuery("(min-width: 768px)");
     const { result } = renderHook(() => useIsMobile());
     expect(result.current).toBe(false);
   });
 
-  it('should update the value when the viewport size changes', () => {
+  it("should update the value when the viewport size changes", () => {
     const { result, rerender } = renderHook(() => useIsMobile());
 
     // Start with a desktop view
     act(() => {
-        matchMediaMock.useMediaQuery('(min-width: 768px)');
+      matchMediaMock.useMediaQuery("(min-width: 768px)");
     });
     rerender();
     expect(result.current).toBe(false);
 
     // Switch to a mobile view
     act(() => {
-        matchMediaMock.useMediaQuery('(max-width: 767px)');
+      matchMediaMock.useMediaQuery("(max-width: 767px)");
     });
     rerender();
     expect(result.current).toBe(true);
   });
 
-  it('should provide a stable boolean value on initial render', () => {
-    matchMediaMock.useMediaQuery('(max-width: 767px)');
+  it("should provide a stable boolean value on initial render", () => {
+    matchMediaMock.useMediaQuery("(max-width: 767px)");
     const { result, rerender } = renderHook(() => useIsMobile());
 
     // The initial value should be a boolean, not undefined
-    expect(typeof result.current).toBe('boolean');
+    expect(typeof result.current).toBe("boolean");
 
     // Rerender and check if the value is stable
     rerender();
-    expect(typeof result.current).toBe('boolean');
+    expect(typeof result.current).toBe("boolean");
   });
 });

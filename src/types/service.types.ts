@@ -12,7 +12,7 @@
  * - Runtime data is normalized to match these shapes before reaching UI components.
  */
 
-import type { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from "lucide-react";
 
 export interface LocalizedContent {
   en: string;
@@ -24,15 +24,15 @@ export interface Service {
   icon: LucideIcon;
   title: LocalizedContent;
   description: LocalizedContent;
-  category?: 'marketing' | 'development' | 'design' | 'analytics';
+  category?: "marketing" | "development" | "design" | "analytics";
   features?: string[];
 }
 
-export interface LocalizedService extends Omit<Service, 'title' | 'description'> {
+export interface LocalizedService extends Omit<Service, "title" | "description"> {
   title: string;
   description: string;
-  originalTitle: Service['title'];
-  originalDescription: Service['description'];
+  originalTitle: Service["title"];
+  originalDescription: Service["description"];
 }
 
 export interface ServiceCardProps {

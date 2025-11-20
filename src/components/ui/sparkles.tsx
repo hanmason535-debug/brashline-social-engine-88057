@@ -90,14 +90,14 @@ export const SparklesCore = (props: ParticlesProps) => {
                   enable: true,
                   mode: "push",
                 },
-              onHover: {
-                enable: false,
-                mode: "repulse",
+                onHover: {
+                  enable: false,
+                  mode: "repulse",
+                },
+                resize: {
+                  enable: true,
+                },
               },
-              resize: {
-                enable: true,
-              },
-            },
               modes: {
                 push: {
                   quantity: 4,
@@ -138,7 +138,7 @@ export const SparklesCore = (props: ParticlesProps) => {
                 },
               },
               color: {
-                value: colorful ? "#ff0000" : (particleColor || "#ffffff"),
+                value: colorful ? "#ff0000" : particleColor || "#ffffff",
                 animation: {
                   h: {
                     count: 0,

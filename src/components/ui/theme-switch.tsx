@@ -19,10 +19,7 @@ import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { analytics } from "@/lib/analytics";
 
-const ThemeSwitch = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => {
+const ThemeSwitch = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
   const { resolvedTheme, setTheme } = useTheme();
   const [checked, setChecked] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -37,18 +34,14 @@ const ThemeSwitch = ({
       setTheme(newTheme);
       analytics.trackThemeSwitch(newTheme);
     },
-    [setTheme],
+    [setTheme]
   );
 
   if (!mounted) return null;
 
   return (
     <div
-      className={cn(
-        "relative flex items-center justify-center",
-        "h-9 w-20",
-        className
-      )}
+      className={cn("relative flex items-center justify-center", "h-9 w-20", className)}
       {...props}
     >
       <Switch
