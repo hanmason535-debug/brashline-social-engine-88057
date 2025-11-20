@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+echo ""
+
+# Run gitleaks scan on staged files
+echo "🔐 Scanning for secrets with gitleaks..."
+gitleaks protect --verbose --staged --redact --config=.gitleaks.toml
+
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Gitleaks detected secrets in your commit!"
+  echo ""
+  echo "📋 What to do:"
+  echo "  1. Remove the secret from your staged files"
+  echo "  2. Use environment variables or GitHub Secrets instead"
+  echo "  3. Add to .gitleaks.toml allowlist if false positive"
+  echo "  4. NEVER use --no-verify to bypass this check"
+  echo ""
+  echo "📚 See SECURITY_REMEDIATION.md for guidance"
+  exit 1
+fi
+
+echo "✅ No secrets detected"
+echo ""
+
+# Run lint-staged (prettier, eslint, etc.)
+echo "🎨 Running code formatters and linters..."
+npx lint-staged
+
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Linting or formatting failed!"
+  echo "Please fix the issues and try again."
+  exit 1
+fi
+
+echo ""
+echo "✅ All pre-commit checks passed!"
+echo ""

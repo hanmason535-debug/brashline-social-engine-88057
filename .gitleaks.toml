@@ -1,0 +1,222 @@
+# Gitleaks Configuration for Brashline Social Engine
+# https://github.com/gitleaks/gitleaks
+
+title = "Gitleaks Config - Brashline Social Engine"
+
+[extend]
+# Use default gitleaks rules
+useDefault = true
+
+# Custom rules for project-specific secrets
+[[rules]]
+id = "codecov-upload-token"
+description = "Codecov Upload Token (UUID format)"
+regex = '''[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'''
+tags = ["codecov", "token", "uuid"]
+[rules.allowlist]
+regexes = [
+  '''example-uuid-here''',
+  '''00000000-0000-0000-0000-000000000000''',
+]
+
+[[rules]]
+id = "percy-visual-token"
+description = "Percy Visual Testing Access Token"
+regex = '''(?i)(percy[_-]?token|percy[_-]?access[_-]?key)['"]?\s*[:=]\s*['"]?[A-Za-z0-9]{20,}'''
+tags = ["percy", "token", "visual-testing"]
+
+[[rules]]
+id = "github-personal-access-token"
+description = "GitHub Personal Access Token"
+regex = '''ghp_[0-9a-zA-Z]{36}'''
+tags = ["github", "pat", "token"]
+[rules.allowlist]
+regexes = [
+  '''ghp_your_token_here''',
+  '''ghp_\*\*\*''',
+]
+
+[[rules]]
+id = "generic-api-key-pattern"
+description = "Generic API Key Pattern"
+regex = '''(?i)(api[_-]?key|apikey|api[_-]?secret|secret[_-]?key)['"]?\s*[:=]\s*['"]?[0-9a-zA-Z\-_]{20,}'''
+tags = ["api", "key", "generic"]
+[rules.allowlist]
+paths = [
+  '''\.example$''',
+  '''\.sample$''',
+  '''/examples/''',
+  '''/test/''',
+  '''/tests/''',
+]
+regexes = [
+  '''your[_-]api[_-]key[_-]here''',
+  '''example[_-]key''',
+  '''test[_-]key''',
+  '''placeholder''',
+]
+
+[[rules]]
+id = "stripe-api-key"
+description = "Stripe API Key (Live or Test)"
+regex = '''(sk|pk)_(live|test)_[0-9a-zA-Z]{24,}'''
+tags = ["stripe", "payment", "api-key"]
+[rules.allowlist]
+regexes = [
+  '''sk_live_\*\*\*REDACTED\*\*\*''',
+  '''sk_test_example''',
+]
+
+[[rules]]
+id = "aws-access-key"
+description = "AWS Access Key ID"
+regex = '''AKIA[0-9A-Z]{16}'''
+tags = ["aws", "access-key"]
+
+[[rules]]
+id = "slack-webhook"
+description = "Slack Webhook URL"
+regex = '''https://hooks\.slack\.com/services/[A-Z0-9]{9,}/[A-Z0-9]{9,}/[a-zA-Z0-9]{24,}'''
+tags = ["slack", "webhook"]
+
+[[rules]]
+id = "sentry-dsn"
+description = "Sentry DSN"
+regex = '''https://[0-9a-f]{32}@[a-z0-9]+\.ingest\.sentry\.io/[0-9]+'''
+tags = ["sentry", "dsn", "error-tracking"]
+[rules.allowlist]
+regexes = [
+  '''https://your-dsn@sentry\.io/project-id''',
+]
+
+[[rules]]
+id = "private-key"
+description = "Private Key (PEM format)"
+regex = '''-----BEGIN (RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY-----'''
+tags = ["private-key", "pem", "ssh"]
+
+[[rules]]
+id = "google-api-key"
+description = "Google API Key"
+regex = '''AIza[0-9A-Za-z\-_]{35}'''
+tags = ["google", "api-key"]
+
+[[rules]]
+id = "firebase-api-key"
+description = "Firebase API Key"
+regex = '''(?i)firebase[_-]?api[_-]?key['"]?\s*[:=]\s*['"]?AIza[0-9A-Za-z\-_]{35}'''
+tags = ["firebase", "google", "api-key"]
+
+[[rules]]
+id = "mailgun-api-key"
+description = "Mailgun API Key"
+regex = '''key-[0-9a-zA-Z]{32}'''
+tags = ["mailgun", "email", "api-key"]
+
+[[rules]]
+id = "jwt-token"
+description = "JWT Token"
+regex = '''eyJ[A-Za-z0-9-_=]+\.eyJ[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]*'''
+tags = ["jwt", "token"]
+[rules.allowlist]
+paths = [
+  '''/test/''',
+  '''/examples/''',
+]
+
+# Allowlist - paths and patterns to ignore
+[allowlist]
+description = "Allowlist for false positives and safe files"
+
+# Ignore specific paths
+paths = [
+  # Git and dependencies
+  '''\.git/''',
+  '''\.github/workflows/secret-scan\.yml''',
+  '''node_modules/''',
+  '''dist/''',
+  '''build/''',
+  '''coverage/''',
+  '''\.next/''',
+  '''\.cache/''',
+  
+  # Lock files and configs
+  '''package-lock\.json''',
+  '''bun\.lockb''',
+  '''yarn\.lock''',
+  '''pnpm-lock\.yaml''',
+  
+  # Test files (often contain example secrets)
+  '''\.test\.(ts|tsx|js|jsx)$''',
+  '''\.spec\.(ts|tsx|js|jsx)$''',
+  '''/tests?/''',
+  '''/fixtures?/''',
+  '''/mocks?/''',
+]
+
+# Ignore specific regex patterns
+regexes = [
+  # Redacted placeholders
+  '''\*\*\*REDACTED\*\*\*''',
+  '''REDACTED''',
+  '''\[REDACTED\]''',
+  '''CODECOV_TOKEN_REDACTED_PERMANENTLY''',
+  '''PERCY_TOKEN_REDACTED_PERMANENTLY''',
+  
+  # Placeholder text
+  '''your[_-]token[_-]here''',
+  '''YOUR_TOKEN_HERE''',
+  '''your[_-]api[_-]key[_-]here''',
+  '''example[_-]''',
+  '''EXAMPLE[_-]''',
+  '''placeholder''',
+  '''PLACEHOLDER''',
+  '''xxx+''',
+  
+  # Common false positives
+  '''localhost''',
+  '''127\.0\.0\.1''',
+  '''example\.com''',
+  '''test\.com''',
+  '''demo\.com''',
+  
+  # Documentation URLs
+  '''https://github\.com/settings/tokens''',
+  '''https://codecov\.io/''',
+  '''https://percy\.io/''',
+  
+  # Environment variable references (not actual values)
+  '''import\.meta\.env\.''',
+  '''process\.env\.''',
+  '''VITE_''',
+  '''REACT_APP_''',
+  
+  # Git commit SHAs (look like hex tokens but aren't secrets)
+  '''[0-9a-f]{40}''',
+  
+  # Common test values
+  '''test[_-]key''',
+  '''test[_-]token''',
+  '''test[_-]secret''',
+  '''mock[_-]''',
+  '''fake[_-]''',
+  
+  # UUIDs in test data
+  '''00000000-0000-0000-0000-000000000000''',
+  '''11111111-1111-1111-1111-111111111111''',
+]
+
+# Allowlist specific commits (rarely used)
+commits = []
+
+# Allowlist specific stop words
+stopwords = [
+  '''example''',
+  '''test''',
+  '''mock''',
+  '''fake''',
+  '''sample''',
+  '''demo''',
+  '''placeholder''',
+  '''redacted''',
+]
