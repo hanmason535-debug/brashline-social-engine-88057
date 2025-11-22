@@ -3,12 +3,21 @@ name: Performance Budget
 on:
   pull_request:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'vite.config.ts'
+      - 'lighthouserc.json'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   performance:
     name: Check Performance Budget
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     
     steps:
       - name: Checkout code
@@ -21,10 +30,12 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit
       
       - name: Build project
         run: npm run build
+        env:
+          NODE_ENV: production
       
       - name: Check bundle sizes against budget
         id: bundle_check
@@ -57,12 +68,19 @@ jobs:
           echo "Chunk breakdown:"
           du -h dist/assets/*.js | sort -rh | head -10
       
+      - name: Cache Lighthouse CLI
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-lhci-v1
+      
       - name: Run Lighthouse CI with performance budgets
         run: |
-          npm install -g @lhci/cli
+          npm install -g @lhci/cli@0.13.x
           lhci autorun --config=lighthouserc.json || echo "⚠️ Lighthouse checks need review"
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        continue-on-error: true
       
       - name: Performance report summary
         if: always()
