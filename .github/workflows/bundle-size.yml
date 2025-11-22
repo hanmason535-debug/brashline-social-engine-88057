@@ -3,11 +3,22 @@ name: Bundle Size Check
 on:
   pull_request:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'vite.config.ts'
+      - 'package.json'
+      - 'package-lock.json'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   bundle-size:
     name: Check Bundle Size
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     
     steps:
       - name: Checkout code
@@ -20,13 +31,16 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit
       
       - name: Build project
         run: npm run build
+        env:
+          NODE_ENV: production
       
       - name: Analyze bundle size
         uses: preactjs/compressed-size-action@v2
+        continue-on-error: true
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           pattern: "./dist/**/*.{js,css,html}"

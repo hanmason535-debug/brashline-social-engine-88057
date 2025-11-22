@@ -3,12 +3,27 @@ name: Lighthouse CI
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'vite.config.ts'
+      - 'index.html'
   pull_request:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'vite.config.ts'
+      - 'index.html'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       
@@ -19,14 +34,22 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit
       
       - name: Build project
         run: npm run build
+        env:
+          NODE_ENV: production
+      
+      - name: Cache Lighthouse CLI
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-lhci-${{ hashFiles('**/package-lock.json') }}
       
       - name: Run Lighthouse CI
         run: |
-          npm install -g @lhci/cli
+          npm install -g @lhci/cli@0.13.x
           lhci autorun
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
