@@ -100,4 +100,4 @@ import APP_ROUTES_DATA from "@/data/routes.json";
  * Defines all public application routes with SEO metadata
  * This is the source of truth for sitemap generation
  */
-export const APP_ROUTES: SitemapRoute[] = APP_ROUTES_DATA;
+export const APP_ROUTES: SitemapRoute[] = APP_ROUTES_DATA as SitemapRoute[];
