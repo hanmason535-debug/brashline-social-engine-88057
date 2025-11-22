@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 
 type FlipDirection = "top" | "bottom" | "left" | "right";
 
-interface FlipButtonProps extends HTMLMotionProps<"button"> {
+interface FlipButtonProps {
   frontText: string;
   backText: string;
   transition?: Transition;
@@ -29,11 +29,13 @@ interface FlipButtonProps extends HTMLMotionProps<"button"> {
   href?: string;
   target?: string;
   rel?: string;
+  className?: string;
+  onClick?: () => void;
 }
 
 const defaultSpanClassName = "absolute inset-0 flex items-center justify-center rounded-lg";
 
-const FlipButton = React.forwardRef<HTMLButtonElement, FlipButtonProps>(
+const FlipButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, FlipButtonProps>(
   (
     {
       frontText,
@@ -78,25 +80,21 @@ const FlipButton = React.forwardRef<HTMLButtonElement, FlipButtonProps>(
     };
 
     const isExternal = href?.startsWith("http");
+    const MotionLink = motion(Link);
 
-    const MotionComponent = motion(isExternal ? "a" : Link);
+    const sharedProps = {
+      ref: ref as any,
+      initial: "initial" as const,
+      whileHover: "hover" as const,
+      whileTap: { scale: 0.95 },
+      className: cn(
+        "relative inline-block h-10 px-4 py-2 text-sm font-medium cursor-pointer perspective-[1000px] focus:outline-none",
+        className
+      ),
+    };
 
-    return (
-      <MotionComponent
-        ref={ref}
-        initial="initial"
-        whileHover="hover"
-        whileTap={{ scale: 0.95 }}
-        className={cn(
-          "relative inline-block h-10 px-4 py-2 text-sm font-medium cursor-pointer perspective-[1000px] focus:outline-none",
-          className
-        )}
-        href={isExternal ? href : undefined}
-        to={!isExternal ? href : undefined}
-        target={target}
-        rel={rel}
-        {...props}
-      >
+    const content = (
+      <>
         <motion.span
           variants={frontVariants}
           transition={transition}
@@ -116,7 +114,17 @@ const FlipButton = React.forwardRef<HTMLButtonElement, FlipButtonProps>(
           {backText}
         </motion.span>
         <span className="invisible">{frontText}</span>
-      </MotionComponent>
+      </>
+    );
+
+    return isExternal ? (
+      <motion.a {...sharedProps} href={href} target={target} rel={rel}>
+        {content}
+      </motion.a>
+    ) : (
+      <MotionLink {...sharedProps} to={href || "/"}>
+        {content}
+      </MotionLink>
     );
   }
 );
