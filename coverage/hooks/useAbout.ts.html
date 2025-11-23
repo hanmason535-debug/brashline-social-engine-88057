@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -137,18 +137,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">42x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -156,13 +147,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">56x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -180,18 +180,18 @@
  * Performance:
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
-import { useMemo } from 'react';
-import { VALUE_CARDS, ABOUT_CONTENT } from '@/data/about.data';
-import { LocalizedValueCard } from '@/types/about.types';
+import { useMemo } from "react";
+import { VALUE_CARDS, ABOUT_CONTENT } from "@/data/about.data";
+import { LocalizedValueCard } from "@/types/about.types";
 &nbsp;
 // Hook: derives localized About page content from static data modules.
 // Inputs: current language code.
 // Output: memoized value cards and structured copy for hero and story sections.
 // Performance: memoizes all derived structures so recomputation only occurs when the language changes.
-export const useAbout = <span class="fstat-no" title="function not covered" >(l</span>ang: 'en' | 'es') =&gt; {
-  const <span class="cstat-no" title="statement not covered" >localizedValueCards = useMemo&lt;LocalizedValueCard[]&gt;(</span>
-<span class="fstat-no" title="function not covered" >    () =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      VALUE_CARDS.map(<span class="fstat-no" title="function not covered" >(c</span>ard) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+export const useAbout = (lang: "en" | "es") =&gt; {
+  const localizedValueCards = useMemo&lt;LocalizedValueCard[]&gt;(
+    () =&gt;
+      VALUE_CARDS.map((card) =&gt; ({
         ...card,
         title: card.title[lang],
         description: card.description[lang],
@@ -199,8 +199,8 @@ export const useAbout = <span class="fstat-no" title="function not covered" >(l<
     [lang]
   );
 &nbsp;
-  const <span class="cstat-no" title="statement not covered" >localizedContent = useMemo(</span>
-<span class="fstat-no" title="function not covered" >    () =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+  const localizedContent = useMemo(
+    () =&gt; ({
       hero: {
         title: ABOUT_CONTENT.hero.title[lang],
         subtitle: ABOUT_CONTENT.hero.subtitle[lang],
@@ -208,13 +208,13 @@ export const useAbout = <span class="fstat-no" title="function not covered" >(l<
       },
       story: {
         title: ABOUT_CONTENT.story.title[lang],
-        paragraphs: ABOUT_CONTENT.story.paragraphs.map(<span class="fstat-no" title="function not covered" >(p</span>) =&gt; <span class="cstat-no" title="statement not covered" >p[lang])</span>,
+        paragraphs: ABOUT_CONTENT.story.paragraphs.map((p) =&gt; p[lang]),
       },
     }),
     [lang]
   );
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return {</span>
+  return {
     valueCards: localizedValueCards,
     content: localizedContent,
   };
@@ -226,7 +226,7 @@ export const useAbout = <span class="fstat-no" title="function not covered" >(l<
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-15T07:38:15.927Z
+                at 2025-11-23T12:00:24.430Z
             </div>
         <script src="../prettify.js"></script>
         <script>

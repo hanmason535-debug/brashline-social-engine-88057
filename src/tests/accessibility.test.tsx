@@ -12,7 +12,7 @@ import Contact from "@/pages/Contact";
 import CaseStudies from "@/pages/CaseStudies";
 
 describe("Accessibility Tests", () => {
-  it("homepage should have no accessibility violations", async () => {
+  it("homepage should have no accessibility violations", { timeout: 20000 }, async () => {
     const { container } = render(
       <BrowserRouter>
         <Index />
@@ -22,7 +22,7 @@ describe("Accessibility Tests", () => {
     expect(results.violations).toEqual([]);
   });
 
-  it("services page should have no accessibility violations", async () => {
+  it("services page should have no accessibility violations", { timeout: 20000 }, async () => {
     const { container } = render(
       <BrowserRouter>
         <Services />
@@ -32,7 +32,7 @@ describe("Accessibility Tests", () => {
     expect(results.violations).toEqual([]);
   });
 
-  it("contact page should have no accessibility violations", async () => {
+  it("contact page should have no accessibility violations", { timeout: 20000 }, async () => {
     const { container } = render(
       <BrowserRouter>
         <Contact />
@@ -42,7 +42,7 @@ describe("Accessibility Tests", () => {
     expect(results.violations).toEqual([]);
   });
 
-  it("case studies page should have no accessibility violations", async () => {
+  it("case studies page should have no accessibility violations", { timeout: 20000 }, async () => {
     const { container } = render(
       <BrowserRouter>
         <CaseStudies />

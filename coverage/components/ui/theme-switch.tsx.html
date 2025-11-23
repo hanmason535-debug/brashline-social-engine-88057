@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/14</span>
+                <span class='fraction'>12/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>5/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">69.23% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/11</span>
+                <span class='fraction'>9/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -159,10 +159,7 @@
 <a name='L94'></a><a href='#L94'>94</a>
 <a name='L95'></a><a href='#L95'>95</a>
 <a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a>
-<a name='L98'></a><a href='#L98'>98</a>
-<a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L97'></a><a href='#L97'>97</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -174,7 +171,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -182,29 +179,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -280,40 +274,37 @@ import { Switch } from "@/components/ui/switch";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { analytics } from "@/lib/analytics";
 &nbsp;
-const ThemeSwitch = <span class="fstat-no" title="function not covered" >({</span>
-  className,
-  ...props
-}: React.HTMLAttributes&lt;HTMLDivElement&gt;) =&gt; {
-  const { resolvedTheme, setTheme }<span class="cstat-no" title="statement not covered" > = useTheme();</span>
-  const [checked, setChecked]<span class="cstat-no" title="statement not covered" > = useState(false);</span>
-  const [mounted, setMounted]<span class="cstat-no" title="statement not covered" > = useState(false);</span>
+const ThemeSwitch = ({ className, ...props }: React.HTMLAttributes&lt;HTMLDivElement&gt;) =&gt; {
+  const { resolvedTheme, setTheme } = useTheme();
+  const [checked, setChecked] = useState(false);
+  const [mounted, setMounted] = useState(false);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etMounted(true), [</span>]);</span>
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etChecked(resolvedTheme === "dark"), [</span>resolvedTheme]);</span>
+  useEffect(() =&gt; setMounted(true), []);
+  useEffect(() =&gt; setChecked(resolvedTheme === "dark"), [resolvedTheme]);
 &nbsp;
-  const <span class="cstat-no" title="statement not covered" >handleCheckedChange = useCallback(</span>
+  const handleCheckedChange = useCallback(
 <span class="fstat-no" title="function not covered" >    (i</span>sChecked: boolean) =&gt; {
+      const newTheme = <span class="cstat-no" title="statement not covered" >isChecked ? "dark" : "light";</span>
 <span class="cstat-no" title="statement not covered" >      setChecked(isChecked);</span>
-<span class="cstat-no" title="statement not covered" >      setTheme(isChecked ? "dark" : "light");</span>
+<span class="cstat-no" title="statement not covered" >      setTheme(newTheme);</span>
+<span class="cstat-no" title="statement not covered" >      analytics.trackThemeSwitch(newTheme);</span>
     },
-    [setTheme],
+    [setTheme]
   );
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (!mounted) <span class="cstat-no" title="statement not covered" >return null;</span></span>
+  if (!mounted) return null;
 &nbsp;
   return (
     &lt;div
-      className={cn(
-        "relative flex items-center justify-center",
-        "h-9 w-20",
-        className
-      )}
+      className={cn("relative flex items-center justify-center", "h-9 w-20", className)}
       {...props}
     &gt;
       &lt;Switch
         checked={checked}
         onCheckedChange={handleCheckedChange}
+        aria-label={checked ? <span class="branch-0 cbranch-no" title="branch not covered" >"Switch to light mode" : "</span>Switch to dark mode"}
         className={cn(
           "peer absolute inset-0 h-full w-full rounded-full transition-colors",
           "bg-muted border-2 border-border",
@@ -336,7 +327,7 @@ const ThemeSwitch = <span class="fstat-no" title="function not covered" >({</spa
           size={16}
           className={cn(
             "transition-all duration-300 ease-out",
-            checked ? "text-background opacity-40" : "text-foreground scale-110 opacity-100"
+            checked ? <span class="branch-0 cbranch-no" title="branch not covered" >"text-background opacity-40" : "</span>text-foreground scale-110 opacity-100"
           )}
         /&gt;
       &lt;/span&gt;
@@ -351,7 +342,7 @@ const ThemeSwitch = <span class="fstat-no" title="function not covered" >({</spa
           size={16}
           className={cn(
             "transition-all duration-300 ease-out",
-            checked ? "text-background scale-110 opacity-100" : "text-muted-foreground opacity-40"
+            checked ? <span class="branch-0 cbranch-no" title="branch not covered" >"text-background scale-110 opacity-100" : "</span>text-muted-foreground opacity-40"
           )}
         /&gt;
       &lt;/span&gt;
@@ -367,7 +358,7 @@ export default ThemeSwitch;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-15T07:38:15.927Z
+                at 2025-11-23T12:00:24.430Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

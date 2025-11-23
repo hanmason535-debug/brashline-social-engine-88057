@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5.26% </span>
+                <span class="strong">68.42% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/19</span>
+                <span class='fraction'>13/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>6/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5.55% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/18</span>
+                <span class='fraction'>12/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -147,29 +147,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -177,7 +168,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Hook: observes element visibility using IntersectionObserver for scroll-triggered animations.
 // Inputs: threshold, rootMargin, and triggerOnce options controlling when the animation should fire.
@@ -197,7 +197,7 @@
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
 // Hook: encapsulated observer logic above for consistent behavior across components
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 &nbsp;
 interface UseScrollAnimationOptions {
   threshold?: number;
@@ -205,16 +205,16 @@ interface UseScrollAnimationOptions {
   triggerOnce?: boolean;
 }
 &nbsp;
-export const useScrollAnimation = <span class="fstat-no" title="function not covered" >(o</span>ptions: UseScrollAnimationOptions = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> =&gt; {
-  const { threshold = <span class="branch-0 cbranch-no" title="branch not covered" >0.1,</span> rootMargin = <span class="branch-0 cbranch-no" title="branch not covered" >'0px',</span> triggerOnce = <span class="branch-0 cbranch-no" title="branch not covered" >true </span>} = <span class="cstat-no" title="statement not covered" >options;</span>
-  const [isVisible, setIsVisible]<span class="cstat-no" title="statement not covered" > = useState(false);</span>
-  const <span class="cstat-no" title="statement not covered" >elementRef = useRef&lt;HTMLElement&gt;(null);</span>
+export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) =&gt; {
+  const { threshold = 0.1, rootMargin = "0px", triggerOnce = true } = options;
+  const [isVisible, setIsVisible] = useState(false);
+  const elementRef = useRef&lt;HTMLElement&gt;(null);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
-    const element = <span class="cstat-no" title="statement not covered" >elementRef.current;</span>
-<span class="cstat-no" title="statement not covered" >    if (!element) <span class="cstat-no" title="statement not covered" >return;</span></span>
+  useEffect(() =&gt; {
+    const element = elementRef.current;
+    if (!element) return;
 &nbsp;
-    const observer = <span class="cstat-no" title="statement not covered" >new IntersectionObserver(</span>
+    const observer = new IntersectionObserver(
 <span class="fstat-no" title="function not covered" >      ([</span>entry]) =&gt; {
 <span class="cstat-no" title="statement not covered" >        if (entry.isIntersecting) {</span>
 <span class="cstat-no" title="statement not covered" >          setIsVisible(true);</span>
@@ -228,14 +228,14 @@ export const useScrollAnimation = <span class="fstat-no" title="function not cov
       { threshold, rootMargin }
     );
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    observer.observe(element);</span>
+    observer.observe(element);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >      observer.disconnect();</span>
+    return () =&gt; {
+      observer.disconnect();
     };
   }, [threshold, rootMargin, triggerOnce]);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return { elementRef, isVisible };</span>
+  return { elementRef, isVisible };
 };
 &nbsp;</pre></td></tr></table></pre>
 
@@ -244,7 +244,7 @@ export const useScrollAnimation = <span class="fstat-no" title="function not cov
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-15T07:38:15.927Z
+                at 2025-11-23T12:00:24.430Z
             </div>
         <script src="../prettify.js"></script>
         <script>

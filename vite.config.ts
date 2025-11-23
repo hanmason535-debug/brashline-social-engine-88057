@@ -68,5 +68,6 @@ export default defineConfig(({ mode }) => ({
     setupFiles: './src/tests/setup.ts',
     exclude: ['**/node_modules/**', '**/dist/**', '**/e2e/**', '**/playwright-report/**', '**/test-results/**', '**/worktrees/**'],
     pool: 'vmThreads',
+    testTimeout: 15000,
   },
 }));

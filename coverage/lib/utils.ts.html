@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -119,9 +119,7 @@
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
 <a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -136,7 +134,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">685x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -151,8 +149,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -161,23 +158,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
  * File overview: src/lib/utils.ts
@@ -193,8 +189,8 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >cn(.</span>..inputs: ClassValue[]) {
-<span class="cstat-no" title="statement not covered" >  return twMerge(clsx(inputs));</span>
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }
 &nbsp;
 /**
@@ -204,14 +200,12 @@ export function <span class="fstat-no" title="function not covered" >cn(.</span>
  * @param format - Image format extension (e.g., "webp" or "png")
  * @returns srcset string suitable for img srcSet attribute
  */
-export function <span class="fstat-no" title="function not covered" >generateSrcSet(</span>
+export function generateSrcSet(
   imageName: string,
   sizes: number[],
-  format: 'webp' | 'png' = <span class="branch-0 cbranch-no" title="branch not covered" >'webp'</span>
+  format: "webp" | "png" = "webp"
 ): string {
-<span class="cstat-no" title="statement not covered" >  return sizes</span>
-    .map(<span class="fstat-no" title="function not covered" >(s</span>ize) =&gt; <span class="cstat-no" title="statement not covered" >`/images/${imageName}-${size}w.${format} ${size}w`)</span>
-    .join(', ');
+  return sizes.map((size) =&gt; `/images/${imageName}-${size}w.${format} ${size}w`).join(", ");
 }
 &nbsp;
 /**
@@ -219,23 +213,23 @@ export function <span class="fstat-no" title="function not covered" >generateSrc
  * @param sizes - Array of pixel widths in ascending order
  * @returns sizes string suitable for img sizes attribute
  */
-export function <span class="fstat-no" title="function not covered" >generateSizesAttribute(s</span>izes: number[]): string {
-<span class="cstat-no" title="statement not covered" >  if (sizes.length === 0) <span class="cstat-no" title="statement not covered" >return '100vw';</span></span>
-<span class="cstat-no" title="statement not covered" >  if (sizes.length === 1) <span class="cstat-no" title="statement not covered" >return `${sizes[0]}px`;</span></span>
+export function generateSizesAttribute(sizes: number[]): string {
+  if (sizes.length === 0) return "100vw";
+  if (sizes.length === 1) return `${sizes[0]}px`;
 &nbsp;
-  const sortedSizes = <span class="cstat-no" title="statement not covered" >[...sizes].sort(<span class="fstat-no" title="function not covered" >(a</span>, b) =&gt; <span class="cstat-no" title="statement not covered" >a - b);</span></span>
-  
+  const sortedSizes = [...sizes].sort((a, b) =&gt; a - b);
+&nbsp;
   // Special case for 2 items: single breakpoint is cleaner
-<span class="cstat-no" title="statement not covered" >  if (sizes.length === 2) {</span>
-<span class="cstat-no" title="statement not covered" >    return `(max-width: 640px) ${sortedSizes[0]}px, ${sortedSizes[1]}px`;</span>
+  if (sizes.length === 2) {
+    return `(max-width: 640px) ${sortedSizes[0]}px, ${sortedSizes[1]}px`;
   }
-  
-  const queries = <span class="cstat-no" title="statement not covered" >[</span>
+&nbsp;
+  const queries = [
     `(max-width: 640px) ${sortedSizes[0]}px`,
     `(max-width: 1024px) ${sortedSizes[Math.floor(sortedSizes.length / 2)]}px`,
     `${sortedSizes[sortedSizes.length - 1]}px`,
   ];
-<span class="cstat-no" title="statement not covered" >  return queries.join(', ');</span>
+  return queries.join(", ");
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -244,7 +238,7 @@ export function <span class="fstat-no" title="function not covered" >generateSiz
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-15T07:38:15.927Z
+                at 2025-11-23T12:00:24.430Z
             </div>
         <script src="../prettify.js"></script>
         <script>

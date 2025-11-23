@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -150,10 +150,7 @@
 <a name='L85'></a><a href='#L85'>85</a>
 <a name='L86'></a><a href='#L86'>86</a>
 <a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L88'></a><a href='#L88'>88</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -174,7 +171,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -201,18 +198,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -237,10 +234,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
@@ -291,22 +285,23 @@ const valueProps = [
   },
 ];
 &nbsp;
-const ValueProps = memo(<span class="fstat-no" title="function not covered" >({</span> lang }: ValuePropsProps) =&gt; {
-  const { elementRef, isVisible }<span class="cstat-no" title="statement not covered" > = useScrollAnimation({ threshold: 0.2 });</span>
+const ValueProps = memo(({ lang }: ValuePropsProps) =&gt; {
+  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
 &nbsp;
   return (
-    &lt;section ref={elementRef as React.RefObject&lt;HTMLElement&gt;} className="py-32 md:py-40 bg-muted/50"&gt;
+    &lt;section
+      ref={elementRef as React.RefObject&lt;HTMLElement&gt;}
+      className="py-20 md:py-24 bg-muted/50"
+    &gt;
       &lt;div className="container mx-auto px-4"&gt;
         &lt;div className="grid grid-cols-1 md:grid-cols-3 gap-8"&gt;
-          {valueProps.map(<span class="fstat-no" title="function not covered" >(p</span>rop, index) =&gt; {
-            const Icon = <span class="cstat-no" title="statement not covered" >prop.icon;</span>
+          {valueProps.map((prop, index) =&gt; {
+            const Icon = prop.icon;
             return (
               &lt;Card
                 key={index}
                 className={`shadow-soft hover:shadow-medium transition-all duration-700 hover:-translate-y-1 border-border/50 bg-card/50 backdrop-blur-sm ${
-                  isVisible
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-10'
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
                 style={{ transitionDelay: `${index * 150}ms` }}
               &gt;
@@ -314,12 +309,8 @@ const ValueProps = memo(<span class="fstat-no" title="function not covered" >({<
                   &lt;div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-foreground/5 border border-border/50 mb-6"&gt;
                     &lt;Icon className="h-8 w-8 text-foreground" /&gt;
                   &lt;/div&gt;
-                  &lt;h3 className="text-xl font-heading font-semibold mb-4"&gt;
-                    {prop.title[lang]}
-                  &lt;/h3&gt;
-                  &lt;p className="text-muted-foreground leading-relaxed"&gt;
-                    {prop.text[lang]}
-                  &lt;/p&gt;
+                  &lt;h3 className="text-xl font-heading font-semibold mb-4"&gt;{prop.title[lang]}&lt;/h3&gt;
+                  &lt;p className="text-muted-foreground leading-relaxed"&gt;{prop.text[lang]}&lt;/p&gt;
                 &lt;/CardContent&gt;
               &lt;/Card&gt;
             );
@@ -330,7 +321,7 @@ const ValueProps = memo(<span class="fstat-no" title="function not covered" >({<
   );
 });
 &nbsp;
-ValueProps.displayName = 'ValueProps';
+ValueProps.displayName = "ValueProps";
 &nbsp;
 export default ValueProps;
 &nbsp;</pre></td></tr></table></pre>
@@ -340,7 +331,7 @@ export default ValueProps;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-15T07:38:15.927Z
+                at 2025-11-23T12:00:24.430Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

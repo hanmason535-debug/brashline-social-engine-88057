@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.69% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.09% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -145,39 +145,39 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">45x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">255x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">135x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">105x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">390x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,48 +196,48 @@
  * Performance:
  * - Designed so calling components can avoid duplicating logic and re-renders.
  */
-import { useMemo } from 'react';
-import { RECURRING_PLANS, MAIN_PACKAGE, ADDON_PACKAGES } from '@/data/pricing.data';
-import { LocalizedRecurringPlan, LocalizedOneTimePackage } from '@/types/pricing.types';
+import { useMemo } from "react";
+import { RECURRING_PLANS, MAIN_PACKAGE, ADDON_PACKAGES } from "@/data/pricing.data";
+import { LocalizedRecurringPlan, LocalizedOneTimePackage } from "@/types/pricing.types";
 &nbsp;
 // Hook: builds localized pricing view models from static plan definitions.
 // Inputs: current language code.
 // Output: memoized recurring plans and one-time packages ready for rendering.
 // Performance: memoizes all derived structures so pricing sections stay cheap to rerender.
-export const usePricing = <span class="fstat-no" title="function not covered" >(l</span>ang: 'en' | 'es') =&gt; {
-  const <span class="cstat-no" title="statement not covered" >localizedRecurringPlans = useMemo&lt;LocalizedRecurringPlan[]&gt;(</span>
-<span class="fstat-no" title="function not covered" >    () =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      RECURRING_PLANS.map(<span class="fstat-no" title="function not covered" >(p</span>lan) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+export const usePricing = (lang: "en" | "es") =&gt; {
+  const localizedRecurringPlans = useMemo&lt;LocalizedRecurringPlan[]&gt;(
+    () =&gt;
+      RECURRING_PLANS.map((plan) =&gt; ({
         ...plan,
         tier: plan.tier[lang],
         summary: plan.summary[lang],
-        features: plan.features.map(<span class="fstat-no" title="function not covered" >(f</span>) =&gt; <span class="cstat-no" title="statement not covered" >f[lang])</span>,
+        features: plan.features.map((f) =&gt; f[lang]),
       })),
     [lang]
   );
 &nbsp;
-  const <span class="cstat-no" title="statement not covered" >localizedMainPackage = useMemo&lt;LocalizedOneTimePackage&gt;(</span>
-<span class="fstat-no" title="function not covered" >    () =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+  const localizedMainPackage = useMemo&lt;LocalizedOneTimePackage&gt;(
+    () =&gt; ({
       ...MAIN_PACKAGE,
       tagline: MAIN_PACKAGE.tagline[lang],
-      features: MAIN_PACKAGE.features.map(<span class="fstat-no" title="function not covered" >(f</span>) =&gt; <span class="cstat-no" title="statement not covered" >f[lang])</span>,
+      features: MAIN_PACKAGE.features.map((f) =&gt; f[lang]),
       bestFor: MAIN_PACKAGE.bestFor[lang],
     }),
     [lang]
   );
 &nbsp;
-  const <span class="cstat-no" title="statement not covered" >localizedAddonPackages = useMemo&lt;LocalizedOneTimePackage[]&gt;(</span>
-<span class="fstat-no" title="function not covered" >    () =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      ADDON_PACKAGES.map(<span class="fstat-no" title="function not covered" >(p</span>kg) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+  const localizedAddonPackages = useMemo&lt;LocalizedOneTimePackage[]&gt;(
+    () =&gt;
+      ADDON_PACKAGES.map((pkg) =&gt; ({
         ...pkg,
         tagline: pkg.tagline[lang],
-        features: pkg.features.map(<span class="fstat-no" title="function not covered" >(f</span>) =&gt; <span class="cstat-no" title="statement not covered" >f[lang])</span>,
+        features: pkg.features.map((f) =&gt; f[lang]),
         bestFor: pkg.bestFor[lang],
       })),
     [lang]
   );
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return {</span>
+  return {
     recurringPlans: localizedRecurringPlans,
     mainPackage: localizedMainPackage,
     addonPackages: localizedAddonPackages,
@@ -250,7 +250,7 @@ export const usePricing = <span class="fstat-no" title="function not covered" >(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-15T07:38:15.927Z
+                at 2025-11-23T12:00:24.430Z
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -155,11 +155,7 @@
 <a name='L90'></a><a href='#L90'>90</a>
 <a name='L91'></a><a href='#L91'>91</a>
 <a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -179,28 +175,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -223,11 +207,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -267,67 +259,65 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { useCountUp } from '@/hooks/useCountUp';
-import { Users, Award, Clock, TrendingUp } from 'lucide-react';
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useCountUp } from "@/hooks/useCountUp";
+import { Users, Award, Clock, TrendingUp } from "lucide-react";
 &nbsp;
 interface StatsSectionProps {
-  lang: 'en' | 'es';
+  lang: "en" | "es";
 }
 &nbsp;
-const StatsSection = <span class="fstat-no" title="function not covered" >({</span> lang }: StatsSectionProps) =&gt; {
-  const { elementRef, isVisible }<span class="cstat-no" title="statement not covered" > = useScrollAnimation({ threshold: 0.3 });</span>
+const StatsSection = ({ lang }: StatsSectionProps) =&gt; {
+  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.3 });
 &nbsp;
   // Call hooks at the top level for each stat
-  const <span class="cstat-no" title="statement not covered" >count1 = useCountUp({ end: 500, duration: 2500, shouldStart: isVisible });</span>
-  const <span class="cstat-no" title="statement not covered" >count2 = useCountUp({ end: 98, duration: 2500, shouldStart: isVisible });</span>
-  const <span class="cstat-no" title="statement not covered" >count3 = useCountUp({ end: 24, duration: 2500, shouldStart: isVisible });</span>
-  const <span class="cstat-no" title="statement not covered" >count4 = useCountUp({ end: 150, duration: 2500, shouldStart: isVisible });</span>
+  const count1 = useCountUp({ end: 500, duration: 2500, shouldStart: isVisible });
+  const count2 = useCountUp({ end: 98, duration: 2500, shouldStart: isVisible });
+  const count3 = useCountUp({ end: 24, duration: 2500, shouldStart: isVisible });
+  const count4 = useCountUp({ end: 150, duration: 2500, shouldStart: isVisible });
 &nbsp;
-  const stats = <span class="cstat-no" title="statement not covered" >[</span>
+  const stats = [
     {
       icon: Users,
       count: count1,
-      suffix: '+',
-      label: { en: 'Clients Served', es: 'Clientes Atendidos' },
+      suffix: "+",
+      label: { en: "Clients Served", es: "Clientes Atendidos" },
     },
     {
       icon: Award,
       count: count2,
-      suffix: '%',
-      label: { en: 'Satisfaction Rate', es: 'Tasa de Satisfacción' },
+      suffix: "%",
+      label: { en: "Satisfaction Rate", es: "Tasa de Satisfacción" },
     },
     {
       icon: Clock,
       count: count3,
-      suffix: '/7',
-      label: { en: 'Support Available', es: 'Soporte Disponible' },
+      suffix: "/7",
+      label: { en: "Support Available", es: "Soporte Disponible" },
     },
     {
       icon: TrendingUp,
       count: count4,
-      suffix: '%',
-      label: { en: 'Avg. Growth', es: 'Crecimiento Promedio' },
+      suffix: "%",
+      label: { en: "Avg. Growth", es: "Crecimiento Promedio" },
     },
   ];
 &nbsp;
   return (
     &lt;section
       ref={elementRef as React.RefObject&lt;HTMLElement&gt;}
-      className="py-20 bg-gradient-to-b from-background to-muted/30"
+      className="pt-12 pb-20 bg-gradient-to-b from-background to-muted/30"
     &gt;
       &lt;div className="container mx-auto px-4"&gt;
         &lt;div className="grid grid-cols-2 md:grid-cols-4 gap-8"&gt;
-          {stats.map(<span class="fstat-no" title="function not covered" >(s</span>tat, index) =&gt; {
-            const Icon = <span class="cstat-no" title="statement not covered" >stat.icon;</span>
+          {stats.map((stat, index) =&gt; {
+            const Icon = stat.icon;
 &nbsp;
             return (
               &lt;div
                 key={index}
                 className={`text-center transform transition-all duration-700 ${
-                  isVisible
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-10'
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               &gt;
@@ -338,9 +328,7 @@ const StatsSection = <span class="fstat-no" title="function not covered" >({</sp
                   {stat.count}
                   {stat.suffix}
                 &lt;/div&gt;
-                &lt;p className="text-sm text-muted-foreground"&gt;
-                  {stat.label[lang]}
-                &lt;/p&gt;
+                &lt;p className="text-sm text-muted-foreground"&gt;{stat.label[lang]}&lt;/p&gt;
               &lt;/div&gt;
             );
           })}
@@ -358,7 +346,7 @@ export default StatsSection;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-15T07:38:15.927Z
+                at 2025-11-23T12:00:24.430Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
