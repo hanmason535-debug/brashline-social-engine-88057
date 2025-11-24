@@ -20,13 +20,6 @@ export interface AnalyticsEvent {
   utm?: UTMParams;
 }
 
-declare global {
-  interface Window {
-    gtag?: (command: string, eventName: string, params?: Record<string, unknown>) => void;
-    dataLayer?: unknown[];
-  }
-}
-
 const STORAGE_KEY = "brashline_analytics_events";
 const UTM_STORAGE_KEY = "brashline_utm_params";
 const MAX_STORED_EVENTS = 1000;

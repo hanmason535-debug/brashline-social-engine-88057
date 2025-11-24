@@ -13,9 +13,10 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, ShoppingCart } from "lucide-react";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { SparklesCore } from "@/components/ui/sparkles";
+import { useCart } from "@/contexts/CartContext";
 
 interface RecurringPlanCardProps {
   tier: { en: string; es: string };
@@ -40,6 +41,20 @@ export const RecurringPlanCard = ({
   featured,
   lang,
 }: RecurringPlanCardProps) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: `recurring-${name.toLowerCase().replace(/\s+/g, "-")}`,
+      name,
+      price,
+      type: "recurring",
+      tier: tier[lang],
+      summary: summary[lang],
+      features: features.map((f) => f[lang]),
+    });
+  };
+
   return (
     <Card
       className={`group relative flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-glow ${
@@ -113,17 +128,12 @@ export const RecurringPlanCard = ({
 
       <CardFooter className="pt-6 relative z-10">
         <Button
-          asChild
-          className="w-full transition-transform hover:scale-105"
+          onClick={handleAddToCart}
+          className="w-full transition-transform hover:scale-105 gap-2"
           variant={featured ? "default" : "outline"}
         >
-          <a
-            href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {lang === "en" ? "Get Started" : "Comenzar"}
-          </a>
+          <ShoppingCart className="h-4 w-4" />
+          {lang === "en" ? "Add to Cart" : "Agregar al Carrito"}
         </Button>
       </CardFooter>
     </Card>

@@ -16,6 +16,7 @@ import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ThemeSwitch from "@/components/ui/theme-switch";
 import FlipButton from "@/components/ui/flip-button";
+import { CartIcon } from "@/components/ui/cart-icon";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const navigation = {
@@ -122,6 +123,7 @@ const Header = memo(() => {
 
           {/* CTAs & Controls */}
           <div className="flex items-center gap-3">
+            <CartIcon />
             <ThemeSwitch className="hidden sm:flex scale-75" />
 
             <Button

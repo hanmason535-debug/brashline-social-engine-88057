@@ -16,14 +16,16 @@ import SEOHead from "@/components/SEO/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check } from "lucide-react";
+import { Check, ShoppingCart } from "lucide-react";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { getPageSEO } from "@/utils/seo";
+import { useCart } from "@/contexts/CartContext";
 
 const Pricing = () => {
   const { lang } = useLanguage();
+  const { addToCart } = useCart();
   const { elementRef: recurringRef, isVisible: recurringVisible } = useScrollAnimation({
     threshold: 0.1,
   });
@@ -372,14 +374,22 @@ const Pricing = () => {
             </CardContent>
 
             <CardFooter className="pt-6 pb-8">
-              <Button asChild className="w-full" size="lg">
-                <a
-                  href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {lang === "en" ? "Get Started" : "Comenzar"}
-                </a>
+              <Button 
+                className="w-full gap-2" 
+                size="lg"
+                onClick={() => {
+                  addToCart({
+                    id: "onetime-digital-launch-pro",
+                    name: mainPackage.name,
+                    price: mainPackage.price,
+                    type: "one-time",
+                    summary: mainPackage.tagline[lang],
+                    features: mainPackage.features.map((f) => f[lang]),
+                  });
+                }}
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {lang === "en" ? "Add to Cart" : "Agregar al Carrito"}
               </Button>
             </CardFooter>
           </Card>
@@ -445,14 +455,22 @@ const Pricing = () => {
                 </CardContent>
 
                 <CardFooter className="pt-4">
-                  <Button asChild className="w-full" variant="outline">
-                    <a
-                      href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {lang === "en" ? "Add to Package" : "Agregar al Paquete"}
-                    </a>
+                  <Button 
+                    className="w-full gap-2" 
+                    variant="outline"
+                    onClick={() => {
+                      addToCart({
+                        id: `addon-${pkg.name.toLowerCase().replace(/\s+/g, "-")}`,
+                        name: pkg.name,
+                        price: pkg.price,
+                        type: "one-time",
+                        summary: pkg.tagline[lang],
+                        features: pkg.features.map((f) => f[lang]),
+                      });
+                    }}
+                  >
+                    <ShoppingCart className="h-4 w-4" />
+                    {lang === "en" ? "Add to Cart" : "Agregar al Carrito"}
                   </Button>
                 </CardFooter>
               </Card>

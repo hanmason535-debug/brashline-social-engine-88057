@@ -15,10 +15,11 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, X } from "lucide-react";
+import { Check, X, ShoppingCart } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { analytics } from "@/lib/analytics";
+import { useCart } from "@/contexts/CartContext";
 
 interface PricingPreviewProps {
   lang: "en" | "es";
@@ -97,6 +98,7 @@ const plans = [
 const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
   const [showComparison, setShowComparison] = useState(false);
+  const { addToCart } = useCart();
 
   return (
     <section className="py-16 md:py-24 bg-background">
@@ -217,18 +219,23 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
 
                 <CardFooter className="pt-6">
                   <Button
-                    asChild
-                    className="w-full"
+                    className="w-full gap-2"
                     variant={plan.featured ? "default" : "outline"}
-                    onClick={() => analytics.trackPricingCTA(plan.name, currentPrice)}
+                    onClick={() => {
+                      addToCart({
+                        id: `recurring-${plan.name.toLowerCase().replace(/\s+/g, "-")}-${billing}`,
+                        name: `${plan.name} (${billing === "monthly" ? lang === "en" ? "Monthly" : "Mensual" : lang === "en" ? "Annual" : "Anual"})`,
+                        price: currentPrice,
+                        type: "recurring",
+                        tier: plan.tier[lang],
+                        summary: plan.summary[lang],
+                        features: plan.features.filter((f) => f.included).map((f) => f[lang]),
+                      });
+                      analytics.trackPricingCTA(plan.name, currentPrice);
+                    }}
                   >
-                    <a
-                      href="https://api.whatsapp.com/send/?phone=19294468440&text&type=phone_number&app_absent=0"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {lang === "en" ? "Get Started" : "Comenzar"}
-                    </a>
+                    <ShoppingCart className="h-4 w-4" />
+                    {lang === "en" ? "Add to Cart" : "Agregar al Carrito"}
                   </Button>
                 </CardFooter>
               </Card>
