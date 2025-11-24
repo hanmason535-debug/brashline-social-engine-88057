@@ -35,6 +35,7 @@ const Cookies = lazy(() => import("./pages/Cookies"));
 const Accessibility = lazy(() => import("./pages/Accessibility"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Checkout = lazy(() => import("./pages/Checkout"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -74,6 +75,7 @@ const AnimatedRoutes = () => {
           <Route path="/accessibility" element={<Accessibility />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
