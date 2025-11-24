@@ -20,6 +20,7 @@ import { ThemeProvider } from "next-themes";
 import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { CartProvider } from "@/contexts/CartContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
@@ -46,9 +47,11 @@ export function AppProviders({ children }: AppProvidersProps) {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <LanguageProvider>
-              <CartProvider>
-                <TooltipProvider>{children}</TooltipProvider>
-              </CartProvider>
+              <AuthProvider>
+                <CartProvider>
+                  <TooltipProvider>{children}</TooltipProvider>
+                </CartProvider>
+              </AuthProvider>
             </LanguageProvider>
           </ThemeProvider>
         </QueryClientProvider>

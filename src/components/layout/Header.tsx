@@ -12,12 +12,13 @@
  */
 import { useState, memo, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, Globe, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ThemeSwitch from "@/components/ui/theme-switch";
 import FlipButton from "@/components/ui/flip-button";
 import { CartIcon } from "@/components/ui/cart-icon";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navigation = {
   top: [
@@ -35,6 +36,7 @@ const Header = memo(() => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { lang, setLang } = useLanguage();
+  const { isAuthenticated } = useAuth();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -124,6 +126,16 @@ const Header = memo(() => {
           {/* CTAs & Controls */}
           <div className="flex items-center gap-3">
             <CartIcon />
+            
+            {isAuthenticated && (
+              <Link to="/dashboard">
+                <Button variant="ghost" size="sm" className="hidden sm:flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  {lang === "en" ? "Dashboard" : "Panel"}
+                </Button>
+              </Link>
+            )}
+            
             <ThemeSwitch className="hidden sm:flex scale-75" />
 
             <Button
