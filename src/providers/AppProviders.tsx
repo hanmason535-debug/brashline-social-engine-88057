@@ -19,6 +19,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
 import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { CartProvider } from "@/contexts/CartContext";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
@@ -45,7 +46,9 @@ export function AppProviders({ children }: AppProvidersProps) {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <LanguageProvider>
-              <TooltipProvider>{children}</TooltipProvider>
+              <CartProvider>
+                <TooltipProvider>{children}</TooltipProvider>
+              </CartProvider>
             </LanguageProvider>
           </ThemeProvider>
         </QueryClientProvider>
