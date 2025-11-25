@@ -164,8 +164,8 @@ All colors MUST be HSL.
   /* Global Performance Optimizations for Animations */
   .meteor,
   .background-animation,
-  [class*=\"animate\"],
-  [class*=\"motion\"] {
+  [class*="animate"],
+  [class*="motion"] {
     backface-visibility: hidden;
     perspective: 1000px;
     transform: translateZ(0);
@@ -182,9 +182,9 @@ All colors MUST be HSL.
   }
 
   /* Optimize transforms for hover states */
-  .group:hover [class*=\"group-hover\"],
-  [class*=\"hover:scale\"],
-  [class*=\"hover:translate\"] {
+  .group:hover [class*="group-hover"],
+  [class*="hover:scale"],
+  [class*="hover:translate"] {
     will-change: transform;
   }
 
