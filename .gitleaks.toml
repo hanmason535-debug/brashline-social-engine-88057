@@ -152,6 +152,13 @@ paths = [
   '''/tests?/''',
   '''/fixtures?/''',
   '''/mocks?/''',
+  
+  # Documentation files with example tokens
+  '''README\.md''',
+  '''GITLEAKS_INSTALL\.md''',
+  '''agent\.md''',
+  '''SECURITY_REMEDIATION\.md''',
+  '''scripts/cleanup-git-history\.ps1''',
 ]
 
 # Ignore specific regex patterns

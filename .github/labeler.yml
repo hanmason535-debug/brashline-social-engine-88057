@@ -84,31 +84,9 @@
   - changed-files:
     - any-glob-to-any-file: 'src/data/**/*'
 
-# Size labels
-'size: XS':
-  - changed-files:
-    - any-glob-to-any-file: '**/*'
-      count: 1-5
-
-'size: S':
-  - changed-files:
-    - any-glob-to-any-file: '**/*'
-      count: 6-15
-
-'size: M':
-  - changed-files:
-    - any-glob-to-any-file: '**/*'
-      count: 16-50
-
-'size: L':
-  - changed-files:
-    - any-glob-to-any-file: '**/*'
-      count: 51-150
-
-'size: XL':
-  - changed-files:
-    - any-glob-to-any-file: '**/*'
-      count: 151-999
+# Size labels - note: count is not supported by labeler v5
+# Size labels are based on file paths, not file count
+# For size-based labeling, consider using a different action
 
 # Priority labels
 'priority: critical':

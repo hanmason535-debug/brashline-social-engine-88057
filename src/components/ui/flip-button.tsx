@@ -83,7 +83,7 @@ const FlipButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, FlipB
     const MotionLink = motion(Link);
 
     const sharedProps = {
-      ref: ref as any,
+      ref: ref as React.Ref<HTMLButtonElement | HTMLAnchorElement>,
       initial: "initial" as const,
       whileHover: "hover" as const,
       whileTap: { scale: 0.95 },
