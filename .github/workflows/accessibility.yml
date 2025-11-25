@@ -2,7 +2,7 @@ name: Accessibility Tests
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, develop]
     paths:
       - 'src/**'
       - 'public/**'
@@ -17,45 +17,37 @@ jobs:
     name: Accessibility Audit
     runs-on: ubuntu-latest
     timeout-minutes: 8
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+
+      - name: Setup project with build
+        uses: ./.github/actions/setup-project
         with:
           node-version: '20'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci --prefer-offline --no-audit
-      
-      - name: Build project
-        run: npm run build
-        env:
-          NODE_ENV: production
-      
+          with-build: 'true'
+
       - name: Start preview server
         run: |
           npm run preview &
           echo $! > server.pid
         env:
           PORT: 4173
-      
+
       - name: Wait for server to be ready
         run: npx wait-on http://localhost:4173 -t 30000
-      
+
       - name: Cache accessibility tools
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-a11y-tools-v1
-      
+
       - name: Install accessibility tools
         run: |
           npm install -g @axe-core/cli@4.x pa11y-ci@3.x
-      
+
       - name: Run axe accessibility tests
         run: |
           axe http://localhost:4173 \
@@ -64,20 +56,20 @@ jobs:
             --tags wcag2a,wcag2aa \
             || echo "⚠️ Accessibility issues found - check report"
         continue-on-error: true
-      
+
       - name: Run pa11y tests
         run: |
           echo '{"urls": ["http://localhost:4173"]}' > .pa11yci.json
           pa11y-ci --config .pa11yci.json || echo "⚠️ Pa11y issues found"
         continue-on-error: true
-      
+
       - name: Stop server
         if: always()
         run: |
           if [ -f server.pid ]; then
             kill $(cat server.pid) || true
           fi
-      
+
       - name: Comment PR with results
         if: always()
         uses: actions/github-script@v7

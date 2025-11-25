@@ -1,0 +1,47 @@
+name: 'PR Comment'
+description: 'Composite action to post standardized comments on pull requests'
+
+inputs:
+  github-token:
+    description: 'GitHub token for authentication'
+    required: true
+  title:
+    description: 'Title for the comment (will be prefixed with emoji)'
+    required: true
+  emoji:
+    description: 'Emoji to prefix the title with'
+    required: false
+    default: '✅'
+  message:
+    description: 'Message body for the comment'
+    required: true
+  footer:
+    description: 'Optional footer for the comment'
+    required: false
+    default: ''
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Post PR comment
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ inputs.github-token }}
+        script: |
+          const emoji = '${{ inputs.emoji }}';
+          const title = '${{ inputs.title }}';
+          const message = `${{ inputs.message }}`;
+          const footer = '${{ inputs.footer }}';
+
+          let body = `${emoji} **${title}**\n\n${message}`;
+
+          if (footer) {
+            body += `\n\n---\n${footer}`;
+          }
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: body
+          });

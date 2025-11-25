@@ -1,0 +1,83 @@
+name: Reusable CI Pipeline
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node.js version to use'
+        type: string
+        default: '20'
+      upload-coverage:
+        description: 'Whether to upload coverage reports to Codecov'
+        type: boolean
+        default: true
+      run-typecheck:
+        description: 'Whether to run TypeScript type check'
+        type: boolean
+        default: true
+      run-lint:
+        description: 'Whether to run ESLint'
+        type: boolean
+        default: true
+      run-format-check:
+        description: 'Whether to run Prettier format check'
+        type: boolean
+        default: true
+      run-tests:
+        description: 'Whether to run unit tests'
+        type: boolean
+        default: true
+    secrets:
+      CODECOV_TOKEN:
+        description: 'Codecov token for uploading coverage'
+        required: false
+
+jobs:
+  quality-checks:
+    name: Code Quality & Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup project
+        uses: ./.github/actions/setup-project
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Run TypeScript type check
+        if: inputs.run-typecheck
+        run: npx tsc --noEmit --incremental
+
+      - name: Run ESLint
+        if: inputs.run-lint
+        run: npm run lint
+        continue-on-error: false
+
+      - name: Run Prettier check
+        if: inputs.run-format-check
+        run: npm run format:check
+        continue-on-error: false
+
+      - name: Run Vitest unit tests with coverage
+        if: inputs.run-tests
+        run: npx vitest run --coverage --reporter=verbose
+
+      - name: Upload coverage reports to Codecov
+        if: inputs.upload-coverage && inputs.run-tests && secrets.CODECOV_TOKEN != ''
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/coverage-final.json
+          fail_ci_if_error: false
+          verbose: true
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always() && inputs.run-tests
+        with:
+          name: test-results-node-${{ inputs.node-version }}
+          path: coverage/
+          retention-days: 7
