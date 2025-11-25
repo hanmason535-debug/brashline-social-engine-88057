@@ -31,15 +31,16 @@ export default defineConfig(({ mode }) => ({
         "manifest-src 'self'",
         "worker-src 'self'",
         // Dev: allow unsafe-inline for HMR + React DevTools injection, unsafe-eval for source maps
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
+        // Clerk: allow clerk.accounts.dev for authentication scripts
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.clerk.accounts.dev",
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
         "font-src 'self' https://fonts.gstatic.com data:",
-        // Allow external images and data/blob URLs, GTM tracking pixel
-        "img-src 'self' data: blob: https: https://www.googletagmanager.com",
-        // Allow HMR websocket, API, Google Analytics, and DevTools calls
-        "connect-src 'self' ws: wss: http: https: https://www.google-analytics.com https://region1.google-analytics.com",
-        // Allow GTM iframe for noscript fallback
-        "frame-src 'self' https://www.googletagmanager.com"
+        // Allow external images and data/blob URLs, GTM tracking pixel, Clerk avatars
+        "img-src 'self' data: blob: https: https://www.googletagmanager.com https://img.clerk.com",
+        // Allow HMR websocket, API, Google Analytics, DevTools, and Clerk API calls
+        "connect-src 'self' ws: wss: http: https: https://www.google-analytics.com https://region1.google-analytics.com https://*.clerk.accounts.dev",
+        // Allow GTM iframe and Clerk modal authentication
+        "frame-src 'self' https://www.googletagmanager.com https://*.clerk.accounts.dev"
       ].join('; '),
     },
   },
