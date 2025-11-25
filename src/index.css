@@ -12,31 +12,26 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Brashline Brand Colors - Logo-inspired palette */
+    /* Brashline Coral Brand Theme */
     --background: 0 0% 100%;
-    --foreground: 216 44% 32%; /* Navy blue #2D4578 */
+    --foreground: 225 29% 17%;
 
     --card: 0 0% 100%;
-    --card-foreground: 216 44% 32%;
+    --card-foreground: 225 29% 17%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 216 44% 32%;
+    --popover-foreground: 225 29% 17%;
 
-    /* Coral Orange as PRIMARY brand color #FF6B4A */
+    /* Coral as primary brand color */
     --primary: 10 100% 65%;
     --primary-foreground: 0 0% 100%;
     --primary-light: 10 100% 70%;
     --primary-glow: 10 100% 75%;
     --primary-dark: 8 83% 54%;
 
-    /* Dark Navy #1E3A5F for backgrounds */
-    --secondary: 214 51% 25%;
+    /* Navy as secondary */
+    --secondary: 225 29% 17%;
     --secondary-foreground: 0 0% 100%;
-
-    /* Hot Pink #E91E63 for hover effects and badges */
-    --accent-pink: 340 82% 52%;
-    --accent-pink-light: 340 82% 60%;
-    --accent-pink-dark: 340 82% 45%;
 
     /* Muted grays */
     --muted: 210 20% 98%;
@@ -47,8 +42,6 @@ All colors MUST be HSL.
     --accent-foreground: 0 0% 100%;
 
     /* Additional brand colors */
-    --brand-navy: 216 44% 32%; /* Navy from logo #2D4578 */
-    --brand-navy-dark: 214 51% 25%; /* Dark navy #1E3A5F */
     --brand-slate: 215 25% 27%;
     --brand-gray: 215 16% 47%;
     --accent-blue: 211 70% 59%;
@@ -65,11 +58,10 @@ All colors MUST be HSL.
 
     --radius: 0.5rem;
 
-    /* Brand gradients with coral and hot pink */
+    /* Brand gradients */
     --gradient-primary: linear-gradient(135deg, hsl(10 100% 65%) 0%, hsl(356 100% 66%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(214 51% 25%) 0%, hsl(216 44% 32%) 100%);
-    --gradient-coral-overlay: linear-gradient(135deg, hsla(10 100% 65% / 0.9) 0%, hsla(340 82% 52% / 0.9) 100%);
-    --gradient-pink-coral: linear-gradient(135deg, hsl(340 82% 52%) 0%, hsl(10 100% 65%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(225 29% 17%) 0%, hsl(215 25% 27%) 100%);
+    --gradient-coral-overlay: linear-gradient(135deg, hsla(10 100% 65% / 0.9) 0%, hsla(356 100% 66% / 0.9) 100%);
     --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 20% 98%));
 
     /* Enhanced shadows with coral */
@@ -77,7 +69,6 @@ All colors MUST be HSL.
     --shadow-medium: 0 8px 24px -4px hsl(10 100% 65% / 0.15);
     --shadow-coral: 0 0 30px hsl(10 100% 65% / 0.3);
     --shadow-coral-hover: 0 0 40px hsl(10 100% 65% / 0.4);
-    --shadow-pink: 0 0 30px hsl(340 82% 52% / 0.3);
 
     /* Transitions */
     --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -94,33 +85,29 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 214 51% 25%; /* Dark navy #1E3A5F */
+    --background: 232 48% 6%;
     --foreground: 210 40% 98%;
 
-    --card: 216 44% 32%;
+    --card: 225 29% 17%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 216 44% 32%;
+    --popover: 225 29% 17%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 10 100% 70%;
-    --primary-foreground: 216 44% 32%;
+    --primary-foreground: 225 29% 17%;
     --primary-light: 10 100% 75%;
     --primary-glow: 10 100% 80%;
     --primary-dark: 8 83% 54%;
 
-    --secondary: 216 44% 32%;
+    --secondary: 225 29% 17%;
     --secondary-foreground: 210 40% 98%;
-
-    --accent-pink: 340 82% 60%;
-    --accent-pink-light: 340 82% 70%;
-    --accent-pink-dark: 340 82% 50%;
 
     --muted: 215 25% 27%;
     --muted-foreground: 215 20% 65%;
 
     --accent: 10 100% 70%;
-    --accent-foreground: 216 44% 32%;
+    --accent-foreground: 225 29% 17%;
 
     --destructive: 0 84% 50%;
     --destructive-foreground: 210 40% 98%;
@@ -129,20 +116,15 @@ All colors MUST be HSL.
     --input: 215 25% 27%;
     --ring: 10 100% 70%;
 
-    --brand-navy: 216 44% 32%;
-    --brand-navy-dark: 214 51% 25%;
-
     --gradient-primary: linear-gradient(135deg, hsl(10 100% 70%) 0%, hsl(356 100% 66%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(214 51% 25%) 0%, hsl(216 44% 32%) 100%);
-    --gradient-coral-overlay: linear-gradient(135deg, hsla(10 100% 70% / 0.9) 0%, hsla(340 82% 60% / 0.9) 100%);
-    --gradient-pink-coral: linear-gradient(135deg, hsl(340 82% 60%) 0%, hsl(10 100% 70%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(214 51% 25%), hsl(216 44% 32%));
+    --gradient-hero: linear-gradient(135deg, hsl(232 48% 6%) 0%, hsl(225 29% 17%) 100%);
+    --gradient-coral-overlay: linear-gradient(135deg, hsla(10 100% 70% / 0.9) 0%, hsla(356 100% 66% / 0.9) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(232 48% 6%), hsl(225 29% 17%));
 
     --shadow-soft: 0 4px 16px -2px hsl(10 100% 70% / 0.15);
     --shadow-medium: 0 8px 24px -4px hsl(10 100% 70% / 0.2);
     --shadow-coral: 0 0 30px hsl(10 100% 70% / 0.4);
     --shadow-coral-hover: 0 0 40px hsl(10 100% 70% / 0.5);
-    --shadow-pink: 0 0 30px hsl(340 82% 60% / 0.4);
 
     --sidebar-background: 225 29% 17%;
     --sidebar-foreground: 210 40% 98%;
@@ -363,10 +345,6 @@ All colors MUST be HSL.
     background: var(--gradient-subtle);
   }
 
-  .gradient-pink-coral {
-    background: var(--gradient-pink-coral);
-  }
-
   .shadow-soft {
     box-shadow: var(--shadow-soft);
   }
@@ -383,10 +361,6 @@ All colors MUST be HSL.
     box-shadow: var(--shadow-coral-hover);
   }
 
-  .shadow-pink {
-    box-shadow: var(--shadow-pink);
-  }
-
   .transition-base {
     transition: var(--transition-base);
   }
@@ -395,44 +369,27 @@ All colors MUST be HSL.
     transition: var(--transition-smooth);
   }
 
-  /* Diagonal pattern background (echoing logo brush strokes) */
+  /* Diagonal pattern background (echoing logo) */
   .diagonal-pattern {
     background-image: 
-      linear-gradient(135deg, hsla(10 100% 65% / 0.08) 0%, hsla(340 82% 52% / 0.05) 100%),
+      linear-gradient(135deg, hsla(10 100% 65% / 0.05) 0%, transparent 100%),
       repeating-linear-gradient(
         135deg,
         transparent,
         transparent 35px,
-        hsla(10 100% 65% / 0.05) 35px,
-        hsla(10 100% 65% / 0.05) 38px,
-        transparent 38px,
-        transparent 70px
+        hsla(10 100% 65% / 0.03) 35px,
+        hsla(10 100% 65% / 0.03) 70px
       );
   }
 
-  /* Pink badge for featured/new items */
-  .badge-pink {
-    @apply bg-gradient-to-r from-[hsl(340,82%,52%)] to-[hsl(340,82%,60%)] text-white px-3 py-1 rounded-full text-xs font-semibold shadow-pink;
-  }
-
-  /* Coral glow effect with pink hover */
+  /* Coral glow effect */
   .coral-glow {
     transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
 
   .coral-glow:hover {
-    box-shadow: var(--shadow-coral-hover), 0 0 20px hsl(var(--accent-pink) / 0.3);
+    box-shadow: var(--shadow-coral-hover);
     transform: scale(1.02);
-  }
-
-  /* Pink glow effect for badges and accents */
-  .pink-glow {
-    box-shadow: var(--shadow-pink);
-    transition: box-shadow 0.3s ease;
-  }
-
-  .pink-glow:hover {
-    box-shadow: 0 0 40px hsl(var(--accent-pink) / 0.5);
   }
 
   /* Nav underline animation with coral */
