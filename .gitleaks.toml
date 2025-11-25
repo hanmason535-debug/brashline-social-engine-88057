@@ -152,6 +152,11 @@ paths = [
   '''/tests?/''',
   '''/fixtures?/''',
   '''/mocks?/''',
+  
+  # Documentation files containing example tokens for security documentation
+  '''SECURITY_REMEDIATION\.md''',
+  '''GITLEAKS_INSTALL\.md''',
+  '''scripts/cleanup-git-history\.ps1''',
 ]
 
 # Ignore specific regex patterns
@@ -204,6 +209,12 @@ regexes = [
   # UUIDs in test data
   '''00000000-0000-0000-0000-000000000000''',
   '''11111111-1111-1111-1111-111111111111''',
+  
+  # Documented Codecov token (already rotated/invalidated for documentation purposes)
+  '''f13c2597-5787-485e-ae7b-2ad69a808087''',
+  
+  # Lovable project UUIDs (not secrets, just project identifiers)
+  '''26de7508-dafd-44d3-93ea-7f75689b02bf''',
 ]
 
 # Allowlist specific commits (rarely used)

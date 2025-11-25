@@ -6,11 +6,11 @@ interface Window {
   gtag?: (
     command: "config" | "event" | "js" | "set",
     targetId: string,
-    config?: Record<string, any>
+    config?: Record<string, unknown>
   ) => void;
-  dataLayer?: Array<any>;
+  dataLayer?: Array<Record<string, unknown>>;
   Sentry?: {
-    captureException: (error: Error, context?: Record<string, any>) => void;
+    captureException: (error: Error, context?: Record<string, unknown>) => void;
   };
 }
 
