@@ -15,6 +15,8 @@ import "@testing-library/jest-dom/vitest";
 import Header from "./Header";
 import { ThemeProvider } from "next-themes";
 import React from "react";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { CartProvider } from "@/contexts/CartContext";
 
 // Mock window.matchMedia for responsive tests
 Object.defineProperty(window, "matchMedia", {
@@ -40,7 +42,11 @@ const renderWithProviders = (ui: React.ReactElement, { route = "/" } = {}) => {
         v7_relativeSplatPath: true,
       }}
     >
-      <ThemeProvider>{ui}</ThemeProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <CartProvider>{ui}</CartProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 };

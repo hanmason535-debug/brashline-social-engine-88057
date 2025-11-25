@@ -10,8 +10,8 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -32,21 +32,9 @@ interface WebsiteProjectCardProps {
   onOpenLightbox: () => void;
 }
 
-export function WebsiteProjectCard({
-  project,
-  lang,
-  index,
-  onOpenLightbox,
-}: WebsiteProjectCardProps) {
+export function WebsiteProjectCard({ project, lang, index, onOpenLightbox }: WebsiteProjectCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, {
-    once: true,
-    margin: "-50px",
-    amount: 0.3,
-  });
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -60,51 +48,20 @@ export function WebsiteProjectCard({
     }
   };
 
-  const title = project.title[lang];
-
   return (
     <motion.div
-      ref={cardRef}
       initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{
-        delay: Math.min(index * 0.08, 0.5),
-        duration: 0.5,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
       className="group relative cursor-pointer"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       role="button"
       tabIndex={0}
-      aria-label={`View details for ${title}`}
-      style={{ willChange: isInView ? "transform, opacity" : "auto" }}
+      aria-label={`View details for ${project.title[lang]}`}
     >
       {/* Browser Mockup Frame */}
-      <div className="relative bg-card rounded-lg overflow-hidden shadow-soft transition-all duration-500 ease-out hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-[1.02] border border-border hover:ring-2 hover:ring-primary/50 will-change-transform">
-        {/* Dual Border Beams - Only on Hover */}
-        {isHovered && (
-          <>
-            <BorderBeam
-              size={150}
-              duration={12}
-              delay={0}
-              colorFrom="hsl(var(--primary))"
-              colorTo="hsl(var(--primary) / 0.3)"
-              borderWidth={2}
-            />
-            <BorderBeam
-              size={200}
-              duration={16}
-              delay={2}
-              colorFrom="hsl(var(--primary) / 0.6)"
-              colorTo="hsl(var(--accent))"
-              borderWidth={1.5}
-            />
-          </>
-        )}
+      <div className="relative bg-card rounded-lg overflow-hidden shadow-soft transition-all duration-300 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-[1.02] border border-border hover:ring-2 hover:ring-primary/50">
         {/* Browser Chrome */}
         <div className="bg-muted px-3 py-2 flex items-center gap-2 border-b border-border">
           <div className="flex gap-1.5">
@@ -119,7 +76,9 @@ export function WebsiteProjectCard({
 
         {/* Website Screenshot */}
         <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-          {!imageLoaded && !imageError && <Skeleton className="absolute inset-0 w-full h-full" />}
+          {!imageLoaded && !imageError && (
+            <Skeleton className="absolute inset-0 w-full h-full" />
+          )}
           {imageError ? (
             <div className="absolute inset-0 flex items-center justify-center bg-muted">
               <div className="text-center p-6">
@@ -131,37 +90,39 @@ export function WebsiteProjectCard({
             <img
               src={project.thumbnail}
               alt={project.title[lang]}
-              className={`w-full h-full object-cover object-top transition-all duration-700 ease-out group-hover:scale-110 ${
+              className={`w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-110 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageError(true)}
               loading="lazy"
-              style={{
-                willChange: "transform",
-                transform: "translate3d(0, 0, 0)",
-                backfaceVisibility: "hidden",
-              }}
             />
           )}
 
           {/* Hover Overlay */}
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out flex items-center justify-center gap-3 will-change-[opacity]">
-            <motion.div
+          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+            <motion.span
+              onClick={handleClick}
               initial={{ scale: 0.8, opacity: 0 }}
               whileHover={{ scale: 1.1 }}
-              className="bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-glow pointer-events-none"
+              className="bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-glow cursor-pointer"
+              aria-hidden="true"
             >
               {lang === "en" ? "View Details" : "Ver Detalles"}
-            </motion.div>
-            <motion.div
+            </motion.span>
+            <motion.span
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(project.url, "_blank", "noopener,noreferrer");
+              }}
               initial={{ scale: 0.8, opacity: 0 }}
               whileHover={{ scale: 1.1 }}
-              className="bg-background text-foreground px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-glow pointer-events-none"
+              className="bg-background text-foreground px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-glow cursor-pointer"
+              aria-hidden="true"
             >
               <ExternalLink className="w-4 h-4" />
               {lang === "en" ? "Visit Site" : "Visitar"}
-            </motion.div>
+            </motion.span>
           </div>
         </div>
 
@@ -170,7 +131,9 @@ export function WebsiteProjectCard({
           <h3 className="font-heading font-bold text-lg mb-2 text-foreground">
             {project.title[lang]}
           </h3>
-          <p className="text-sm text-muted-foreground mb-3">{project.description[lang]}</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            {project.description[lang]}
+          </p>
 
           {/* Tech Stack Badges */}
           <div className="flex flex-wrap gap-2">
@@ -184,6 +147,7 @@ export function WebsiteProjectCard({
             ))}
           </div>
         </div>
+
       </div>
     </motion.div>
   );

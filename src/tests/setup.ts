@@ -1,8 +1,8 @@
-import React from "react";
-import { expect, afterEach, vi } from "vitest";
-import { cleanup } from "@testing-library/react";
-import * as matchers from "@testing-library/jest-dom/matchers";
-import "vitest-matchmedia-mock";
+import React from 'react';
+import { expect, afterEach, vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import * as matchers from '@testing-library/jest-dom/matchers';
+import 'vitest-matchmedia-mock';
 
 // Test setup: centralizes global mocks and DOM helpers so individual test files stay focused on behavior.
 // Responsibilities: extend Jest DOM matchers, normalize browser APIs (matchMedia, IntersectionObserver), and stub animation/SEO layers.
@@ -11,10 +11,10 @@ expect.extend(matchers);
 
 // Provide a default matchMedia implementation so viewport-dependent hooks can run without extra per-test wiring.
 if (!window.matchMedia) {
-  Object.defineProperty(window, "matchMedia", {
+  Object.defineProperty(window, 'matchMedia', {
     writable: true,
     configurable: true,
-    value: vi.fn().mockImplementation((query) => ({
+    value: vi.fn().mockImplementation(query => ({
       matches: false,
       media: query,
       onchange: null,
@@ -38,7 +38,7 @@ global.IntersectionObserver = class IntersectionObserver {
   unobserve() {}
 } as unknown as typeof IntersectionObserver;
 
-// Minimal ResizeObserver shim to support embla-carousel and other components that observe element size changes.
+// Minimal ResizeObserver shim to support components that use ResizeObserver (like Embla Carousel)
 global.ResizeObserver = class ResizeObserver {
   constructor() {}
   disconnect() {}
@@ -47,9 +47,9 @@ global.ResizeObserver = class ResizeObserver {
 } as unknown as typeof ResizeObserver;
 
 // Provide a default language context so components under test can assume a valid `lang` without rendering the real provider.
-vi.mock("@/contexts/LanguageContext", () => ({
+vi.mock('@/contexts/LanguageContext', () => ({
   useLanguage: () => ({
-    lang: "en",
+    lang: 'en',
     setLang: vi.fn(),
   }),
   LanguageProvider: ({ children }: { children: React.ReactNode }) => children,
@@ -61,42 +61,42 @@ interface MotionProps {
 }
 
 // Disable framer-motion animations in tests while preserving component structure for layout queries.
-vi.mock("framer-motion", () => ({
-  ...vi.importActual("framer-motion"),
+vi.mock('framer-motion', () => ({
+  ...vi.importActual('framer-motion'),
   motion: {
-    div: ({ children, ...props }: MotionProps) => React.createElement("div", props, children),
-    span: ({ children, ...props }: MotionProps) => React.createElement("span", props, children),
-    path: (props: MotionProps) => React.createElement("path", props),
-    button: ({ children, ...props }: MotionProps) => React.createElement("button", props, children),
-    a: ({ children, ...props }: MotionProps) => React.createElement("a", props, children),
+    div: ({ children, ...props }: MotionProps) => React.createElement('div', props, children),
+    span: ({ children, ...props }: MotionProps) => React.createElement('span', props, children),
+    path: (props: MotionProps) => React.createElement('path', props),
+    button: ({ children, ...props }: MotionProps) => React.createElement('button', props, children),
+    a: ({ children, ...props }: MotionProps) => React.createElement('a', props, children),
   },
   AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 // Replace the heavy BackgroundPaths animation layer with a cheap test double.
-vi.mock("@/components/ui/background-paths", () => ({
-  default: () => React.createElement("div", { "data-testid": "background-paths-mock" }),
+vi.mock('@/components/ui/background-paths', () => ({
+  default: () => React.createElement('div', { 'data-testid': 'background-paths-mock' }),
 }));
 
 // Mock SEO components so tests do not depend on react-helmet-async behavior.
-vi.mock("@/components/SEO/SEOHead", () => ({
+vi.mock('@/components/SEO/SEOHead', () => ({
   default: () => null,
 }));
 
-vi.mock("@/seo/MetaManager", () => ({
+vi.mock('@/seo/MetaManager', () => ({
   default: () => null,
 }));
 
-vi.mock("@/seo/StructuredData", () => ({
+vi.mock('@/seo/StructuredData', () => ({
   default: () => null,
 }));
 
 // Strip Vercel analytics integrations from tests to keep the environment side-effect free.
-vi.mock("@vercel/analytics/react", () => ({
+vi.mock('@vercel/analytics/react', () => ({
   Analytics: () => null,
 }));
 
-vi.mock("@vercel/speed-insights/react", () => ({
+vi.mock('@vercel/speed-insights/react', () => ({
   SpeedInsights: () => null,
 }));
 

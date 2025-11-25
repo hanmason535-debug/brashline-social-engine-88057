@@ -12,19 +12,30 @@ import { render } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
 import { BrowserRouter } from "react-router-dom";
 import Index from "./Index";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { CartProvider } from "@/contexts/CartContext";
+import { ThemeProvider } from "next-themes";
+
+const renderWithProviders = (ui: React.ReactElement) => {
+  return render(
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
+      <ThemeProvider>
+        <AuthProvider>
+          <CartProvider>{ui}</CartProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  );
+};
 
 describe("Index Page", () => {
   it("should render the header, main content, and footer", async () => {
-    render(
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <Index />
-      </BrowserRouter>
-    );
+    renderWithProviders(<Index />);
 
     // Check for the header (navigation)
     const header = screen.getByRole("banner");
@@ -40,16 +51,7 @@ describe("Index Page", () => {
   }, 10000);
 
   it("should render hero section", () => {
-    render(
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <Index />
-      </BrowserRouter>
-    );
+    renderWithProviders(<Index />);
 
     // Hero should contain a heading
     const heroHeading = screen.getByRole("heading", { level: 1 });
@@ -57,16 +59,7 @@ describe("Index Page", () => {
   });
 
   it("should render all major sections", () => {
-    render(
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <Index />
-      </BrowserRouter>
-    );
+    renderWithProviders(<Index />);
 
     const main = screen.getByRole("main");
     expect(main).toBeInTheDocument();
