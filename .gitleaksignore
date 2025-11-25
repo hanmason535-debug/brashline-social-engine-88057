@@ -1,0 +1,20 @@
+# Gitleaks ignore file
+# These files contain documentation/examples and are not actual secrets
+
+# Documentation files with example tokens for reference purposes
+README.md:241
+GITLEAKS_INSTALL.md:100
+agent.md:922
+SECURITY_REMEDIATION.md:42
+SECURITY_REMEDIATION.md:95
+SECURITY_REMEDIATION.md:241
+SECURITY_REMEDIATION.md:275
+SECURITY_REMEDIATION.md:353
+SECURITY_REMEDIATION.md:397
+SECURITY_REMEDIATION.md:755
+SECURITY_REMEDIATION.md:762
+SECURITY_REMEDIATION.md:804
+SECURITY_REMEDIATION.md:696
+SECURITY_REMEDIATION.md:836
+scripts/cleanup-git-history.ps1:64
+scripts/cleanup-git-history.ps1:196
