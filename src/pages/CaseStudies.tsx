@@ -289,22 +289,22 @@ const CaseStudies = () => {
     <RootLayout>
       <SEOHead pageSEO={pageSEO} lang={lang} />
       {/* Hero Section with Parallax */}
-      <section className=\"relative overflow-hidden bg-muted py-20\">
+      <section className="relative overflow-hidden bg-muted py-20">
         <div
-          className=\"w-full absolute inset-0 h-full\"
+          className="w-full absolute inset-0 h-full"
           style={{
             transform: `translate3d(0, ${heroParallax}px, 0)`,
-            willChange: \"transform\",
-            backfaceVisibility: \"hidden\",
+            willChange: "transform",
+            backfaceVisibility: "hidden",
           }}
         >
           <Meteors number={30} />
         </div>
         <div
-          className=\"container mx-auto px-4 text-center relative z-10\"
+          className="container mx-auto px-4 text-center relative z-10"
           style={{
             transform: `translate3d(0, ${heroParallax * 0.5}px, 0)`,
-            willChange: \"transform\",
+            willChange: "transform",
           }}
         >
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6">
@@ -319,12 +319,12 @@ const CaseStudies = () => {
       </section>
 
       {/* Stats Bar with Parallax */}
-      <section className=\"py-8 bg-background\">
+      <section className="py-8 bg-background">
         <div
-          className=\"container mx-auto px-4\"
+          className="container mx-auto px-4"
           style={{
             transform: `translate3d(0, ${statsParallax}px, 0)`,
-            willChange: \"transform\",
+            willChange: "transform",
           }}
         >
           <StatsBar lang={lang} />
