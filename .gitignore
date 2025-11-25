@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Test coverage output
+coverage
+
+# Git worktrees (should not be tracked)
+worktrees
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
