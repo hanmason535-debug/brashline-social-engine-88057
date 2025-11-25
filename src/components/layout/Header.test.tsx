@@ -17,6 +17,7 @@ import { ThemeProvider } from "next-themes";
 import React from "react";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
+import { setMockAuthState, resetMockAuthState } from "@/tests/mocks/clerk";
 
 // Mock window.matchMedia for responsive tests
 Object.defineProperty(window, "matchMedia", {
@@ -55,6 +56,7 @@ describe("Header", () => {
   beforeEach(() => {
     // Reset mocks before each test
     vi.clearAllMocks();
+    resetMockAuthState();
   });
 
   it("should render the logo and desktop navigation", () => {
@@ -98,5 +100,20 @@ describe("Header", () => {
 
     // Image should still be in the document even after error
     expect(image).toBeInTheDocument();
+  });
+
+  it("should show sign in button when user is not authenticated", () => {
+    setMockAuthState({ isSignedIn: false });
+    renderWithProviders(<Header />);
+    // The Sign In button should be visible (from Clerk mock)
+    expect(screen.getByText("Sign In")).toBeInTheDocument();
+  });
+
+  it("should show user button when user is authenticated", () => {
+    setMockAuthState({ isSignedIn: true });
+    renderWithProviders(<Header />);
+    // Dashboard link and user button should be visible
+    expect(screen.getByText("Dashboard")).toBeInTheDocument();
+    expect(screen.getByTestId("clerk-user-button")).toBeInTheDocument();
   });
 });

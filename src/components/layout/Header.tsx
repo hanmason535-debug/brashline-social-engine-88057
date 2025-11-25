@@ -12,13 +12,13 @@
  */
 import { useState, memo, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Globe, User } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 import ThemeSwitch from "@/components/ui/theme-switch";
 import FlipButton from "@/components/ui/flip-button";
 import { CartIcon } from "@/components/ui/cart-icon";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useAuth } from "@/contexts/AuthContext";
 
 const navigation = {
   top: [
@@ -36,7 +36,7 @@ const Header = memo(() => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { lang, setLang } = useLanguage();
-  const { isAuthenticated } = useAuth();
+  const { isLoaded } = useUser();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -127,14 +127,32 @@ const Header = memo(() => {
           <div className="flex items-center gap-3">
             <CartIcon />
 
-            {isAuthenticated && (
-              <Link to="/dashboard">
-                <Button variant="ghost" size="sm" className="hidden sm:flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  {lang === "en" ? "Dashboard" : "Panel"}
-                </Button>
-              </Link>
-            )}
+            {/* Auth buttons - Desktop */}
+            <div className="hidden sm:flex items-center gap-2">
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <Button variant="ghost" size="sm" className="items-center gap-2">
+                    {lang === "en" ? "Sign In" : "Iniciar Sesión"}
+                  </Button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <Link to="/dashboard">
+                  <Button variant="ghost" size="sm" className="items-center gap-2">
+                    {lang === "en" ? "Dashboard" : "Panel"}
+                  </Button>
+                </Link>
+                <UserButton
+                  afterSignOutUrl="/"
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-9 h-9",
+                      userButtonTrigger: "focus:ring-2 focus:ring-ring rounded-full",
+                    },
+                  }}
+                />
+              </SignedIn>
+            </div>
 
             <ThemeSwitch className="hidden sm:flex scale-75" />
 
@@ -219,6 +237,41 @@ const Header = memo(() => {
                   </Link>
                 ))}
                 <div className="pt-4 space-y-4 border-t border-border/40">
+                  {/* Mobile Auth Section */}
+                  <div className="px-4 py-2">
+                    <SignedOut>
+                      <SignInButton mode="modal">
+                        <Button variant="outline" size="lg" className="w-full">
+                          {lang === "en" ? "Sign In" : "Iniciar Sesión"}
+                        </Button>
+                      </SignInButton>
+                    </SignedOut>
+                    <SignedIn>
+                      <div className="flex items-center gap-3 mb-4">
+                        <UserButton
+                          afterSignOutUrl="/"
+                          appearance={{
+                            elements: {
+                              avatarBox: "w-10 h-10",
+                            },
+                          }}
+                        />
+                        <div className="flex-1">
+                          <p className="font-medium text-foreground">
+                            {lang === "en" ? "My Account" : "Mi Cuenta"}
+                          </p>
+                          <Link
+                            to="/dashboard"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="text-sm text-primary hover:underline"
+                          >
+                            {lang === "en" ? "Go to Dashboard" : "Ir al Panel"}
+                          </Link>
+                        </div>
+                      </div>
+                    </SignedIn>
+                  </div>
+                  
                   <div className="flex items-center justify-between px-4">
                     <span className="text-sm text-muted-foreground">
                       {lang === "en" ? "Theme" : "Tema"}

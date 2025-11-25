@@ -11,10 +11,20 @@
  */
 import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
+import { ClerkProvider } from "@clerk/clerk-react";
 import App from "./App.tsx";
 import "./index.css";
 import { logSEOAudit } from "@/utils/seo";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { clerkAppearance } from "@/lib/clerk-theme";
+import { AuthErrorBoundary } from "@/components/auth";
+
+// Clerk Publishable Key
+const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+if (!CLERK_PUBLISHABLE_KEY) {
+  throw new Error("Missing Clerk Publishable Key. Please set VITE_CLERK_PUBLISHABLE_KEY in your .env file.");
+}
 
 // Log SEO audit reminder in dev mode
 logSEOAudit();
@@ -35,7 +45,15 @@ if ("serviceWorker" in navigator) {
 
 createRoot(document.getElementById("root")!).render(
   <HelmetProvider>
-    <App />
-    <SpeedInsights />
+    <AuthErrorBoundary>
+      <ClerkProvider 
+        publishableKey={CLERK_PUBLISHABLE_KEY}
+        appearance={clerkAppearance}
+        afterSignOutUrl="/"
+      >
+        <App />
+        <SpeedInsights />
+      </ClerkProvider>
+    </AuthErrorBoundary>
   </HelmetProvider>
 );

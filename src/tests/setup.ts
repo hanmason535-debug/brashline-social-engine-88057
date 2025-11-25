@@ -1,8 +1,9 @@
 import React from 'react';
-import { expect, afterEach, vi } from 'vitest';
+import { expect, afterEach, vi, beforeEach } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
 import 'vitest-matchmedia-mock';
+import { clerkMocks, resetMockAuthState } from './mocks/clerk';
 
 // Test setup: centralizes global mocks and DOM helpers so individual test files stay focused on behavior.
 // Responsibilities: extend Jest DOM matchers, normalize browser APIs (matchMedia, IntersectionObserver), and stub animation/SEO layers.
@@ -99,6 +100,14 @@ vi.mock('@vercel/analytics/react', () => ({
 vi.mock('@vercel/speed-insights/react', () => ({
   SpeedInsights: () => null,
 }));
+
+// Mock Clerk authentication for tests
+vi.mock('@clerk/clerk-react', () => clerkMocks);
+
+// Reset Clerk mock state before each test
+beforeEach(() => {
+  resetMockAuthState();
+});
 
 // Run a DOM cleanup after each test to avoid cross-test leakage.
 afterEach(() => {

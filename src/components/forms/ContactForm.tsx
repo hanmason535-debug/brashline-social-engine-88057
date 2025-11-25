@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useUser } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { analytics } from "@/lib/analytics";
 
 const contactSchema = z.object({
@@ -53,6 +54,7 @@ interface ContactFormProps {
 export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { user, isSignedIn } = useUser();
 
   const {
     register,
@@ -71,6 +73,21 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
       message: "",
     },
   });
+
+  // Pre-fill form with user data if authenticated
+  useEffect(() => {
+    if (isSignedIn && user) {
+      const fullName = user.fullName || `${user.firstName || ""} ${user.lastName || ""}`.trim();
+      const email = user.primaryEmailAddress?.emailAddress || "";
+      
+      if (fullName) {
+        setValue("name", fullName);
+      }
+      if (email) {
+        setValue("email", email);
+      }
+    }
+  }, [isSignedIn, user, setValue]);
 
   const serviceType = watch("serviceType");
 

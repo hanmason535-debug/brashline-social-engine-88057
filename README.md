@@ -13,6 +13,10 @@
 # Install dependencies
 npm install
 
+# Set up environment variables
+cp .env.example .env
+# Edit .env and add your Clerk publishable key
+
 # Start development server
 npm run dev
 
@@ -28,6 +32,26 @@ npm run lint
 # Format code
 npm run format
 ```
+
+## 🔐 Authentication
+
+This project uses [Clerk](https://clerk.com) for authentication. See [AUTHENTICATION.md](./AUTHENTICATION.md) for detailed setup.
+
+### Quick Setup
+
+1. Create an account at [clerk.com](https://clerk.com)
+2. Create a new application
+3. Copy your Publishable Key
+4. Add to `.env`:
+   ```env
+   VITE_CLERK_PUBLISHABLE_KEY=pk_test_xxxxx
+   ```
+
+### Auth Routes
+- `/sign-in` - Sign in page
+- `/sign-up` - Sign up page  
+- `/dashboard` - Protected user dashboard
+- `/profile` - User profile settings
 
 ## 🏗️ Tech Stack
 

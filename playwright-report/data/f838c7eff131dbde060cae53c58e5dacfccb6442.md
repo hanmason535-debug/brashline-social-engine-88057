@@ -1,0 +1,282 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - main [ref=e4]:
+    - generic [ref=e6]:
+      - link "Skip to main content" [ref=e7] [cursor=pointer]:
+        - /url: "#main-content"
+      - link "Saltar al contenido principal" [ref=e8] [cursor=pointer]:
+        - /url: "#main-content"
+      - navigation [ref=e10]:
+        - link "Brashline Logo BRASHLINE" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img "Brashline Logo" [ref=e12]
+          - generic [ref=e13]: BRASHLINE
+        - generic [ref=e14]:
+          - link "Inicio" [ref=e15] [cursor=pointer]:
+            - /url: /
+          - link "Servicios" [ref=e16] [cursor=pointer]:
+            - /url: /services
+          - link "Precios" [ref=e17] [cursor=pointer]:
+            - /url: /pricing
+          - link "Casos" [ref=e18] [cursor=pointer]:
+            - /url: /case-studies
+          - link "Nosotros" [ref=e19] [cursor=pointer]:
+            - /url: /about
+          - link "Blog" [ref=e20] [cursor=pointer]:
+            - /url: /blog
+          - link "Contacto" [ref=e21] [cursor=pointer]:
+            - /url: /contact
+        - generic [ref=e22]:
+          - link "Cart with 0 items" [ref=e23] [cursor=pointer]:
+            - /url: /cart
+            - img
+          - generic [ref=e24]:
+            - switch "Switch to dark mode" [ref=e25] [cursor=pointer]
+            - generic:
+              - img
+            - generic:
+              - img
+          - button "ES" [active] [ref=e26] [cursor=pointer]:
+            - img
+            - text: ES
+          - link "Reservar Llamada 📞 Calling…" [ref=e27] [cursor=pointer]:
+            - /url: https://wa.me/19294468440
+            - generic [ref=e28]: Reservar Llamada
+            - generic: 📞 Calling…
+      - main [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e32]:
+            - generic:
+              - img "Background Paths"
+            - generic:
+              - img "Background Paths"
+          - generic [ref=e34]:
+            - generic [ref=e36]: Crecido en Florida
+            - heading "Siempre Constantes en Crecimiento Visibles Conectadas" [level=1] [ref=e37]:
+              - generic [ref=e38]:
+                - generic [ref=e39]: Siempre
+                - generic [ref=e40]:
+                  - generic [ref=e41]: Constantes
+                  - generic [ref=e42]: en Crecimiento
+                  - generic [ref=e43]: Visibles
+                  - generic [ref=e44]: Conectadas
+            - paragraph [ref=e45]: "Brashline comenzó con dos amigos y una misión: hacer que la visibilidad en línea sea sin esfuerzo. Creamos contenido real y constante que mantiene tu negocio activo y visible. Directo, asequible y construido para durar."
+            - link "Reservar Llamada Estratégica 📞 Calling…" [ref=e47] [cursor=pointer]:
+              - /url: https://wa.me/19294468440
+              - generic [ref=e48]: Reservar Llamada Estratégica
+              - generic: 📞 Calling…
+        - generic [ref=e51]:
+          - generic [ref=e53]:
+            - img [ref=e55]
+            - heading "Redes Gestionadas." [level=3] [ref=e61]
+            - paragraph [ref=e62]: Contenido constante y de marca que mantiene tu negocio visible en todas partes.
+          - generic [ref=e64]:
+            - img [ref=e66]
+            - heading "Sitios Web que Funcionan." [level=3] [ref=e69]
+            - paragraph [ref=e70]: Rápidos, optimizados y construidos para convertir clics en clientes.
+          - generic [ref=e72]:
+            - img [ref=e74]
+            - heading "Presencia que Rinde." [level=3] [ref=e77]
+            - paragraph [ref=e78]: SEO inteligente y estrategia para hacer crecer tu marca orgánicamente.
+        - generic [ref=e81]:
+          - generic [ref=e82]:
+            - img [ref=e84]
+            - generic [ref=e89]: 0+
+            - paragraph [ref=e90]: Clientes Atendidos
+          - generic [ref=e91]:
+            - img [ref=e93]
+            - generic [ref=e96]: 0%
+            - paragraph [ref=e97]: Tasa de Satisfacción
+          - generic [ref=e98]:
+            - img [ref=e100]
+            - generic [ref=e103]: 0/7
+            - paragraph [ref=e104]: Soporte Disponible
+          - generic [ref=e105]:
+            - img [ref=e107]
+            - generic [ref=e110]: 0%
+            - paragraph [ref=e111]: Crecimiento Promedio
+        - generic [ref=e113]:
+          - generic [ref=e114]:
+            - heading "Elige tu plan" [level=2] [ref=e115]
+            - paragraph [ref=e116]: Precios transparentes. Sin tarifas ocultas. Cancela en cualquier momento.
+            - group [ref=e118]:
+              - radio "Mensual" [checked] [ref=e119] [cursor=pointer]
+              - radio "Anual Hasta un 15% desc." [ref=e120] [cursor=pointer]:
+                - text: Anual
+                - generic [ref=e121]: Hasta un 15% desc.
+          - generic [ref=e122]:
+            - generic [ref=e123]:
+              - generic [ref=e124]:
+                - generic [ref=e125]: BÁSICO
+                - heading "Starter Spark" [level=3] [ref=e126]
+                - generic [ref=e127]:
+                  - generic [ref=e128]: $99
+                  - text: /mo
+                - paragraph [ref=e129]: Mantén las cuentas activas con bajo esfuerzo.
+              - generic [ref=e130]:
+                - generic [ref=e131]:
+                  - img [ref=e132]
+                  - generic [ref=e134]: 4 publicaciones estáticas/mes
+                - generic [ref=e135]:
+                  - img [ref=e136]
+                  - generic [ref=e138]: Facebook e Instagram
+                - generic [ref=e139]:
+                  - img [ref=e140]
+                  - generic [ref=e142]: Higiene básica de perfil
+                - generic [ref=e143]:
+                  - img [ref=e144]
+                  - generic [ref=e146]: Revisión diaria de bandeja
+                - generic [ref=e147]:
+                  - img [ref=e148]
+                  - generic [ref=e150]: Mini-informe mensual
+                - generic [ref=e151]:
+                  - img [ref=e152]
+                  - generic [ref=e155]: Planificación de contenido
+                - generic [ref=e156]:
+                  - img [ref=e157]
+                  - generic [ref=e160]: Fotografía o video
+                - generic [ref=e161]:
+                  - img [ref=e162]
+                  - generic [ref=e165]: SEO o anuncios
+              - button "Agregar al Carrito" [ref=e167] [cursor=pointer]:
+                - img
+                - text: Agregar al Carrito
+            - generic [ref=e168]:
+              - generic [ref=e169]: Más Popular
+              - generic [ref=e170]:
+                - generic [ref=e171]: ESTÁNDAR
+                - heading "Brand Pulse" [level=3] [ref=e172]
+                - generic [ref=e173]:
+                  - generic [ref=e174]: $179
+                  - text: /mo
+                - paragraph [ref=e175]: Mantén la presencia y gestiona tu ecosistema.
+              - generic [ref=e176]:
+                - generic [ref=e177]:
+                  - img [ref=e178]
+                  - generic [ref=e180]: ~15 publicaciones/mes
+                - generic [ref=e181]:
+                  - img [ref=e182]
+                  - generic [ref=e184]: Copys completos + plantillas
+                - generic [ref=e185]:
+                  - img [ref=e186]
+                  - generic [ref=e188]: Mantenimiento GBP y Yelp
+                - generic [ref=e189]:
+                  - img [ref=e190]
+                  - generic [ref=e192]: Respuestas a reseñas
+                - generic [ref=e193]:
+                  - img [ref=e194]
+                  - generic [ref=e196]: Supervisión ligera anuncios
+                - generic [ref=e197]:
+                  - img [ref=e198]
+                  - generic [ref=e200]: Informe mensual
+                - generic [ref=e201]:
+                  - img [ref=e202]
+                  - generic [ref=e205]: Fotografía
+                - generic [ref=e206]:
+                  - img [ref=e207]
+                  - generic [ref=e210]: SEO Premium
+              - button "Agregar al Carrito" [ref=e212] [cursor=pointer]:
+                - img
+                - text: Agregar al Carrito
+            - generic [ref=e213]:
+              - generic [ref=e214]:
+                - generic [ref=e215]: PREMIUM
+                - heading "Impact Engine" [level=3] [ref=e216]
+                - generic [ref=e217]:
+                  - generic [ref=e218]: $399
+                  - text: /mo
+                - paragraph [ref=e219]: Crecimiento con ROI medible.
+              - generic [ref=e220]:
+                - generic [ref=e221]:
+                  - img [ref=e222]
+                  - generic [ref=e224]: 12–16 publicaciones/mes
+                - generic [ref=e225]:
+                  - img [ref=e226]
+                  - generic [ref=e228]: 2–4 videos/mes
+                - generic [ref=e229]:
+                  - img [ref=e230]
+                  - generic [ref=e232]: Sesión de fotos mensual
+                - generic [ref=e233]:
+                  - img [ref=e234]
+                  - generic [ref=e236]: Blog SEO + SEO completo
+                - generic [ref=e237]:
+                  - img [ref=e238]
+                  - generic [ref=e240]: Anuncios Meta y Google
+                - generic [ref=e241]:
+                  - img [ref=e242]
+                  - generic [ref=e244]: Dashboard KPIs + llamada
+                - generic [ref=e245]:
+                  - img [ref=e246]
+                  - generic [ref=e248]: Integración CRM
+                - generic [ref=e249]:
+                  - img [ref=e250]
+                  - generic [ref=e252]: Seguimiento avanzado
+              - button "Agregar al Carrito" [ref=e254] [cursor=pointer]:
+                - img
+                - text: Agregar al Carrito
+          - generic [ref=e255]:
+            - button "Comparar Todas las Características" [ref=e256] [cursor=pointer]
+            - link "Ver Complementos" [ref=e258] [cursor=pointer]:
+              - /url: /pricing#addons
+        - generic [ref=e260]:
+          - heading "¿Listo para Comenzar?" [level=2] [ref=e261]
+          - paragraph [ref=e262]: Discutamos cómo podemos ayudarte a hacer crecer tu presencia en redes sociales.
+          - button "Contáctanos" [ref=e263] [cursor=pointer]:
+            - img
+            - text: Contáctanos
+      - generic [ref=e265]:
+        - generic [ref=e266]:
+          - generic [ref=e267]:
+            - link "Brashline Logo BRASHLINE" [ref=e268] [cursor=pointer]:
+              - /url: /
+              - img "Brashline Logo" [ref=e269]
+              - generic [ref=e270]: BRASHLINE
+            - paragraph [ref=e271]: Socios en Orlando ayudando a negocios de Florida a mantenerse visibles.
+          - generic [ref=e272]:
+            - heading "Contacto" [level=3] [ref=e273]
+            - generic [ref=e274]:
+              - paragraph [ref=e275]: Brashline
+              - paragraph [ref=e276]: Orlando, Florida
+              - paragraph [ref=e277]:
+                - link "+1 (929) 446-8440" [ref=e278] [cursor=pointer]:
+                  - /url: tel:+19294468440
+              - paragraph [ref=e279]:
+                - link "Brashline@gmail.com" [ref=e280] [cursor=pointer]:
+                  - /url: mailto:Brashline@gmail.com
+              - paragraph [ref=e281]: Respondemos en 1 día hábil
+              - paragraph [ref=e282]: Lun–Vie 9:00–18:00 ET
+          - generic [ref=e283]:
+            - heading "Síguenos" [level=3] [ref=e284]
+            - generic [ref=e285]:
+              - link "Facebook" [ref=e286] [cursor=pointer]:
+                - /url: https://www.facebook.com/profile.php?id=61583138566921
+                - img [ref=e287]
+              - link "Instagram" [ref=e289] [cursor=pointer]:
+                - /url: https://www.instagram.com/brashlineofficial/
+                - img [ref=e290]
+              - link "X (Twitter)" [ref=e293] [cursor=pointer]:
+                - /url: https://x.com/brashlinex?s=11
+                - img [ref=e294]
+              - link "LinkedIn" [ref=e296] [cursor=pointer]:
+                - /url: /linkedin-not-found
+                - img [ref=e297]
+              - link "YouTube" [ref=e301] [cursor=pointer]:
+                - /url: /youtube-not-found
+                - img [ref=e302]
+        - generic [ref=e305]:
+          - paragraph [ref=e306]: © 2025 Brashline. Todos los derechos reservados.
+          - generic [ref=e307]:
+            - link "Términos" [ref=e308] [cursor=pointer]:
+              - /url: /terms
+            - link "Privacidad" [ref=e309] [cursor=pointer]:
+              - /url: /privacy
+            - link "Cookies" [ref=e310] [cursor=pointer]:
+              - /url: /cookies
+            - link "Accesibilidad" [ref=e311] [cursor=pointer]:
+              - /url: /accessibility
+```

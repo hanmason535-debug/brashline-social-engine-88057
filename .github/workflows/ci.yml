@@ -24,6 +24,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  # Clerk test key for CI builds
+  VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY_TEST }}
+
 jobs:
   quality-checks:
     name: Code Quality & Tests (Node ${{ matrix.node-version }})
@@ -57,6 +61,8 @@ jobs:
 
       - name: Run Vitest unit tests with coverage
         run: npx vitest run --coverage --reporter=verbose
+        env:
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY_TEST || 'pk_test_placeholder' }}
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5

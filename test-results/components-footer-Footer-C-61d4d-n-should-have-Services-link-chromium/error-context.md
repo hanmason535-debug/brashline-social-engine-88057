@@ -1,0 +1,129 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - main [ref=e4]:
+    - generic [ref=e6]:
+      - link "Skip to main content" [ref=e7] [cursor=pointer]:
+        - /url: "#main-content"
+      - link "Skip to main content" [ref=e8] [cursor=pointer]:
+        - /url: "#main-content"
+      - navigation [ref=e10]:
+        - link "Brashline Logo BRASHLINE" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img "Brashline Logo"
+          - generic [ref=e12]: BRASHLINE
+        - generic [ref=e13]:
+          - link "Home" [ref=e14] [cursor=pointer]:
+            - /url: /
+          - link "Services" [ref=e15] [cursor=pointer]:
+            - /url: /services
+          - link "Pricing" [ref=e16] [cursor=pointer]:
+            - /url: /pricing
+          - link "Work" [ref=e17] [cursor=pointer]:
+            - /url: /case-studies
+          - link "About" [ref=e18] [cursor=pointer]:
+            - /url: /about
+          - link "Blog" [ref=e19] [cursor=pointer]:
+            - /url: /blog
+          - link "Contact" [ref=e20] [cursor=pointer]:
+            - /url: /contact
+        - generic [ref=e21]:
+          - link "Cart with 0 items" [ref=e22] [cursor=pointer]:
+            - /url: /cart
+            - img
+          - generic [ref=e23]:
+            - switch "Switch to dark mode" [ref=e24] [cursor=pointer]
+            - generic:
+              - img
+            - generic:
+              - img
+          - button "EN" [ref=e25] [cursor=pointer]:
+            - img
+            - text: EN
+          - link "Book Strategic Call 📞 Calling…" [ref=e26] [cursor=pointer]:
+            - /url: https://wa.me/19294468440
+            - generic [ref=e27]: Book Strategic Call
+            - generic: 📞 Calling…
+      - main [ref=e28]:
+        - generic [ref=e29]:
+          - generic [ref=e31]:
+            - generic:
+              - img "Background Paths"
+            - generic:
+              - img "Background Paths"
+          - generic [ref=e33]:
+            - generic [ref=e35]: Florida-Grown
+            - heading "Be Consistent Growing Visible Connected" [level=1] [ref=e36]:
+              - generic [ref=e37]:
+                - generic [ref=e38]: Be
+                - generic [ref=e39]:
+                  - generic [ref=e40]: Consistent
+                  - generic [ref=e41]: Growing
+                  - generic [ref=e42]: Visible
+                  - generic [ref=e43]: Connected
+            - paragraph [ref=e44]: Brashline started with two friends and one mission - make online visibility effortless. We create consistent, real content that keeps your business active and seen. Straightforward, affordable, and built to last.
+            - link "Book Strategic Call 📞 Calling…" [ref=e46] [cursor=pointer]:
+              - /url: https://wa.me/19294468440
+              - generic [ref=e47]: Book Strategic Call
+              - generic: 📞 Calling…
+        - generic [ref=e55]:
+          - heading "Ready to Get Started?" [level=2] [ref=e56]
+          - paragraph [ref=e57]: Let's discuss how we can help grow your social media presence.
+          - button "Contact Us" [ref=e58] [cursor=pointer]:
+            - img
+            - text: Contact Us
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - generic [ref=e62]:
+            - link "Brashline Logo BRASHLINE" [ref=e63] [cursor=pointer]:
+              - /url: /
+              - img "Brashline Logo"
+              - generic [ref=e64]: BRASHLINE
+            - paragraph [ref=e65]: Orlando-based partners helping Florida businesses stay visible online.
+          - generic [ref=e66]:
+            - heading "Contact" [level=3] [ref=e67]
+            - generic [ref=e68]:
+              - paragraph [ref=e69]: Brashline
+              - paragraph [ref=e70]: Orlando, Florida
+              - paragraph [ref=e71]:
+                - link "+1 (929) 446-8440" [ref=e72] [cursor=pointer]:
+                  - /url: tel:+19294468440
+              - paragraph [ref=e73]:
+                - link "Brashline@gmail.com" [ref=e74] [cursor=pointer]:
+                  - /url: mailto:Brashline@gmail.com
+              - paragraph [ref=e75]: Replies within 1 business day
+              - paragraph [ref=e76]: Mon–Fri 9:00–6:00 ET
+          - generic [ref=e77]:
+            - heading "Follow Us" [level=3] [ref=e78]
+            - generic [ref=e79]:
+              - link "Facebook" [ref=e80] [cursor=pointer]:
+                - /url: https://www.facebook.com/profile.php?id=61583138566921
+                - img [ref=e81]
+              - link "Instagram" [ref=e83] [cursor=pointer]:
+                - /url: https://www.instagram.com/brashlineofficial/
+                - img [ref=e84]
+              - link "X (Twitter)" [ref=e87] [cursor=pointer]:
+                - /url: https://x.com/brashlinex?s=11
+                - img [ref=e88]
+              - link "LinkedIn" [ref=e90] [cursor=pointer]:
+                - /url: /linkedin-not-found
+                - img [ref=e91]
+              - link "YouTube" [ref=e95] [cursor=pointer]:
+                - /url: /youtube-not-found
+                - img [ref=e96]
+        - generic [ref=e99]:
+          - paragraph [ref=e100]: © 2025 Brashline. All rights reserved.
+          - generic [ref=e101]:
+            - link "Terms" [ref=e102] [cursor=pointer]:
+              - /url: /terms
+            - link "Privacy" [ref=e103] [cursor=pointer]:
+              - /url: /privacy
+            - link "Cookie Policy" [ref=e104] [cursor=pointer]:
+              - /url: /cookies
+            - link "Accessibility" [ref=e105] [cursor=pointer]:
+              - /url: /accessibility
+```
