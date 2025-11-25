@@ -39,6 +39,7 @@ export default {
           foreground: "hsl(var(--primary-foreground))",
           light: "hsl(var(--primary-light))",
           glow: "hsl(var(--primary-glow))",
+          dark: "hsl(var(--primary-dark))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -74,6 +75,18 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        brand: {
+          coral: "hsl(var(--primary))",
+          "coral-light": "hsl(var(--primary-light))",
+          "coral-dark": "hsl(var(--primary-dark))",
+          navy: "hsl(var(--secondary))",
+          slate: "hsl(var(--brand-slate))",
+          gray: "hsl(var(--brand-gray))",
+        },
+        "accent-blue": "hsl(var(--accent-blue))",
+        "accent-purple": "hsl(var(--accent-purple))",
+        "accent-success": "hsl(var(--accent-success))",
+        "accent-warning": "hsl(var(--accent-warning))",
       },
       borderRadius: {
         lg: "var(--radius)",
