@@ -2,7 +2,7 @@ name: Bundle Size Check
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, develop]
     paths:
       - 'src/**'
       - 'public/**'
@@ -19,25 +19,17 @@ jobs:
     name: Check Bundle Size
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+
+      - name: Setup project with build
+        uses: ./.github/actions/setup-project
         with:
           node-version: '20'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci --prefer-offline --no-audit
-      
-      - name: Build project
-        run: npm run build
-        env:
-          NODE_ENV: production
-      
+          with-build: 'true'
+
       - name: Analyze bundle size
         uses: preactjs/compressed-size-action@v2
         continue-on-error: true
@@ -47,18 +39,18 @@ jobs:
           exclude: "{**/*.map,**/node_modules/**}"
           compression: gzip
           minimum-change-threshold: 100
-          
+
       - name: Check bundle size limits
         run: |
           echo "📊 Bundle Size Report"
           echo "===================="
-          
+
           # Get main bundle size
           MAIN_SIZE=$(find dist/assets -name "index-*.js" -exec du -b {} + | awk '{sum+=$1} END {print sum}')
           MAIN_SIZE_KB=$((MAIN_SIZE / 1024))
-          
+
           echo "Main bundle: $MAIN_SIZE_KB KB"
-          
+
           # Check against budget (200 KB raw, ~60 KB gzipped)
           if [ $MAIN_SIZE_KB -gt 200 ]; then
             echo "⚠️ Warning: Main bundle ($MAIN_SIZE_KB KB) exceeds recommended size (200 KB)"
@@ -66,7 +58,7 @@ jobs:
           else
             echo "✅ Bundle size within limits"
           fi
-          
+
           # List all chunks
           echo ""
           echo "All chunks:"

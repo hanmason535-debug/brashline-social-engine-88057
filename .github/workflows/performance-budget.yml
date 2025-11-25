@@ -2,7 +2,7 @@ name: Performance Budget
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, develop]
     paths:
       - 'src/**'
       - 'public/**'
@@ -18,42 +18,34 @@ jobs:
     name: Check Performance Budget
     runs-on: ubuntu-latest
     timeout-minutes: 12
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+
+      - name: Setup project with build
+        uses: ./.github/actions/setup-project
         with:
           node-version: '20'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci --prefer-offline --no-audit
-      
-      - name: Build project
-        run: npm run build
-        env:
-          NODE_ENV: production
-      
+          with-build: 'true'
+
       - name: Check bundle sizes against budget
         id: bundle_check
         run: |
           echo "📊 Performance Budget Check"
           echo "=============================="
           echo ""
-          
+
           # Budget: 200 KB raw, ~60 KB gzipped
           BUDGET_RAW=200
           BUDGET_GZIP=70
-          
+
           # Get main bundle size
           MAIN_SIZE=$(find dist/assets -name "index-*.js" -exec du -b {} + | awk '{sum+=$1} END {print sum}')
           MAIN_SIZE_KB=$((MAIN_SIZE / 1024))
-          
+
           echo "Main bundle (raw): $MAIN_SIZE_KB KB / $BUDGET_RAW KB budget"
-          
+
           # Check raw size
           if [ $MAIN_SIZE_KB -gt $BUDGET_RAW ]; then
             echo "❌ FAILED: Main bundle ($MAIN_SIZE_KB KB) exceeds budget ($BUDGET_RAW KB)"
@@ -63,17 +55,17 @@ jobs:
             echo "✅ PASSED: Bundle size within budget"
             echo "bundle_status=passed" >> $GITHUB_OUTPUT
           fi
-          
+
           echo ""
           echo "Chunk breakdown:"
           du -h dist/assets/*.js | sort -rh | head -10
-      
+
       - name: Cache Lighthouse CLI
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-lhci-v1
-      
+
       - name: Run Lighthouse CI with performance budgets
         run: |
           npm install -g @lhci/cli@0.13.x
@@ -81,7 +73,7 @@ jobs:
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
         continue-on-error: true
-      
+
       - name: Performance report summary
         if: always()
         run: |
