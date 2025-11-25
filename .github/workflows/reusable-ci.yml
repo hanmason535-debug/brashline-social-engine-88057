@@ -66,7 +66,7 @@ jobs:
         run: npx vitest run --coverage --reporter=verbose
 
       - name: Upload coverage reports to Codecov
-        if: inputs.upload-coverage && inputs.run-tests
+        if: inputs.upload-coverage && inputs.run-tests && secrets.CODECOV_TOKEN != ''
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

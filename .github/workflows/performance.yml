@@ -53,7 +53,6 @@ jobs:
 
           # Budget: 200 KB raw, ~70 KB gzipped
           BUDGET_RAW=200
-          BUDGET_GZIP=70
 
           # Get main bundle size
           MAIN_SIZE=$(find dist/assets -name "index-*.js" -exec du -b {} + | awk '{sum+=$1} END {print sum}')
@@ -140,7 +139,14 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Metric | Value | Budget | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|--------|-------|--------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Main Bundle (raw) | ${{ needs.bundle-analysis.outputs.main-size-kb }} KB | < 200 KB | ${{ needs.bundle-analysis.outputs.bundle-status == 'passed' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          BUNDLE_SIZE="${{ needs.bundle-analysis.outputs.main-size-kb }}"
+          BUNDLE_STATUS="${{ needs.bundle-analysis.outputs.bundle-status }}"
+          if [ "$BUNDLE_STATUS" == "passed" ]; then
+            STATUS_ICON="✅ Passed"
+          else
+            STATUS_ICON="❌ Failed"
+          fi
+          echo "| Main Bundle (raw) | ${BUNDLE_SIZE} KB | < 200 KB | ${STATUS_ICON} |" >> $GITHUB_STEP_SUMMARY
           echo "| Main Bundle (gzip) | - | < 70 KB | 🔍 See logs |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Lighthouse Targets" >> $GITHUB_STEP_SUMMARY
