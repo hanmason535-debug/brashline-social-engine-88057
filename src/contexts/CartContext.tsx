@@ -21,7 +21,7 @@ const getInitialCart = (): Cart => {
   if (typeof window === "undefined") {
     return { items: [], total: 0, itemCount: 0 };
   }
-  
+
   try {
     const stored = localStorage.getItem(CART_STORAGE_KEY);
     if (stored) {
@@ -31,7 +31,7 @@ const getInitialCart = (): Cart => {
   } catch (error) {
     console.error("Error loading cart from localStorage:", error);
   }
-  
+
   return { items: [], total: 0, itemCount: 0 };
 };
 
@@ -56,7 +56,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const addToCart = (item: Omit<CartItem, "quantity">) => {
     setCart((prevCart) => {
       const existingItem = prevCart.items.find((i) => i.id === item.id);
-      
+
       let newItems: CartItem[];
       if (existingItem) {
         newItems = prevCart.items.map((i) =>
@@ -67,7 +67,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         newItems = [...prevCart.items, { ...item, quantity: 1 }];
         toast.success(`${item.name} added to cart`);
       }
-      
+
       return calculateCart(newItems);
     });
   };
@@ -88,7 +88,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       removeFromCart(itemId);
       return;
     }
-    
+
     setCart((prevCart) => {
       const newItems = prevCart.items.map((item) =>
         item.id === itemId ? { ...item, quantity } : item
@@ -103,9 +103,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}
-    >
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}>
       {children}
     </CartContext.Provider>
   );

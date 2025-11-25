@@ -1,25 +1,18 @@
 /**
  * User Dashboard - View subscriptions, orders, billing, and profile
  */
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Separator } from '@/components/ui/separator';
-import { 
-  Package, 
-  ShoppingBag, 
-  CreditCard, 
-  User, 
-  LogOut,
-  AlertCircle 
-} from 'lucide-react';
-import { format } from 'date-fns';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Separator } from "@/components/ui/separator";
+import { Package, ShoppingBag, CreditCard, User, LogOut, AlertCircle } from "lucide-react";
+import { format } from "date-fns";
 
 interface Order {
   id: string;
@@ -34,30 +27,30 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [profileForm, setProfileForm] = useState({
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    email: user?.email || '',
-    phone: user?.phone || '',
-    company: user?.company || '',
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
+    company: user?.company || "",
   });
   const [billingForm, setBillingForm] = useState({
-    billingAddress: billingInfo?.billingAddress || '',
-    billingCity: billingInfo?.billingCity || '',
-    billingState: billingInfo?.billingState || '',
-    billingZip: billingInfo?.billingZip || '',
-    billingCountry: billingInfo?.billingCountry || 'United States',
+    billingAddress: billingInfo?.billingAddress || "",
+    billingCity: billingInfo?.billingCity || "",
+    billingState: billingInfo?.billingState || "",
+    billingZip: billingInfo?.billingZip || "",
+    billingCountry: billingInfo?.billingCountry || "United States",
   });
 
   // Get orders from localStorage
-  const orders: Order[] = JSON.parse(localStorage.getItem('brashline_orders') || '[]');
-  
+  const orders: Order[] = JSON.parse(localStorage.getItem("brashline_orders") || "[]");
+
   if (!isAuthenticated) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
         <AlertCircle className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
         <h2 className="text-2xl font-bold mb-2">Authentication Required</h2>
         <p className="text-muted-foreground mb-6">Please log in to view your dashboard</p>
-        <Button onClick={() => navigate('/checkout')}>Go to Login</Button>
+        <Button onClick={() => navigate("/checkout")}>Go to Login</Button>
       </div>
     );
   }
@@ -73,7 +66,7 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -93,7 +86,8 @@ export default function Dashboard() {
         <Alert className="mb-6">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            This is a frontend-only dashboard. Enable Lovable Cloud for full authentication and payment processing.
+            This is a frontend-only dashboard. Enable Lovable Cloud for full authentication and
+            payment processing.
           </AlertDescription>
         </Alert>
 
@@ -124,40 +118,44 @@ export default function Dashboard() {
                 <CardDescription>Manage your active subscription packages</CardDescription>
               </CardHeader>
               <CardContent>
-                {orders.filter(o => o.status === 'active').length === 0 ? (
+                {orders.filter((o) => o.status === "active").length === 0 ? (
                   <div className="text-center py-12">
                     <Package className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                     <p className="text-muted-foreground">No active subscriptions</p>
-                    <Button className="mt-4" onClick={() => navigate('/pricing')}>
+                    <Button className="mt-4" onClick={() => navigate("/pricing")}>
                       Browse Packages
                     </Button>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {orders.filter(o => o.status === 'active').map((order) => (
-                      <Card key={order.id}>
-                        <CardContent className="pt-6">
-                          {order.items.map((item, idx) => (
-                            <div key={idx} className="flex justify-between items-center mb-2">
-                              <div>
-                                <h4 className="font-semibold">{item.name}</h4>
-                                <p className="text-sm text-muted-foreground">
-                                  Started {format(new Date(order.date), 'MMM d, yyyy')}
-                                </p>
+                    {orders
+                      .filter((o) => o.status === "active")
+                      .map((order) => (
+                        <Card key={order.id}>
+                          <CardContent className="pt-6">
+                            {order.items.map((item, idx) => (
+                              <div key={idx} className="flex justify-between items-center mb-2">
+                                <div>
+                                  <h4 className="font-semibold">{item.name}</h4>
+                                  <p className="text-sm text-muted-foreground">
+                                    Started {format(new Date(order.date), "MMM d, yyyy")}
+                                  </p>
+                                </div>
+                                <p className="font-bold">${item.price}/mo</p>
                               </div>
-                              <p className="font-bold">${item.price}/mo</p>
+                            ))}
+                            <Separator className="my-4" />
+                            <div className="flex justify-between items-center">
+                              <Button variant="outline" size="sm">
+                                Manage
+                              </Button>
+                              <Button variant="ghost" size="sm" className="text-destructive">
+                                Cancel
+                              </Button>
                             </div>
-                          ))}
-                          <Separator className="my-4" />
-                          <div className="flex justify-between items-center">
-                            <Button variant="outline" size="sm">Manage</Button>
-                            <Button variant="ghost" size="sm" className="text-destructive">
-                              Cancel
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                          </CardContent>
+                        </Card>
+                      ))}
                   </div>
                 )}
               </CardContent>
@@ -175,7 +173,7 @@ export default function Dashboard() {
                   <div className="text-center py-12">
                     <ShoppingBag className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                     <p className="text-muted-foreground">No orders yet</p>
-                    <Button className="mt-4" onClick={() => navigate('/pricing')}>
+                    <Button className="mt-4" onClick={() => navigate("/pricing")}>
                       Start Shopping
                     </Button>
                   </div>
@@ -188,13 +186,16 @@ export default function Dashboard() {
                             <div>
                               <p className="font-semibold">Order #{order.id.slice(0, 8)}</p>
                               <p className="text-sm text-muted-foreground">
-                                {format(new Date(order.date), 'MMM d, yyyy')}
+                                {format(new Date(order.date), "MMM d, yyyy")}
                               </p>
                             </div>
-                            <span className={`text-xs px-2 py-1 rounded ${
-                              order.status === 'active' ? 'bg-green-100 text-green-800' : 
-                              'bg-gray-100 text-gray-800'
-                            }`}>
+                            <span
+                              className={`text-xs px-2 py-1 rounded ${
+                                order.status === "active"
+                                  ? "bg-green-100 text-green-800"
+                                  : "bg-gray-100 text-gray-800"
+                              }`}
+                            >
                               {order.status}
                             </span>
                           </div>
@@ -234,11 +235,17 @@ export default function Dashboard() {
                           <div className="flex items-center gap-3">
                             <CreditCard className="h-8 w-8" />
                             <div>
-                              <p className="font-medium">{billingInfo.cardBrand} •••• {billingInfo.cardLast4}</p>
-                              <p className="text-sm text-muted-foreground">Default payment method</p>
+                              <p className="font-medium">
+                                {billingInfo.cardBrand} •••• {billingInfo.cardLast4}
+                              </p>
+                              <p className="text-sm text-muted-foreground">
+                                Default payment method
+                              </p>
                             </div>
                           </div>
-                          <Button variant="outline" size="sm">Update</Button>
+                          <Button variant="outline" size="sm">
+                            Update
+                          </Button>
                         </div>
                       </CardContent>
                     </Card>
@@ -257,7 +264,9 @@ export default function Dashboard() {
                       <Input
                         id="address"
                         value={billingForm.billingAddress}
-                        onChange={(e) => setBillingForm({ ...billingForm, billingAddress: e.target.value })}
+                        onChange={(e) =>
+                          setBillingForm({ ...billingForm, billingAddress: e.target.value })
+                        }
                         placeholder="123 Main St"
                       />
                     </div>
@@ -267,7 +276,9 @@ export default function Dashboard() {
                         <Input
                           id="city"
                           value={billingForm.billingCity}
-                          onChange={(e) => setBillingForm({ ...billingForm, billingCity: e.target.value })}
+                          onChange={(e) =>
+                            setBillingForm({ ...billingForm, billingCity: e.target.value })
+                          }
                           placeholder="New York"
                         />
                       </div>
@@ -276,7 +287,9 @@ export default function Dashboard() {
                         <Input
                           id="state"
                           value={billingForm.billingState}
-                          onChange={(e) => setBillingForm({ ...billingForm, billingState: e.target.value })}
+                          onChange={(e) =>
+                            setBillingForm({ ...billingForm, billingState: e.target.value })
+                          }
                           placeholder="NY"
                         />
                       </div>
@@ -287,7 +300,9 @@ export default function Dashboard() {
                         <Input
                           id="zip"
                           value={billingForm.billingZip}
-                          onChange={(e) => setBillingForm({ ...billingForm, billingZip: e.target.value })}
+                          onChange={(e) =>
+                            setBillingForm({ ...billingForm, billingZip: e.target.value })
+                          }
                           placeholder="10001"
                         />
                       </div>
@@ -296,7 +311,9 @@ export default function Dashboard() {
                         <Input
                           id="country"
                           value={billingForm.billingCountry}
-                          onChange={(e) => setBillingForm({ ...billingForm, billingCountry: e.target.value })}
+                          onChange={(e) =>
+                            setBillingForm({ ...billingForm, billingCountry: e.target.value })
+                          }
                         />
                       </div>
                     </div>
@@ -320,7 +337,9 @@ export default function Dashboard() {
                     <Input
                       id="firstName"
                       value={profileForm.firstName}
-                      onChange={(e) => setProfileForm({ ...profileForm, firstName: e.target.value })}
+                      onChange={(e) =>
+                        setProfileForm({ ...profileForm, firstName: e.target.value })
+                      }
                       disabled={!isEditing}
                       placeholder="John"
                     />
@@ -375,7 +394,9 @@ export default function Dashboard() {
                   {isEditing ? (
                     <>
                       <Button onClick={handleProfileUpdate}>Save Changes</Button>
-                      <Button variant="outline" onClick={() => setIsEditing(false)}>Cancel</Button>
+                      <Button variant="outline" onClick={() => setIsEditing(false)}>
+                        Cancel
+                      </Button>
                     </>
                   ) : (
                     <Button onClick={() => setIsEditing(true)}>Edit Profile</Button>
@@ -389,7 +410,9 @@ export default function Dashboard() {
                   <p className="text-sm text-muted-foreground mb-4">
                     Permanently delete your account and all associated data
                   </p>
-                  <Button variant="destructive" size="sm">Delete Account</Button>
+                  <Button variant="destructive" size="sm">
+                    Delete Account
+                  </Button>
                 </div>
               </CardContent>
             </Card>

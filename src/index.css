@@ -61,7 +61,11 @@ All colors MUST be HSL.
     /* Brand gradients */
     --gradient-primary: linear-gradient(135deg, hsl(10 100% 65%) 0%, hsl(356 100% 66%) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(225 29% 17%) 0%, hsl(215 25% 27%) 100%);
-    --gradient-coral-overlay: linear-gradient(135deg, hsla(10 100% 65% / 0.9) 0%, hsla(356 100% 66% / 0.9) 100%);
+    --gradient-coral-overlay: linear-gradient(
+      135deg,
+      hsla(10 100% 65% / 0.9) 0%,
+      hsla(356 100% 66% / 0.9) 100%
+    );
     --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 20% 98%));
 
     /* Enhanced shadows with coral */
@@ -118,7 +122,11 @@ All colors MUST be HSL.
 
     --gradient-primary: linear-gradient(135deg, hsl(10 100% 70%) 0%, hsl(356 100% 66%) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(232 48% 6%) 0%, hsl(225 29% 17%) 100%);
-    --gradient-coral-overlay: linear-gradient(135deg, hsla(10 100% 70% / 0.9) 0%, hsla(356 100% 66% / 0.9) 100%);
+    --gradient-coral-overlay: linear-gradient(
+      135deg,
+      hsla(10 100% 70% / 0.9) 0%,
+      hsla(356 100% 66% / 0.9) 100%
+    );
     --gradient-subtle: linear-gradient(180deg, hsl(232 48% 6%), hsl(225 29% 17%));
 
     --shadow-soft: 0 4px 16px -2px hsl(10 100% 70% / 0.15);
@@ -398,7 +406,7 @@ All colors MUST be HSL.
 
   /* Diagonal pattern background (echoing logo) */
   .diagonal-pattern {
-    background-image: 
+    background-image:
       linear-gradient(135deg, hsla(10 100% 65% / 0.05) 0%, transparent 100%),
       repeating-linear-gradient(
         135deg,
@@ -411,7 +419,9 @@ All colors MUST be HSL.
 
   /* Coral glow effect */
   .coral-glow {
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    transition:
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
   }
 
   .coral-glow:hover {

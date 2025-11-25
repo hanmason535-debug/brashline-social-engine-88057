@@ -224,7 +224,7 @@ const PricingPreview = memo(({ lang }: PricingPreviewProps) => {
                     onClick={() => {
                       addToCart({
                         id: `recurring-${plan.name.toLowerCase().replace(/\s+/g, "-")}-${billing}`,
-                        name: `${plan.name} (${billing === "monthly" ? lang === "en" ? "Monthly" : "Mensual" : lang === "en" ? "Annual" : "Anual"})`,
+                        name: `${plan.name} (${billing === "monthly" ? (lang === "en" ? "Monthly" : "Mensual") : lang === "en" ? "Annual" : "Anual"})`,
                         price: currentPrice,
                         type: "recurring",
                         tier: plan.tier[lang],

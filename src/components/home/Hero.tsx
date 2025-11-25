@@ -84,7 +84,12 @@ const Hero = memo(({ lang }: HeroProps) => {
                           }
                     }
                     style={{
-                      willChange: titleNumber === index || titleNumber === index - 1 || titleNumber === index + 1 ? "transform, opacity" : "auto",
+                      willChange:
+                        titleNumber === index ||
+                        titleNumber === index - 1 ||
+                        titleNumber === index + 1
+                          ? "transform, opacity"
+                          : "auto",
                       transform: "translate3d(0, 0, 0)",
                       backfaceVisibility: "hidden",
                     }}

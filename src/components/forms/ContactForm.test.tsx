@@ -16,17 +16,20 @@ describe("ContactForm", () => {
     render(<ContactForm lang="en" />);
 
     const button = screen.getByRole("button", { name: /Send Message/i });
-    
+
     await waitFor(() => {
       fireEvent.click(button);
     });
 
-    await waitFor(() => {
-      expect(screen.getByText(/Name must be at least 2 characters/i)).toBeInTheDocument();
-      expect(screen.getByText(/Invalid email address/i)).toBeInTheDocument();
-      expect(screen.getByText(/Please select a service type/i)).toBeInTheDocument();
-      expect(screen.getByText(/Message must be at least 10 characters/i)).toBeInTheDocument();
-    }, { timeout: 10000 });
+    await waitFor(
+      () => {
+        expect(screen.getByText(/Name must be at least 2 characters/i)).toBeInTheDocument();
+        expect(screen.getByText(/Invalid email address/i)).toBeInTheDocument();
+        expect(screen.getByText(/Please select a service type/i)).toBeInTheDocument();
+        expect(screen.getByText(/Message must be at least 10 characters/i)).toBeInTheDocument();
+      },
+      { timeout: 10000 }
+    );
   });
 
   it("submits the form and triggers Toast and window.open", async () => {
@@ -38,13 +41,13 @@ describe("ContactForm", () => {
     await waitFor(() => {
       fireEvent.input(screen.getByLabelText(/Full Name/i), { target: { value: "John Doe" } });
     });
-    
+
     await waitFor(() => {
       fireEvent.input(screen.getByLabelText(/Email Address/i), {
         target: { value: "john@example.com" },
       });
     });
-    
+
     await waitFor(() => {
       fireEvent.input(screen.getByLabelText(/Phone Number/i), { target: { value: "1234567890" } });
     });
@@ -66,12 +69,15 @@ describe("ContactForm", () => {
       fireEvent.click(submit);
     });
 
-    await waitFor(() => {
-      // Ensure window was opened to WhatsApp
-      expect(winOpen).toHaveBeenCalled();
-      // Verify onSuccess was called
-      expect(onSuccess).toHaveBeenCalled();
-    }, { timeout: 10000 });
+    await waitFor(
+      () => {
+        // Ensure window was opened to WhatsApp
+        expect(winOpen).toHaveBeenCalled();
+        // Verify onSuccess was called
+        expect(onSuccess).toHaveBeenCalled();
+      },
+      { timeout: 10000 }
+    );
 
     winOpen.mockRestore();
   });

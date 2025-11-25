@@ -73,7 +73,7 @@ function FloatingPaths({ position }: { position: number }) {
         className="w-full h-full text-foreground/70"
         viewBox="0 0 696 316"
         fill="none"
-        style={{ 
+        style={{
           willChange: isInView ? "transform, opacity" : "auto",
           transform: "translate3d(0, 0, 0)",
           backfaceVisibility: "hidden",

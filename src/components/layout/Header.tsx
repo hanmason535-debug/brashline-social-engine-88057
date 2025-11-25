@@ -126,7 +126,7 @@ const Header = memo(() => {
           {/* CTAs & Controls */}
           <div className="flex items-center gap-3">
             <CartIcon />
-            
+
             {isAuthenticated && (
               <Link to="/dashboard">
                 <Button variant="ghost" size="sm" className="hidden sm:flex items-center gap-2">
@@ -135,7 +135,7 @@ const Header = memo(() => {
                 </Button>
               </Link>
             )}
-            
+
             <ThemeSwitch className="hidden sm:flex scale-75" />
 
             <Button

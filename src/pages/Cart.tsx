@@ -32,8 +32,7 @@ const Cart = () => {
     es: {
       title: "Tu Carrito",
       emptyCart: "Tu carrito está vacío",
-      emptyDescription:
-        "Agrega paquetes para comenzar con tu transformación digital.",
+      emptyDescription: "Agrega paquetes para comenzar con tu transformación digital.",
       browsePlans: "Ver Planes",
       remove: "Eliminar",
       subtotal: "Subtotal",

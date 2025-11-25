@@ -96,7 +96,10 @@ const Checkout = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 {cart.items.map((item) => (
-                  <div key={item.id} className="flex justify-between items-start gap-4 pb-4 border-b">
+                  <div
+                    key={item.id}
+                    className="flex justify-between items-start gap-4 pb-4 border-b"
+                  >
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-semibold">{item.name}</span>
@@ -110,9 +113,7 @@ const Checkout = () => {
                         <div className="text-xs text-muted-foreground">{item.tier}</div>
                       )}
                     </div>
-                    <div className="text-right font-semibold">
-                      ${item.price * item.quantity}
-                    </div>
+                    <div className="text-right font-semibold">${item.price * item.quantity}</div>
                   </div>
                 ))}
                 <div className="flex justify-between items-center text-xs text-muted-foreground pt-2">

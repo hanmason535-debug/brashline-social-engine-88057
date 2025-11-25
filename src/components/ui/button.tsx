@@ -21,9 +21,11 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "gradient-primary text-primary-foreground shadow-coral hover:shadow-coral-hover hover:scale-105",
+        default:
+          "gradient-primary text-primary-foreground shadow-coral hover:shadow-coral-hover hover:scale-105",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground",
+        outline:
+          "border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/90",
         ghost: "text-foreground hover:bg-primary/10",
         link: "text-primary underline-offset-4 hover:underline",

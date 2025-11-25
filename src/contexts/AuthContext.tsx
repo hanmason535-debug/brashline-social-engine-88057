@@ -2,7 +2,7 @@
  * Authentication Context - Frontend-only mock authentication
  * Stores user session in localStorage until backend integration
  */
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 export interface User {
   id: string;
@@ -41,9 +41,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [billingInfo, setBillingInfo] = useState<BillingInfo | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('brashline_user');
-    const storedBilling = localStorage.getItem('brashline_billing');
-    
+    const storedUser = localStorage.getItem("brashline_user");
+    const storedBilling = localStorage.getItem("brashline_billing");
+
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -59,24 +59,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       createdAt: new Date().toISOString(),
     };
     setUser(newUser);
-    localStorage.setItem('brashline_user', JSON.stringify(newUser));
+    localStorage.setItem("brashline_user", JSON.stringify(newUser));
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('brashline_user');
+    localStorage.removeItem("brashline_user");
   };
 
   const updateProfile = (data: Partial<User>) => {
     if (!user) return;
     const updatedUser = { ...user, ...data };
     setUser(updatedUser);
-    localStorage.setItem('brashline_user', JSON.stringify(updatedUser));
+    localStorage.setItem("brashline_user", JSON.stringify(updatedUser));
   };
 
   const updateBilling = (data: BillingInfo) => {
     setBillingInfo(data);
-    localStorage.setItem('brashline_billing', JSON.stringify(data));
+    localStorage.setItem("brashline_billing", JSON.stringify(data));
   };
 
   return (
@@ -99,7 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
+    throw new Error("useAuth must be used within AuthProvider");
   }
   return context;
 }

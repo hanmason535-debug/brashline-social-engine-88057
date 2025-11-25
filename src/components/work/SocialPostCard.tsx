@@ -60,10 +60,10 @@ const platformColors = {
 export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPostCardProps) {
   const PlatformIcon = platformIcons[post.platform];
   const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { 
-    once: true, 
+  const isInView = useInView(cardRef, {
+    once: true,
     margin: "-50px",
-    amount: 0.3
+    amount: 0.3,
   });
 
   const handleClick = () => {
@@ -89,10 +89,10 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
       ref={cardRef}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ 
+      transition={{
         delay: Math.min(index * 0.08, 0.5),
         duration: 0.5,
-        ease: [0.25, 0.1, 0.25, 1]
+        ease: [0.25, 0.1, 0.25, 1],
       }}
       className="group relative cursor-pointer"
       onClick={handleClick}
@@ -100,7 +100,7 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
       role="button"
       tabIndex={0}
       aria-label={`View ${post.platform} post`}
-      style={{ willChange: isInView ? 'transform, opacity' : 'auto' }}
+      style={{ willChange: isInView ? "transform, opacity" : "auto" }}
     >
       <div className="relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-2 border border-border">
         {/* Platform Badge */}
@@ -120,9 +120,9 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
             style={{
-              willChange: 'transform',
-              transform: 'translate3d(0, 0, 0)',
-              backfaceVisibility: 'hidden',
+              willChange: "transform",
+              transform: "translate3d(0, 0, 0)",
+              backfaceVisibility: "hidden",
             }}
           />
 

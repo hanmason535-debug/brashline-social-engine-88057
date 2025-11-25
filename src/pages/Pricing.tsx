@@ -374,8 +374,8 @@ const Pricing = () => {
             </CardContent>
 
             <CardFooter className="pt-6 pb-8">
-              <Button 
-                className="w-full gap-2" 
+              <Button
+                className="w-full gap-2"
                 size="lg"
                 onClick={() => {
                   addToCart({
@@ -455,8 +455,8 @@ const Pricing = () => {
                 </CardContent>
 
                 <CardFooter className="pt-4">
-                  <Button 
-                    className="w-full gap-2" 
+                  <Button
+                    className="w-full gap-2"
                     variant="outline"
                     onClick={() => {
                       addToCart({
