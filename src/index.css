@@ -161,6 +161,33 @@ All colors MUST be HSL.
   }
 
   /* Reduced motion support */
+  /* Global Performance Optimizations for Animations */
+  .meteor,
+  .background-animation,
+  [class*=\"animate\"],
+  [class*=\"motion\"] {
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: translateZ(0);
+  }
+
+  /* GPU Acceleration for specific animation types */
+  .animate-meteor-effect,
+  .animate-fade-in-up,
+  .animate-scale-in,
+  .animate-slide-in-right,
+  .animate-slide-in-left {
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Optimize transforms for hover states */
+  .group:hover [class*=\"group-hover\"],
+  [class*=\"hover:scale\"],
+  [class*=\"hover:translate\"] {
+    will-change: transform;
+  }
+
   /* CSS Animations for Performance */
   @keyframes fadeInUp {
     from {

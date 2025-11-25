@@ -56,7 +56,7 @@ const Hero = memo(({ lang }: HeroProps) => {
               <div>{lang === "en" ? "Be" : "Siempre"}</div>
               <span
                 className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1"
-                style={{ contain: "layout" }}
+                style={{ contain: "layout", willChange: "contents" }}
               >
                 &nbsp;
                 {titles.map((title, index) => (
@@ -70,6 +70,7 @@ const Hero = memo(({ lang }: HeroProps) => {
                     transition={{
                       type: "spring",
                       stiffness: 50,
+                      damping: 15,
                     }}
                     animate={
                       titleNumber === index
@@ -82,6 +83,11 @@ const Hero = memo(({ lang }: HeroProps) => {
                             opacity: 0,
                           }
                     }
+                    style={{
+                      willChange: titleNumber === index || titleNumber === index - 1 || titleNumber === index + 1 ? "transform, opacity" : "auto",
+                      transform: "translate3d(0, 0, 0)",
+                      backfaceVisibility: "hidden",
+                    }}
                   >
                     {title}
                   </motion.span>

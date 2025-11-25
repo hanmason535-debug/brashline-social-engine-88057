@@ -10,7 +10,8 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import {
   Heart,
   MessageCircle,
@@ -58,6 +59,12 @@ const platformColors = {
 
 export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPostCardProps) {
   const PlatformIcon = platformIcons[post.platform];
+  const cardRef = useRef(null);
+  const isInView = useInView(cardRef, { 
+    once: true, 
+    margin: "-50px",
+    amount: 0.3
+  });
 
   const handleClick = () => {
     onOpenLightbox();
@@ -79,15 +86,21 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
 
   return (
     <motion.div
+      ref={cardRef}
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ 
+        delay: Math.min(index * 0.08, 0.5),
+        duration: 0.5,
+        ease: [0.25, 0.1, 0.25, 1]
+      }}
       className="group relative cursor-pointer"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
       aria-label={`View ${post.platform} post`}
+      style={{ willChange: isInView ? 'transform, opacity' : 'auto' }}
     >
       <div className="relative bg-card rounded-lg overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-2 border border-border">
         {/* Platform Badge */}
@@ -106,6 +119,11 @@ export function SocialPostCard({ post, lang, index, onOpenLightbox }: SocialPost
             alt={post.caption[lang]}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
+            style={{
+              willChange: 'transform',
+              transform: 'translate3d(0, 0, 0)',
+              backfaceVisibility: 'hidden',
+            }}
           />
 
           {/* Video Play Button */}

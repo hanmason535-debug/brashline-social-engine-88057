@@ -67,13 +67,17 @@ function FloatingPaths({ position }: { position: number }) {
     <div
       ref={containerRef}
       className="absolute inset-0 pointer-events-none"
-      style={{ contain: "layout style paint" }}
+      style={{ contain: "layout style paint", transform: "translate3d(0, 0, 0)" }}
     >
       <svg
         className="w-full h-full text-foreground/70"
         viewBox="0 0 696 316"
         fill="none"
-        style={{ willChange: isInView ? "transform, opacity" : "auto" }}
+        style={{ 
+          willChange: isInView ? "transform, opacity" : "auto",
+          transform: "translate3d(0, 0, 0)",
+          backfaceVisibility: "hidden",
+        }}
       >
         <title>Background Paths</title>
         {/* Phase 2 Optimization: Group animation reduces individual path paint operations */}

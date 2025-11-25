@@ -10,8 +10,8 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -41,6 +41,12 @@ export function WebsiteProjectCard({
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
+  const isInView = useInView(cardRef, { 
+    once: true, 
+    margin: "-50px",
+    amount: 0.3
+  });
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -58,9 +64,14 @@ export function WebsiteProjectCard({
 
   return (
     <motion.div
+      ref={cardRef}
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ 
+        delay: Math.min(index * 0.08, 0.5),
+        duration: 0.5,
+        ease: [0.25, 0.1, 0.25, 1]
+      }}
       className="group relative cursor-pointer"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
@@ -69,6 +80,7 @@ export function WebsiteProjectCard({
       role="button"
       tabIndex={0}
       aria-label={`View details for ${title}`}
+      style={{ willChange: isInView ? 'transform, opacity' : 'auto' }}
     >
       {/* Browser Mockup Frame */}
       <div className="relative bg-card rounded-lg overflow-hidden shadow-soft transition-all duration-500 ease-out hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-[1.02] border border-border hover:ring-2 hover:ring-primary/50 will-change-transform">
@@ -119,12 +131,17 @@ export function WebsiteProjectCard({
             <img
               src={project.thumbnail}
               alt={project.title[lang]}
-              className={`w-full h-full object-cover object-top transition-all duration-700 ease-out group-hover:scale-110 will-change-transform ${
+              className={`w-full h-full object-cover object-top transition-all duration-700 ease-out group-hover:scale-110 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageError(true)}
               loading="lazy"
+              style={{
+                willChange: 'transform',
+                transform: 'translate3d(0, 0, 0)',
+                backfaceVisibility: 'hidden',
+              }}
             />
           )}
 
