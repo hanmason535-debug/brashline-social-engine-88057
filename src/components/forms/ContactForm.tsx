@@ -17,7 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { analytics } from "@/lib/analytics";
-import { useSubmitContact } from "@/hooks/api";
+import { useContactForm } from "@/hooks/api";
 
 const contactSchema = z.object({
   name: z
@@ -55,7 +55,7 @@ interface ContactFormProps {
 export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
   const { toast } = useToast();
   const { user, isSignedIn } = useUser();
-  const submitContactMutation = useSubmitContact();
+  const submitContactMutation = useContactForm();
 
   const {
     register,
@@ -98,19 +98,16 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
     analytics.trackContactFormStart();
 
     try {
+      // Combine service type and message for API (API only accepts name, email, company, message)
+      const fullMessage = `Service Type: ${data.serviceType}\n\n${data.message}`;
+      const phoneInfo = data.phone ? `Phone: ${data.phone}` : undefined;
+      
       // Save to database via API
       await submitContactMutation.mutateAsync({
         name: data.name,
         email: data.email,
-        phone: data.phone || undefined,
-        serviceType: data.serviceType,
-        message: data.message,
-        source: 'website',
-        metadata: {
-          lang,
-          userAgent: navigator.userAgent,
-          timestamp: new Date().toISOString(),
-        },
+        company: phoneInfo,
+        message: fullMessage,
       });
 
       // Construct WhatsApp message with proper encoding

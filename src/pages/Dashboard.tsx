@@ -1,448 +1,375 @@
 /**
- * User Dashboard - View subscriptions, orders, billing, and profile
- * Protected by Clerk authentication
+ * User Dashboard Page
+ * Beautiful dashboard for authenticated users to view their activity and account information
  */
-import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { SignedIn, SignedOut, RedirectToSignIn, useUser, useClerk } from "@clerk/clerk-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Separator } from "@/components/ui/separator";
-import { Package, ShoppingBag, CreditCard, User, LogOut, AlertCircle, Settings, Loader2 } from "lucide-react";
-import { format } from "date-fns";
+import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useCart } from "@/contexts/CartContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import {
+  Calendar,
+  Mail,
+  Package,
+  ShoppingCart,
+  User,
+  Sparkles,
+  TrendingUp,
+  Award,
+  Heart,
+} from "lucide-react";
+import { format } from "date-fns";
+import { AuthLoadingPage } from "@/components/auth/AuthLoading";
 
-interface Order {
-  id: string;
-  date: string;
-  items: Array<{ name: string; price: number }>;
-  total: number;
-  status: string;
-}
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
 
-function DashboardContent() {
-  const { user: clerkUser, isLoaded: isClerkLoaded } = useUser();
-  const { signOut } = useClerk();
-  const { billingInfo, updateBilling } = useAuth();
-  const navigate = useNavigate();
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+};
+
+export default function DashboardPage() {
+  const { user, isLoaded } = useUser();
   const { lang } = useLanguage();
-  
-  const [billingForm, setBillingForm] = useState({
-    billingAddress: billingInfo?.billingAddress || "",
-    billingCity: billingInfo?.billingCity || "",
-    billingState: billingInfo?.billingState || "",
-    billingZip: billingInfo?.billingZip || "",
-    billingCountry: billingInfo?.billingCountry || "United States",
-  });
+  const cartContext = useCart();
+  const items = cartContext.cart.items;
+  const navigate = useNavigate();
 
-  // Get orders from localStorage
-  const orders: Order[] = JSON.parse(localStorage.getItem("brashline_orders") || "[]");
+  if (!isLoaded) {
+    return <AuthLoadingPage />;
+  }
 
-  const handleBillingUpdate = () => {
-    updateBilling(billingForm);
-  };
-
-  const handleLogout = async () => {
-    await signOut();
-    navigate("/");
-  };
-
-  // Show loading state
-  if (!isClerkLoaded) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
+  if (!user) {
+    navigate("/sign-in");
+    return null;
   }
 
   const content = {
     en: {
-      title: "My Dashboard",
-      welcome: "Welcome back",
-      logout: "Logout",
-      subscriptions: "Subscriptions",
-      orders: "Orders",
-      billing: "Billing",
-      profile: "Profile",
-      activeSubscriptions: "Active Subscriptions",
-      manageSubscriptions: "Manage your active subscription packages",
-      noSubscriptions: "No active subscriptions",
-      browsePackages: "Browse Packages",
-      orderHistory: "Order History",
-      viewOrders: "View your past orders and invoices",
-      noOrders: "No orders yet",
-      startShopping: "Start Shopping",
-      billingInfo: "Billing Information",
-      manageBilling: "Manage your payment methods and billing address",
-      paymentMethod: "Payment Method",
-      defaultPayment: "Default payment method",
-      addPayment: "Add Payment Method",
-      billingAddress: "Billing Address",
-      streetAddress: "Street Address",
-      city: "City",
-      state: "State",
-      zipCode: "ZIP Code",
-      country: "Country",
-      saveBilling: "Save Billing Info",
-      profileSettings: "Profile Settings",
-      updateInfo: "Update your personal information",
-      manageClerk: "Manage Account",
-      manageClerkDesc: "Click below to manage your account settings, security, and connected accounts.",
-      openAccountSettings: "Open Account Settings",
+      title: "Welcome back",
+      subtitle: "Here's what's happening with your account",
+      stats: {
+        cart: "Cart Items",
+        joined: "Member Since",
+        status: "Account Status",
+        engagement: "Engagement Score",
+      },
+      sections: {
+        activity: "Recent Activity",
+        quickActions: "Quick Actions",
+      },
+      actions: {
+        viewProfile: "View Profile",
+        browseServices: "Browse Services",
+        viewCart: "View Cart",
+        contactUs: "Contact Us",
+      },
+      emptyState: {
+        title: "Start Your Journey",
+        description: "Explore our services and add items to your cart to get started!",
+        cta: "Browse Services",
+      },
+      accountStatus: {
+        active: "Active",
+        premium: "Premium",
+        verified: "Verified",
+      },
     },
     es: {
-      title: "Mi Panel",
-      welcome: "Bienvenido de nuevo",
-      logout: "Cerrar Sesión",
-      subscriptions: "Suscripciones",
-      orders: "Pedidos",
-      billing: "Facturación",
-      profile: "Perfil",
-      activeSubscriptions: "Suscripciones Activas",
-      manageSubscriptions: "Gestiona tus paquetes de suscripción activos",
-      noSubscriptions: "Sin suscripciones activas",
-      browsePackages: "Ver Paquetes",
-      orderHistory: "Historial de Pedidos",
-      viewOrders: "Ver tus pedidos e facturas anteriores",
-      noOrders: "Sin pedidos todavía",
-      startShopping: "Empezar a Comprar",
-      billingInfo: "Información de Facturación",
-      manageBilling: "Gestiona tus métodos de pago y dirección de facturación",
-      paymentMethod: "Método de Pago",
-      defaultPayment: "Método de pago predeterminado",
-      addPayment: "Añadir Método de Pago",
-      billingAddress: "Dirección de Facturación",
-      streetAddress: "Dirección",
-      city: "Ciudad",
-      state: "Estado/Provincia",
-      zipCode: "Código Postal",
-      country: "País",
-      saveBilling: "Guardar Facturación",
-      profileSettings: "Configuración del Perfil",
-      updateInfo: "Actualiza tu información personal",
-      manageClerk: "Gestionar Cuenta",
-      manageClerkDesc: "Haz clic abajo para gestionar la configuración de tu cuenta, seguridad y cuentas conectadas.",
-      openAccountSettings: "Abrir Configuración de Cuenta",
+      title: "Bienvenido de nuevo",
+      subtitle: "Esto es lo que está pasando con tu cuenta",
+      stats: {
+        cart: "Artículos en el Carrito",
+        joined: "Miembro Desde",
+        status: "Estado de la Cuenta",
+        engagement: "Puntuación de Engagement",
+      },
+      sections: {
+        activity: "Actividad Reciente",
+        quickActions: "Acciones Rápidas",
+      },
+      actions: {
+        viewProfile: "Ver Perfil",
+        browseServices: "Explorar Servicios",
+        viewCart: "Ver Carrito",
+        contactUs: "Contáctanos",
+      },
+      emptyState: {
+        title: "Comienza tu Viaje",
+        description: "¡Explora nuestros servicios y agrega artículos a tu carrito para comenzar!",
+        cta: "Explorar Servicios",
+      },
+      accountStatus: {
+        active: "Activo",
+        premium: "Premium",
+        verified: "Verificado",
+      },
     },
   };
 
   const t = content[lang];
+  const joinedDate = user.createdAt ? format(new Date(user.createdAt), "MMMM yyyy") : "Recently";
+  const initials = `${user.firstName?.[0] || ""}${user.lastName?.[0] || ""}`.toUpperCase() || "U";
+
+  const quickActions = [
+    {
+      icon: User,
+      label: t.actions.viewProfile,
+      description: "Manage your profile settings",
+      href: "/profile",
+      gradient: "from-coral to-coral-light",
+    },
+    {
+      icon: Package,
+      label: t.actions.browseServices,
+      description: "Explore our service packages",
+      href: "/services",
+      gradient: "from-accent-purple to-accent-blue",
+    },
+    {
+      icon: ShoppingCart,
+      label: t.actions.viewCart,
+      description: `${items.length} item${items.length !== 1 ? "s" : ""} in cart`,
+      href: "/cart",
+      gradient: "from-accent-success to-accent-blue",
+      badge: items.length > 0 ? items.length : null,
+    },
+    {
+      icon: Mail,
+      label: t.actions.contactUs,
+      description: "Get in touch with our team",
+      href: "/contact",
+      gradient: "from-coral-dark to-accent-warning",
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-background py-12">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl font-bold font-heading">{t.title}</h1>
-            <p className="text-muted-foreground mt-2">
-              {t.welcome}, {clerkUser?.firstName || clerkUser?.primaryEmailAddress?.emailAddress}
-            </p>
-          </div>
-          <Button variant="outline" onClick={handleLogout}>
-            <LogOut className="h-4 w-4 mr-2" />
-            {t.logout}
-          </Button>
-        </div>
-
-        <Tabs defaultValue="subscriptions" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="subscriptions">
-              <Package className="h-4 w-4 mr-2 hidden sm:inline" />
-              {t.subscriptions}
-            </TabsTrigger>
-            <TabsTrigger value="orders">
-              <ShoppingBag className="h-4 w-4 mr-2 hidden sm:inline" />
-              {t.orders}
-            </TabsTrigger>
-            <TabsTrigger value="billing">
-              <CreditCard className="h-4 w-4 mr-2 hidden sm:inline" />
-              {t.billing}
-            </TabsTrigger>
-            <TabsTrigger value="profile">
-              <User className="h-4 w-4 mr-2 hidden sm:inline" />
-              {t.profile}
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="subscriptions" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t.activeSubscriptions}</CardTitle>
-                <CardDescription>{t.manageSubscriptions}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {orders.filter((o) => o.status === "active").length === 0 ? (
-                  <div className="text-center py-12">
-                    <Package className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                    <p className="text-muted-foreground">{t.noSubscriptions}</p>
-                    <Button className="mt-4" onClick={() => navigate("/pricing")}>
-                      {t.browsePackages}
-                    </Button>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-accent-blue/5">
+      <Header />
+      
+      <main id="main-content" className="flex-1 container mx-auto px-4 py-12">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="max-w-7xl mx-auto space-y-8"
+        >
+          {/* Hero Section */}
+          <motion.div variants={itemVariants} className="relative overflow-hidden">
+            <div className="absolute inset-0 diagonal-pattern opacity-30" />
+            <Card className="relative border-2 border-coral/20 bg-gradient-to-br from-background to-coral/5 shadow-glow">
+              <CardContent className="p-8">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                  <Avatar className="h-24 w-24 ring-4 ring-coral/20 ring-offset-4 ring-offset-background">
+                    <AvatarImage src={user.imageUrl} alt={user.fullName || "User"} />
+                    <AvatarFallback className="bg-gradient-coral text-white text-2xl font-bold">
+                      {initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  
+                  <div className="flex-1 space-y-2">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <h1 className="text-4xl font-bold font-heading bg-gradient-to-r from-foreground via-coral to-coral-light bg-clip-text text-transparent">
+                        {t.title}, {user.firstName || "Friend"}!
+                      </h1>
+                      <Badge variant="secondary" className="bg-coral/10 text-coral border-coral/20">
+                        <Sparkles className="w-3 h-3 mr-1" />
+                        {t.accountStatus.active}
+                      </Badge>
+                    </div>
+                    <p className="text-muted-foreground text-lg">{t.subtitle}</p>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Mail className="w-4 h-4" />
+                      {user.primaryEmailAddress?.emailAddress}
+                    </div>
                   </div>
-                ) : (
-                  <div className="space-y-4">
-                    {orders
-                      .filter((o) => o.status === "active")
-                      .map((order) => (
-                        <Card key={order.id}>
-                          <CardContent className="pt-6">
-                            {order.items.map((item, idx) => (
-                              <div key={idx} className="flex justify-between items-center mb-2">
-                                <div>
-                                  <h4 className="font-semibold">{item.name}</h4>
-                                  <p className="text-sm text-muted-foreground">
-                                    Started {format(new Date(order.date), "MMM d, yyyy")}
-                                  </p>
-                                </div>
-                                <p className="font-bold">${item.price}/mo</p>
-                              </div>
-                            ))}
-                            <Separator className="my-4" />
-                            <div className="flex justify-between items-center">
-                              <Button variant="outline" size="sm">
-                                Manage
-                              </Button>
-                              <Button variant="ghost" size="sm" className="text-destructive">
-                                Cancel
-                              </Button>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                  </div>
-                )}
+
+                  <Button
+                    onClick={() => navigate("/profile")}
+                    size="lg"
+                    className="bg-gradient-coral text-white hover:opacity-90 shadow-coral-glow"
+                  >
+                    <User className="w-4 h-4 mr-2" />
+                    {t.actions.viewProfile}
+                  </Button>
+                </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </motion.div>
 
-          <TabsContent value="orders" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t.orderHistory}</CardTitle>
-                <CardDescription>{t.viewOrders}</CardDescription>
+          {/* Stats Grid */}
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          >
+            <Card className="border-coral/20 hover:shadow-coral-glow transition-all duration-300 hover:-translate-y-1">
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    {t.stats.cart}
+                  </CardTitle>
+                  <ShoppingCart className="w-4 h-4 text-coral" />
+                </div>
               </CardHeader>
               <CardContent>
-                {orders.length === 0 ? (
-                  <div className="text-center py-12">
-                    <ShoppingBag className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                    <p className="text-muted-foreground">{t.noOrders}</p>
-                    <Button className="mt-4" onClick={() => navigate("/pricing")}>
-                      {t.startShopping}
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {orders.map((order) => (
-                      <Card key={order.id}>
-                        <CardContent className="pt-6">
-                          <div className="flex justify-between items-start mb-4">
-                            <div>
-                              <p className="font-semibold">Order #{order.id.slice(0, 8)}</p>
-                              <p className="text-sm text-muted-foreground">
-                                {format(new Date(order.date), "MMM d, yyyy")}
+                <div className="text-3xl font-bold bg-gradient-coral bg-clip-text text-transparent">
+                  {items.length}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-accent-blue/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    {t.stats.joined}
+                  </CardTitle>
+                  <Calendar className="w-4 h-4 text-accent-blue" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-foreground">{joinedDate}</div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-accent-success/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    {t.stats.status}
+                  </CardTitle>
+                  <Award className="w-4 h-4 text-accent-success" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Badge className="bg-accent-success/10 text-accent-success border-accent-success/20 text-lg px-3 py-1">
+                  {t.accountStatus.verified}
+                </Badge>
+              </CardContent>
+            </Card>
+
+            <Card className="border-accent-purple/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    {t.stats.engagement}
+                  </CardTitle>
+                  <TrendingUp className="w-4 h-4 text-accent-purple" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-foreground">100%</div>
+                <p className="text-xs text-muted-foreground mt-1">Outstanding!</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Quick Actions */}
+          <motion.div variants={itemVariants}>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl font-heading flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-coral" />
+                  {t.sections.quickActions}
+                </CardTitle>
+                <CardDescription>Explore what you can do with your account</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {quickActions.map((action, index) => (
+                    <motion.div
+                      key={action.label}
+                      variants={itemVariants}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => navigate(action.href)}
+                      className="relative group cursor-pointer"
+                    >
+                      <Card className="border-2 border-border hover:border-coral transition-all duration-300 overflow-hidden h-full">
+                        <div className={`absolute inset-0 bg-gradient-to-br ${action.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                        <CardContent className="p-6 relative">
+                          <div className="flex items-start gap-4">
+                            <div className={`p-3 rounded-xl bg-gradient-to-br ${action.gradient} shadow-lg`}>
+                              <action.icon className="w-6 h-6 text-white" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <h3 className="font-semibold text-foreground group-hover:text-coral transition-colors">
+                                  {action.label}
+                                </h3>
+                                {action.badge && (
+                                  <Badge className="bg-coral text-white">{action.badge}</Badge>
+                                )}
+                              </div>
+                              <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                                {action.description}
                               </p>
                             </div>
-                            <span
-                              className={`text-xs px-2 py-1 rounded ${
-                                order.status === "active"
-                                  ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                                  : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300"
-                              }`}
-                            >
-                              {order.status}
-                            </span>
-                          </div>
-                          {order.items.map((item, idx) => (
-                            <div key={idx} className="flex justify-between mb-2">
-                              <span className="text-sm">{item.name}</span>
-                              <span className="text-sm font-medium">${item.price}</span>
-                            </div>
-                          ))}
-                          <Separator className="my-3" />
-                          <div className="flex justify-between font-bold">
-                            <span>Total</span>
-                            <span>${order.total}</span>
                           </div>
                         </CardContent>
                       </Card>
-                    ))}
-                  </div>
-                )}
+                    </motion.div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </motion.div>
 
-          <TabsContent value="billing" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t.billingInfo}</CardTitle>
-                <CardDescription>{t.manageBilling}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <h3 className="font-semibold mb-4">{t.paymentMethod}</h3>
-                  {billingInfo?.cardLast4 ? (
-                    <Card>
-                      <CardContent className="pt-6">
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-3">
-                            <CreditCard className="h-8 w-8" />
-                            <div>
-                              <p className="font-medium">
-                                {billingInfo.cardBrand} •••• {billingInfo.cardLast4}
-                              </p>
-                              <p className="text-sm text-muted-foreground">
-                                {t.defaultPayment}
-                              </p>
-                            </div>
-                          </div>
-                          <Button variant="outline" size="sm">
-                            Update
-                          </Button>
+          {/* Empty State / Activity Section */}
+          {items.length === 0 ? (
+            <motion.div variants={itemVariants}>
+              <Card className="border-dashed border-2 border-coral/30 bg-coral/5">
+                <CardContent className="py-16 text-center">
+                  <div className="max-w-md mx-auto space-y-6">
+                    <div className="flex justify-center">
+                      <div className="relative">
+                        <div className="absolute inset-0 animate-ping opacity-20">
+                          <Heart className="w-16 h-16 text-coral" />
                         </div>
-                      </CardContent>
-                    </Card>
-                  ) : (
-                    <Button>{t.addPayment}</Button>
-                  )}
-                </div>
-
-                <Separator />
-
-                <div>
-                  <h3 className="font-semibold mb-4">{t.billingAddress}</h3>
-                  <div className="space-y-4">
+                        <Heart className="w-16 h-16 text-coral relative" />
+                      </div>
+                    </div>
                     <div className="space-y-2">
-                      <Label htmlFor="address">{t.streetAddress}</Label>
-                      <Input
-                        id="address"
-                        value={billingForm.billingAddress}
-                        onChange={(e) =>
-                          setBillingForm({ ...billingForm, billingAddress: e.target.value })
-                        }
-                        placeholder="123 Main St"
-                      />
+                      <h3 className="text-2xl font-bold font-heading text-foreground">
+                        {t.emptyState.title}
+                      </h3>
+                      <p className="text-muted-foreground">{t.emptyState.description}</p>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="city">{t.city}</Label>
-                        <Input
-                          id="city"
-                          value={billingForm.billingCity}
-                          onChange={(e) =>
-                            setBillingForm({ ...billingForm, billingCity: e.target.value })
-                          }
-                          placeholder="New York"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="state">{t.state}</Label>
-                        <Input
-                          id="state"
-                          value={billingForm.billingState}
-                          onChange={(e) =>
-                            setBillingForm({ ...billingForm, billingState: e.target.value })
-                          }
-                          placeholder="NY"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="zip">{t.zipCode}</Label>
-                        <Input
-                          id="zip"
-                          value={billingForm.billingZip}
-                          onChange={(e) =>
-                            setBillingForm({ ...billingForm, billingZip: e.target.value })
-                          }
-                          placeholder="10001"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="country">{t.country}</Label>
-                        <Input
-                          id="country"
-                          value={billingForm.billingCountry}
-                          onChange={(e) =>
-                            setBillingForm({ ...billingForm, billingCountry: e.target.value })
-                          }
-                        />
-                      </div>
-                    </div>
-                    <Button onClick={handleBillingUpdate}>{t.saveBilling}</Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="profile" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t.profileSettings}</CardTitle>
-                <CardDescription>{t.updateInfo}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* User Info from Clerk */}
-                <div className="flex items-center gap-4 p-4 bg-muted rounded-lg">
-                  <img 
-                    src={clerkUser?.imageUrl} 
-                    alt="Profile" 
-                    className="w-16 h-16 rounded-full"
-                  />
-                  <div>
-                    <h3 className="font-semibold text-lg">
-                      {clerkUser?.fullName || clerkUser?.primaryEmailAddress?.emailAddress}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {clerkUser?.primaryEmailAddress?.emailAddress}
-                    </p>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold mb-2">{t.manageClerk}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {t.manageClerkDesc}
-                  </p>
-                  <Link to="/profile">
-                    <Button>
-                      <Settings className="h-4 w-4 mr-2" />
-                      {t.openAccountSettings}
+                    <Button
+                      size="lg"
+                      onClick={() => navigate("/services")}
+                      className="bg-gradient-coral text-white hover:opacity-90 shadow-coral-glow"
+                    >
+                      <Package className="w-4 h-4 mr-2" />
+                      {t.emptyState.cta}
                     </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
-    </div>
-  );
-}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ) : null}
+        </motion.div>
+      </main>
 
-export default function Dashboard() {
-  return (
-    <>
-      <SignedIn>
-        <div className="min-h-screen flex flex-col bg-background">
-          <Header />
-          <DashboardContent />
-          <Footer />
-        </div>
-      </SignedIn>
-      <SignedOut>
-        <RedirectToSignIn />
-      </SignedOut>
-    </>
+      <Footer />
+    </div>
   );
 }
