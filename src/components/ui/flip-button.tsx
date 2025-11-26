@@ -35,7 +35,7 @@ interface FlipButtonProps {
 
 const defaultSpanClassName = "absolute inset-0 flex items-center justify-center rounded-lg";
 
-const FlipButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, FlipButtonProps>(
+const FlipButton = React.forwardRef<HTMLAnchorElement, FlipButtonProps>(
   (
     {
       frontText,
@@ -83,7 +83,7 @@ const FlipButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, FlipB
     const MotionLink = motion(Link);
 
     const sharedProps = {
-      ref: ref as React.Ref<HTMLButtonElement | HTMLAnchorElement>,
+      ref: ref as React.Ref<HTMLAnchorElement>,
       initial: "initial" as const,
       whileHover: "hover" as const,
       whileTap: { scale: 0.95 },

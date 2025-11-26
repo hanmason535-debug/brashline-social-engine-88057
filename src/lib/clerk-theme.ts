@@ -5,44 +5,46 @@
 
 export const clerkAppearance = {
   variables: {
-    colorPrimary: "hsl(var(--primary))",
+    colorPrimary: "hsl(var(--coral))",
     colorBackground: "hsl(var(--background))",
     colorText: "hsl(var(--foreground))",
     colorTextSecondary: "hsl(var(--muted-foreground))",
     colorInputBackground: "hsl(var(--background))",
     colorInputText: "hsl(var(--foreground))",
     colorDanger: "hsl(var(--destructive))",
-    borderRadius: "0.5rem",
+    borderRadius: "0.75rem",
     fontFamily: "inherit",
+    fontSize: "0.875rem",
   },
   elements: {
     // Root container
     rootBox: "w-full",
-    card: "bg-background border border-border shadow-lg rounded-lg",
+    card: "bg-background/95 backdrop-blur-xl border-2 border-coral/20 shadow-coral-glow rounded-2xl overflow-hidden",
     
     // Header
-    headerTitle: "text-foreground font-heading font-bold",
-    headerSubtitle: "text-muted-foreground",
+    headerTitle: "text-foreground font-heading font-bold text-2xl",
+    headerSubtitle: "text-muted-foreground text-base",
     
     // Form elements
     formButtonPrimary: 
-      "bg-primary text-primary-foreground hover:bg-primary/90 transition-colors",
-    formFieldLabel: "text-foreground font-medium",
+      "bg-gradient-coral text-white hover:opacity-90 transition-all shadow-coral-glow hover:shadow-lg hover:scale-[1.02] font-semibold",
+    formFieldLabel: "text-foreground font-medium text-sm",
     formFieldInput: 
-      "bg-background border-border text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring",
-    formFieldInputShowPasswordButton: "text-muted-foreground hover:text-foreground",
+      "bg-background border-2 border-border text-foreground placeholder:text-muted-foreground focus:border-coral focus:ring-2 focus:ring-coral/20 transition-all rounded-lg",
+    formFieldInputShowPasswordButton: "text-muted-foreground hover:text-coral transition-colors",
     
     // Social buttons
     socialButtonsBlockButton: 
-      "bg-background border border-border text-foreground hover:bg-muted transition-colors",
+      "bg-background border-2 border-border text-foreground hover:border-coral/50 hover:bg-coral/5 transition-all rounded-lg shadow-sm hover:shadow-md",
     socialButtonsBlockButtonText: "text-foreground font-medium",
+    socialButtonsProviderIcon: "filter brightness-110",
     
     // Dividers
-    dividerLine: "bg-border",
-    dividerText: "text-muted-foreground",
+    dividerLine: "bg-gradient-to-r from-transparent via-border to-transparent h-px",
+    dividerText: "text-muted-foreground text-sm px-4",
     
     // Footer
-    footerActionLink: "text-primary hover:text-primary/80 transition-colors",
+    footerActionLink: "text-coral hover:text-coral-light transition-colors font-medium underline-offset-4 hover:underline",
     footerActionText: "text-muted-foreground",
     
     // User button
@@ -77,8 +79,8 @@ export const clerkAppearance = {
     modalContent: "bg-background border border-border shadow-xl",
   },
   layout: {
-    socialButtonsPlacement: "bottom",
-    socialButtonsVariant: "blockButton",
+    socialButtonsPlacement: "bottom" as const,
+    socialButtonsVariant: "blockButton" as const,
     termsPageUrl: "/terms",
     privacyPageUrl: "/privacy",
     helpPageUrl: "/contact",
