@@ -53,7 +53,7 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test --workers=2
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: always()
         with:
           name: playwright-report-node-${{ matrix.node-version }}
