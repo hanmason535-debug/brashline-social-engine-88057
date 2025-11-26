@@ -53,6 +53,51 @@ This project uses [Clerk](https://clerk.com) for authentication. See [AUTHENTICA
 - `/dashboard` - Protected user dashboard
 - `/profile` - User profile settings
 
+## 🗄️ Backend API
+
+The backend API is built with Express.js and deployed as Vercel Serverless Functions, using Neon PostgreSQL for data persistence.
+
+### Quick Setup
+
+1. Create a Neon database at [neon.tech](https://neon.tech)
+2. Add environment variables to `.env`:
+   ```env
+   DATABASE_URL=postgresql://...
+   CLERK_SECRET_KEY=sk_test_xxxxx
+   ```
+
+3. Run database migrations:
+   ```bash
+   cd server
+   npm install
+   npm run migrate
+   ```
+
+4. Start development server:
+   ```bash
+   npm run dev  # Starts on port 3001
+   ```
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/health` | Health check |
+| POST | `/api/contact` | Submit contact form |
+| POST | `/api/newsletter/subscribe` | Newsletter subscription |
+| POST | `/api/newsletter/unsubscribe` | Newsletter unsubscription |
+| GET | `/api/auth/me` | Get current user (auth required) |
+| PATCH | `/api/auth/me/preferences` | Update preferences (auth required) |
+
+### Database Tables
+
+- `users` - Synced from Clerk authentication
+- `contact_submissions` - Contact form entries
+- `newsletter_subscribers` - Newsletter list
+- `user_preferences` - User settings
+
+See [docs/BACKEND_API.md](./docs/BACKEND_API.md) for full API documentation.
+
 ## 🏗️ Tech Stack
 
 ### Core Framework

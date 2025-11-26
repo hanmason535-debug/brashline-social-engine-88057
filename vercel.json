@@ -4,7 +4,15 @@
   "installCommand": "npm install",
   "framework": "vite",
   "env": {
-    "VITE_SITE_URL": "https://brashline.com"
+    "VITE_SITE_URL": "https://brashline.com",
+    "VITE_API_URL": ""
+  },
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "@vercel/node@3.2.0",
+      "memory": 256,
+      "maxDuration": 10
+    }
   },
   "headers": [
     {
@@ -67,6 +75,10 @@
     {
       "source": "/robots.txt",
       "destination": "/robots.txt"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
     },
     {
       "source": "/:path*",
