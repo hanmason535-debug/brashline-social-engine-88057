@@ -2,8 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import performance optimizations */
+@import './styles/performance.css';
+
 html {
   scroll-behavior: smooth;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 

@@ -10,10 +10,11 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { Share2, Globe, TrendingUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface ValuePropsProps {
   lang: "en" | "es";
@@ -48,6 +49,13 @@ const valueProps = [
 
 const ValueProps = memo(({ lang }: ValuePropsProps) => {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+  const prefersReducedMotion = useReducedMotion();
+
+  // Memoize transition delays to avoid recalculation
+  const transitionDelays = useMemo(() => 
+    valueProps.map((_, index) => prefersReducedMotion ? 0 : index * 150),
+    [prefersReducedMotion]
+  );
 
   return (
     <section
@@ -61,10 +69,15 @@ const ValueProps = memo(({ lang }: ValuePropsProps) => {
             return (
               <Card
                 key={index}
-                className={`shadow-soft hover:shadow-medium transition-all duration-700 hover:-translate-y-1 border-border/50 bg-card/50 backdrop-blur-sm ${
+                className={`shadow-soft hover:shadow-medium transition-all duration-500 hover:-translate-y-1 border-border/50 bg-card/50 backdrop-blur-sm ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
+                style={{ 
+                  transitionDelay: `${transitionDelays[index]}ms`,
+                  willChange: isVisible ? "transform, opacity" : "auto",
+                  transform: "translate3d(0, 0, 0)",
+                  backfaceVisibility: "hidden",
+                }}
               >
                 <CardContent className="p-8 text-center">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-foreground/5 border border-border/50 mb-6">

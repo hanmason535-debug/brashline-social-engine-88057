@@ -142,13 +142,18 @@ export function Lightbox({
 
           {/* Lightbox Content */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
             onClick={(e) => e.stopPropagation()}
             {...swipeHandlers}
+            style={{
+              willChange: "transform, opacity",
+              transform: "translate3d(0, 0, 0)",
+              backfaceVisibility: "hidden",
+            }}
           >
             <div className="relative w-full max-w-6xl max-h-[90vh] bg-background rounded-2xl shadow-2xl overflow-hidden">
               {/* Close Button */}

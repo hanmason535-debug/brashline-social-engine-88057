@@ -10,33 +10,64 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
-import { useEffect, useMemo, useState, memo } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useMemo, useState, memo, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import FlipButton from "@/components/ui/flip-button";
 import BackgroundPaths from "@/components/ui/background-paths";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { gpuAcceleration } from "@/utils/animations";
+
 interface HeroProps {
   lang: "en" | "es";
 }
+
 const Hero = memo(({ lang }: HeroProps) => {
   const [titleNumber, setTitleNumber] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
+  
   const titlesEn = useMemo(() => ["Consistent", "Growing", "Visible", "Connected"], []);
   const titlesEs = useMemo(() => ["Constantes", "en Crecimiento", "Visibles", "Conectadas"], []);
   const titles = lang === "en" ? titlesEn : titlesEs;
+  
+  // Cycle titles with cleanup
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (titleNumber === titles.length - 1) {
-        setTitleNumber(0);
-      } else {
-        setTitleNumber(titleNumber + 1);
-      }
+      setTitleNumber((prev) => (prev === titles.length - 1 ? 0 : prev + 1));
     }, 2000);
     return () => clearTimeout(timeoutId);
-  }, [titleNumber, titles]);
+  }, [titleNumber, titles.length]);
+
+  // Optimized animation variants
+  const wordVariants = useMemo(() => ({
+    enter: (direction: number) => ({
+      y: direction > 0 ? 50 : -50,
+      opacity: 0,
+    }),
+    center: {
+      y: 0,
+      opacity: 1,
+      transition: prefersReducedMotion 
+        ? { duration: 0 }
+        : {
+            type: "spring" as const,
+            stiffness: 300,
+            damping: 30,
+          }
+    },
+    exit: (direction: number) => ({
+      y: direction > 0 ? -50 : 50,
+      opacity: 0,
+      transition: prefersReducedMotion
+        ? { duration: 0 }
+        : { duration: 0.2 }
+    }),
+  }), [prefersReducedMotion]);
+
   return (
     <section className="relative overflow-hidden bg-background">
       {/* Animated Background with performance hints */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0" style={{ contain: "layout style paint" }}>
         <BackgroundPaths />
       </div>
 
@@ -54,50 +85,25 @@ const Hero = memo(({ lang }: HeroProps) => {
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-6 animate-fade-in leading-tight">
             <div className="flex flex-col items-center">
               <div>{lang === "en" ? "Be" : "Siempre"}</div>
-              <span
-                className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1"
-                style={{ contain: "layout", willChange: "contents" }}
+              <div 
+                className="relative h-[1.2em] flex items-center justify-center w-full"
+                style={{ contain: "layout style" }}
               >
-                &nbsp;
-                {titles.map((title, index) => (
+                <AnimatePresence mode="wait" initial={false}>
                   <motion.span
-                    key={index}
-                    className="absolute font-bold"
-                    initial={{
-                      opacity: 0,
-                      y: -100,
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 50,
-                      damping: 15,
-                    }}
-                    animate={
-                      titleNumber === index
-                        ? {
-                            y: 0,
-                            opacity: 1,
-                          }
-                        : {
-                            y: titleNumber > index ? -150 : 150,
-                            opacity: 0,
-                          }
-                    }
-                    style={{
-                      willChange:
-                        titleNumber === index ||
-                        titleNumber === index - 1 ||
-                        titleNumber === index + 1
-                          ? "transform, opacity"
-                          : "auto",
-                      transform: "translate3d(0, 0, 0)",
-                      backfaceVisibility: "hidden",
-                    }}
+                    key={titleNumber}
+                    custom={1}
+                    variants={wordVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    className="absolute font-bold whitespace-nowrap"
+                    style={gpuAcceleration}
                   >
-                    {title}
+                    {titles[titleNumber]}
                   </motion.span>
-                ))}
-              </span>
+                </AnimatePresence>
+              </div>
             </div>
           </h1>
 
