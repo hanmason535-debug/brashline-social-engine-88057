@@ -21,9 +21,9 @@ function FloatingPaths({ position }: { position: number }) {
   const [isInView, setIsInView] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Reduce path count on desktop for better performance (36 → 18)
-  // Desktop has more rendering overhead due to larger viewport
-  const pathCount = isDesktop ? 28 : 36;
+  // Reduce path count significantly for better performance
+  // Fewer paths = less GPU load while maintaining visual effect
+  const pathCount = isDesktop ? 16 : 20;
 
   // Phase 2 Optimization: Memoize stable random durations to avoid recalculating on every render
   const durations = useMemo(() => {
@@ -80,20 +80,23 @@ function FloatingPaths({ position }: { position: number }) {
         }}
       >
         <title>Background Paths</title>
-        {/* Phase 2 Optimization: Group animation reduces individual path paint operations */}
+        {/* Optimized: Reduced animation complexity for better performance */}
         <motion.g
-          initial={{ opacity: 0.8 }}
+          initial={{ opacity: 0.6 }}
           animate={
             isInView
               ? {
-                  opacity: [0.5, 0.8, 0.5],
+                  opacity: [0.4, 0.6, 0.4],
                 }
-              : { opacity: 0.5 }
+              : { opacity: 0.4 }
           }
           transition={{
-            duration: 25,
-            repeat: Number.POSITIVE_INFINITY,
+            duration: 30,
+            repeat: Infinity,
             ease: "linear",
+          }}
+          style={{
+            willChange: isInView ? "opacity" : "auto",
           }}
         >
           {paths.map((path, index) => (
@@ -102,20 +105,23 @@ function FloatingPaths({ position }: { position: number }) {
               d={path.d}
               stroke="currentColor"
               strokeWidth={path.width}
-              strokeOpacity={0.3 + path.id * 0.02}
-              initial={{ pathLength: 0.3 }}
+              strokeOpacity={0.25 + path.id * 0.015}
+              initial={{ pathLength: 0.5 }}
               animate={
                 isInView
                   ? {
                       pathLength: 1,
-                      pathOffset: [0, 1, 0],
+                      pathOffset: [0, 0.5, 0],
                     }
                   : { pathLength: 1, pathOffset: 0 }
               }
               transition={{
                 duration: durations[index],
-                repeat: Number.POSITIVE_INFINITY,
+                repeat: Infinity,
                 ease: "linear",
+              }}
+              style={{
+                vectorEffect: "non-scaling-stroke",
               }}
             />
           ))}

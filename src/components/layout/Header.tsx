@@ -206,6 +206,10 @@ const Header = memo(() => {
             <div
               className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden animate-fade-in"
               onClick={() => setMobileMenuOpen(false)}
+              style={{ 
+                willChange: "opacity",
+                transform: "translate3d(0, 0, 0)",
+              }}
             />
 
             {/* Mobile Menu Panel */}
@@ -215,23 +219,23 @@ const Header = memo(() => {
               role="dialog"
               aria-modal="true"
               aria-label={lang === "en" ? "Mobile navigation" : "Navegación móvil"}
+              style={{
+                willChange: "transform, opacity",
+                transform: "translate3d(0, 0, 0)",
+                backfaceVisibility: "hidden",
+              }}
             >
               <div className="container mx-auto px-4 py-6 space-y-4 max-h-[calc(100vh-4rem)] overflow-y-auto">
-                {navigation.top.map((item, index) => (
+                {navigation.top.map((item) => (
                   <Link
                     key={item.href}
                     to={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`block py-3 px-4 text-lg font-medium transition-all duration-300 rounded-lg ${
+                    className={`block py-3 px-4 text-lg font-medium transition-colors duration-200 rounded-lg ${
                       isActive(item.href)
                         ? "text-primary bg-primary/10"
                         : "text-foreground/80 hover:text-primary hover:bg-muted"
                     }`}
-                    style={{
-                      animationDelay: `${index * 50}ms`,
-                      animation: "fade-in 0.3s ease-out forwards",
-                      opacity: 0,
-                    }}
                   >
                     {item.label[lang]}
                   </Link>

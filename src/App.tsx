@@ -18,6 +18,8 @@ import { LoadingBar } from "@/components/ui/loading-bar";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { analytics } from "@/lib/analytics";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { useWebVitals } from "@/hooks/usePerformanceMonitor";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -53,15 +55,20 @@ const PageLoader = () => (
 // Animated route wrapper for smooth page transitions
 const AnimatedRoutes = () => {
   const location = useLocation();
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 20 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -15 }}
-        transition={{ duration: 0.35, ease: "easeOut" }}
+        exit={{ opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : -15 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: "easeOut" }}
+        style={{
+          willChange: prefersReducedMotion ? "auto" : "transform, opacity",
+          transform: "translate3d(0, 0, 0)",
+        }}
       >
         <Routes location={location}>
           <Route path="/" element={<Index />} />
@@ -126,8 +133,12 @@ const GA4Initializer = () => {
   return null;
 };
 
-const App = () => (
-  <AppProviders>
+const App = () => {
+  // Track Web Vitals in development
+  useWebVitals();
+
+  return (
+    <AppProviders>
     <Toaster />
     <Sonner />
     <BrowserRouter
@@ -147,6 +158,7 @@ const App = () => (
     </BrowserRouter>
     <VercelAnalytics />
   </AppProviders>
-);
+  );
+};
 
 export default App;

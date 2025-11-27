@@ -1,0 +1,209 @@
+/**
+ * Performance-Optimized CSS Utilities
+ * GPU-accelerated animations and transforms
+ */
+
+/* GPU Acceleration Hints */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Optimized Animations - Only transform and opacity */
+@keyframes slide-in-right-optimized {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fade-in-optimized {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scale-in-optimized {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Performance Classes */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-transform-opacity {
+  will-change: transform, opacity;
+}
+
+/* Reset will-change after animation completes */
+.will-change-auto {
+  will-change: auto;
+}
+
+/* Contain Layout for Isolated Components */
+.contain-layout {
+  contain: layout;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
+.contain-strict {
+  contain: layout style paint;
+}
+
+/* Optimize Backdrop Blur (expensive operation) */
+.backdrop-blur-optimized {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  /* Use lower blur value for better performance */
+}
+
+/* Smooth Scroll Performance */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-smooth {
+    scroll-behavior: auto;
+  }
+}
+
+/* Optimized Shadow Rendering */
+.shadow-optimized {
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+  /* Simpler shadow with fewer layers */
+}
+
+.shadow-optimized-hover {
+  transition: box-shadow 0.2s ease;
+}
+
+.shadow-optimized-hover:hover {
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.15);
+}
+
+/* Prevent Layout Shifts */
+.prevent-layout-shift {
+  content-visibility: auto;
+}
+
+/* Optimize Image Rendering */
+.image-optimized {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep essential animations but make them instant */
+  .animate-fade-in,
+  .animate-slide-in-right,
+  .animate-scale-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Font Rendering Optimization */
+.text-rendering-optimized {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Interaction States - Fast Transitions */
+.interaction-fast {
+  transition: all 0.15s ease-out;
+}
+
+.interaction-medium {
+  transition: all 0.25s ease-out;
+}
+
+/* Hover States with GPU Acceleration */
+.hover-lift {
+  transition: transform 0.2s ease-out;
+}
+
+.hover-lift:hover {
+  transform: translate3d(0, -4px, 0);
+}
+
+/* Focus States */
+.focus-ring-optimized:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  transition: outline-offset 0.1s ease;
+}
+
+/* Loading Skeleton Optimization */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-loader {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 0%,
+    hsl(var(--muted-foreground) / 0.1) 50%,
+    hsl(var(--muted)) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  will-change: background-position;
+}
+
+/* Scroll Performance */
+.scroll-container-optimized {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Virtual Scroll Optimization */
+.virtual-scroll-item {
+  contain: layout style paint;
+  content-visibility: auto;
+}

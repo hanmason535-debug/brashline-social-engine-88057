@@ -10,16 +10,19 @@
  * Performance:
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
+import { memo, useMemo } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useCountUp } from "@/hooks/useCountUp";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { Users, Award, Clock, TrendingUp } from "lucide-react";
 
 interface StatsSectionProps {
   lang: "en" | "es";
 }
 
-const StatsSection = ({ lang }: StatsSectionProps) => {
+const StatsSection = memo(({ lang }: StatsSectionProps) => {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.3 });
+  const prefersReducedMotion = useReducedMotion();
 
   // Call hooks at the top level for each stat
   const count1 = useCountUp({ end: 500, duration: 2500, shouldStart: isVisible });
@@ -27,7 +30,7 @@ const StatsSection = ({ lang }: StatsSectionProps) => {
   const count3 = useCountUp({ end: 24, duration: 2500, shouldStart: isVisible });
   const count4 = useCountUp({ end: 150, duration: 2500, shouldStart: isVisible });
 
-  const stats = [
+  const stats = useMemo(() => [
     {
       icon: Users,
       count: count1,
@@ -52,7 +55,13 @@ const StatsSection = ({ lang }: StatsSectionProps) => {
       suffix: "%",
       label: { en: "Avg. Growth", es: "Crecimiento Promedio" },
     },
-  ];
+  ], [count1, count2, count3, count4]);
+
+  // Memoize transition delays
+  const transitionDelays = useMemo(() => 
+    stats.map((_, index) => prefersReducedMotion ? 0 : index * 100),
+    [prefersReducedMotion, stats.length]
+  );
 
   return (
     <section
@@ -67,10 +76,14 @@ const StatsSection = ({ lang }: StatsSectionProps) => {
             return (
               <div
                 key={index}
-                className={`text-center transform transition-all duration-700 ${
+                className={`text-center transform transition-all duration-500 ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                style={{ 
+                  transitionDelay: `${transitionDelays[index]}ms`,
+                  willChange: isVisible ? "transform, opacity" : "auto",
+                  transform: "translate3d(0, 0, 0)",
+                }}
               >
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 border border-primary/20 mb-4">
                   <Icon className="h-8 w-8 text-primary" />
@@ -87,6 +100,8 @@ const StatsSection = ({ lang }: StatsSectionProps) => {
       </div>
     </section>
   );
-};
+});
+
+StatsSection.displayName = "StatsSection";
 
 export default StatsSection;
