@@ -19,11 +19,12 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { clerkAppearance } from "@/lib/clerk-theme";
 import { AuthErrorBoundary } from "@/components/auth";
 
-// Clerk Publishable Key
-const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+// Clerk Publishable Key - with fallback for development
+const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || 'pk_test_cHJvZm91bmQtcHVtYS02NC5jbGVyay5hY2NvdW50cy5kZXYk';
 
-if (!CLERK_PUBLISHABLE_KEY) {
-  throw new Error("Missing Clerk Publishable Key. Please set VITE_CLERK_PUBLISHABLE_KEY in your .env file.");
+// Log warning if using fallback key
+if (!import.meta.env.VITE_CLERK_PUBLISHABLE_KEY) {
+  console.warn("Using fallback Clerk key. Set VITE_CLERK_PUBLISHABLE_KEY in environment for production.");
 }
 
 // Log SEO audit reminder in dev mode
