@@ -33,7 +33,11 @@ export const useContactForm = () => {
       name: string;
       email: string;
       company?: string;
+      phone?: string;
+      serviceType?: string;
       message: string;
+      source?: string;
+      metadata?: Record<string, unknown>;
     }) => {
       const response = await apiClient.submitContact(data);
       if (!response.success) {

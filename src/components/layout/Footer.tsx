@@ -12,7 +12,8 @@
  */
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Linkedin, Youtube, Twitter } from "lucide-react";
+import { Facebook, Instagram, Twitter } from "lucide-react";
+// Linkedin, Youtube icons commented out until profiles are created
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const footerLinks = [
@@ -36,8 +37,9 @@ const socialLinks = [
     external: true,
   },
   { icon: Twitter, href: "https://x.com/brashlinex?s=11", label: "X (Twitter)", external: true },
-  { icon: Linkedin, href: "/linkedin-not-found", label: "LinkedIn", external: false },
-  { icon: Youtube, href: "/youtube-not-found", label: "YouTube", external: false },
+  // LinkedIn and YouTube links hidden until real profiles are created
+  // { icon: Linkedin, href: "https://linkedin.com/company/brashline", label: "LinkedIn", external: true },
+  // { icon: Youtube, href: "https://youtube.com/@brashline", label: "YouTube", external: true },
 ];
 
 const Footer = memo(() => {

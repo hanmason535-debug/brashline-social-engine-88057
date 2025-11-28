@@ -169,7 +169,11 @@ class ApiClient {
     name: string;
     email: string;
     company?: string;
+    phone?: string;
+    serviceType?: string;
     message: string;
+    source?: string;
+    metadata?: Record<string, unknown>;
   }): Promise<ApiResponse<ContactSubmissionData>> {
     return this.request("/api/contact", {
       method: "POST",
