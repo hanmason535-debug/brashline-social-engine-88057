@@ -41,6 +41,8 @@ const Dashboard = lazy(() => import("./pages/Dashboard"));
 const SignIn = lazy(() => import("./pages/SignIn"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Profile = lazy(() => import("./pages/Profile"));
+const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
+const PaymentHistory = lazy(() => import("./pages/PaymentHistory"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -89,6 +91,8 @@ const AnimatedRoutes = () => {
           <Route path="/sign-in/*" element={<SignIn />} />
           <Route path="/sign-up/*" element={<SignUp />} />
           <Route path="/profile/*" element={<Profile />} />
+          <Route path="/payment/success" element={<PaymentSuccess />} />
+          <Route path="/payment/history" element={<PaymentHistory />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

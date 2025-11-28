@@ -21,6 +21,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { StripeProvider } from "@/contexts/StripeContext";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
@@ -48,9 +49,11 @@ export function AppProviders({ children }: AppProvidersProps) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <LanguageProvider>
               <AuthProvider>
-                <CartProvider>
-                  <TooltipProvider>{children}</TooltipProvider>
-                </CartProvider>
+                <StripeProvider>
+                  <CartProvider>
+                    <TooltipProvider>{children}</TooltipProvider>
+                  </CartProvider>
+                </StripeProvider>
               </AuthProvider>
             </LanguageProvider>
           </ThemeProvider>
