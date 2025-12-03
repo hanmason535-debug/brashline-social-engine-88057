@@ -11,6 +11,7 @@
  * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
  */
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState } from "react";
 import { RootLayout } from "@/components/layout/RootLayout";
 import SEOHead from "@/components/SEO/SEOHead";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,8 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { getPageSEO } from "@/utils/seo";
 import { useCart } from "@/contexts/CartContext";
+import RecurringPlanCard from "@/components/pricing/RecurringPlanCard";
+import { usePricing } from "@/hooks/usePricing";
 
 const Pricing = () => {
   const { lang } = useLanguage();
@@ -33,6 +36,8 @@ const Pricing = () => {
     threshold: 0.1,
   });
   const pageSEO = getPageSEO("pricing");
+  const { recurringPlans: localizedRecurringPlans } = usePricing(lang);
+  const [billingInterval, setBillingInterval] = useState<"monthly" | "yearly">("monthly");
 
   const recurringPlans = [
     {
@@ -52,6 +57,10 @@ const Pricing = () => {
         { en: "Daily inbox scan", es: "Revisión diaria de bandeja" },
         { en: "Monthly mini-report", es: "Mini-informe mensual" },
       ],
+      stripePriceIds: {
+        monthly: "price_starter_monthly_placeholder",
+        yearly: "price_starter_yearly_placeholder",
+      },
     },
     {
       tier: { en: "STANDARD", es: "ESTÁNDAR" },
@@ -72,6 +81,10 @@ const Pricing = () => {
         { en: "Light Meta ads oversight", es: "Supervisión ligera anuncios" },
         { en: "Monthly performance report", es: "Informe mensual" },
       ],
+      stripePriceIds: {
+        monthly: "price_brand_monthly_placeholder",
+        yearly: "price_brand_yearly_placeholder",
+      },
     },
     {
       tier: { en: "PREMIUM", es: "PREMIUM" },
@@ -91,8 +104,56 @@ const Pricing = () => {
         { en: "Meta + Google ads", es: "Anuncios Meta y Google" },
         { en: "KPI dashboard + strategy call", es: "Dashboard KPIs + llamada" },
       ],
+      stripePriceIds: {
+        monthly: "price_impact_monthly_placeholder",
+        yearly: "price_impact_yearly_placeholder",
+      },
     },
   ];
+
+  // Render recurring plan section
+  const renderRecurringSection = () => (
+    <section ref={recurringRef as React.RefObject<HTMLElement>} className="py-16 md:py-24 bg-background">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <Badge className="mb-4 bg-secondary text-secondary-foreground">
+            {lang === "en" ? "MONTHLY PLANS" : "PLANES MENSUALES"}
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
+            {lang === "en" ? "Pick your plan" : "Elige tu plan"}
+          </h2>
+        </div>
+
+        <div className="mb-6 flex items-center justify-center gap-3">
+          <Button variant={billingInterval === "monthly" ? "default" : "outline"} onClick={() => setBillingInterval("monthly")}>
+            {lang === "en" ? "Monthly" : "Mensual"}
+          </Button>
+          <Button variant={billingInterval === "yearly" ? "default" : "outline"} onClick={() => setBillingInterval("yearly")}>
+            {lang === "en" ? "Yearly" : "Anual"}
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {recurringPlans.map((plan, idx) => (
+            <RecurringPlanCard
+              key={idx}
+              tier={plan.tier}
+              name={plan.name}
+              price={plan.price}
+              annualPrice={plan.annualPrice}
+              annualDiscount={plan.annualDiscount}
+              summary={plan.summary}
+              features={plan.features as any}
+              featured={plan.featured}
+              lang={lang}
+              billingInterval={billingInterval}
+              stripePriceIds={plan.stripePriceIds}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 
   const mainPackage = {
     name: "Digital Launch Pro",
@@ -313,6 +374,7 @@ const Pricing = () => {
   return (
     <RootLayout>
       <SEOHead pageSEO={pageSEO} lang={lang} />
+      {renderRecurringSection()}
       {/* One-Time Launch Package */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -397,6 +459,7 @@ const Pricing = () => {
       </section>
 
       {/* Add-On Packages */}
+      {/* Render Recurring Plan Cards */}
       <section
         ref={projectRef as React.RefObject<HTMLElement>}
         id="addons"

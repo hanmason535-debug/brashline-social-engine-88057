@@ -17,6 +17,7 @@ import { Check, ShoppingCart } from "lucide-react";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { useCart } from "@/contexts/CartContext";
+import { useStripe as useStripeContext } from "@/contexts/StripeContext";
 
 interface RecurringPlanCardProps {
   tier: { en: string; es: string };
@@ -28,6 +29,8 @@ interface RecurringPlanCardProps {
   features: { en: string; es: string }[];
   featured?: boolean;
   lang: "en" | "es";
+  billingInterval: "monthly" | "yearly";
+  stripePriceIds?: { monthly?: string; yearly?: string };
 }
 
 export const RecurringPlanCard = ({
@@ -40,19 +43,61 @@ export const RecurringPlanCard = ({
   features,
   featured,
   lang,
+  billingInterval,
+  stripePriceIds,
 }: RecurringPlanCardProps) => {
   const { addToCart } = useCart();
+  const { createCheckoutSession, isLoading } = useStripeContext();
 
   const handleAddToCart = () => {
+    const cartPrice = billingInterval === "yearly" ? annualPrice : price;
     addToCart({
       id: `recurring-${name.toLowerCase().replace(/\s+/g, "-")}`,
       name,
-      price,
+      price: cartPrice,
       type: "recurring",
       tier: tier[lang],
       summary: summary[lang],
       features: features.map((f) => f[lang]),
     });
+  };
+
+  const handleCheckout = async () => {
+    // Resolve price ID from stripePriceIds or from environment variables as a fallback
+    const normalized = name.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
+    const envKey = `VITE_STRIPE_PRICE_${normalized}_${billingInterval === "monthly" ? "MONTHLY" : "YEARLY"}`;
+    const envPriceId = (import.meta.env as any)[envKey] as string | undefined;
+    const priceId = billingInterval === "monthly" ? stripePriceIds?.monthly || envPriceId : stripePriceIds?.yearly || envPriceId;
+    if (!priceId) {
+      addToCart({
+        id: `recurring-${name.toLowerCase().replace(/\s+/g, "-")}`,
+        name,
+        price,
+        type: "recurring",
+        tier: tier[lang],
+        summary: summary[lang],
+        features: features.map((f) => f[lang]),
+      });
+      return;
+    }
+
+    try {
+      const result = await createCheckoutSession(priceId, "subscription");
+      if (result?.url) {
+        window.location.href = result.url;
+      }
+    } catch (err) {
+      // On error, fallback to add to cart
+      addToCart({
+        id: `recurring-${name.toLowerCase().replace(/\s+/g, "-")}`,
+        name,
+        price,
+        type: "recurring",
+        tier: tier[lang],
+        summary: summary[lang],
+        features: features.map((f) => f[lang]),
+      });
+    }
   };
 
   return (
@@ -126,11 +171,20 @@ export const RecurringPlanCard = ({
         ))}
       </CardContent>
 
-      <CardFooter className="pt-6 relative z-10">
+      <CardFooter className="pt-6 relative z-10 flex gap-3">
+        <Button
+          onClick={handleCheckout}
+          className="w-full transition-transform hover:scale-105 gap-2"
+          variant={featured ? "default" : "outline"}
+          disabled={isLoading}
+        >
+          <ShoppingCart className="h-4 w-4" />
+          {isLoading ? (lang === "en" ? "Processing..." : "Procesando...") : (lang === "en" ? "Get Started" : "Comenzar")}
+        </Button>
         <Button
           onClick={handleAddToCart}
           className="w-full transition-transform hover:scale-105 gap-2"
-          variant={featured ? "default" : "outline"}
+          variant={featured ? "secondary" : "ghost"}
         >
           <ShoppingCart className="h-4 w-4" />
           {lang === "en" ? "Add to Cart" : "Agregar al Carrito"}
@@ -139,3 +193,6 @@ export const RecurringPlanCard = ({
     </Card>
   );
 };
+
+// Provide a default export to align with imports across the codebase
+export default RecurringPlanCard;

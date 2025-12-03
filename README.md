@@ -47,6 +47,11 @@ This project uses [Clerk](https://clerk.com) for authentication. See [AUTHENTICA
    VITE_CLERK_PUBLISHABLE_KEY=pk_test_xxxxx
    ```
 
+## 💡 Model Context Protocol (MCP)
+
+This workspace contains configuration for Stripe MCP (Model Context Protocol) to enable VS Code developers and trusted agents to interact with Stripe via the MCP server. See [docs/MCP_SETUP.md](./docs/MCP_SETUP.md) for detailed instructions on installing Stripe MCP, creating restricted API keys, and configuring webhook endpoints.
+
+
 ### Auth Routes
 - `/sign-in` - Sign in page
 - `/sign-up` - Sign up page  
@@ -88,6 +93,11 @@ The backend API is built with Express.js and deployed as Vercel Serverless Funct
 | POST | `/api/newsletter/unsubscribe` | Newsletter unsubscription |
 | GET | `/api/auth/me` | Get current user (auth required) |
 | PATCH | `/api/auth/me/preferences` | Update preferences (auth required) |
+| POST | `/api/payments/create-intent` | Create payment intent (auth required) |
+| GET | `/api/payments/history` | Get payment history (auth required) |
+| GET | `/api/payments/status/:id` | Get payment status (auth required) |
+| GET | `/api/payments/subscription` | Get subscription status (auth required) |
+| POST | `/api/webhooks/stripe` | Stripe webhook handler |
 
 ### Database Tables
 
@@ -95,8 +105,272 @@ The backend API is built with Express.js and deployed as Vercel Serverless Funct
 - `contact_submissions` - Contact form entries
 - `newsletter_subscribers` - Newsletter list
 - `user_preferences` - User settings
+- `stripe_customers` - Stripe customer mapping
+- `products` - Stripe products (synced)
+- `prices` - Product pricing tiers
+- `subscriptions` - Active subscriptions
+- `payments` - Payment transactions
 
 See [docs/BACKEND_API.md](./docs/BACKEND_API.md) for full API documentation.
+
+## 💳 Stripe Payment Integration
+
+This project includes full Stripe payment processing for subscriptions and one-time payments.
+
+### Setup Instructions
+
+#### 1. Get Stripe API Keys
+
+1. Create account at [stripe.com](https://stripe.com)
+2. Go to **Developers → API keys**
+3. Copy your keys (use test keys for development)
+
+#### 2. Configure Environment Variables
+
+Add to `.env`:
+```env
+# Stripe Keys (use test keys for development)
+STRIPE_SECRET_KEY=sk_test_xxxxx
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxx
+STRIPE_WEBHOOK_SECRET=whsec_xxxxx
+```
+
+Add to Vercel environment variables (production):
+- `STRIPE_SECRET_KEY` (secret key)
+- `VITE_STRIPE_PUBLISHABLE_KEY` (publishable key)
+- `STRIPE_WEBHOOK_SECRET` (webhook signing secret)
+
+#### 3. Create Products and Prices in Stripe Dashboard
+
+1. Go to **Products** in Stripe Dashboard
+2. Create your products (e.g., "Starter Spark", "Brand Pulse", "Impact Engine")
+3. Add prices for each product:
+   - Set amount (e.g., $99.00, $179.00, $399.00)
+   - Choose billing interval (monthly/yearly for subscriptions, or one-time)
+4. Copy the **Price ID** (starts with `price_`)
+
+#### 4. Update Price IDs in Code
+
+Edit `src/lib/stripe.ts` and add your price IDs:
+```typescript
+export const STRIPE_PRICE_IDS = {
+  starter: {
+    monthly: "price_xxxxx", // Your Stripe price ID
+    yearly: "price_xxxxx",
+  },
+  professional: {
+    monthly: "price_xxxxx",
+    yearly: "price_xxxxx",
+  },
+  enterprise: {
+    monthly: "price_xxxxx",
+    yearly: "price_xxxxx",
+  },
+};
+```
+
+#### 5. Configure Webhooks
+
+##### Local Development (using Stripe CLI)
+
+```bash
+# Install Stripe CLI
+# Windows: scoop install stripe
+# Mac: brew install stripe/stripe-cli/stripe
+# Linux: Download from https://stripe.com/docs/stripe-cli
+
+# Login to Stripe
+stripe login
+
+# Forward webhooks to local server
+stripe listen --forward-to localhost:3001/api/webhooks/stripe
+
+# Copy the webhook signing secret (whsec_...) to .env
+```
+
+##### Production (Vercel)
+
+1. Go to **Developers → Webhooks** in Stripe Dashboard
+2. Click **Add endpoint**
+3. Enter URL: `https://your-domain.vercel.app/api/webhooks/stripe`
+4. Select events to listen to:
+   - `checkout.session.completed`
+   - `payment_intent.succeeded`
+   - `payment_intent.payment_failed`
+   - `customer.subscription.created`
+   - `customer.subscription.updated`
+   - `customer.subscription.deleted`
+   - `invoice.paid`
+   - `invoice.payment_failed`
+5. Copy the **Signing secret** and add to Vercel environment variables
+
+#### 6. Run Database Migrations
+
+The Stripe tables are already defined in the schema. Ensure they're created:
+
+```bash
+cd server
+npm run db:generate  # Generate migration
+npm run db:push      # Push to database
+```
+
+Or use Neon MCP tools to verify tables exist:
+- `stripe_customers`
+- `products`
+- `prices`
+- `subscriptions`
+- `payments`
+
+### Testing Payments
+
+#### Test Cards
+
+Use these test cards in development:
+
+| Card Number | Result |
+|-------------|--------|
+| `4242 4242 4242 4242` | Success |
+| `4000 0000 0000 9995` | Declined |
+| `4000 0025 0000 3155` | Requires authentication (3D Secure) |
+
+- **Expiry:** Any future date
+- **CVC:** Any 3 digits
+- **ZIP:** Any 5 digits
+
+#### Test Webhook Events
+
+```bash
+# Trigger test events with Stripe CLI
+stripe trigger payment_intent.succeeded
+stripe trigger checkout.session.completed
+stripe trigger customer.subscription.created
+```
+
+#### Manual Testing Flow
+
+1. **Start Local Development:**
+   ```bash
+   # Terminal 1: Start frontend
+   npm run dev
+   
+   # Terminal 2: Start backend
+   cd server && npm run dev
+   
+   # Terminal 3: Forward webhooks
+   stripe listen --forward-to localhost:3001/api/webhooks/stripe
+   ```
+
+2. **Test Checkout Flow:**
+   - Navigate to `/pricing`
+   - Click "Get Started" on a plan
+   - Sign in with Clerk (if not authenticated)
+   - Complete checkout with test card `4242 4242 4242 4242`
+   - Verify redirect to `/payment/success`
+   - Check payment in dashboard at `/payment/history`
+
+3. **Verify Database:**
+   - Check `payments` table for new entry
+   - Check `subscriptions` table (if subscription)
+   - Check `stripe_customers` table for customer mapping
+
+4. **Test Webhook Processing:**
+   - Check server logs for webhook events
+   - Verify payment status updates in database
+   - Test webhook signature verification
+
+### Payment Features
+
+#### Implemented Features
+
+- ✅ One-time payments (PaymentIntent API)
+- ✅ Subscription payments (Checkout Sessions)
+- ✅ Customer portal (manage subscriptions)
+- ✅ Payment history view
+- ✅ Webhook event handling
+- ✅ Automatic customer creation
+- ✅ Database record syncing
+- ✅ Stripe Elements integration
+- ✅ Dark mode support for payment UI
+
+#### Payment Pages
+
+- `/pricing` - View plans and pricing
+- `/checkout` - Custom payment form
+- `/payment/success` - Payment confirmation
+- `/payment/history` - Payment transaction history
+- `/dashboard` - Subscription status
+
+#### Components
+
+- `<PricingCard>` - Pricing plan cards with checkout
+- `<PaymentForm>` - Custom payment form with Stripe Elements
+- `<SubscriptionStatus>` - Current subscription display
+- `<StripeProvider>` - Stripe context wrapper
+
+### Troubleshooting
+
+#### Common Issues
+
+**"Stripe publishable key not found"**
+- Verify `VITE_STRIPE_PUBLISHABLE_KEY` is set in `.env`
+- Restart dev server after adding environment variables
+
+**"Webhook signature verification failed"**
+- Ensure `STRIPE_WEBHOOK_SECRET` matches your webhook endpoint
+- In development, get secret from `stripe listen` command
+- In production, get from Stripe Dashboard webhook settings
+
+**"Payment not showing in database"**
+- Check webhook is configured and receiving events
+- Verify webhook handler logs in server console
+- Ensure database connection is active
+- Check for any errors in webhook processing
+
+**"Customer not found"**
+- User must be authenticated (signed in with Clerk)
+- Customer is created on first payment attempt
+- Check `stripe_customers` table for user mapping
+
+### Security Best Practices
+
+- ✅ Never expose `STRIPE_SECRET_KEY` in frontend code
+- ✅ Always validate amounts on backend
+- ✅ Store amounts in cents (integers) to avoid floating-point errors
+- ✅ Use webhooks as source of truth for payment status
+- ✅ Verify webhook signatures to prevent spoofing
+- ✅ Implement rate limiting on payment endpoints
+- ✅ Log all payment events for audit trail
+- ✅ Use HTTPS in production (required by Stripe)
+- ✅ Follow PCI compliance guidelines
+
+### Production Deployment
+
+1. **Environment Variables:**
+   - Add all Stripe keys to Vercel environment variables
+   - Use production keys (not test keys)
+
+2. **Webhook Configuration:**
+   - Create production webhook endpoint in Stripe
+   - Use production URL: `https://your-domain.com/api/webhooks/stripe`
+   - Update `STRIPE_WEBHOOK_SECRET` in Vercel
+
+3. **Database:**
+   - Ensure production database has all Stripe tables
+   - Run migrations if needed
+
+4. **Testing:**
+   - Use test mode first with production keys
+   - Verify webhook events are received
+   - Test full payment flow end-to-end
+   - Switch to live mode when ready
+
+### Additional Resources
+
+- [Stripe Documentation](https://stripe.com/docs)
+- [Stripe Testing Guide](https://stripe.com/docs/testing)
+- [Stripe Webhooks](https://stripe.com/docs/webhooks)
+- [Stripe Elements](https://stripe.com/docs/stripe-js)
+- [Stripe API Reference](https://stripe.com/docs/api)
 
 ## 🏗️ Tech Stack
 

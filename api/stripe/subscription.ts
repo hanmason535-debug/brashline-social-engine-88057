@@ -5,11 +5,9 @@
  * Returns the current user's subscription status
  */
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import Stripe from "stripe";
 import { neon } from "@neondatabase/serverless";
 import { verifyToken } from "@clerk/backend";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS headers

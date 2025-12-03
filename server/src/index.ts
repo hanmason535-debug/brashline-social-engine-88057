@@ -22,6 +22,8 @@ import { logger } from "./utils/logger.js";
 import contactRoutes from "./routes/contact.js";
 import newsletterRoutes from "./routes/newsletter.js";
 import authRoutes from "./routes/auth.js";
+import paymentRoutes from "./routes/payments.js";
+import webhookRoutes from "./routes/webhooks.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -59,6 +61,10 @@ const corsOptions: cors.CorsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+// Stripe webhooks (must be BEFORE body parsing middleware)
+// Webhooks need raw body for signature verification
+app.use("/api/webhooks/stripe", express.raw({ type: "application/json" }), webhookRoutes);
 
 // Body parsing
 app.use(express.json({ limit: "10kb" }));
@@ -154,6 +160,7 @@ app.get("/health", async (_req: Request, res: Response) => {
 app.use("/api/contact", contactLimiter, contactRoutes);
 app.use("/api/newsletter", newsletterLimiter, newsletterRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/payments", paymentRoutes);
 
 // 404 handler
 app.use(notFoundHandler);

@@ -47,6 +47,10 @@ const plans = [
       { en: "Photography or video", es: "Fotografía o video", included: false },
       { en: "SEO or ads", es: "SEO o anuncios", included: false },
     ],
+    stripePriceIds: {
+      monthly: "price_starter_monthly_placeholder",
+      yearly: "price_starter_yearly_placeholder",
+    }
   },
   {
     tier: { en: "STANDARD", es: "ESTÁNDAR" },
@@ -70,6 +74,10 @@ const plans = [
       { en: "Photography", es: "Fotografía", included: false },
       { en: "Premium SEO", es: "SEO Premium", included: false },
     ],
+    stripePriceIds: {
+      monthly: "price_brand_monthly_placeholder",
+      yearly: "price_brand_yearly_placeholder",
+    }
   },
   {
     tier: { en: "PREMIUM", es: "PREMIUM" },
@@ -92,6 +100,10 @@ const plans = [
       { en: "CRM integration", es: "Integración CRM", included: true },
       { en: "Advanced tracking", es: "Seguimiento avanzado", included: true },
     ],
+    stripePriceIds: {
+      monthly: "price_impact_monthly_placeholder",
+      yearly: "price_impact_yearly_placeholder",
+    },
   },
 ];
 

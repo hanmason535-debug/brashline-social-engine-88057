@@ -4,9 +4,10 @@
  * 
  * Handles Stripe webhook events for payments, subscriptions, and invoices
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
-import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
+import { neon } from "@neondatabase/serverless";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -129,8 +130,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 }
 
 // Event handlers
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type SqlClient = any;
+type SqlClient = ReturnType<typeof neon>;
 
 async function handleCheckoutSessionCompleted(
   sql: SqlClient,

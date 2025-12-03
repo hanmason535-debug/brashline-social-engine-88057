@@ -27,6 +27,10 @@ export const RECURRING_PLANS: RecurringPlan[] = [
       { en: "Daily inbox scan", es: "Revisión diaria de bandeja" },
       { en: "Monthly mini-report", es: "Mini-informe mensual" },
     ],
+    stripePriceIds: {
+      monthly: "price_starter_monthly_placeholder",
+      yearly: "price_starter_yearly_placeholder",
+    },
   },
   {
     tier: { en: "STANDARD", es: "ESTÁNDAR" },
@@ -47,6 +51,10 @@ export const RECURRING_PLANS: RecurringPlan[] = [
       { en: "Light Meta ads oversight", es: "Supervisión ligera anuncios" },
       { en: "Monthly performance report", es: "Informe mensual" },
     ],
+    stripePriceIds: {
+      monthly: "price_brand_monthly_placeholder",
+      yearly: "price_brand_yearly_placeholder",
+    },
   },
   {
     tier: { en: "PREMIUM", es: "PREMIUM" },
@@ -66,6 +74,10 @@ export const RECURRING_PLANS: RecurringPlan[] = [
       { en: "Meta + Google ads", es: "Anuncios Meta y Google" },
       { en: "KPI dashboard + strategy call", es: "Dashboard KPIs + llamada" },
     ],
+    stripePriceIds: {
+      monthly: "price_impact_monthly_placeholder",
+      yearly: "price_impact_yearly_placeholder",
+    },
   },
 ];
 
