@@ -89,6 +89,7 @@ export const MAIN_PACKAGE: OneTimePackage = {
   price: 2999,
   type: "one-time",
   stripeProductId: "prod_TVS5FcxrQkvq5L",
+  stripePriceId: "price_digital_launch_pro_placeholder",
   tagline: {
     en: "Full business setup — for new or rebranding clients",
     es: "Configuración completa del negocio — para clientes nuevos o en proceso de rebranding",
@@ -190,6 +191,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     price: 399,
     type: "one-time",
     stripeProductId: "prod_TVS7v3cOTcXY76",
+    stripePriceId: "price_visual_vault_placeholder",
     tagline: {
       en: "Photography & video creation",
       es: "Creación de fotografía y video",
@@ -213,6 +215,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     price: 899,
     type: "one-time",
     stripeProductId: "prod_TVSAvZFkkSQ1tu",
+    stripePriceId: "price_automateiq_placeholder",
     tagline: {
       en: "CRM + workflow automation",
       es: "CRM + automatización de flujo de trabajo",
@@ -239,6 +242,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     price: 599,
     type: "one-time",
     stripeProductId: "prod_TVSBLbVY78wqB1",
+    stripePriceId: "price_local_surge_placeholder",
     tagline: {
       en: "Local search & map ranking boost",
       es: "Búsqueda local y mejora de clasificación en mapas",
@@ -265,6 +269,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     price: 799,
     type: "one-time",
     stripeProductId: "prod_TVSBP43xi9RfXE",
+    stripePriceId: "price_commerce_boost_placeholder",
     tagline: {
       en: "E-commerce and delivery integration",
       es: "Integración de e-commerce y entrega",
@@ -290,6 +295,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     price: 399,
     type: "one-time",
     stripeProductId: "prod_TVSCwnL5zuQdxy",
+    stripePriceId: "price_data_pulse_placeholder",
     tagline: {
       en: "Analytics + performance dashboard",
       es: "Análisis + panel de rendimiento",

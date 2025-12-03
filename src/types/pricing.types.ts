@@ -38,6 +38,7 @@ export interface OneTimePackage {
   features: PricingFeature[];
   bestFor: LocalizedContent;
   stripeProductId?: string;
+  stripePriceId?: string;
 }
 
 export interface LocalizedRecurringPlan
@@ -52,4 +53,6 @@ export interface LocalizedOneTimePackage
   tagline: string;
   features: string[];
   bestFor: string;
+  stripeProductId?: string;
+  stripePriceId?: string;
 }

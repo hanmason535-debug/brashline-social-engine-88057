@@ -21,9 +21,9 @@ function FloatingPaths({ position }: { position: number }) {
   const [isInView, setIsInView] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Reduce path count significantly for better performance
-  // Fewer paths = less GPU load while maintaining visual effect
-  const pathCount = isDesktop ? 16 : 20;
+  // Increased path count for more visible animation effect
+  // Balance between visual impact and performance
+  const pathCount = isDesktop ? 28 : 36;
 
   // Phase 2 Optimization: Memoize stable random durations to avoid recalculating on every render
   const durations = useMemo(() => {
@@ -80,18 +80,18 @@ function FloatingPaths({ position }: { position: number }) {
         }}
       >
         <title>Background Paths</title>
-        {/* Optimized: Reduced animation complexity for better performance */}
+        {/* Optimized group animation with increased visibility */}
         <motion.g
-          initial={{ opacity: 0.6 }}
+          initial={{ opacity: 0.8 }}
           animate={
             isInView
               ? {
-                  opacity: [0.4, 0.6, 0.4],
+                  opacity: [0.5, 0.8, 0.5],
                 }
-              : { opacity: 0.4 }
+              : { opacity: 0.5 }
           }
           transition={{
-            duration: 30,
+            duration: 25,
             repeat: Infinity,
             ease: "linear",
           }}
@@ -105,13 +105,13 @@ function FloatingPaths({ position }: { position: number }) {
               d={path.d}
               stroke="currentColor"
               strokeWidth={path.width}
-              strokeOpacity={0.25 + path.id * 0.015}
-              initial={{ pathLength: 0.5 }}
+              strokeOpacity={0.3 + path.id * 0.02}
+              initial={{ pathLength: 0.3 }}
               animate={
                 isInView
                   ? {
                       pathLength: 1,
-                      pathOffset: [0, 0.5, 0],
+                      pathOffset: [0, 1, 0],
                     }
                   : { pathLength: 1, pathOffset: 0 }
               }
