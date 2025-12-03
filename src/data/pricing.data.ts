@@ -27,6 +27,7 @@ export const RECURRING_PLANS: RecurringPlan[] = [
       { en: "Daily inbox scan", es: "Revisión diaria de bandeja" },
       { en: "Monthly mini-report", es: "Mini-informe mensual" },
     ],
+    stripeProductId: "prod_TVRrohKG1uB7fa",
     stripePriceIds: {
       monthly: "price_starter_monthly_placeholder",
       yearly: "price_starter_yearly_placeholder",
@@ -51,6 +52,7 @@ export const RECURRING_PLANS: RecurringPlan[] = [
       { en: "Light Meta ads oversight", es: "Supervisión ligera anuncios" },
       { en: "Monthly performance report", es: "Informe mensual" },
     ],
+    stripeProductId: "prod_TVRrso4JzT9ceT",
     stripePriceIds: {
       monthly: "price_brand_monthly_placeholder",
       yearly: "price_brand_yearly_placeholder",
@@ -74,6 +76,7 @@ export const RECURRING_PLANS: RecurringPlan[] = [
       { en: "Meta + Google ads", es: "Anuncios Meta y Google" },
       { en: "KPI dashboard + strategy call", es: "Dashboard KPIs + llamada" },
     ],
+    stripeProductId: "prod_TVRsONeDHkB2it",
     stripePriceIds: {
       monthly: "price_impact_monthly_placeholder",
       yearly: "price_impact_yearly_placeholder",
@@ -85,6 +88,7 @@ export const MAIN_PACKAGE: OneTimePackage = {
   name: "Digital Launch Pro",
   price: 2999,
   type: "one-time",
+  stripeProductId: "prod_TVS5FcxrQkvq5L",
   tagline: {
     en: "Full business setup — for new or rebranding clients",
     es: "Configuración completa del negocio — para clientes nuevos o en proceso de rebranding",
@@ -185,6 +189,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     name: "Visual Vault",
     price: 399,
     type: "one-time",
+    stripeProductId: "prod_TVS7v3cOTcXY76",
     tagline: {
       en: "Photography & video creation",
       es: "Creación de fotografía y video",
@@ -207,6 +212,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     name: "AutomateIQ",
     price: 899,
     type: "one-time",
+    stripeProductId: "prod_TVSAvZFkkSQ1tu",
     tagline: {
       en: "CRM + workflow automation",
       es: "CRM + automatización de flujo de trabajo",
@@ -232,6 +238,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     name: "Local Surge",
     price: 599,
     type: "one-time",
+    stripeProductId: "prod_TVSBLbVY78wqB1",
     tagline: {
       en: "Local search & map ranking boost",
       es: "Búsqueda local y mejora de clasificación en mapas",
@@ -257,6 +264,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     name: "Commerce Boost",
     price: 799,
     type: "one-time",
+    stripeProductId: "prod_TVSBP43xi9RfXE",
     tagline: {
       en: "E-commerce and delivery integration",
       es: "Integración de e-commerce y entrega",
@@ -281,6 +289,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     name: "Data Pulse",
     price: 399,
     type: "one-time",
+    stripeProductId: "prod_TVSCwnL5zuQdxy",
     tagline: {
       en: "Analytics + performance dashboard",
       es: "Análisis + panel de rendimiento",

@@ -23,6 +23,7 @@ export interface RecurringPlan {
   featured?: boolean;
   summary: LocalizedContent;
   features: PricingFeature[];
+  stripeProductId?: string;
   stripePriceIds?: {
     monthly?: string;
     yearly?: string;
@@ -36,6 +37,7 @@ export interface OneTimePackage {
   tagline: LocalizedContent;
   features: PricingFeature[];
   bestFor: LocalizedContent;
+  stripeProductId?: string;
 }
 
 export interface LocalizedRecurringPlan
