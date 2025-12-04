@@ -79,7 +79,7 @@ jobs:
           du -h dist/assets/*.js | sort -rh | head -10
 
       - name: Upload build artifact for lighthouse
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build-dist
           path: dist/
@@ -121,7 +121,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload Lighthouse results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: always()
         with:
           name: lighthouse-results
