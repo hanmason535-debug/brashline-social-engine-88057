@@ -297,6 +297,23 @@ export const STRIPE_PRICE_IDS = {
   // ... etc
 };
 ```
+### Current Price ID Mapping (Provided)
+Use this mapping to seed your DB or set env vars. These price IDs were provided and inserted into `pricing.data.ts` as defaults.
+
+| Product | Stripe Price ID | Type |
+|---------|-----------------|------|
+| Starter Spark | price_1SYQxZBlSadv5HO95adqBVKV | Recurring (monthly/yearly placeholder) |
+| Brand Pulse | price_1SYQy8BlSadv5HO9yEVLGlHd | Recurring (monthly/yearly placeholder) |
+| Impact Engine | price_1SYQyYBlSadv5HO9kykoYbvI | Recurring (monthly/yearly placeholder) |
+| Digital Launch Pro | price_1SYRBEBlSadv5HO9NAer0awA | One-time |
+| Visual Vault | (not provided — placeholder) | One-time |
+| AutomateIQ | price_1SYRGWBlSadv5HO9gvMfjTD0 | One-time |
+| Local Surge | price_1SYRGuBlSadv5HO9J7xs09kF | One-time |
+| Commerce Boost | price_1SYRHKBlSadv5HO92oQpkMnj | One-time |
+| Data Pulse | price_1SYRHsBlSadv5HO9KQb1nHR7 | One-time |
+| Brand Forge | price_1SYRCnBlSadv5HO9hGR5Zhad | One-time |
+| Ad Storm | price_1SYRC1BlSadv5HO96aXw8nts | One-time |
+
 
 Alternatively, you can set price IDs in environment variables for sandbox or production without editing code directly. The UI looks up these `VITE_` variables automatically if present.
 
