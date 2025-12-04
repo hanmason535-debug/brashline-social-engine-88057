@@ -309,6 +309,48 @@ VITE_STRIPE_PRICE_IMPACT_ENGINE_MONTHLY=price_XXXXX
 VITE_STRIPE_PRICE_IMPACT_ENGINE_YEARLY=price_XXXXX
 ```
 
+For one-time packages, set these env vars (optional):
+```
+VITE_STRIPE_PRICE_DIGITAL_LAUNCH_PRO_ONE_TIME=price_XXXX
+VITE_STRIPE_PRICE_VISUAL_VAULT_ONE_TIME=price_XXXX
+VITE_STRIPE_PRICE_AUTOMATEIQ_ONE_TIME=price_XXXX
+VITE_STRIPE_PRICE_LOCAL_SURGE_ONE_TIME=price_XXXX
+VITE_STRIPE_PRICE_COMMERCE_BOOST_ONE_TIME=price_XXXX
+VITE_STRIPE_PRICE_DATA_PULSE_ONE_TIME=price_XXXX
+```
+
+### Creating Prices Fast: Helper Scripts
+
+We added convenience scripts to create Price IDs via the Stripe CLI (or MCP):
+
+- Bash: `scripts/create_price_ids.sh` — usage:
+```
+./scripts/create_price_ids.sh <product_id> <monthly_cents> <yearly_cents> <env_var_prefix>
+# Example:
+./scripts/create_price_ids.sh prod_TVRrohKG1uB7fa 9900 110600 STARTER_SPARK
+```
+This will output two environment exports you can copy to Vercel or `.env`.
+
+- PowerShell: `scripts/create_price_ids.ps1` — usage:
+```
+.\scripts\create_price_ids.ps1 -ProductId prod_TVRrohKG1uB7fa -MonthlyCents 9900 -YearlyCents 110600 -Prefix STARTER_SPARK
+```
+
+These scripts require Stripe CLI. They will return `price_xxx` values and print the exact `VITE_STRIPE_PRICE_<PREFIX>_<MONTHLY|YEARLY>` lines you should add to your environment.
+
+### Validation
+Once you have set env vars, run the validation script to ensure the price IDs exist in Stripe and your env is configured correctly:
+
+```bash
+# Validate in Bash (Stripe CLI required)
+./scripts/validate_price_ids.sh
+
+# Validate in PowerShell
+./scripts/validate_price_ids.ps1
+```
+
+
+
 ### 5. Setup Webhooks
 
 #### Local Development
