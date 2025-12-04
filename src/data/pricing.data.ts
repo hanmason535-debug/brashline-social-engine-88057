@@ -52,7 +52,7 @@ export const RECURRING_PLANS: RecurringPlan[] = [
     stripeProductId: "prod_TVRrohKG1uB7fa",
     stripePriceIds: {
       monthly: envPriceValue("Starter Spark", "monthly") || "price_1SYQxZBlSadv5HO95adqBVKV",
-      yearly: envPriceValue("Starter Spark", "yearly") || "price_1SYQxZBlSadv5HO95adqBVKV",
+      yearly: envPriceValue("Starter Spark", "yearly") || "price_starter_yearly_placeholder",
     },
   },
   {
@@ -77,7 +77,7 @@ export const RECURRING_PLANS: RecurringPlan[] = [
     stripeProductId: "prod_TVRrso4JzT9ceT",
     stripePriceIds: {
       monthly: envPriceValue("Brand Pulse", "monthly") || "price_1SYQy8BlSadv5HO9yEVLGlHd",
-      yearly: envPriceValue("Brand Pulse", "yearly") || "price_1SYQy8BlSadv5HO9yEVLGlHd",
+      yearly: envPriceValue("Brand Pulse", "yearly") || "price_brand_yearly_placeholder",
     },
   },
   {
@@ -101,7 +101,7 @@ export const RECURRING_PLANS: RecurringPlan[] = [
     stripeProductId: "prod_TVRsONeDHkB2it",
     stripePriceIds: {
       monthly: envPriceValue("Impact Engine", "monthly") || "price_1SYQyYBlSadv5HO9kykoYbvI",
-      yearly: envPriceValue("Impact Engine", "yearly") || "price_1SYQyYBlSadv5HO9kykoYbvI",
+      yearly: envPriceValue("Impact Engine", "yearly") || "price_impact_yearly_placeholder",
     },
   },
 ];
@@ -213,7 +213,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     price: 399,
     type: "one-time",
     stripeProductId: "prod_TVS7v3cOTcXY76",
-    stripePriceId: envOneTimePriceValue("Visual Vault") || "price_visual_vault_placeholder",
+    stripePriceId: envOneTimePriceValue("Visual Vault") || "price_1SYRDIBlSadv5HO9eyQpz5Af",
     tagline: {
       en: "Photography & video creation",
       es: "Creación de fotografía y video",

@@ -302,11 +302,11 @@ Use this mapping to seed your DB or set env vars. These price IDs were provided 
 
 | Product | Stripe Price ID | Type |
 |---------|-----------------|------|
-| Starter Spark | price_1SYQxZBlSadv5HO95adqBVKV | Recurring (monthly/yearly placeholder) |
-| Brand Pulse | price_1SYQy8BlSadv5HO9yEVLGlHd | Recurring (monthly/yearly placeholder) |
-| Impact Engine | price_1SYQyYBlSadv5HO9kykoYbvI | Recurring (monthly/yearly placeholder) |
+| Starter Spark | price_1SYQxZBlSadv5HO95adqBVKV | Recurring (monthly only — yearly pending) |
+| Brand Pulse | price_1SYQy8BlSadv5HO9yEVLGlHd | Recurring (monthly only — yearly pending) |
+| Impact Engine | price_1SYQyYBlSadv5HO9kykoYbvI | Recurring (monthly only — yearly pending) |
 | Digital Launch Pro | price_1SYRBEBlSadv5HO9NAer0awA | One-time |
-| Visual Vault | (not provided — placeholder) | One-time |
+| Visual Vault | price_1SYRDIBlSadv5HO9eyQpz5Af | One-time |
 | AutomateIQ | price_1SYRGWBlSadv5HO9gvMfjTD0 | One-time |
 | Local Surge | price_1SYRGuBlSadv5HO9J7xs09kF | One-time |
 | Commerce Boost | price_1SYRHKBlSadv5HO92oQpkMnj | One-time |
