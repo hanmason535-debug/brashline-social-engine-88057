@@ -24,6 +24,7 @@ import newsletterRoutes from "./routes/newsletter.js";
 import authRoutes from "./routes/auth.js";
 import paymentRoutes from "./routes/payments.js";
 import webhookRoutes from "./routes/webhooks.js";
+import stripeRoutes from "./routes/stripe.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -161,6 +162,7 @@ app.use("/api/contact", contactLimiter, contactRoutes);
 app.use("/api/newsletter", newsletterLimiter, newsletterRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/stripe", stripeRoutes);
 
 // 404 handler
 app.use(notFoundHandler);

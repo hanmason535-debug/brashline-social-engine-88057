@@ -4,6 +4,7 @@
  */
 import { Request, Response } from "express";
 import { getSql } from "../config/database.js";
+import Stripe from 'stripe';
 import { stripe } from "../config/stripe.js";
 import { asyncHandler, ApiError } from "../middleware/error.js";
 import { logger } from "../utils/logger.js";
@@ -305,3 +306,88 @@ export const getSubscriptionStatus = asyncHandler(
     });
   }
 );
+
+/**
+ * Create a Stripe Checkout Session (Express / server-side)
+ * POST /api/payments/create-checkout-session
+ * Body: { priceId, mode, successUrl, cancelUrl, metadata }
+ */
+export const createCheckoutSession = asyncHandler(async (req: Request, res: Response) => {
+  const { priceId, mode = 'subscription', successUrl, cancelUrl, metadata } = req.body as {
+    priceId?: string;
+    mode?: 'payment' | 'subscription';
+    successUrl?: string;
+    cancelUrl?: string;
+    metadata?: Record<string, string> | undefined;
+  };
+
+  if (!priceId || typeof priceId !== 'string') {
+    throw new ApiError(400, 'INVALID_PRICE', 'Missing or invalid priceId');
+  }
+
+  if (!successUrl || !cancelUrl) {
+    throw new ApiError(400, 'INVALID_URLS', 'Missing successUrl or cancelUrl');
+  }
+
+  const sql = getSql();
+
+  // Determine user and customer
+  let userId: string | null = null;
+  let userEmail: string | null = null;
+  let stripeCustomerId: string | null = null;
+
+  // If using Clerk, we expect req.auth?.userId to exist
+  if (req.auth?.userId) {
+    const userRes = await sql`
+      SELECT u.id, u.email, sc.stripe_customer_id
+      FROM users u
+      LEFT JOIN stripe_customers sc ON u.id = sc.user_id
+      WHERE u.clerk_id = ${req.auth.userId}
+    `;
+
+    if (userRes.length > 0) {
+      userId = userRes[0].id as string;
+      userEmail = userRes[0].email as string;
+      stripeCustomerId = userRes[0].stripe_customer_id as string | null;
+    }
+  }
+
+  // If user exists but no customer, create one
+  if (userId && userEmail && !stripeCustomerId) {
+    const customer = await stripe.customers.create({
+      email: userEmail,
+      metadata: { userId },
+    });
+    stripeCustomerId = customer.id;
+
+    await sql`
+      INSERT INTO stripe_customers (user_id, stripe_customer_id, email)
+      VALUES (${userId}, ${stripeCustomerId}, ${userEmail})
+      ON CONFLICT (user_id) DO UPDATE SET stripe_customer_id = ${stripeCustomerId}
+    `;
+  }
+
+  // Build stripe checkout session params
+  const sessionParams: Stripe.Checkout.SessionCreateParams = {
+    payment_method_types: ['card'],
+    line_items: [
+      { price: priceId, quantity: 1 }
+    ],
+    mode,
+    success_url: `${successUrl}?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: cancelUrl,
+    metadata: {
+      userId: userId || '',
+      ...(metadata || {}),
+    },
+  };
+
+  if (stripeCustomerId) sessionParams.customer = stripeCustomerId;
+  else if (userEmail) sessionParams.customer_email = userEmail;
+  if (mode === 'subscription') sessionParams.allow_promotion_codes = true;
+
+  const session = await stripe.checkout.sessions.create(sessionParams);
+
+  return res.json({ success: true, data: { sessionId: session.id, url: session.url } });
+});
+

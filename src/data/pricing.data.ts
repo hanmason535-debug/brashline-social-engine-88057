@@ -61,8 +61,8 @@ export const RECURRING_PLANS: RecurringPlan[] = [
   {
     tier: { en: "PREMIUM", es: "PREMIUM" },
     name: "Impact Engine",
-    price: 399,
-    annualPrice: 5689,
+    price: 499,
+    annualPrice: 5390, // 10% discount for yearly
     annualDiscount: 10,
     summary: {
       en: "Growth with measurable ROI.",
