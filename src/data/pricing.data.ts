@@ -9,6 +9,28 @@
  */
 import { RecurringPlan, OneTimePackage } from "@/types/pricing.types";
 
+// Utility: compute Vite env var key for a plan name
+function envPriceKeyFromName(name: string, interval: "monthly" | "yearly") {
+  const normalized = name.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
+  const suffix = interval === "monthly" ? "MONTHLY" : "YEARLY";
+  return `VITE_STRIPE_PRICE_${normalized}_${suffix}`;
+}
+
+function envPriceValue(name: string, interval: "monthly" | "yearly") {
+  const key = envPriceKeyFromName(name, interval);
+  return (import.meta.env as any)[key] as string | undefined; // Vite env variables
+}
+
+function envOneTimePriceKeyFromName(name: string) {
+  const normalized = name.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
+  return `VITE_STRIPE_PRICE_${normalized}_ONE_TIME`;
+}
+
+function envOneTimePriceValue(name: string) {
+  const key = envOneTimePriceKeyFromName(name);
+  return (import.meta.env as any)[key] as string | undefined;
+}
+
 export const RECURRING_PLANS: RecurringPlan[] = [
   {
     tier: { en: "BASIC", es: "BÁSICO" },
@@ -29,8 +51,8 @@ export const RECURRING_PLANS: RecurringPlan[] = [
     ],
     stripeProductId: "prod_TVRrohKG1uB7fa",
     stripePriceIds: {
-      monthly: "price_starter_monthly_placeholder",
-      yearly: "price_starter_yearly_placeholder",
+      monthly: envPriceValue("Starter Spark", "monthly") || "price_1SYQxZBlSadv5HO95adqBVKV",
+      yearly: envPriceValue("Starter Spark", "yearly") || "price_1SYQxZBlSadv5HO95adqBVKV",
     },
   },
   {
@@ -54,8 +76,8 @@ export const RECURRING_PLANS: RecurringPlan[] = [
     ],
     stripeProductId: "prod_TVRrso4JzT9ceT",
     stripePriceIds: {
-      monthly: "price_brand_monthly_placeholder",
-      yearly: "price_brand_yearly_placeholder",
+      monthly: envPriceValue("Brand Pulse", "monthly") || "price_1SYQy8BlSadv5HO9yEVLGlHd",
+      yearly: envPriceValue("Brand Pulse", "yearly") || "price_1SYQy8BlSadv5HO9yEVLGlHd",
     },
   },
   {
@@ -78,8 +100,8 @@ export const RECURRING_PLANS: RecurringPlan[] = [
     ],
     stripeProductId: "prod_TVRsONeDHkB2it",
     stripePriceIds: {
-      monthly: "price_impact_monthly_placeholder",
-      yearly: "price_impact_yearly_placeholder",
+      monthly: envPriceValue("Impact Engine", "monthly") || "price_1SYQyYBlSadv5HO9kykoYbvI",
+      yearly: envPriceValue("Impact Engine", "yearly") || "price_1SYQyYBlSadv5HO9kykoYbvI",
     },
   },
 ];
@@ -89,7 +111,7 @@ export const MAIN_PACKAGE: OneTimePackage = {
   price: 2999,
   type: "one-time",
   stripeProductId: "prod_TVS5FcxrQkvq5L",
-  stripePriceId: "price_digital_launch_pro_placeholder",
+  stripePriceId: envOneTimePriceValue("Digital Launch Pro") || "price_1SYRBEBlSadv5HO9NAer0awA",
   tagline: {
     en: "Full business setup — for new or rebranding clients",
     es: "Configuración completa del negocio — para clientes nuevos o en proceso de rebranding",
@@ -191,7 +213,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     price: 399,
     type: "one-time",
     stripeProductId: "prod_TVS7v3cOTcXY76",
-    stripePriceId: "price_visual_vault_placeholder",
+    stripePriceId: envOneTimePriceValue("Visual Vault") || "price_visual_vault_placeholder",
     tagline: {
       en: "Photography & video creation",
       es: "Creación de fotografía y video",
@@ -215,7 +237,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     price: 899,
     type: "one-time",
     stripeProductId: "prod_TVSAvZFkkSQ1tu",
-    stripePriceId: "price_automateiq_placeholder",
+    stripePriceId: envOneTimePriceValue("AutomateIQ") || "price_1SYRGWBlSadv5HO9gvMfjTD0",
     tagline: {
       en: "CRM + workflow automation",
       es: "CRM + automatización de flujo de trabajo",
@@ -242,7 +264,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     price: 599,
     type: "one-time",
     stripeProductId: "prod_TVSBLbVY78wqB1",
-    stripePriceId: "price_local_surge_placeholder",
+    stripePriceId: envOneTimePriceValue("Local Surge") || "price_1SYRGuBlSadv5HO9J7xs09kF",
     tagline: {
       en: "Local search & map ranking boost",
       es: "Búsqueda local y mejora de clasificación en mapas",
@@ -269,7 +291,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     price: 799,
     type: "one-time",
     stripeProductId: "prod_TVSBP43xi9RfXE",
-    stripePriceId: "price_commerce_boost_placeholder",
+    stripePriceId: envOneTimePriceValue("Commerce Boost") || "price_1SYRHKBlSadv5HO92oQpkMnj",
     tagline: {
       en: "E-commerce and delivery integration",
       es: "Integración de e-commerce y entrega",
@@ -295,7 +317,7 @@ export const ADDON_PACKAGES: OneTimePackage[] = [
     price: 399,
     type: "one-time",
     stripeProductId: "prod_TVSCwnL5zuQdxy",
-    stripePriceId: "price_data_pulse_placeholder",
+    stripePriceId: envOneTimePriceValue("Data Pulse") || "price_1SYRHsBlSadv5HO9KQb1nHR7",
     tagline: {
       en: "Analytics + performance dashboard",
       es: "Análisis + panel de rendimiento",
