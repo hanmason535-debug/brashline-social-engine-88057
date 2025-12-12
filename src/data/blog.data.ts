@@ -8,6 +8,12 @@
  * - Consumers treat this as read-only and avoid mutating values in place.
  */
 import { BlogPost } from "@/types/blog.types";
+import smbSocialImg from "@/assets/images/blog/smb-social.png";
+import reviewsStarsImg from "@/assets/images/blog/reviews-stars.png";
+import instagramCaptionsImg from "@/assets/images/blog/instagram-captions.png";
+import localSeoImg from "@/assets/images/blog/local-seo.png";
+import lightAdsImg from "@/assets/images/blog/light-ads.png";
+import reportingOwnersImg from "@/assets/images/blog/reporting-owners.png";
 
 export const BLOG_POSTS: BlogPost[] = [
   {
@@ -19,7 +25,7 @@ export const BLOG_POSTS: BlogPost[] = [
       en: "A two-post rhythm and one story per week keep you visible without burnout.",
       es: "Dos publicaciones y una historia por semana te mantienen visible sin agotamiento.",
     },
-    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&h=400&fit=crop",
+    image: smbSocialImg,
     date: "2024-01-15",
   },
   {
@@ -31,7 +37,7 @@ export const BLOG_POSTS: BlogPost[] = [
       en: "Turn real feedback into monthly content without sounding salesy.",
       es: "Convierte comentarios reales en contenido mensual sin sonar promocional.",
     },
-    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&h=400&fit=crop",
+    image: reviewsStarsImg,
     date: "2024-01-10",
   },
   {
@@ -43,7 +49,7 @@ export const BLOG_POSTS: BlogPost[] = [
       en: "Three caption patterns for local service brands.",
       es: "Tres patrones de caption para marcas de servicios locales.",
     },
-    image: "https://images.unsplash.com/photo-1519337265831-281ec6cc8514?w=600&h=400&fit=crop",
+    image: instagramCaptionsImg,
     date: "2024-01-05",
   },
   {
@@ -55,7 +61,7 @@ export const BLOG_POSTS: BlogPost[] = [
       en: "GBP hygiene, weekly posts, and citations that actually matter.",
       es: "Higiene de GBP, publicaciones semanales y citaciones que importan.",
     },
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&h=400&fit=crop",
+    image: localSeoImg,
     date: "2023-12-28",
   },
   {
@@ -67,7 +73,7 @@ export const BLOG_POSTS: BlogPost[] = [
       en: "A small, targeted boost that supports organic posts.",
       es: "Un impulso pequeño y dirigido que apoya publicaciones orgánicas.",
     },
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop",
+    image: lightAdsImg,
     date: "2023-12-20",
   },
   {
@@ -79,7 +85,7 @@ export const BLOG_POSTS: BlogPost[] = [
       en: "One page with reach, followers, and your two most effective posts.",
       es: "Una página con alcance, seguidores y tus dos publicaciones más efectivas.",
     },
-    image: "https://images.unsplash.com/photo-1523475496153-3d6cc0a69f45?w=600&h=400&fit=crop",
+    image: reportingOwnersImg,
     date: "2023-12-15",
   },
 ];

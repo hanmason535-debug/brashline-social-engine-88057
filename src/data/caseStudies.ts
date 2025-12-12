@@ -1,4 +1,10 @@
 import { WebsiteData, SocialData } from "@/types/work.types";
+import navTechnoImg from "@/assets/images/case-studies/nav-techno.png";
+import westernHydroImg from "@/assets/images/case-studies/western-hydro.png";
+import cafecitoImg from "@/assets/images/case-studies/cafecito.png";
+import runningExplainedImg from "@/assets/images/case-studies/running-explained.png";
+import oobRestaurantImg from "@/assets/images/case-studies/oob-restaurant.png";
+import thompsonLegalImg from "@/assets/images/case-studies/thompson-legal.png";
 
 export const websiteProjects: WebsiteData[] = [
   {
@@ -8,7 +14,7 @@ export const websiteProjects: WebsiteData[] = [
       es: "Sitio web de soluciones tecnológicas modernas con diseño elegante y funciones interactivas",
     },
     url: "https://navtechno.in/",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+    thumbnail: navTechnoImg,
     techStack: ["React", "TypeScript", "Tailwind CSS"],
     category: { en: "Technology", es: "Tecnología" },
   },
@@ -19,7 +25,7 @@ export const websiteProjects: WebsiteData[] = [
       es: "Sitio web de empresa de mudanzas profesional con sistema de reservas y exhibición de servicios",
     },
     url: "https://www.westernhydromovers.com/",
-    thumbnail: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=600&fit=crop",
+    thumbnail: westernHydroImg,
     techStack: ["WordPress", "WooCommerce", "Custom CSS"],
     category: { en: "Services", es: "Servicios" },
   },
@@ -30,7 +36,7 @@ export const websiteProjects: WebsiteData[] = [
       es: "Sitio web de cafetería acogedor con pedidos en línea y exhibición de menú",
     },
     url: "https://www.cafecitosantafe.com/",
-    thumbnail: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop",
+    thumbnail: cafecitoImg,
     techStack: ["Shopify", "Liquid", "Custom Theme"],
     category: { en: "Food & Beverage", es: "Comida y Bebida" },
   },
@@ -41,7 +47,7 @@ export const websiteProjects: WebsiteData[] = [
       es: "Blog de fitness y running con programas de entrenamiento y funciones comunitarias",
     },
     url: "https://www.runningexplained.com/",
-    thumbnail: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=600&fit=crop",
+    thumbnail: runningExplainedImg,
     techStack: ["WordPress", "Elementor", "WP Forms"],
     category: { en: "Fitness", es: "Fitness" },
   },
@@ -52,7 +58,7 @@ export const websiteProjects: WebsiteData[] = [
       es: "Sitio web de restaurante moderno con menú interactivo y sistema de reservas",
     },
     url: "https://oobpdx.com/",
-    thumbnail: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop",
+    thumbnail: oobRestaurantImg,
     techStack: ["React", "Node.js", "OpenTable API"],
     category: { en: "Restaurant", es: "Restaurante" },
   },
@@ -63,7 +69,7 @@ export const websiteProjects: WebsiteData[] = [
       es: "Sitio web de bufete de abogados profesional con estudios de casos y portal de clientes",
     },
     url: "https://www.thomplegal.com/",
-    thumbnail: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=600&fit=crop",
+    thumbnail: thompsonLegalImg,
     techStack: ["WordPress", "Custom CMS", "SSL Security"],
     category: { en: "Professional Services", es: "Servicios Profesionales" },
   },
