@@ -44,6 +44,10 @@ const Profile = lazy(() => import("./pages/Profile"));
 const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
 const PaymentHistory = lazy(() => import("./pages/PaymentHistory"));
 
+// Location pages for local SEO
+const TampaPage = lazy(() => import("./pages/services/Tampa"));
+const MiamiPage = lazy(() => import("./pages/services/Miami"));
+
 // Loading fallback component
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-screen">
@@ -93,6 +97,9 @@ const AnimatedRoutes = () => {
           <Route path="/profile/*" element={<Profile />} />
           <Route path="/payment/success" element={<PaymentSuccess />} />
           <Route path="/payment/history" element={<PaymentHistory />} />
+          {/* Location-specific pages for local SEO */}
+          <Route path="/services/tampa" element={<TampaPage />} />
+          <Route path="/services/miami" element={<MiamiPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -143,25 +150,25 @@ const App = () => {
 
   return (
     <AppProviders>
-    <Toaster />
-    <Sonner />
-    <BrowserRouter
-      future={{
-        v7_startTransition: true,
-        v7_relativeSplatPath: true,
-      }}
-    >
-      <GA4Initializer />
-      <GA4Tracker />
-      <LoadingBar />
-      <Suspense fallback={<PageLoader />}>
-        <main id="main-content">
-          <AnimatedRoutes />
-        </main>
-      </Suspense>
-    </BrowserRouter>
-    <VercelAnalytics />
-  </AppProviders>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
+        <GA4Initializer />
+        <GA4Tracker />
+        <LoadingBar />
+        <Suspense fallback={<PageLoader />}>
+          <main id="main-content">
+            <AnimatedRoutes />
+          </main>
+        </Suspense>
+      </BrowserRouter>
+      <VercelAnalytics />
+    </AppProviders>
   );
 };
 
