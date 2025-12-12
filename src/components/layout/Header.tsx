@@ -16,6 +16,7 @@ import { Menu, X, Globe } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 import ThemeSwitch from "@/components/ui/theme-switch";
+import { ThemeSelector } from "@/components/ui/theme-selector";
 import FlipButton from "@/components/ui/flip-button";
 import { CartIcon } from "@/components/ui/cart-icon";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -112,11 +113,10 @@ const Header = memo(() => {
               <Link
                 key={item.href}
                 to={item.href}
-                className={`nav-link text-sm font-medium transition-colors pb-1 ${
-                  isActive(item.href)
+                className={`nav-link text-sm font-medium transition-colors pb-1 ${isActive(item.href)
                     ? "text-foreground active"
                     : "text-foreground/80 hover:text-foreground"
-                }`}
+                  }`}
               >
                 {item.label[lang]}
               </Link>
@@ -154,6 +154,7 @@ const Header = memo(() => {
               </SignedIn>
             </div>
 
+            <ThemeSelector compact />
             <ThemeSwitch className="hidden sm:flex scale-75" />
 
             <Button
@@ -206,7 +207,7 @@ const Header = memo(() => {
             <div
               className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden animate-fade-in"
               onClick={() => setMobileMenuOpen(false)}
-              style={{ 
+              style={{
                 willChange: "opacity",
                 transform: "translate3d(0, 0, 0)",
               }}
@@ -231,11 +232,10 @@ const Header = memo(() => {
                     key={item.href}
                     to={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`block py-3 px-4 text-lg font-medium transition-colors duration-200 rounded-lg ${
-                      isActive(item.href)
+                    className={`block py-3 px-4 text-lg font-medium transition-colors duration-200 rounded-lg ${isActive(item.href)
                         ? "text-primary bg-primary/10"
                         : "text-foreground/80 hover:text-primary hover:bg-muted"
-                    }`}
+                      }`}
                   >
                     {item.label[lang]}
                   </Link>
@@ -275,7 +275,7 @@ const Header = memo(() => {
                       </div>
                     </SignedIn>
                   </div>
-                  
+
                   <div className="flex items-center justify-between px-4">
                     <span className="text-sm text-muted-foreground">
                       {lang === "en" ? "Theme" : "Tema"}
