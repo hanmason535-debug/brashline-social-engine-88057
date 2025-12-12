@@ -109,7 +109,7 @@ export const socialPosts: SocialData[] = [
     image: "https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=600&h=600&fit=crop",
     caption: {
       en: "✨ 5 tips for organizing your home workspace. Save this for later! #HomeOrganization #ProductivityTips",
-      es: "✨ 5 consejos para organizar tu espacio de trabajo en casa. ¡Guarda esto para después! #OrganizaciónDelHogar #ConsejosDeLaNación",
+      es: "✨ 5 consejos para organizar tu espacio de trabajo en casa. ¡Guarda esto para después! #OrganizaciónDelHogar #ConsejosDeProductividad",
     },
     engagement: { likes: 634, saves: 892, comments: 18 },
     timestamp: "1w ago",
@@ -164,7 +164,7 @@ export const socialPosts: SocialData[] = [
     image: "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=600&fit=crop",
     caption: {
       en: "☕️ Behind the scenes: How we roast our signature coffee blend. #CoffeeRoasting #BehindTheScenes",
-      es: "☕️ Detrás de escena: Cómo tostamos nuestra mezcla de café característica. #TostadoDeCafé #DetrásDe escena",
+      es: "☕️ Detrás de escena: Cómo tostamos nuestra mezcla de café característica. #TostadoDeCafé #DetrasDeEscena",
     },
     engagement: { views: 3456, likes: 892, comments: 67 },
     timestamp: "3w ago",
