@@ -101,7 +101,7 @@ export default function PaymentHistory() {
         {/* Payment History */}
         <section className="space-y-4">
           <h2 className="text-xl font-semibold">Payment History</h2>
-          
+
           {isLoading ? (
             <Card>
               <CardContent className="flex items-center justify-center py-12">
@@ -163,7 +163,7 @@ export default function PaymentHistory() {
                             </a>
                           </Button>
                         ) : (
-                          <span className="text-muted-foreground">—</span>
+                          <span className="text-muted-foreground">-</span>
                         )}
                       </TableCell>
                     </TableRow>

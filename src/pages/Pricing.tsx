@@ -36,8 +36,8 @@ const Pricing = () => {
     price: 2999,
     type: "one-time",
     tagline: {
-      en: "Full business setup — for new or rebranding clients",
-      es: "Configuración completa del negocio — para clientes nuevos o en proceso de rebranding",
+      en: "Full business setup - for new or rebranding clients",
+      es: "Configuración completa del negocio - para clientes nuevos o en proceso de rebranding",
     },
     features: [
       {
@@ -359,9 +359,8 @@ const Pricing = () => {
             {addOnPackages.map((pkg, index) => (
               <Card
                 key={index}
-                className={`relative shadow-soft hover:shadow-glow transition-all duration-700 hover:-translate-y-2 flex flex-col ${
-                  projectVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                }`}
+                className={`relative shadow-soft hover:shadow-glow transition-all duration-700 hover:-translate-y-2 flex flex-col ${projectVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <CardHeader className="pb-6">

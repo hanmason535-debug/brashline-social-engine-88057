@@ -113,8 +113,8 @@ export const MAIN_PACKAGE: OneTimePackage = {
   stripeProductId: "prod_TVS5FcxrQkvq5L",
   stripePriceId: envOneTimePriceValue("Digital Launch Pro") || "price_1SYRBEBlSadv5HO9NAer0awA",
   tagline: {
-    en: "Full business setup — for new or rebranding clients",
-    es: "Configuración completa del negocio — para clientes nuevos o en proceso de rebranding",
+    en: "Full business setup - for new or rebranding clients",
+    es: "Configuración completa del negocio - para clientes nuevos o en proceso de rebranding",
   },
   features: [
     {
@@ -342,8 +342,8 @@ export const faqs = [
       es: "¿Los planes requieren un contrato a largo plazo?",
     },
     answer: {
-      en: "No — our plans are month-to-month with a 30-day cancellation notice. We focus on delivering measurable value so clients stay because they get results.",
-      es: "No — nuestros planes son mensuales con 30 días de preaviso para cancelar. Nos enfocamos en ofrecer un valor medible para que los clientes se queden por los resultados.",
+      en: "No - our plans are month-to-month with a 30-day cancellation notice. We focus on delivering measurable value so clients stay because they get results.",
+      es: "No - nuestros planes son mensuales con 30 días de preaviso para cancelar. Nos enfocamos en ofrecer un valor medible para que los clientes se queden por los resultados.",
     },
   },
   {
@@ -352,8 +352,8 @@ export const faqs = [
       es: "¿Puedo cambiar entre planes a mitad de período?",
     },
     answer: {
-      en: "Yes — you can upgrade or downgrade at any time; billing is prorated for upgrades.",
-      es: "Sí — puedes actualizar o degradar en cualquier momento; la facturación se prorratea para las mejoras.",
+      en: "Yes - you can upgrade or downgrade at any time; billing is prorated for upgrades.",
+      es: "Sí - puedes actualizar o degradar en cualquier momento; la facturación se prorratea para las mejoras.",
     },
   },
   {
@@ -362,8 +362,8 @@ export const faqs = [
       es: "¿Ofrecen paquetes personalizados para agencias o franquicias?",
     },
     answer: {
-      en: "Absolutely — we provide custom packages for agencies, franchises, or enterprise clients. Contact our sales team using the contact form to discuss specific requirements.",
-      es: "Absolutamente — ofrecemos paquetes personalizados para agencias, franquicias o clientes empresariales. Contacta a nuestro equipo de ventas mediante el formulario de contacto para discutir requisitos específicos.",
+      en: "Absolutely - we provide custom packages for agencies, franchises, or enterprise clients. Contact our sales team using the contact form to discuss specific requirements.",
+      es: "Absolutamente - ofrecemos paquetes personalizados para agencias, franquicias o clientes empresariales. Contacta a nuestro equipo de ventas mediante el formulario de contacto para discutir requisitos específicos.",
     },
   },
 ];
