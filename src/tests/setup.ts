@@ -80,7 +80,7 @@ vi.mock('@/components/ui/background-paths', () => ({
 }));
 
 // Mock SEO components so tests do not depend on react-helmet-async behavior.
-vi.mock('@/components/SEO/SEOHead', () => ({
+vi.mock('@/components/SEO/MetaManager', () => ({
   default: () => null,
 }));
 
@@ -113,3 +113,21 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
 });
+
+// JSDOM doesn't implement PointerEvent, which some UI libraries like Radix rely on.
+if (!global.PointerEvent) {
+  class PointerEvent extends MouseEvent {
+    constructor(type: string, params: PointerEventInit) {
+      super(type, params);
+    }
+  }
+  global.PointerEvent = PointerEvent as unknown as typeof global.PointerEvent;
+}
+
+// Mock hasPointerCapture and releasePointerCapture, which are part of the Pointer Events API.
+if (!window.HTMLElement.prototype.hasPointerCapture) {
+  window.HTMLElement.prototype.hasPointerCapture = vi.fn();
+}
+if (!window.HTMLElement.prototype.releasePointerCapture) {
+  window.HTMLElement.prototype.releasePointerCapture = vi.fn();
+}

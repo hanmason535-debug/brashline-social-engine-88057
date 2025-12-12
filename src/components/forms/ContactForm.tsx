@@ -43,6 +43,7 @@ const contactSchema = z.object({
     .trim()
     .min(10, { message: "Message must be at least 10 characters" })
     .max(1000, { message: "Message must be less than 1000 characters" }),
+  honeypot: z.string().optional(),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -80,7 +81,7 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
     if (isSignedIn && user) {
       const fullName = user.fullName || `${user.firstName || ""} ${user.lastName || ""}`.trim();
       const email = user.primaryEmailAddress?.emailAddress || "";
-      
+
       if (fullName) {
         setValue("name", fullName);
       }
@@ -95,13 +96,19 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
   const isSubmitting = submitContactMutation.isPending;
 
   const onSubmit = async (data: ContactFormData) => {
+    // Bot protection: reject if honeypot field is filled
+    if (data.honeypot) {
+      console.warn("Bot submission detected");
+      return;
+    }
+
     analytics.trackContactFormStart();
 
     try {
       // Combine service type and message for API (API only accepts name, email, company, message)
       const fullMessage = `Service Type: ${data.serviceType}\n\n${data.message}`;
       const phoneInfo = data.phone ? `Phone: ${data.phone}` : undefined;
-      
+
       // Save to database via API
       await submitContactMutation.mutateAsync({
         name: data.name,
@@ -113,11 +120,11 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
       // Construct WhatsApp message with proper encoding
       const whatsappMessage = encodeURIComponent(
         `New Contact Form Submission:\n\n` +
-          `Name: ${data.name}\n` +
-          `Email: ${data.email}\n` +
-          `Phone: ${data.phone || "Not provided"}\n` +
-          `Service: ${data.serviceType}\n` +
-          `Message: ${data.message}`
+        `Name: ${data.name}\n` +
+        `Email: ${data.email}\n` +
+        `Phone: ${data.phone || "Not provided"}\n` +
+        `Service: ${data.serviceType}\n` +
+        `Message: ${data.message}`
       );
 
       // Open WhatsApp with pre-filled message
@@ -193,6 +200,10 @@ export const ContactForm = ({ lang, onSuccess }: ContactFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="hidden">
+        <Label htmlFor="honeypot">Honeypot</Label>
+        <Input id="honeypot" {...register("honeypot")} />
+      </div>
       <div className="space-y-2">
         <Label htmlFor="name">{t.name}</Label>
         <Input
