@@ -1,22 +1,13 @@
 /**
- * File overview: src/components/pricing/RecurringPlanCard.tsx
- *
- * React component `RecurringPlanCard` rendering a focused piece of UI.
- * Behavior:
- * - Receives props from parents and may read from hooks or context.
- * - Renders presentational markup and wires callbacks for user interaction.
- * Data flow:
- * - Follows a one-way data flow: parents own data, this component focuses on display.
- * Performance:
- * - Avoid expensive work during render and prefer memoized helpers for heavy subtrees.
+ * RecurringPlanCard - Triggers direct Stripe checkout redirect
+ * No cart fallback. Single "Get Started" button → Stripe hosted checkout.
  */
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Check, ShoppingCart } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { SparklesCore } from "@/components/ui/sparkles";
-import { useCart } from "@/contexts/CartContext";
 import { useStripe as useStripeContext } from "@/contexts/StripeContext";
 
 interface RecurringPlanCardProps {
@@ -46,38 +37,20 @@ export const RecurringPlanCard = ({
   billingInterval,
   stripePriceIds,
 }: RecurringPlanCardProps) => {
-  const { addToCart } = useCart();
   const { createCheckoutSession, isLoading } = useStripeContext();
-
-  const handleAddToCart = () => {
-    const cartPrice = billingInterval === "yearly" ? annualPrice : price;
-    addToCart({
-      id: `recurring-${name.toLowerCase().replace(/\s+/g, "-")}`,
-      name,
-      price: cartPrice,
-      type: "recurring",
-      tier: tier[lang],
-      summary: summary[lang],
-      features: features.map((f) => f[lang]),
-    });
-  };
 
   const handleCheckout = async () => {
     // Resolve price ID from stripePriceIds or from environment variables as a fallback
     const normalized = name.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
     const envKey = `VITE_STRIPE_PRICE_${normalized}_${billingInterval === "monthly" ? "MONTHLY" : "YEARLY"}`;
     const envPriceId = (import.meta.env as any)[envKey] as string | undefined;
-    const priceId = billingInterval === "monthly" ? stripePriceIds?.monthly || envPriceId : stripePriceIds?.yearly || envPriceId;
-    if (!priceId) {
-      addToCart({
-        id: `recurring-${name.toLowerCase().replace(/\s+/g, "-")}`,
-        name,
-        price,
-        type: "recurring",
-        tier: tier[lang],
-        summary: summary[lang],
-        features: features.map((f) => f[lang]),
-      });
+    const priceId = billingInterval === "monthly" 
+      ? stripePriceIds?.monthly || envPriceId 
+      : stripePriceIds?.yearly || envPriceId;
+
+    if (!priceId || priceId.includes("placeholder")) {
+      // No valid price ID - alert user (production would handle gracefully)
+      console.error("No valid Stripe price ID configured for", name, billingInterval);
       return;
     }
 
@@ -87,16 +60,7 @@ export const RecurringPlanCard = ({
         window.location.href = result.url;
       }
     } catch (err) {
-      // On error, fallback to add to cart
-      addToCart({
-        id: `recurring-${name.toLowerCase().replace(/\s+/g, "-")}`,
-        name,
-        price,
-        type: "recurring",
-        tier: tier[lang],
-        summary: summary[lang],
-        features: features.map((f) => f[lang]),
-      });
+      console.error("Checkout failed:", err);
     }
   };
 
@@ -171,23 +135,17 @@ export const RecurringPlanCard = ({
         ))}
       </CardContent>
 
-      <CardFooter className="pt-6 relative z-10 flex gap-3">
+      <CardFooter className="pt-6 relative z-10">
         <Button
           onClick={handleCheckout}
           className="w-full transition-transform hover:scale-105 gap-2"
           variant={featured ? "default" : "outline"}
           disabled={isLoading}
         >
-          <ShoppingCart className="h-4 w-4" />
-          {isLoading ? (lang === "en" ? "Processing..." : "Procesando...") : (lang === "en" ? "Get Started" : "Comenzar")}
-        </Button>
-        <Button
-          onClick={handleAddToCart}
-          className="w-full transition-transform hover:scale-105 gap-2"
-          variant={featured ? "secondary" : "ghost"}
-        >
-          <ShoppingCart className="h-4 w-4" />
-          {lang === "en" ? "Add to Cart" : "Agregar al Carrito"}
+          {isLoading 
+            ? (lang === "en" ? "Processing..." : "Procesando...") 
+            : (lang === "en" ? "Get Started" : "Comenzar")}
+          {!isLoading && <ArrowRight className="h-4 w-4" />}
         </Button>
       </CardFooter>
     </Card>
