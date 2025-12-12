@@ -66,29 +66,29 @@ export const getPageSEO = (page: string): PageSEO => {
 
   const pages: Record<string, PageSEO> = {
     home: {
-      title: "Brashline | Social Media Management for Florida Businesses",
+      title: "Brashline | Affordable Social Media Management for Florida Small Business",
       description:
-        "Orlando-based social media management agency. Simple packages, consistent posts, clear reporting. Serving Florida businesses with affordable social media solutions.",
+        "Orlando's affordable social media agency for small business. Instagram management, content creation, and Google Business Profile optimization. Serving Florida SMBs with simple packages starting at competitive rates.",
       keywords:
-        "social media management Orlando, Florida social media agency, social media marketing Orlando FL, Instagram management, Facebook ads Florida",
+        "social media management Orlando, Florida social media agency, small business social media Florida, Instagram management Orlando, affordable social media agency Florida, social media marketing Orlando FL, Google Business Profile management Orlando",
       canonical: baseUrl,
       ogImage: "/images/og-home.jpg",
     },
     services: {
-      title: "Social Media Services | Brashline Orlando",
+      title: "Social Media Services for Florida Businesses | Brashline Orlando",
       description:
-        "Professional social media management services for Florida businesses. Content creation, community management, analytics, and strategic planning. Based in Orlando, FL.",
+        "Professional social media services in Orlando & Florida. Instagram management, content creation, Google Business Profile optimization, and Yelp management for restaurants, salons, and local businesses.",
       keywords:
-        "social media services Orlando, social media management packages Florida, content creation Orlando, community management services",
+        "social media services Orlando, social media for restaurants Orlando, Instagram management Orlando, Google Business Profile management Orlando, Yelp management Orlando, local business marketing Florida",
       canonical: `${baseUrl}/services`,
       ogImage: "/images/og-services.jpg",
     },
     pricing: {
-      title: "Social Media Management Pricing | Brashline",
+      title: "Social Media Pricing | Affordable Packages for Florida Businesses",
       description:
-        "Transparent, affordable social media management packages for Florida businesses. Simple monthly plans starting at competitive rates. No contracts, clear reporting.",
+        "Transparent social media pricing for Florida businesses. No contracts, no hidden fees. Simple monthly packages starting at competitive rates. See what's included.",
       keywords:
-        "social media management pricing Orlando, affordable social media packages Florida, social media cost Orlando",
+        "social media management pricing Orlando, affordable social media packages Florida, social media cost Orlando, cheap social media management Florida",
       canonical: `${baseUrl}/pricing`,
       ogImage: "/images/og-pricing.jpg",
     },

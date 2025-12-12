@@ -26,6 +26,7 @@ const TrustedBy = lazy(() => import("@/components/home/TrustedBy"));
 const ValueProps = lazy(() => import("@/components/home/ValueProps"));
 const StatsSection = lazy(() => import("@/components/home/StatsSection"));
 const PricingPreview = lazy(() => import("@/components/home/PricingPreview"));
+const HomeFAQ = lazy(() => import("@/components/home/HomeFAQ"));
 
 // Lightweight loading fallback
 const SectionLoader = () => (
@@ -58,6 +59,9 @@ const Index = () => {
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <PricingPreview lang={lang} />
+      </Suspense>
+      <Suspense fallback={<SectionLoader />}>
+        <HomeFAQ lang={lang} />
       </Suspense>
 
       {/* CTA Section with Contact Form Dialog */}

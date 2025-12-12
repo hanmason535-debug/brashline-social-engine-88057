@@ -36,12 +36,14 @@ const Services = () => {
         <div className={`container mx-auto ${CONTAINER_PADDING_X}`}>
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6">
-              {lang === "en" ? "Our Services" : "Nuestros Servicios"}
+              {lang === "en"
+                ? "Social Media Services for Florida Businesses"
+                : "Servicios de Redes Sociales para Negocios de Florida"}
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               {lang === "en"
-                ? "Comprehensive social media and digital marketing services for Florida businesses"
-                : "Servicios integrales de redes sociales y marketing digital para negocios de Florida"}
+                ? "Instagram management, content creation, Google Business Profile optimization, and more. Helping Orlando restaurants, salons, and local businesses grow online."
+                : "Gestión de Instagram, creación de contenido, optimización de Google Business Profile y más. Ayudando a restaurantes, salones y negocios locales de Orlando a crecer en línea."}
             </p>
           </div>
           <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${SECTION_GAP}`}>
